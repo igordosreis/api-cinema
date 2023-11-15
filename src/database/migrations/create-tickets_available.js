@@ -31,6 +31,9 @@ module.exports = {
     }, {
       engine: 'InnoDB',
       charset: 'latin1',
+    }, {
+      underscored: true,
+      timestamps: true,
     });
   },
 

@@ -20,6 +20,9 @@ module.exports = {
         type: Sequelize.STRING(2),
         defaultValue: null,
       },
+    }, {
+      underscored: true,
+      timestamps: false,
     });
   },
 

@@ -28,6 +28,9 @@ module.exports = {
         type: Sequelize.DATE,
         defaultValue: null,
       },
+    }, {
+      underscored: true,
+      timestamps: false,
     });
   },
 

@@ -5,50 +5,45 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('tickets_used', {
+    await queryInterface.createTable('cities', {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
       },
-      voucher: {
+      name: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      establishment_id: {
-        type: Sequelize.STRING,
+      state_id: {
+        type: Sequelize.INTEGER,
         allowNull: false,
+        references: {
+          model: 'states',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
       },
-      user_id: {
+      country: {
+        type: Sequelize.INTEGER,
+        defaultValue: null,
+      },
+      latitude: {
         type: Sequelize.STRING,
-        allowNull: false,
-      },
-      expire_date: {
-        type: Sequelize.DATE,
         defaultValue: null,
       },
-      payment_id: {
+      longitude: {
         type: Sequelize.STRING,
-        defaultValue: null,
-      },
-      created_at: {
-        type: Sequelize.DATE,
-        defaultValue: null,
-      },
-      sold_at: {
-        type: Sequelize.DATE,
         defaultValue: null,
       },
     }, {
       underscored: true,
       timestamps: false,
-      engine: 'InnoDB',
-      charset: 'latin1',
     });
   },
 
   down: async (queryInterface) => {
-    await queryInterface.dropTable('tickets_used');
+    await queryInterface.dropTable('cities');
   },
 };

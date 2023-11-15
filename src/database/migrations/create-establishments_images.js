@@ -27,6 +27,9 @@ module.exports = {
         type: Sequelize.STRING,
         defaultValue: '#ffffff',
       },
+    }, {
+      underscored: true,
+      timestamps: false,
     });
   },
 
