@@ -12,11 +12,11 @@ module.exports = {
         primaryKey: true,
       },
       image: {
-        type: Sequelize.STRING(255),
+        type: Sequelize.STRING,
         defaultValue: null,
       },
       image_carousel: {
-        type: Sequelize.STRING(255),
+        type: Sequelize.STRING,
         defaultValue: null,
       },
       cover: {
@@ -24,7 +24,7 @@ module.exports = {
         defaultValue: null,
       },
       resize_color: {
-        type: Sequelize.STRING(255),
+        type: Sequelize.STRING,
         defaultValue: '#ffffff',
       },
     });
