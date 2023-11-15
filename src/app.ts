@@ -12,6 +12,7 @@ class App {
     // this.app.use('/images', express.static(`${__dirname}/images`));
     // this.app.use(router);
     // this.app.use(httpErrorMiddleware);
+    // this.app.use(httpErrorMiddleware);
   }
 
   public app: express.Express;
