@@ -17,7 +17,7 @@ class App {
 
   public app: express.Express;
 
-  public start(PORT: number): void {
+  public start(PORT): void {
     this.app.listen(
       PORT,
       () =>
