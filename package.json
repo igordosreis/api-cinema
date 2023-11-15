@@ -1,0 +1,42 @@
+{
+  "name": "backend",
+  "main": "./src/api/server.js",
+  "scripts": {
+    "dev": "tsnd --respawn src/server.ts",
+    "check-types": "tsc --noEmit --skipLibCheck",
+    "db:reset": "npx -y tsc && sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
+    "prepare": "husky install"
+  },
+  "dependencies": {
+    "cors": "2.8.5",
+    "dotenv": "16.0.0",
+    "express": "4.17.3",
+    "express-async-errors": "3.1.1",
+    "joi": "17.9.2",
+    "jsonwebtoken": "8.5.1",
+    "mysql2": "2.3.0",
+    "sequelize": "6.29.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "17.6.5",
+    "@commitlint/config-angular": "17.6.5",
+    "@types/cors": "2.8.13",
+    "@types/express": "4.17.17",
+    "@types/jsonwebtoken": "^9.0.2",
+    "@types/node": "20.4.6",
+    "@types/sequelize": "4.28.14",
+    "@typescript-eslint/eslint-plugin": "5.3.1",
+    "@typescript-eslint/parser": "5.3.1",
+    "eslint": "7.32.0",
+    "eslint-config-airbnb-base": "15.0.0",
+    "eslint-config-airbnb-typescript": "15.0.0",
+    "eslint-plugin-editorconfig": "3.2.0",
+    "eslint-plugin-import": "2.25.3",
+    "eslint-plugin-mocha": "10.1.0",
+    "eslint-plugin-sonarjs": "0.10.0",
+    "husky": "^8.0.0",
+    "lint-staged": "13.2.3",
+    "ts-node-dev": "1.1.8",
+    "typescript": "4.4.4"
+  }
+}
