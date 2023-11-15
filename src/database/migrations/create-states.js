@@ -1,0 +1,29 @@
+/* eslint-disable max-lines-per-function */
+/* eslint-disable strict */
+
+'use strict';
+
+module.exports = {
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.createTable('states', {
+      id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+      },
+      name: {
+        type: Sequelize.STRING(255),
+        allowNull: false,
+      },
+      abbreviation: {
+        type: Sequelize.STRING(2),
+        defaultValue: null,
+      },
+    });
+  },
+
+  down: async (queryInterface) => {
+    await queryInterface.dropTable('states');
+  },
+};
