@@ -19,11 +19,13 @@ module.exports = {
       state_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        field: 'state_id',
         references: {
           model: 'states',
           key: 'id',
         },
         onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
       },
       country: {
         type: Sequelize.INTEGER,
