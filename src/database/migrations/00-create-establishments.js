@@ -22,10 +22,6 @@ module.exports = {
         allowNull: false,
         collate: 'utf8mb3_unicode_ci',
       },
-      brand: {
-        type: Sequelize.STRING,
-        characterSet: 'utf8mb3',
-      },
       primary_color: {
         type: Sequelize.STRING,
         defaultValue: '000000',

@@ -5,7 +5,6 @@ class EstablishmentsModel extends Model {
   declare id: number;
   declare name: string;
   declare about: string;
-  declare brand: string;
   declare primaryColor: string;
   declare link: string;
   declare linkDescription: string;
@@ -38,9 +37,6 @@ EstablishmentsModel.init(
     about: {
       type: DataTypes.TEXT('long'),
       allowNull: false,
-    },
-    brand: {
-      type: DataTypes.STRING,
     },
     primaryColor: {
       type: DataTypes.STRING,
