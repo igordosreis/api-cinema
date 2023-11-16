@@ -4,6 +4,8 @@ import db from '.';
 class TicketsAvailableModel extends Model {
   declare id: number;
   declare voucher: string;
+  declare ticketName: string;
+  declare ticketType: string;
   declare establishmentId: string;
   declare expireDate: Date;
   declare createdAt: Date;
@@ -18,6 +20,14 @@ TicketsAvailableModel.init(
       primaryKey: true,
     },
     voucher: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    ticketName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    ticketType: {
       type: DataTypes.STRING,
       allowNull: false,
     },
