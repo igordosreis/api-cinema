@@ -6,7 +6,6 @@ class CitiesModel extends Model {
   declare id: number;
   declare name: string;
   declare stateId: number;
-  declare country: number;
   declare latitude: string;
   declare longitude: string;
 }
