@@ -4,9 +4,7 @@ import db from '.';
 class TicketsAvailableModel extends Model {
   declare id: number;
   declare voucher: string;
-  declare ticketName: string;
-  declare ticketType: string;
-  declare establishmentId: string;
+  declare productId: string;
   declare expireDate: Date;
   declare createdAt: Date;
 }
@@ -23,15 +21,7 @@ TicketsAvailableModel.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    ticketName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    ticketType: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    establishmentId: {
+    productId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },

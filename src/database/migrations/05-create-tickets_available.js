@@ -16,15 +16,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      ticket_name: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      ticket_type: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      establishment_id: {
+      product_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },

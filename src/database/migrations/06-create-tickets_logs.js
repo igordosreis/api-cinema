@@ -13,15 +13,15 @@ module.exports = {
         primaryKey: true,
       },
       request: {
-        type: Sequelize.TEXT('long'),
+        type: Sequelize.STRING,
         allowNull: true,
       },
       response: {
-        type: Sequelize.TEXT('long'),
+        type: Sequelize.STRING,
         allowNull: true,
       },
       ticket: {
-        type: Sequelize.TEXT('long'),
+        type: Sequelize.STRING,
         allowNull: true,
       },
       date: {

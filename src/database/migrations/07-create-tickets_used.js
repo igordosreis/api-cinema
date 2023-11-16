@@ -16,15 +16,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      ticket_name: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      ticket_type: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      establishment_id: {
+      product_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
@@ -47,6 +39,10 @@ module.exports = {
       sold_at: {
         type: Sequelize.DATE,
         defaultValue: null,
+      },
+      sold_price: {
+        type: Sequelize.DECIMAL(10, 2),
+        allowNull: false,
       },
     }, {
       underscored: true,

@@ -8,7 +8,7 @@ module.exports = {
       {
         id: 2702,
         name: 'Cineart Del Rey ',
-        establishmentId: 488,
+        establishment_id: 488,
         cityId: 1,
         active: true,
         address: 'Av. Presidente Carlos Luz, 3001, Sl. 3103 - Caiçara',
@@ -20,7 +20,7 @@ module.exports = {
       {
         id: 2703,
         name: 'Cineart Cidade',
-        establishmentId: 488,
+        establishment_id: 488,
         cityId: 1,
         active: true,
         address: 'Rua São Paulo, 957, Loja GG-24/25 Centro',
@@ -32,7 +32,7 @@ module.exports = {
       {
         id: 2704,
         name: 'Cineart Via shopping',
-        establishmentId: 488,
+        establishment_id: 488,
         cityId: 1,
         active: true,
         address: 'Av. Afonso Vaz de Melo, 640, Loja 320 - Barreiro de baixo',
@@ -44,7 +44,7 @@ module.exports = {
       {
         id: 2705,
         name: 'Cineart Boulevard',
-        establishmentId: 488,
+        establishment_id: 488,
         cityId: 1,
         active: true,
         address: 'Av. dos Andradas, 3000, Loja 3036, piso 3 -  Santa Efigênia',
@@ -56,7 +56,7 @@ module.exports = {
       {
         id: 2706,
         name: 'Cineart Minas',
-        establishmentId: 488,
+        establishment_id: 488,
         cityId: 1,
         active: true,
         address: 'Av. Cristiano Machado, nº4000, Loja 09; 2º Piso, União',
@@ -68,7 +68,7 @@ module.exports = {
       {
         id: 2707,
         name: 'Cineart Paragem',
-        establishmentId: 488,
+        establishment_id: 488,
         cityId: 1,
         active: true,
         address: 'Av. Professor Mario Werneck, nº 1360, loja 320, Estoril',
@@ -80,7 +80,7 @@ module.exports = {
       {
         id: 2708,
         name: 'Cineart Ponteio',
-        establishmentId: 488,
+        establishment_id: 488,
         cityId: 1,
         active: true,
         address: 'Rodovia BR-356, nº 2500, loja C01. Sion',
@@ -92,7 +92,7 @@ module.exports = {
       {
         id: 2709,
         name: 'Cineart Monte Carmo',
-        establishmentId: 488,
+        establishment_id: 488,
         cityId: 2,
         active: true,
         address: 'Av. Juiz Marco Tulio Isaac, n° 1119, loja LZ 2002. Jardim da Cidade',
@@ -104,7 +104,7 @@ module.exports = {
       {
         id: 2710,
         name: 'Cineart Contagem',
-        establishmentId: 488,
+        establishment_id: 488,
         cityId: 3,
         active: true,
         address: 'Av. Severino Ballesteros Rodrigues, 850, Piso L 3; Lj 3.003 Ressaca',
@@ -116,7 +116,7 @@ module.exports = {
       {
         id: 2711,
         name: 'Cineart Itaú',
-        establishmentId: 488,
+        establishment_id: 488,
         cityId: 3,
         active: true,
         address: 'Av. General David Sarnoff, 5160 Loja 251, Cid. Indust.',
@@ -128,7 +128,7 @@ module.exports = {
       {
         id: 2712,
         name: 'Cineart Barbacena',
-        establishmentId: 488,
+        establishment_id: 488,
         cityId: 327,
         active: true,
         address: 'Av. Helena Aguiar de Figueredo 131 - IPANEMA',
@@ -140,7 +140,7 @@ module.exports = {
       {
         id: 2713,
         name: 'Cineart Serra Sul',
-        establishmentId: 488,
+        establishment_id: 488,
         cityId: 50,
         active: true,
         address: 'Rodovia JK (BR 459), S/N, KM 107, loja: Cinema. Ipiranga',
@@ -152,7 +152,7 @@ module.exports = {
       {
         id: 2741,
         name: 'CINEMARK MANAUS',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 93,
         active: true,
         address: 'Av. Rodrigo Otávio, 555 Distrito Industrial',
@@ -164,7 +164,7 @@ module.exports = {
       {
         id: 2742,
         name: 'CINEMARK Camaçari',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 335,
         active: true,
         address: 'BVD Shopping Camaçari (Via Parafuso), S/N 1106/2022 Piso L2',
@@ -176,7 +176,7 @@ module.exports = {
       {
         id: 2743,
         name: 'CINEMARK Itabuna',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 103,
         active: true,
         address: 'Av. Aziz Maron s/n, Shopping Jequitiba LUC N Las 05 Parte Piso Terreo',
@@ -188,7 +188,7 @@ module.exports = {
       {
         id: 2744,
         name: 'CINEMARK JUAZEIRO DA BAHIA',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 95,
         active: true,
         address: 'Lot Centro Industrial São Francisco, S/N Área 1-B Rod. Lomanto Junior KM 06 Juá Garden Shopping Piso L 01 LUC 2067',
@@ -200,7 +200,7 @@ module.exports = {
       {
         id: 2745,
         name: 'CINEMARK SALVADOR',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 5,
         active: true,
         address: 'Av: Tancredo Neves, 2915 - Lj 3005 - Caminho das Árvores',
@@ -212,7 +212,7 @@ module.exports = {
       {
         id: 2746,
         name: 'CINEMARK BRASILIA',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 43,
         active: true,
         address: 'S.C.E. Sul Trecho 2 - Cj. 32 - 1º Pavimento',
@@ -224,7 +224,7 @@ module.exports = {
       {
         id: 2747,
         name: 'CINEMARK IGUATEMI BRASÍLIA',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 43,
         active: true,
         address: 'ST SHI/Norte, Quadra CA - 04 Bloco A salas de Cinema 01 a 06 - S/N',
@@ -236,7 +236,7 @@ module.exports = {
       {
         id: 2748,
         name: 'CINEMARK TAGUATINGA',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 336,
         active: true,
         address: 'R. 210 - QS 01 - Lote 40 - Taquatinga Àguas Claras',
@@ -248,7 +248,7 @@ module.exports = {
       {
         id: 2749,
         name: 'CINEMARK PASSEIO DAS AGUAS',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 34,
         active: true,
         address: 'Av. Perimetral Norte, 8303 - Área B Passeio das Águas Shopping Cinema',
@@ -260,7 +260,7 @@ module.exports = {
       {
         id: 2750,
         name: 'CINEMARK GOIÂNIA',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 34,
         active: true,
         address: 'Av. Jamel Cecilio, 3300, LUC T-120, Flamboyant Shopping',
@@ -272,7 +272,7 @@ module.exports = {
       {
         id: 2751,
         name: 'CINEMARK GOIABEIRAS',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 334,
         active: true,
         address: 'Av. José Monteiro de Figueiredo (Doutor Zelito), 500',
@@ -284,7 +284,7 @@ module.exports = {
       {
         id: 2752,
         name: 'CINEMARK CAMPO GRANDE',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 309,
         active: true,
         address: 'Av. Afonso Pena, 4909 - Área de Cinemas',
@@ -296,7 +296,7 @@ module.exports = {
       {
         id: 2753,
         name: 'CINEMARK SAVASSI',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 1,
         active: true,
         address: 'Av. do Contorno, 6061',
@@ -308,7 +308,7 @@ module.exports = {
       {
         id: 2754,
         name: 'CINEMARK DIAMOND MALL',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 1,
         active: true,
         address: 'Av. Olegário Maciel 1600  - Lj OM25 - Lourdes',
@@ -320,7 +320,7 @@ module.exports = {
       {
         id: 2755,
         name: 'CINEMARK BH SHOPPING',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 1,
         active: true,
         address: 'Rodovia BR 356, nº 3049 - loja OP47 - Belvedere',
@@ -332,7 +332,7 @@ module.exports = {
       {
         id: 2756,
         name: 'CINEMARK METROPOLITAN BETIM',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 2,
         active: true,
         address: 'Rod. BR-381 Fernão Dias - Km 492.601 - Lado Ímpar Metropolitan Shopping',
@@ -344,7 +344,7 @@ module.exports = {
       {
         id: 2757,
         name: 'CINEMARK UBERLÂNDIA',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 51,
         active: true,
         address: 'Av. Paulo Gracindo, 15 - Morada da Colina',
@@ -356,7 +356,7 @@ module.exports = {
       {
         id: 2758,
         name: 'CINEMARK VARGINHA',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 215,
         active: true,
         address: 'R. Humberto Pizo, 999, Via Café Garden - Shoppin LUC 166; 1º andar',
@@ -368,7 +368,7 @@ module.exports = {
       {
         id: 2759,
         name: 'CINEMARK MUELLER',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 123,
         active: true,
         address: 'Av. Candido de Abreu, 127 Lj. SS01',
@@ -380,7 +380,7 @@ module.exports = {
       {
         id: 2760,
         name: 'CINEMARK BARIGUI',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 123,
         active: true,
         address: 'R. Prof. Pedro Viriato Parigot de Souza, 600 Mossungue',
@@ -392,7 +392,7 @@ module.exports = {
       {
         id: 2761,
         name: 'CINEMARK Foz do Iguaçu',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 151,
         active: true,
         address: 'Av. das Cataratas, 3570 - Catuai Palladium Shopping Piso L2',
@@ -404,7 +404,7 @@ module.exports = {
       {
         id: 2762,
         name: 'CINEMARK LONDRINA',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 332,
         active: true,
         address: 'Av. Theodoro Victorelli, 150- Gleba Patrimonio Boulevard Londrina Shopping',
@@ -416,7 +416,7 @@ module.exports = {
       {
         id: 2763,
         name: 'CINEMARK SÃO JOSÉ DOS PINHAIS',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 333,
         active: true,
         address: 'Rua  Izabel redentora, 1434, Lj 206',
@@ -428,7 +428,7 @@ module.exports = {
       {
         id: 2764,
         name: 'CINEMARK RIOMAR RECIFE',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 40,
         active: true,
         address: 'Av. República do Líbano - Shop RioMar L4 Lj 4001 - Bairro Pina',
@@ -440,7 +440,7 @@ module.exports = {
       {
         id: 2765,
         name: 'CINEMARK NITERÓI',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 52,
         active: true,
         address: 'R. XV de Novembro, 8 - Loja 333',
@@ -452,7 +452,7 @@ module.exports = {
       {
         id: 2766,
         name: 'CINEMARK CARIOCA',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 7,
         active: true,
         address: 'Estr. Vicente de Carvalho, 909 - 2º Pavimento - Vila Kosmos',
@@ -464,7 +464,7 @@ module.exports = {
       {
         id: 2767,
         name: 'CINEMARK DOWNTOWN',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 7,
         active: true,
         address: 'Av. das Américas, 500 BL.17  2º Piso',
@@ -476,7 +476,7 @@ module.exports = {
       {
         id: 2768,
         name: 'CINEMARK BOTAFOGO',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 7,
         active: true,
         address: 'Praia de Botafogo, 400 - Arco 800',
@@ -488,7 +488,7 @@ module.exports = {
       {
         id: 2769,
         name: 'CINEMARK VILLAGE MALL',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 7,
         active: true,
         address: 'Av. das Américas, 3900 - Barra da Tijuca',
@@ -500,7 +500,7 @@ module.exports = {
       {
         id: 2770,
         name: 'CINEMARK CENTRO METROPOLITANO',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 7,
         active: true,
         address: 'Av. 4, PAA 10.292/PAL 38.883, nº 2002 - Shopping Metropolitano Barra (SUC)',
@@ -512,7 +512,7 @@ module.exports = {
       {
         id: 2771,
         name: 'CINEMARK JACAREPAGUÁ',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 7,
         active: true,
         address: 'Av. Geremário Dantas, 404 - Center Shopping Rio',
@@ -524,7 +524,7 @@ module.exports = {
       {
         id: 2772,
         name: 'CINEMARK São Gonçalo',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 59,
         active: true,
         address: 'Av. Presidente kennedt 425 - Sala comercial 403 3 piso',
@@ -536,7 +536,7 @@ module.exports = {
       {
         id: 2773,
         name: 'CINEMARK NATAL',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 56,
         active: true,
         address: 'Av. Bernardo Vieira, 3775 – área de cinemas - Tirol',
@@ -548,7 +548,7 @@ module.exports = {
       {
         id: 2774,
         name: 'CINEMARK CANOAS',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 105,
         active: true,
         address: 'Av. Guilherme Schell, 6.750 - Área de Cinemas',
@@ -560,7 +560,7 @@ module.exports = {
       {
         id: 2775,
         name: 'CINEMARK IPIRANGA',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 67,
         active: true,
         address: 'Av.Ipiranga, 5.200  Loja 201',
@@ -572,7 +572,7 @@ module.exports = {
       {
         id: 2776,
         name: 'CINEMARK BARRA SUL',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 67,
         active: true,
         address: 'Av. Diario de Noticias, 300 loja 1032',
@@ -584,7 +584,7 @@ module.exports = {
       {
         id: 2777,
         name: 'CINEMARK Novo Hambugo',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 67,
         active: true,
         address: 'Av. Nações unidas. 2001 - Loja 300 - 9332001',
@@ -596,7 +596,7 @@ module.exports = {
       {
         id: 2778,
         name: 'CINEMARK Wallig Porto Alegre',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 67,
         active: true,
         address: 'Av. Assis brasil 2611 - SUC 401 - 91010002',
@@ -608,7 +608,7 @@ module.exports = {
       {
         id: 2779,
         name: 'CINEMARK RORAIMA',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 312,
         active: true,
         address: 'Av. Ville Roy, 1544 Loja 102 á 105 - CEP: 69307-725 - Caçari',
@@ -620,7 +620,7 @@ module.exports = {
       {
         id: 2780,
         name: 'CINEMARK FLORIPA',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 72,
         active: true,
         address: 'ROD JOSE CARLOS DAUX, Nº 283, Compl.: SC 401 3116 AP LOJAS PISO L2',
@@ -632,7 +632,7 @@ module.exports = {
       {
         id: 2781,
         name: 'CINEMARK LAGES',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 172,
         active: true,
         address: 'Rodovia BR 282, km 216, Vila Mariza, Lages',
@@ -644,7 +644,7 @@ module.exports = {
       {
         id: 2782,
         name: 'CINEMARK TAMBORÉ',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 119,
         active: true,
         address: 'Av. Piracema, 669 (km 22 Castelo)',
@@ -656,7 +656,7 @@ module.exports = {
       {
         id: 2783,
         name: 'CINEMARK Bragança Garden',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 141,
         active: true,
         address: 'ROD ALKINDAR MONTEIRO JUNQUEIRA KM 53,00, Nº 1013, BRAGANCA GARDEN SHOPPING PISO L01 LUC/SUC 2067',
@@ -668,7 +668,7 @@ module.exports = {
       {
         id: 2784,
         name: 'CINEMARK CAMPINAS',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 60,
         active: true,
         address: 'Av. Iguatemi , 777 - SUC C - 3º Piso L  - Vila Brandina',
@@ -680,7 +680,7 @@ module.exports = {
       {
         id: 2785,
         name: 'CINEMARK GRANJA VIANA',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 330,
         active: true,
         address: 'Rodovia Raposo Tavares, 23.600 - loja 405 pavimento superior - Lagoinha',
@@ -692,7 +692,7 @@ module.exports = {
       {
         id: 2786,
         name: 'CINEMARK GUARULHOS',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 156,
         active: true,
         address: 'R. Engenheiro Camilo Olivetti, 295 - Internacional Shopping Guarulhos - Luc Cinema, Parte A-Piso Sup',
@@ -704,7 +704,7 @@ module.exports = {
       {
         id: 2787,
         name: 'CINEMARK JACAREÍ',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 329,
         active: true,
         address: 'R. Barão de Jacareí, 364',
@@ -716,7 +716,7 @@ module.exports = {
       {
         id: 2788,
         name: 'CINEMARK MOGI DAS CRUZES',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 177,
         active: true,
         address: 'Av. Vereador Narciso Yague Guimarães, 1001 - Jardim Armenia',
@@ -728,7 +728,7 @@ module.exports = {
       {
         id: 2789,
         name: 'CINEMARK Mogi Guaçu',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 178,
         active: true,
         address: 'R. Princesa Isabel, 88 área 02 Boulevard Shopping Mogi Guaçu, Térreo  LUC N E 004 Vila Ricci',
@@ -740,7 +740,7 @@ module.exports = {
       {
         id: 2790,
         name: 'CINEMARK OSASCO',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 114,
         active: true,
         address: 'Av. dos Autonomistas, 1400 - ancora K',
@@ -752,7 +752,7 @@ module.exports = {
       {
         id: 2791,
         name: 'CINEMARK RIBEIRÃO PRETO',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 192,
         active: true,
         address: 'Av. President Kennedy, 1500 - Ancora D - Riberânia',
@@ -764,7 +764,7 @@ module.exports = {
       {
         id: 2792,
         name: 'CINEMARK ABC PLAZA',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 127,
         active: true,
         address: 'Av. Industrial, 600',
@@ -776,7 +776,7 @@ module.exports = {
       {
         id: 2793,
         name: 'CINEMARK ATRIUM',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 127,
         active: true,
         address: 'Rua Giovanni Battista Pirelli, 155 - Atrium Shopping Santo André 2 andar',
@@ -788,7 +788,7 @@ module.exports = {
       {
         id: 2794,
         name: 'CINEMARK SANTOS',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 197,
         active: true,
         address: 'R. Alexandre Martins, 80 - Aparecida',
@@ -800,7 +800,7 @@ module.exports = {
       {
         id: 2795,
         name: 'CINEMARK EXTRA SBC',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 198,
         active: true,
         address: 'R. Garcia Lorca, 301 - Piso Superior',
@@ -812,7 +812,7 @@ module.exports = {
       {
         id: 2796,
         name: 'CINEMARK GOLDEN SQUARE',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 198,
         active: true,
         address: 'Av. Kennedy, 700 - Shopping Golden Square - 4º andar - Luc 401',
@@ -824,7 +824,7 @@ module.exports = {
       {
         id: 2797,
         name: 'CINEMARK SÃO CAETANO',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 109,
         active: true,
         address: 'Al. Terracota, SN - Loja 2041 - Ceramica',
@@ -836,7 +836,7 @@ module.exports = {
       {
         id: 2798,
         name: 'CINEMARK CENTERVALE',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 84,
         active: true,
         address: 'Av. Deputado Benedito Matarazzo, 9403 Lj. T 114',
@@ -848,7 +848,7 @@ module.exports = {
       {
         id: 2799,
         name: 'CINEMARK COLINAS',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 84,
         active: true,
         address: 'Av. São João 2200-Loja 23 NT',
@@ -860,7 +860,7 @@ module.exports = {
       {
         id: 2800,
         name: 'CINEMARK TIETE',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 11,
         active: true,
         address: 'Av. Raimundo Pereira de Magalhães, 1465 - Tietê Plaza Shopping - 2 Pavimento Suc 4000',
@@ -872,7 +872,7 @@ module.exports = {
       {
         id: 2801,
         name: 'CINEMARK LAR CENTER',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 11,
         active: true,
         address: 'Av. Otto Baumgart, 500 - Shopping Lar Center Piso Sup. Lj 320,321,322',
@@ -884,7 +884,7 @@ module.exports = {
       {
         id: 2802,
         name: 'CINEMARK CIDADE DE SP',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 11,
         active: true,
         address: 'Av. Paulista, 1230 - Shopping Cidade de São Paulo 4º andar',
@@ -896,7 +896,7 @@ module.exports = {
       {
         id: 2803,
         name: 'CINEMARK RAPOSO',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 11,
         active: true,
         address: 'Rod Raposo Tavares S/N KM 14,5 SHOPPING RAPOSO PISO DO CINEMA LOJA 1002 - Jd. Boa vista',
@@ -908,7 +908,7 @@ module.exports = {
       {
         id: 2804,
         name: 'CINEMARK CIDADE JARDIM',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 11,
         active: true,
         address: 'Av.  Magalhães de Castro, 12000 - Morumbi Cinemas Shop Cidade Jardim',
@@ -920,7 +920,7 @@ module.exports = {
       {
         id: 2805,
         name: 'CINEMARK BOULEVARD TATUAPÉ',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 11,
         active: true,
         address: 'R.  Gonçalves Crespo, S/N -  LJ 420/421',
@@ -932,7 +932,7 @@ module.exports = {
       {
         id: 2806,
         name: 'CINEMARK SP MARKET',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 11,
         active: true,
         address: 'Av. Das Nações Unidas, 22540 - Bl C',
@@ -944,7 +944,7 @@ module.exports = {
       {
         id: 2807,
         name: 'CINEMARK INTERLAGOS',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 11,
         active: true,
         address: 'Av. Interlagos ,2255 Lj.157 A Vila Inglesa',
@@ -956,7 +956,7 @@ module.exports = {
       {
         id: 2808,
         name: 'CINEMARK ARICANDUVA',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 11,
         active: true,
         address: 'Av. Aricanduva, 5.555 Subsolo Vila Matilde',
@@ -968,7 +968,7 @@ module.exports = {
       {
         id: 2809,
         name: 'CINEMARK PAULISTA',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 11,
         active: true,
         address: 'Rua treze de maio  ,1947- Arco  N  501 - Shopping Pátio Paulista Paraíso',
@@ -980,7 +980,7 @@ module.exports = {
       {
         id: 2810,
         name: 'CINEMARK TUCURUVI',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 11,
         active: true,
         address: 'Av. Dr. Antonio Maria Laet, 566 - Shopping Metro Tucuruvi - Parada Inglesa',
@@ -992,7 +992,7 @@ module.exports = {
       {
         id: 2811,
         name: 'CINEMARK WEST PLAZA',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 11,
         active: true,
         address: 'Avenida Antártica, 408, bloco B',
@@ -1004,7 +1004,7 @@ module.exports = {
       {
         id: 2812,
         name: 'CINEMARK SANTA CRUZ',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 11,
         active: true,
         address: 'R. Domingo de Moraes, 2564 - 3ºpiso - Vila Mariana',
@@ -1016,7 +1016,7 @@ module.exports = {
       {
         id: 2813,
         name: 'CINEMARK SHOPPING D',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 11,
         active: true,
         address: 'Av. Cruzeiro do Sul, 1100  Piso Superior Pte. Pequena',
@@ -1028,7 +1028,7 @@ module.exports = {
       {
         id: 2814,
         name: 'CINEMARK MARKET PLACE',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 11,
         active: true,
         address: 'AV DOUTOR CHUCRI ZAIDAN, Nº 902, Compl.: 1 ANDAR SUC 253',
@@ -1040,7 +1040,7 @@ module.exports = {
       {
         id: 2815,
         name: 'CINEMARK CENTER NORTE',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 11,
         active: true,
         address: 'Travessa Casalbuono, 127 Lj. 503',
@@ -1052,7 +1052,7 @@ module.exports = {
       {
         id: 2816,
         name: 'CINEMARK CENTRAL PLAZA',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 11,
         active: true,
         address: 'Av. Dr. Francisco Mesquita, 1.000 - Ancora D',
@@ -1064,7 +1064,7 @@ module.exports = {
       {
         id: 2817,
         name: 'CINEMARK TATUAPÉ',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 11,
         active: true,
         address: 'R. Domingos Agostim, 91',
@@ -1076,7 +1076,7 @@ module.exports = {
       {
         id: 2818,
         name: 'CINEMARK ELDORADO',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 11,
         active: true,
         address: 'Av. Rebouças, 3970 Lj. 410 Pinheiros',
@@ -1088,7 +1088,7 @@ module.exports = {
       {
         id: 2819,
         name: 'CINEMARK HIGIENÓPOLIS',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 11,
         active: true,
         address: 'Av. Higienópolis, 646',
@@ -1100,7 +1100,7 @@ module.exports = {
       {
         id: 2820,
         name: 'CINEMARK VILLA LOBOS',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 11,
         active: true,
         address: 'Av. das Nações Unidas, 4.777 - Piso Lazer',
@@ -1112,7 +1112,7 @@ module.exports = {
       {
         id: 2821,
         name: 'CINEMARK MOOCA',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 11,
         active: true,
         address: 'Rua Capitão Pacheco e Chaves, 313 - LUC 2026 Vila Prudente',
@@ -1124,7 +1124,7 @@ module.exports = {
       {
         id: 2822,
         name: 'CINEMARK IGUATEMI',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 11,
         active: true,
         address: 'Av. Brigadeiro Faria Lima, 2232 - Loja Gr 8 / Piso 8 Jd. Paulistano',
@@ -1136,7 +1136,7 @@ module.exports = {
       {
         id: 2823,
         name: 'CINEMARK VIA VALE TAUBATE',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 208,
         active: true,
         address: 'Av. Dom Pedro I, 7181 - Via Vale Garden Shopping - 2º andar - Luc/Suc 216',
@@ -1148,7 +1148,7 @@ module.exports = {
       {
         id: 2824,
         name: 'CINEMARK ARACAJU',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 39,
         active: true,
         address: 'Av. Ministro Geraldo Barreto Sobral, 215',
@@ -1160,7 +1160,7 @@ module.exports = {
       {
         id: 2825,
         name: 'CINEMARK RIOMAR',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 39,
         active: true,
         address: 'Rua Delmiro Gouveia, s/n – loja 268/269',
@@ -1172,7 +1172,7 @@ module.exports = {
       {
         id: 2826,
         name: 'CINEMARK CAPIM DOURADO',
-        establishmentId: 753,
+        establishment_id: 753,
         cityId: 313,
         active: true,
         address: 'Av. 107 Norte Avenida Juscelino Kubitschek - Plano Diretor Norte',
@@ -1184,7 +1184,7 @@ module.exports = {
       {
         id: 2827,
         name: 'CINESYSTEM Arapiraca Garden Shopping',
-        establishmentId: 1115,
+        establishment_id: 1115,
         cityId: 48,
         active: true,
         address: 'R. José Jaílson Nunes, 493 - Santa Edwiges',
@@ -1196,7 +1196,7 @@ module.exports = {
       {
         id: 2828,
         name: 'CINESYSTEM Parque Shopping Maceió',
-        establishmentId: 1115,
+        establishment_id: 1115,
         cityId: 81,
         active: true,
         address: 'Av. Comendador Gustavo Paiva, 5945',
@@ -1208,7 +1208,7 @@ module.exports = {
       {
         id: 2829,
         name: 'CINESYSTEM Boulevard Shopping Vila Velha',
-        establishmentId: 1115,
+        establishment_id: 1115,
         cityId: 24,
         active: true,
         address: 'Rod. do Sol, 5000  - Itaparica',
@@ -1220,7 +1220,7 @@ module.exports = {
       {
         id: 2830,
         name: 'CINESYSTEM Imperatriz Shopping',
-        establishmentId: 1115,
+        establishment_id: 1115,
         cityId: 337,
         active: true,
         address: 'Rodovia Br 010 100',
@@ -1232,7 +1232,7 @@ module.exports = {
       {
         id: 2831,
         name: 'CINESYSTEM Rio Anil Shopping',
-        establishmentId: 1115,
+        establishment_id: 1115,
         cityId: 90,
         active: true,
         address: 'Av. São Luís Rei de França, 8 - Turu',
@@ -1244,7 +1244,7 @@ module.exports = {
       {
         id: 2832,
         name: 'CINESYSTEM Rio Tapajós Shopping',
-        establishmentId: 1115,
+        establishment_id: 1115,
         cityId: 338,
         active: true,
         address: 'Av Engenho Fernando Guilho S/N Santa Terezinha',
@@ -1256,7 +1256,7 @@ module.exports = {
       {
         id: 2833,
         name: 'CINESYSTEM Shopping Metrópole Ananindeua',
-        establishmentId: 1115,
+        establishment_id: 1115,
         cityId: 339,
         active: true,
         address: 'Rodovia BR 316, KM 4, Nº 4500',
@@ -1268,7 +1268,7 @@ module.exports = {
       {
         id: 2834,
         name: 'CINESYSTEM Hipermercado Condor Paranaguá',
-        establishmentId: 1115,
+        establishment_id: 1115,
         cityId: 183,
         active: true,
         address: 'R. Manoel Pereira, 1615 - Raia',
@@ -1280,7 +1280,7 @@ module.exports = {
       {
         id: 2835,
         name: 'CINESYSTEM Londrina Norte Shopping',
-        establishmentId: 1115,
+        establishment_id: 1115,
         cityId: 332,
         active: true,
         address: 'R. Américo Deolindo Garla, 224 - Pacaembu',
@@ -1292,7 +1292,7 @@ module.exports = {
       {
         id: 2836,
         name: 'CINESYSTEM Shopping Cidade ',
-        establishmentId: 1115,
+        establishment_id: 1115,
         cityId: 123,
         active: true,
         address: 'Av. Mal. Floriano Peixoto, 4984',
@@ -1304,7 +1304,7 @@ module.exports = {
       {
         id: 2837,
         name: 'CINESYSTEM Shopping Curitiba',
-        establishmentId: 1115,
+        establishment_id: 1115,
         cityId: 123,
         active: true,
         address: 'R. Brg. Franco, 2300',
@@ -1316,7 +1316,7 @@ module.exports = {
       {
         id: 2838,
         name: 'CINESYSTEM Ventura Shopping de Descontos',
-        establishmentId: 1115,
+        establishment_id: 1115,
         cityId: 123,
         active: true,
         address: 'R. Itacolomi, 292',
@@ -1328,7 +1328,7 @@ module.exports = {
       {
         id: 2839,
         name: 'CINESYSTEM Paulista North Way',
-        establishmentId: 1115,
+        establishment_id: 1115,
         cityId: 331,
         active: true,
         address: 'Rodovia 15 - KM 16,5, nº242 - Centro',
@@ -1340,7 +1340,7 @@ module.exports = {
       {
         id: 2840,
         name: 'CINESYSTEM Américas Shopping',
-        establishmentId: 1115,
+        establishment_id: 1115,
         cityId: 7,
         active: true,
         address: 'Av. das Américas, 15500 - Recreio dos Bandeirantes',
@@ -1352,7 +1352,7 @@ module.exports = {
       {
         id: 2841,
         name: 'CINESYSTEM Bangu Shopping',
-        establishmentId: 1115,
+        establishment_id: 1115,
         cityId: 7,
         active: true,
         address: 'Rua Fonseca, 240 - Bangu',
@@ -1364,7 +1364,7 @@ module.exports = {
       {
         id: 2842,
         name: 'CINESYSTEM Ilha Plaza Shopping',
-        establishmentId: 1115,
+        establishment_id: 1115,
         cityId: 7,
         active: true,
         address: 'Av. Maestro Paulo e Silva, 400 - Jardim Carioca',
@@ -1376,7 +1376,7 @@ module.exports = {
       {
         id: 2843,
         name: 'CINESYSTEM Itaboraí Plaza Shopping',
-        establishmentId: 1115,
+        establishment_id: 1115,
         cityId: 126,
         active: true,
         address: 'Rod. Gov. Mário Covas, 101 - Três Pontes',
@@ -1388,7 +1388,7 @@ module.exports = {
       {
         id: 2845,
         name: 'CINESYSTEM Recreio Shopping',
-        establishmentId: 1115,
+        establishment_id: 1115,
         cityId: 7,
         active: true,
         address: 'Av. das Américas, 19019 -  Recreio dos Bandeirantes',
@@ -1400,7 +1400,7 @@ module.exports = {
       {
         id: 2846,
         name: 'CINESYSTEM Via Brasil Shopping',
-        establishmentId: 1115,
+        establishment_id: 1115,
         cityId: 7,
         active: true,
         address: 'R. Itapera, 500 - Irajá',
@@ -1412,7 +1412,7 @@ module.exports = {
       {
         id: 2847,
         name: 'CINESYSTEM Bourbon Shopping ',
-        establishmentId: 1115,
+        establishment_id: 1115,
         cityId: 203,
         active: true,
         address: 'R. Primeiro de Março, 821 - Centro',
@@ -1424,7 +1424,7 @@ module.exports = {
       {
         id: 2848,
         name: 'CINESYSTEM Praça Rio Grande Shopping Center',
-        establishmentId: 1115,
+        establishment_id: 1115,
         cityId: 196,
         active: true,
         address: 'Rua Jockey Clube, nº 155',
@@ -1436,7 +1436,7 @@ module.exports = {
       {
         id: 2849,
         name: 'CINESYSTEM Shopping Iguatemi ',
-        establishmentId: 1115,
+        establishment_id: 1115,
         cityId: 72,
         active: true,
         address: 'Av. Madre Benvenuta, 687 Santa Mônica',
@@ -1448,7 +1448,7 @@ module.exports = {
       {
         id: 2850,
         name: 'CINESYSTEM Litoral Plaza Shopping',
-        establishmentId: 1115,
+        establishment_id: 1115,
         cityId: 189,
         active: true,
         address: 'Av. Ayrton Senna da Silva, 1511 - Xixová',
@@ -1460,7 +1460,7 @@ module.exports = {
       {
         id: 2851,
         name: 'CINESYSTEM Morumbi Town',
-        establishmentId: 1115,
+        establishment_id: 1115,
         cityId: 11,
         active: true,
         address: 'Av. Giovanni Gronchi, 5930 - Vila Andrade',
@@ -1472,7 +1472,7 @@ module.exports = {
       {
         id: 2852,
         name: 'CINESYSTEM Shopping Hortolândia',
-        establishmentId: 1115,
+        establishment_id: 1115,
         cityId: 328,
         active: true,
         address: 'R. José Camilo de Camargo, 5 - Lot. Remanso Campineiro',
@@ -1484,7 +1484,7 @@ module.exports = {
       {
         id: 37480,
         name: 'CINESYSTEM Ilha Governador RJ',
-        establishmentId: 1115,
+        establishment_id: 1115,
         cityId: 947,
         active: true,
         address: 'Av. Maestro Paulo e Silva, 400 - Ilha do Governador, RJ',
@@ -1496,7 +1496,7 @@ module.exports = {
       {
         id: 7678,
         name: 'SUMAÚMA PARK SHOPPING',
-        establishmentId: 3091,
+        establishment_id: 3091,
         cityId: 93,
         active: true,
         address: 'Avenida Noel Nutels, 1762 - Loja 4014, Cidade Nova',
@@ -1508,7 +1508,7 @@ module.exports = {
       {
         id: 7679,
         name: 'ORIENT SHOPPING DA BAHIA',
-        establishmentId: 3091,
+        establishment_id: 3091,
         cityId: 5,
         active: true,
         address: 'Av. Tancredo Neves, 148 Loja 26 QZ - 3 SCI, Pituba',
@@ -1520,7 +1520,7 @@ module.exports = {
       {
         id: 7680,
         name: 'ORIENT SHOPPING PARALELA',
-        establishmentId: 3091,
+        establishment_id: 3091,
         cityId: 5,
         active: true,
         address: 'Av. Luiz Viana Filho, 8544 QD A PISO L/2 LOJA 222, Paralela',
@@ -1532,7 +1532,7 @@ module.exports = {
       {
         id: 7681,
         name: 'ORIENT SHOPPING BARRA',
-        establishmentId: 3091,
+        establishment_id: 3091,
         cityId: 5,
         active: true,
         address: 'Av. Centenário, 2992, Chame-Chame',
@@ -1544,7 +1544,7 @@ module.exports = {
       {
         id: 7682,
         name: 'KINOPLEX IGUATEMI FORTALEZA',
-        establishmentId: 3091,
+        establishment_id: 3091,
         cityId: 79,
         active: true,
         address: 'Washington Soares, 85 loja 600, Cocó',
@@ -1556,7 +1556,7 @@ module.exports = {
       {
         id: 7683,
         name: 'SHOPPING PARANGABA',
-        establishmentId: 3091,
+        establishment_id: 3091,
         cityId: 79,
         active: true,
         address: 'Av. Germano Frank, 300 nivel 3 loja 517, Parangaba',
@@ -1568,7 +1568,7 @@ module.exports = {
       {
         id: 7684,
         name: 'KINOPLEX SHOPPING DA ILHA',
-        establishmentId: 3091,
+        establishment_id: 3091,
         cityId: 90,
         active: true,
         address: 'Av. Daniel de La Touche, 987, Cohama',
@@ -1580,7 +1580,7 @@ module.exports = {
       {
         id: 7685,
         name: 'BOSQUE DOS IPÊS',
-        establishmentId: 3091,
+        establishment_id: 3091,
         cityId: 54,
         active: true,
         address: 'Avenida Cônsul Assaf Trad, 4634, Novos Estados',
@@ -1592,7 +1592,7 @@ module.exports = {
       {
         id: 7686,
         name: 'KINOPLEX INDEPENDÊNCIA',
-        establishmentId: 3091,
+        establishment_id: 3091,
         cityId: 6,
         active: true,
         address: 'Av. Independência, 3600 - nível L2, São Mateus',
@@ -1604,7 +1604,7 @@ module.exports = {
       {
         id: 7687,
         name: 'BOSQUE GRÃO-PARÁ',
-        establishmentId: 3091,
+        establishment_id: 3091,
         cityId: 83,
         active: true,
         address: 'Avenida Centenário, 1052, Val de Caes',
@@ -1616,7 +1616,7 @@ module.exports = {
       {
         id: 7688,
         name: 'ESTAÇÃO',
-        establishmentId: 3091,
+        establishment_id: 3091,
         cityId: 123,
         active: true,
         address: 'Rua Sete de Setembro, 2775 Loja C-01, Batel',
@@ -1628,7 +1628,7 @@ module.exports = {
       {
         id: 7689,
         name: 'PALADIUM',
-        establishmentId: 3091,
+        establishment_id: 3091,
         cityId: 123,
         active: true,
         address: 'Av. Pres. Kennedy, 4121 - loja 4001, Portão',
@@ -1640,7 +1640,7 @@ module.exports = {
       {
         id: 7690,
         name: 'KINOPLEX RECIFE SHOPPING',
-        establishmentId: 3091,
+        establishment_id: 3091,
         cityId: 40,
         active: true,
         address: 'Av .Padre Carapuceiro, 777 Loja BV 174, Boa Viagem',
@@ -1652,7 +1652,7 @@ module.exports = {
       {
         id: 7691,
         name: 'KINOPLEX SHOPPING TACARUNA',
-        establishmentId: 3091,
+        establishment_id: 3091,
         cityId: 40,
         active: true,
         address: 'Av. Gov. Agamenom Magalhães, 153, Santo Amaro',
@@ -1664,7 +1664,7 @@ module.exports = {
       {
         id: 7692,
         name: 'KINOPLEX PLAZA CASA FORTE SHOPPING',
-        establishmentId: 3091,
+        establishment_id: 3091,
         cityId: 40,
         active: true,
         address: 'R. Doutor João Santos Filho, 255, Paranamirim',
@@ -1676,7 +1676,7 @@ module.exports = {
       {
         id: 7693,
         name: 'KINOPLEX DE LUX SHOPPING RECIFE',
-        establishmentId: 3091,
+        establishment_id: 3091,
         cityId: 40,
         active: true,
         address: 'Av .Padre Carapuceiro, 777 Loja BV 231 Piso Bruno Veloso, Boa Viagem',
@@ -1688,7 +1688,7 @@ module.exports = {
       {
         id: 7694,
         name: 'NEW YORK CITY CENTER',
-        establishmentId: 3091,
+        establishment_id: 3091,
         cityId: 7,
         active: true,
         address: 'Av. Das Américas, 5000, Barra da Tijuca',
@@ -1700,7 +1700,7 @@ module.exports = {
       {
         id: 7695,
         name: 'KINOPLEX NORTESHOPPING',
-        establishmentId: 3091,
+        establishment_id: 3091,
         cityId: 7,
         active: true,
         address: 'Av. Dom Helder Câmara, 5080, Del Castilho',
@@ -1712,7 +1712,7 @@ module.exports = {
       {
         id: 7696,
         name: 'PARKSHOPPING CAMPO GRANDE',
-        establishmentId: 3091,
+        establishment_id: 3091,
         cityId: 7,
         active: true,
         address: 'Est. do Monteiro, 1200, Campo Grande',
@@ -1724,7 +1724,7 @@ module.exports = {
       {
         id: 7697,
         name: 'PARKSHOPPING CANOAS',
-        establishmentId: 3091,
+        establishment_id: 3091,
         cityId: 105,
         active: true,
         address: 'Avenida Farroupilha, 4545 - Pavº L3 - Loja 3004, Marechal Rondon',
@@ -1736,7 +1736,7 @@ module.exports = {
       {
         id: 7698,
         name: 'RIBEIRÃO',
-        establishmentId: 3091,
+        establishment_id: 3091,
         cityId: 192,
         active: true,
         address: 'Av.Coronel Fernando Ferreira Leite,1540, JD. California',
@@ -1748,7 +1748,7 @@ module.exports = {
       {
         id: 7699,
         name: 'JARDIM SUL',
-        establishmentId: 3091,
+        establishment_id: 3091,
         cityId: 11,
         active: true,
         address: 'Av. Giovanni Gronchi, 5819/501 a 511M, Morumbi',
@@ -1760,7 +1760,7 @@ module.exports = {
       {
         id: 7700,
         name: 'ANÁLIA FRANCO',
-        establishmentId: 3091,
+        establishment_id: 3091,
         cityId: 11,
         active: true,
         address: 'Av. Regente Feijó, 1759, Anália Franco',
@@ -1772,7 +1772,7 @@ module.exports = {
       {
         id: 7701,
         name: 'SANTANA PARQUE SHOPPING',
-        establishmentId: 3091,
+        establishment_id: 3091,
         cityId: 11,
         active: true,
         address: 'R. Conselheiro Moreira de Barros, 2780, Lauzane Paulista',
@@ -1784,7 +1784,7 @@ module.exports = {
       {
         id: 7647,
         name: 'Shopping Maceio',
-        establishmentId: 3092,
+        establishment_id: 3092,
         cityId: 81,
         active: true,
         address: 'Av. Comendador Gustavo Paiva, 2990 Lj.E',
@@ -1796,7 +1796,7 @@ module.exports = {
       {
         id: 7648,
         name: 'Shopping Amazonas',
-        establishmentId: 3092,
+        establishment_id: 3092,
         cityId: 93,
         active: true,
         address: 'Avenida Djalma Batista, 482 - Lucs 223, 224, 225, 226 E 227 - Bairro: Parque 10 De Novembro',
@@ -1808,7 +1808,7 @@ module.exports = {
       {
         id: 7649,
         name: 'North Shopping',
-        establishmentId: 3092,
+        establishment_id: 3092,
         cityId: 79,
         active: true,
         address: 'Av.Bezerra De Menezes 2450 3 A.L.350/355',
@@ -1820,7 +1820,7 @@ module.exports = {
       {
         id: 7650,
         name: 'Boulevard',
-        establishmentId: 3092,
+        establishment_id: 3092,
         cityId: 43,
         active: true,
         address: 'St Setor Terminal Norte, Conj.J - Lj.T83',
@@ -1832,7 +1832,7 @@ module.exports = {
       {
         id: 7651,
         name: 'Park Shopping',
-        establishmentId: 3092,
+        establishment_id: 3092,
         cityId: 43,
         active: true,
         address: 'Sai/Sudo Area 6580 Loja 273',
@@ -1844,7 +1844,7 @@ module.exports = {
       {
         id: 7652,
         name: 'Patio Brasil',
-        establishmentId: 3092,
+        establishment_id: 3092,
         cityId: 43,
         active: true,
         address: 'Pst Scs Qd 07 Bl.A Lj3P 3Pav Parte Lj 3Pa',
@@ -1856,7 +1856,7 @@ module.exports = {
       {
         id: 7653,
         name: 'Terraço Shopping',
-        establishmentId: 3092,
+        establishment_id: 3092,
         cityId: 43,
         active: true,
         address: 'Shc, Entrequadras 2/8-L5 Salão Com. 253',
@@ -1868,7 +1868,7 @@ module.exports = {
       {
         id: 7654,
         name: 'Shopping Praia Daf Costa',
-        establishmentId: 3092,
+        establishment_id: 3092,
         cityId: 24,
         active: true,
         address: 'Av.Dr.Olivio Lira, 353 Suc 301 Piso L3',
@@ -1880,7 +1880,7 @@ module.exports = {
       {
         id: 7655,
         name: 'Shopping Goiânia',
-        establishmentId: 3092,
+        establishment_id: 3092,
         cityId: 34,
         active: true,
         address: 'Av.T-10 1300 Qd-A L.1115 Piso P3 Setor Bueno',
@@ -1892,7 +1892,7 @@ module.exports = {
       {
         id: 7656,
         name: 'Shopping Uberaba',
-        establishmentId: 3092,
+        establishment_id: 3092,
         cityId: 212,
         active: true,
         address: 'Avenida Leopoldino De Oliveira, 5100',
@@ -1904,7 +1904,7 @@ module.exports = {
       {
         id: 7657,
         name: 'Shopping Boa Vista',
-        establishmentId: 3092,
+        establishment_id: 3092,
         cityId: 40,
         active: true,
         address: 'Rua Jose De Alencar, 105 Loja 202',
@@ -1916,7 +1916,7 @@ module.exports = {
       {
         id: 7658,
         name: 'West Shopping',
-        establishmentId: 3092,
+        establishment_id: 3092,
         cityId: 54,
         active: true,
         address: 'Est.Do Mendanha, 550 Lj. 401 E Mezanino',
@@ -1928,7 +1928,7 @@ module.exports = {
       {
         id: 7659,
         name: 'Shopping Avenida',
-        establishmentId: 3092,
+        establishment_id: 3092,
         cityId: 393,
         active: true,
         address: 'Avenida 28 De Março, 574 Loja 145',
@@ -1940,7 +1940,7 @@ module.exports = {
       {
         id: 7660,
         name: 'Shopping Bay Market',
-        establishmentId: 3092,
+        establishment_id: 3092,
         cityId: 52,
         active: true,
         address: 'R.Visc.Do Rio Branco 360 Ljs 326/329',
@@ -1952,7 +1952,7 @@ module.exports = {
       {
         id: 7661,
         name: 'Iguaçu Top',
-        establishmentId: 3092,
+        establishment_id: 3092,
         cityId: 55,
         active: true,
         address: 'Av.Gov. Roberto Silveira, 540 - La 401',
@@ -1964,7 +1964,7 @@ module.exports = {
       {
         id: 7662,
         name: 'Shopping Nova Iguaçu',
-        establishmentId: 3092,
+        establishment_id: 3092,
         cityId: 55,
         active: true,
         address: 'Avenida Abilio Augusto Távora, 1111, Loja 5001 - Bairro Da Luz',
@@ -1976,7 +1976,7 @@ module.exports = {
       {
         id: 7663,
         name: 'Cine Odeon',
-        establishmentId: 3092,
+        establishment_id: 3092,
         cityId: 7,
         active: true,
         address: 'Prc Floriano,7 Lojas A, B, C - Parte(S) Centro ',
@@ -1988,7 +1988,7 @@ module.exports = {
       {
         id: 7664,
         name: 'Cine Carioca Méier',
-        establishmentId: 3092,
+        establishment_id: 3092,
         cityId: 7,
         active: true,
         address: 'Rua Dias Da Cruz, 170 - Meier',
@@ -2000,7 +2000,7 @@ module.exports = {
       {
         id: 7665,
         name: 'Fashion Mall',
-        establishmentId: 3092,
+        establishment_id: 3092,
         cityId: 7,
         active: true,
         address: 'Estrada Da Gávea, 899 Pav.02 Ljs.220/222',
@@ -2012,7 +2012,7 @@ module.exports = {
       {
         id: 7666,
         name: 'Madureira Shopping',
-        establishmentId: 3092,
+        establishment_id: 3092,
         cityId: 7,
         active: true,
         address: 'Estrada Do Portela,222 Lj 408',
@@ -2024,7 +2024,7 @@ module.exports = {
       {
         id: 7667,
         name: 'Shoppinh Nova América',
-        establishmentId: 3092,
+        establishment_id: 3092,
         cityId: 7,
         active: true,
         address: 'Av.Pastor Martin Luther King Jr,126-Ec81',
@@ -2036,7 +2036,7 @@ module.exports = {
       {
         id: 7668,
         name: 'Galeria Edificio São Luiz',
-        establishmentId: 3092,
+        establishment_id: 3092,
         cityId: 7,
         active: true,
         address: 'Rua Do Catete, 311, Loja 203/204',
@@ -2048,7 +2048,7 @@ module.exports = {
       {
         id: 7669,
         name: 'Shopping Boulevard',
-        establishmentId: 3092,
+        establishment_id: 3092,
         cityId: 7,
         active: true,
         address: 'R.Barao Sao Francisco 236 Lj.301 - Vila Isabel',
@@ -2060,7 +2060,7 @@ module.exports = {
       {
         id: 7670,
         name: 'Shopping Leblon',
-        establishmentId: 3092,
+        establishment_id: 3092,
         cityId: 7,
         active: true,
         address: 'Av. Afranio De Melo Franco,290 Loja 401 - Leblon',
@@ -2072,7 +2072,7 @@ module.exports = {
       {
         id: 7671,
         name: 'Shopping Tijuca',
-        establishmentId: 3092,
+        establishment_id: 3092,
         cityId: 7,
         active: true,
         address: 'Av Maracana, 987, Piso L10 - Suc 10001 - Tijuca',
@@ -2084,7 +2084,7 @@ module.exports = {
       {
         id: 7672,
         name: 'Via Parque',
-        establishmentId: 3092,
+        establishment_id: 3092,
         cityId: 7,
         active: true,
         address: 'Av. Ayrton Senna, 3000 - Loja 2068 A - Andar 2 - Barra Datijuca',
@@ -2096,7 +2096,7 @@ module.exports = {
       {
         id: 7673,
         name: 'Shopping Grande Rio',
-        establishmentId: 3092,
+        establishment_id: 3092,
         cityId: 223,
         active: true,
         address: 'Estr.Munic.São João De Meriti,111 Lj.412',
@@ -2108,7 +2108,7 @@ module.exports = {
       {
         id: 7674,
         name: 'Shopping Dom Pedro',
-        establishmentId: 3092,
+        establishment_id: 3092,
         cityId: 60,
         active: true,
         address: 'Av. Guilherme Campos Nº 500 Euc-A18',
@@ -2120,7 +2120,7 @@ module.exports = {
       {
         id: 7675,
         name: 'Shopping Osasco',
-        establishmentId: 3092,
+        establishment_id: 3092,
         cityId: 114,
         active: true,
         address: 'Av. Dos Autonomistas, 1828 - 3º Piso L1',
@@ -2132,7 +2132,7 @@ module.exports = {
       {
         id: 7676,
         name: 'Itaim',
-        establishmentId: 3092,
+        establishment_id: 3092,
         cityId: 11,
         active: true,
         address: 'Rua Joaquim Floriano, 462 Loja 29',
@@ -2144,7 +2144,7 @@ module.exports = {
       {
         id: 7677,
         name: 'Shopping Vila Olimpia',
-        establishmentId: 3092,
+        establishment_id: 3092,
         cityId: 11,
         active: true,
         address: 'Rua Olimpiadas, 360 Ljs 603/604',
@@ -2156,7 +2156,7 @@ module.exports = {
       {
         id: 12532,
         name: 'Amapá Garden',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 308,
         active: true,
         address: 'Rodovia Juscelino Kubitschek 2.141 km 2, nº - Universidade',
@@ -2168,7 +2168,7 @@ module.exports = {
       {
         id: 12539,
         name: 'Bela Vista',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 5,
         active: true,
         address: 'R. dos Rodoviários, 01 - Cabula',
@@ -2180,7 +2180,7 @@ module.exports = {
       {
         id: 12540,
         name: 'Boulevard Bauru',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 216,
         active: true,
         address: 'R. Marcondes Salgado, 11-39 - Chácara das Flores',
@@ -2192,7 +2192,7 @@ module.exports = {
       {
         id: 12541,
         name: 'Boulevard Belém',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 83,
         active: true,
         address: 'Av. Visc. de Souza Franco, 776 - 501 - Reduto',
@@ -2204,7 +2204,7 @@ module.exports = {
       {
         id: 12542,
         name: 'Campinas Shopping',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 60,
         active: true,
         address: 'Rua Jacy Teixeira de Camargo, 940 - Jardim do Lago',
@@ -2216,7 +2216,7 @@ module.exports = {
       {
         id: 12543,
         name: 'Center Shopping Uberlândia',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 51,
         active: true,
         address: 'Av. João Naves de Ávila, 1331 - 310 - Tibery',
@@ -2228,7 +2228,7 @@ module.exports = {
       {
         id: 12544,
         name: 'Shopping Cerrado',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 34,
         active: true,
         address: 'Piso 2 Shopping Cerrado, Av. Anhanguera, 10790 - Aeroviario',
@@ -2240,7 +2240,7 @@ module.exports = {
       {
         id: 12545,
         name: 'Continente Shopping',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 201,
         active: true,
         address: 'BR-101, KM 210 - Distrito Industrial',
@@ -2252,7 +2252,7 @@ module.exports = {
       {
         id: 12546,
         name: 'Shopping Estação',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 1,
         active: true,
         address: 'Av. Cristiano Machado, 11833 - Vila Cloris',
@@ -2264,7 +2264,7 @@ module.exports = {
       {
         id: 12547,
         name: 'Estação Cuiabá',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 334,
         active: true,
         address: 'Av. Miguel Sutil, 9300 - L66 - Duque de Caxias',
@@ -2276,7 +2276,7 @@ module.exports = {
       {
         id: 12549,
         name: 'Shopping Guararapes',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 232,
         active: true,
         address: 'Av. Barreto de Menezes, 800 - Piedade',
@@ -2288,7 +2288,7 @@ module.exports = {
       {
         id: 12550,
         name: 'Iguatemi Alphaville',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 119,
         active: true,
         address: 'Al. Rio Negro, 111 - Alphaville Industrial',
@@ -2300,7 +2300,7 @@ module.exports = {
       {
         id: 12551,
         name: 'Shopping Iguatemi Esplanada',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 80,
         active: true,
         address: 'Avenida Gisele Constantino Alameda Iguatemi esplanada, 1850 Shop 300 - South Wing - Ground Floor - Parque Bela Vista',
@@ -2312,7 +2312,7 @@ module.exports = {
       {
         id: 12552,
         name: 'Shopping Iguatemi Ribeirão Preto',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 192,
         active: true,
         address: 'Av. Luiz Eduardo Toledo Prado, 900 - Vila do Golfe',
@@ -2324,7 +2324,7 @@ module.exports = {
       {
         id: 12553,
         name: 'Shopping Iguatemi São José do Rio Preto',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 202,
         active: true,
         address: 'Av. Pres. Juscelino K. de Oliveira, 5000 - Res. Eco Village I,',
@@ -2336,7 +2336,7 @@ module.exports = {
       {
         id: 12554,
         name: 'Itaquá Garden Shopping',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 457,
         active: true,
         address: 'Estr. Mun. do Mandi, 1205 - Jardim Campo Limpo',
@@ -2348,7 +2348,7 @@ module.exports = {
       {
         id: 12555,
         name: 'Shopping Jardim Oriente',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 84,
         active: true,
         address: 'R. Andorra, 500 - Jardim America',
@@ -2360,7 +2360,7 @@ module.exports = {
       {
         id: 12558,
         name: 'Jockey Plaza Shopping',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 123,
         active: true,
         address: 'Av. Victor Ferreira do Amaral, 2635 - Tarumã',
@@ -2372,7 +2372,7 @@ module.exports = {
       {
         id: 12559,
         name: 'JP Porto Alegre',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 67,
         active: true,
         address: 'Av. João Pessoa, 1831 - 311 - Azenha',
@@ -2384,7 +2384,7 @@ module.exports = {
       {
         id: 12560,
         name: 'Jundiaí Shopping',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 110,
         active: true,
         address: 'Avenida 9 de Julho 3333 Loja 207 - 304 - Anhangabaú',
@@ -2396,7 +2396,7 @@ module.exports = {
       {
         id: 12561,
         name: 'Mais Shopping -Largo Treze',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 11,
         active: true,
         address: 'R. Amador Bueno, 229 - Santo Amaro',
@@ -2408,7 +2408,7 @@ module.exports = {
       {
         id: 12562,
         name: 'Manaíra Shopping',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 96,
         active: true,
         address: 'Av. Gov. Flávio Ribeiro Coutinho, 805 - Manaíra',
@@ -2420,7 +2420,7 @@ module.exports = {
       {
         id: 12563,
         name: 'Millenium Shopping',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 93,
         active: true,
         address: 'Av. Djalma Batista, 1661 - Parque Dez de Novembro',
@@ -2432,7 +2432,7 @@ module.exports = {
       {
         id: 12564,
         name: 'Mangabeira Shopping',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 96,
         active: true,
         address: 'Av. Hilton Souto Maior - Mangabeira',
@@ -2444,7 +2444,7 @@ module.exports = {
       {
         id: 12565,
         name: 'Shopping Mall',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 398,
         active: true,
         address: 'Rua dos Tucunarés, 500 - Jardim Maria Martha',
@@ -2456,7 +2456,7 @@ module.exports = {
       {
         id: 12566,
         name: 'Metrô Itaquera -',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 11,
         active: true,
         address: 'Av. José Pinheiro Borges, s/n - Itaquera',
@@ -2468,7 +2468,7 @@ module.exports = {
       {
         id: 12567,
         name: 'Millennium Shopping',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 93,
         active: true,
         address: 'Av. Djalma Batista, 1661, Piso G3, Loja 02 - Chapada',
@@ -2480,7 +2480,7 @@ module.exports = {
       {
         id: 12568,
         name: 'Moxuara',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 89,
         active: true,
         address: 'Rodovia BR-262, Km 5, 6555, salão comercial NE 401A , Piso I4 - Campo Grande',
@@ -2492,7 +2492,7 @@ module.exports = {
       {
         id: 12569,
         name: 'Natal Shopping',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 56,
         active: true,
         address: 'Av. Sen. Salgado Filho, 2234 - Loja 400 - Candelária',
@@ -2504,7 +2504,7 @@ module.exports = {
       {
         id: 12570,
         name: 'Norte Shopping Blumenau',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 140,
         active: true,
         address: 'Rodovia BR 470, s/n - Sala Comercial 49 a 54 - Salto Norte',
@@ -2516,7 +2516,7 @@ module.exports = {
       {
         id: 12571,
         name: 'Norte Sul Plaza Shopping',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 309,
         active: true,
         address: 'Av. Pres. Ernesto Geisel, 2300 - Jardim Joquei Club',
@@ -2528,7 +2528,7 @@ module.exports = {
       {
         id: 12572,
         name: 'North Shopping Jóquei',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 79,
         active: true,
         address: 'Av. Lineu Machado, 419 - Jóquei Clube',
@@ -2540,7 +2540,7 @@ module.exports = {
       {
         id: 12573,
         name: 'Parque Barueri',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 119,
         active: true,
         address: 'Rua Gen. de Divisão Pedro Rodrigues da Silva, 400 - Nova Aldeinha',
@@ -2552,7 +2552,7 @@ module.exports = {
       {
         id: 12574,
         name: 'Ourinhos Plaza',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 600,
         active: true,
         address: 'Rua Cardoso Ribeiro, 970 - Vila Boa Esperança',
@@ -2564,7 +2564,7 @@ module.exports = {
       {
         id: 12575,
         name: 'Parque Shopping Belém',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 83,
         active: true,
         address: 'Av. Augusto Montenegro, 4300 - 2026 - Parque Verde',
@@ -2576,7 +2576,7 @@ module.exports = {
       {
         id: 12576,
         name: 'Parque Shopping Maia',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 156,
         active: true,
         address: 'Av. Bartolomeu de Carlos, 230 - Jardim Flor da Montanha',
@@ -2588,7 +2588,7 @@ module.exports = {
       {
         id: 12577,
         name: 'Partage Norte Shopping',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 56,
         active: true,
         address: 'Av. Dr. João Medeiros Filho, 2395 - loja 230 A - Potengi',
@@ -2600,7 +2600,7 @@ module.exports = {
       {
         id: 12579,
         name: 'Patteo Olinda',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 408,
         active: true,
         address: 'Rua Eduardo de Morais, s/n - Casa Caiada',
@@ -2612,7 +2612,7 @@ module.exports = {
       {
         id: 12580,
         name: 'Plaza Avenida Shopping',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 202,
         active: true,
         address: 'Av. José Munia, 4775 - 3216-6606 - Jardim Redentor',
@@ -2624,7 +2624,7 @@ module.exports = {
       {
         id: 12581,
         name: 'Plaza Carapicuíba',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 448,
         active: true,
         address: 'Estrada Ernestina Vieira, 149 Loja 301 - Piso 3 - Vila Silviania',
@@ -2636,7 +2636,7 @@ module.exports = {
       {
         id: 12582,
         name: 'Ponta Negra',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 93,
         active: true,
         address: 'Av. Coronel Teixeira, 5705 - Ponta Negra',
@@ -2648,7 +2648,7 @@ module.exports = {
       {
         id: 12583,
         name: 'Praça Nova Santa Maria',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 69,
         active: true,
         address: 'BR-287, 2885 - Loja 1049 - Patronato',
@@ -2660,7 +2660,7 @@ module.exports = {
       {
         id: 12584,
         name: 'Rio Poty',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 310,
         active: true,
         address: 'Av. Mar. Castelo Branco, 911 - Porenquanto',
@@ -2672,7 +2672,7 @@ module.exports = {
       {
         id: 12585,
         name: 'RioMar Fortaleza',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 79,
         active: true,
         address: 'R. Des. Lauro Nogueira, 1355 - Papicu',
@@ -2684,7 +2684,7 @@ module.exports = {
       {
         id: 12586,
         name: 'RioMar Kennedy',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 79,
         active: true,
         address: 'Av. Sargento Hermínio Sampaio, 3100 - 3001 - Pres. Kennedy',
@@ -2696,7 +2696,7 @@ module.exports = {
       {
         id: 12587,
         name: 'Salvador Norte',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 5,
         active: true,
         address: 'BA-526, nº 305 3017 - São Cristóvão',
@@ -2708,7 +2708,7 @@ module.exports = {
       {
         id: 12588,
         name: 'Shopping San Pelegrino Bourbon,',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 146,
         active: true,
         address: 'Av. Rio Branco, 425 - São Pelegrino',
@@ -2720,7 +2720,7 @@ module.exports = {
       {
         id: 12589,
         name: 'Santa Ursula',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 192,
         active: true,
         address: 'R. São José, 933 - 401 - Higienópolis',
@@ -2732,7 +2732,7 @@ module.exports = {
       {
         id: 12590,
         name: 'São Bernardo',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 198,
         active: true,
         address: 'Av. Rotary, 624 - Ferrazópolis',
@@ -2744,7 +2744,7 @@ module.exports = {
       {
         id: 12591,
         name: 'Shopping São Gonçalo',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 59,
         active: true,
         address: 'Av. São Gonçalo, 100 - 269A - Boa Vista',
@@ -2756,7 +2756,7 @@ module.exports = {
       {
         id: 12592,
         name: 'Shopping São Luis',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 90,
         active: true,
         address: 'Av. Prof. Carlos Cunha, 1000 - Jaracaty',
@@ -2768,7 +2768,7 @@ module.exports = {
       {
         id: 12593,
         name: 'Shopping 3 Américas',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 334,
         active: true,
         address: 'Av. Brasília, 146 - Jardim das Américas',
@@ -2780,7 +2780,7 @@ module.exports = {
       {
         id: 12594,
         name: 'Três Lagoas',
-        establishmentId: 3543,
+        establishment_id: 3543,
         cityId: 382,
         active: true,
         address: 'Rodovia BR-158,163 KM 01 Shopping Três Lagoas, Loja Ancora, L025 - Jardim Santa Louders',
@@ -2792,7 +2792,7 @@ module.exports = {
       {
         id: 12614,
         name: '.Shopping Buriti',
-        establishmentId: 3564,
+        establishment_id: 3564,
         cityId: 117,
         active: true,
         address: '.Av. Rio Verde, QUADRAS 102/104, 400 - Vila Sao Tomaz',
@@ -2804,7 +2804,7 @@ module.exports = {
       {
         id: 12615,
         name: 'Jaraguá',
-        establishmentId: 3564,
+        establishment_id: 3564,
         cityId: 133,
         active: true,
         address: 'Ac. Eng. Heitor de Souza Pinheiro, 2270 - Jardim dos Manacas',
@@ -2816,7 +2816,7 @@ module.exports = {
       {
         id: 12616,
         name: 'Castanheira Shopping Center',
-        establishmentId: 3564,
+        establishment_id: 3564,
         cityId: 83,
         active: true,
         address: 'Rodovia BR316 KM 01 – Castanheira',
@@ -2828,7 +2828,7 @@ module.exports = {
       {
         id: 12617,
         name: 'Shopping Pátio Belém',
-        establishmentId: 3564,
+        establishment_id: 3564,
         cityId: 83,
         active: true,
         address: 'Tv. Padre Eutíquio, 1078 - Batista Campos',
@@ -2840,7 +2840,7 @@ module.exports = {
       {
         id: 12618,
         name: 'Unimart Shopping Campinas',
-        establishmentId: 3564,
+        establishment_id: 3564,
         cityId: 60,
         active: true,
         address: 'Av. John Boyd Dunlop, 350 - Jardim Aurelia',
@@ -2852,7 +2852,7 @@ module.exports = {
       {
         id: 12619,
         name: 'Franca Shopping',
-        establishmentId: 3564,
+        establishment_id: 3564,
         cityId: 152,
         active: true,
         address: 'Av. Rio Negro, 1100 - Jardim Roselandia',
@@ -2864,7 +2864,7 @@ module.exports = {
       {
         id: 12620,
         name: 'Shopping Vale Do Aço',
-        establishmentId: 3564,
+        establishment_id: 3564,
         cityId: 21,
         active: true,
         address: 'Av. Pedro Linhares Gomes, 3900 - Industrial',
@@ -2876,7 +2876,7 @@ module.exports = {
       {
         id: 12621,
         name: 'Shopping Pateo Itaquá',
-        establishmentId: 3564,
+        establishment_id: 3564,
         cityId: 457,
         active: true,
         address: 'Av. Italo Adami, 1.809 - Vila Zeferina',
@@ -2888,7 +2888,7 @@ module.exports = {
       {
         id: 12622,
         name: 'Jaú Shopping',
-        establishmentId: 3564,
+        establishment_id: 3564,
         cityId: 170,
         active: true,
         address: 'Av. Dr. Quinzinho, 511 - Chácara Peccioli',
@@ -2900,7 +2900,7 @@ module.exports = {
       {
         id: 12623,
         name: 'Maxi Shopping Jundiaí',
-        establishmentId: 3564,
+        establishment_id: 3564,
         cityId: 110,
         active: true,
         address: 'Av. Antônio Frederico Ozanan, 6000 - Vila Rio Branco',
@@ -2912,7 +2912,7 @@ module.exports = {
       {
         id: 12624,
         name: 'Macapá Shopping',
-        establishmentId: 3564,
+        establishment_id: 3564,
         cityId: 308,
         active: true,
         address: 'Rua Leopoldo Machado, 2334 - Trem',
@@ -2924,7 +2924,7 @@ module.exports = {
       {
         id: 12625,
         name: 'Marabá – Partage',
-        establishmentId: 3564,
+        establishment_id: 3564,
         cityId: 389,
         active: true,
         address: 'L4 - Folha 30, Quadra 15, 68507-445',
@@ -2936,7 +2936,7 @@ module.exports = {
       {
         id: 12626,
         name: 'Praia Shopping',
-        establishmentId: 3564,
+        establishment_id: 3564,
         cityId: 56,
         active: true,
         address: 'Av. Engenheiro Roberto Freire, 8790 - Ponta Negra',
@@ -2948,7 +2948,7 @@ module.exports = {
       {
         id: 12627,
         name: 'Prudenshopping',
-        establishmentId: 3564,
+        establishment_id: 3564,
         cityId: 399,
         active: true,
         address: 'Av. Manoel Goulart, 2400 - Vila Santa Helena',
@@ -2960,7 +2960,7 @@ module.exports = {
       {
         id: 12628,
         name: 'Boavista Shopping',
-        establishmentId: 3564,
+        establishment_id: 3564,
         cityId: 11,
         active: true,
         address: 'Rua Borba Gato, 59 - Santo Amaro',
@@ -2972,7 +2972,7 @@ module.exports = {
       {
         id: 12629,
         name: 'Shopping Penha',
-        establishmentId: 3564,
+        establishment_id: 3564,
         cityId: 11,
         active: true,
         address: 'Rua Doutor João Ribeiro 304 Loja Ancora G - Penha de França',
@@ -2984,7 +2984,7 @@ module.exports = {
       {
         id: 12630,
         name: 'Tivoli Shopping',
-        establishmentId: 3564,
+        establishment_id: 3564,
         cityId: 344,
         active: true,
         address: ' R. do Ósmio, 699 - Vila Mollon IV',
@@ -2996,7 +2996,7 @@ module.exports = {
       {
         id: 12631,
         name: 'Taubaté Shopping',
-        establishmentId: 3564,
+        establishment_id: 3564,
         cityId: 208,
         active: true,
         address: 'Av. Charles Schnneider, 1700 - Vila Costa',
@@ -3008,7 +3008,7 @@ module.exports = {
       {
         id: 12632,
         name: 'Shopping Conquista Sul',
-        establishmentId: 3564,
+        establishment_id: 3564,
         cityId: 101,
         active: true,
         address: 'Av. Juracy Magalhães, 3340 - Felicia',
@@ -3020,7 +3020,7 @@ module.exports = {
       {
         id: 38076,
         name: 'Shopping Sinop',
-        establishmentId: 3564,
+        establishment_id: 3564,
         cityId: 385,
         active: true,
         address: 'Av Alexandre Ferronato,800-ST Industrial,Sinop',
@@ -3032,7 +3032,7 @@ module.exports = {
       {
         id: 16036,
         name: 'Cine Sete Lagoas/MG',
-        establishmentId: 4243,
+        establishment_id: 4243,
         cityId: 10,
         active: true,
         address: 'Avenida Otavio Campelo Ribeiro, 2801 Loja 270 - 1º Piso',
@@ -3044,7 +3044,7 @@ module.exports = {
       {
         id: 16037,
         name: 'Cine Delmiro Gouveia/AL',
-        establishmentId: 4243,
+        establishment_id: 4243,
         cityId: 350,
         active: true,
         address: 'Av. Pres. Castelo Branco, 123',
@@ -3056,7 +3056,7 @@ module.exports = {
       {
         id: 16038,
         name: 'Cine Amargosa/BA',
-        establishmentId: 4243,
+        establishment_id: 4243,
         cityId: 782,
         active: true,
         address: 'Avenida Doutor Luis Sandes, 100 - Piso 01 Complexo Cinema - Santa Rita ',
@@ -3068,7 +3068,7 @@ module.exports = {
       {
         id: 16039,
         name: 'Cine Eusébio/CE',
-        establishmentId: 4243,
+        establishment_id: 4243,
         cityId: 94,
         active: true,
         address: 'AV. Eusébio De Queiroz, 1890 Loja 4 ? Tamatanduba Shopping Eusébio ',
@@ -3080,7 +3080,7 @@ module.exports = {
       {
         id: 16040,
         name: 'Cine Fortaleza/CE',
-        establishmentId: 4243,
+        establishment_id: 4243,
         cityId: 79,
         active: true,
         address: 'Av. Santos Dumont, 3131 - Aldeota, Fortaleza',
@@ -3092,7 +3092,7 @@ module.exports = {
       {
         id: 16042,
         name: 'Cine Pacajus/CE',
-        establishmentId: 4243,
+        establishment_id: 4243,
         cityId: 753,
         active: true,
         address: 'Avenida Vice Prefeito Expedito Chaves Cavalcante, 13 - Tucum',
@@ -3104,7 +3104,7 @@ module.exports = {
       {
         id: 16044,
         name: 'Cine Tucuruí',
-        establishmentId: 4243,
+        establishment_id: 4243,
         cityId: 594,
         active: true,
         address: 'Rua Lauro Sodré, 675 - São José',
@@ -3116,7 +3116,7 @@ module.exports = {
       {
         id: 16047,
         name: 'Cine Rio do Sul/SC',
-        establishmentId: 4243,
+        establishment_id: 4243,
         cityId: 195,
         active: true,
         address: 'Rua 15 De Novembro, 303, Centro Comercial Dellan',
@@ -3128,7 +3128,7 @@ module.exports = {
       {
         id: 16048,
         name: 'Cine Concórdia/SC',
-        establishmentId: 4243,
+        establishment_id: 4243,
         cityId: 148,
         active: true,
         address: 'Rua Independência, 91 Centro ',
@@ -3140,7 +3140,7 @@ module.exports = {
       {
         id: 16051,
         name: 'Cine Itapetinga/SP',
-        establishmentId: 4243,
+        establishment_id: 4243,
         cityId: 833,
         active: true,
         address: 'Rua Doutor Coutinho, 733 Loja 102 - Centro',
@@ -3152,7 +3152,7 @@ module.exports = {
       {
         id: 16052,
         name: 'Cine Guarujá/SP',
-        establishmentId: 4243,
+        establishment_id: 4243,
         cityId: 121,
         active: true,
         address: 'Avenida Marechal Deodoro Da Fonseca, 885Loja 230 - Centro',
@@ -3164,7 +3164,7 @@ module.exports = {
       {
         id: 16053,
         name: 'Cine Itapecerica da Serra/SP',
-        establishmentId: 4243,
+        establishment_id: 4243,
         cityId: 455,
         active: true,
         address: 'XV De Novembro, 89 - Itapecerica Da Serra',
@@ -3176,7 +3176,7 @@ module.exports = {
       {
         id: 16054,
         name: 'Cine Fernandópolis/SP',
-        establishmentId: 4243,
+        establishment_id: 4243,
         cityId: 450,
         active: true,
         address: 'Avenida Litério Grecco, 600 ',
@@ -3188,7 +3188,7 @@ module.exports = {
       {
         id: 16055,
         name: 'Cine Rio Claro/SP',
-        establishmentId: 4243,
+        establishment_id: 4243,
         cityId: 194,
         active: true,
         address: 'Av Conde Francisco Matarazzo Junior, 205 - Loja A3 ',
@@ -3200,7 +3200,7 @@ module.exports = {
       {
         id: 16056,
         name: 'Cine Cajamar/SP',
-        establishmentId: 4243,
+        establishment_id: 4243,
         cityId: 446,
         active: true,
         address: 'Rua Jean Anastace Kovelis, 123 Jardim Adelaide',
@@ -3212,7 +3212,7 @@ module.exports = {
       {
         id: 16057,
         name: 'Cine Valinhos/SP',
-        establishmentId: 4243,
+        establishment_id: 4243,
         cityId: 217,
         active: true,
         address: 'Rua Paiquerê, 200 Shopping Valinhos ',
@@ -3224,7 +3224,7 @@ module.exports = {
       {
         id: 16058,
         name: 'Cine Pindamanhangaba/SP',
-        establishmentId: 4243,
+        establishment_id: 4243,
         cityId: 468,
         active: true,
         address: 'Rua Alcides Ramos Nogueira, 650 Mombaca - Shopping Pátio Pinda',
@@ -3236,7 +3236,7 @@ module.exports = {
       {
         id: 16059,
         name: 'Cine Embu das Artes/SP',
-        establishmentId: 4243,
+        establishment_id: 4243,
         cityId: 449,
         active: true,
         address: 'R. Augusto De Almeida Batista, 204 - Chácaras São Marcos, Embu Das Artes',
@@ -3248,7 +3248,7 @@ module.exports = {
       {
         id: 16061,
         name: 'Cine Diadema/SP',
-        establishmentId: 4243,
+        establishment_id: 4243,
         cityId: 231,
         active: true,
         address: 'Av. Afonso Monteiro Da Cruz, 1150 Serraria, Diadema ',
@@ -3260,7 +3260,7 @@ module.exports = {
       {
         id: 16063,
         name: 'Cine Várzea Paulista/SP',
-        establishmentId: 4243,
+        establishment_id: 4243,
         cityId: 873,
         active: true,
         address: 'Av. Duque De Caxias, 2225 Sítio Do Moinho  Shopping Araguaia',
@@ -3272,7 +3272,7 @@ module.exports = {
       {
         id: 16064,
         name: 'Cine Santa Isabel',
-        establishmentId: 4243,
+        establishment_id: 4243,
         cityId: 872,
         active: true,
         address: 'Rodovia SP 56 KM 71,5 - Centro',
@@ -3284,7 +3284,7 @@ module.exports = {
       {
         id: 16065,
         name: 'Cine Andradina/SP',
-        establishmentId: 4243,
+        establishment_id: 4243,
         cityId: 871,
         active: true,
         address: 'Avenida Guanabara, 2919 - Trevo',
@@ -3296,7 +3296,7 @@ module.exports = {
       {
         id: 16066,
         name: 'Cine Fraiburgo',
-        establishmentId: 4243,
+        establishment_id: 4243,
         cityId: 870,
         active: true,
         address: 'Avenida Anita Garibaldi, 461 - São José',
@@ -3308,7 +3308,7 @@ module.exports = {
       {
         id: 16067,
         name: 'Cine Videira/SC',
-        establishmentId: 4243,
+        establishment_id: 4243,
         cityId: 869,
         active: true,
         address: 'Avenida Dom Pedro Il Centro',
@@ -3320,7 +3320,7 @@ module.exports = {
       {
         id: 16068,
         name: 'Cine Santo Antão',
-        establishmentId: 4243,
+        establishment_id: 4243,
         cityId: 868,
         active: true,
         address: 'Avenida Henrique De Holanda, 3000 Vitória Park Shopping, Lj 2000/2001 - Vitória De Santo',
@@ -3332,7 +3332,7 @@ module.exports = {
       {
         id: 16069,
         name: 'Cine Aquidauana',
-        establishmentId: 4243,
+        establishment_id: 4243,
         cityId: 801,
         active: true,
         address: 'Rua Oscar Trindade De Barros, 1169 - Santa Therezinha',
@@ -3344,7 +3344,7 @@ module.exports = {
       {
         id: 16070,
         name: 'Cine Maranguape/CE',
-        establishmentId: 4243,
+        establishment_id: 4243,
         cityId: 756,
         active: true,
         address: 'Rua Coronel Antônio Botelho, 254 Centro',
@@ -3356,7 +3356,7 @@ module.exports = {
       {
         id: 36862,
         name: 'Cineshow',
-        establishmentId: 4732,
+        establishment_id: 4732,
         cityId: 301,
         active: true,
         address: 'Estrada das Marinas, 91, 3º andar, Praia da Chácara - Shopping Piratas',
@@ -3368,7 +3368,7 @@ module.exports = {
       {
         id: 36863,
         name: 'Cineshow',
-        establishmentId: 4732,
+        establishment_id: 4732,
         cityId: 945,
         active: true,
         address: 'Rua Cel. Carlos Araújo, 60, Centro',
@@ -3380,7 +3380,7 @@ module.exports = {
       {
         id: 36864,
         name: 'Cineshow',
-        establishmentId: 4732,
+        establishment_id: 4732,
         cityId: 441,
         active: true,
         address: 'Avenida Joaquim Leite, 577, Centro',
@@ -3392,7 +3392,7 @@ module.exports = {
       {
         id: 36865,
         name: 'Cineshow',
-        establishmentId: 4732,
+        establishment_id: 4732,
         cityId: 72,
         active: true,
         address: 'Rua Bocaiúva, 2468 - 1002, Centro - Beiramar Shopping',
@@ -3404,7 +3404,7 @@ module.exports = {
       {
         id: 36866,
         name: 'Cineshow',
-        establishmentId: 4732,
+        establishment_id: 4732,
         cityId: 303,
         active: true,
         address: 'Avenida Aluizio da Silva Gomes, Centro - Shopping Plaza Macaé',
@@ -3416,7 +3416,7 @@ module.exports = {
       {
         id: 36867,
         name: 'Cineshow',
-        establishmentId: 4732,
+        establishment_id: 4732,
         cityId: 180,
         active: true,
         address: 'Rua Moisés Amélio, 17, Centro - Cadima Shopping',
@@ -3428,7 +3428,7 @@ module.exports = {
       {
         id: 36868,
         name: 'Cineshow',
-        establishmentId: 4732,
+        establishment_id: 4732,
         cityId: 180,
         active: true,
         address: 'Praça Pres. Getúlio Vargas, 139, 3º piso, Centro',
@@ -3440,7 +3440,7 @@ module.exports = {
       {
         id: 36869,
         name: 'Cineshow',
-        establishmentId: 4732,
+        establishment_id: 4732,
         cityId: 222,
         active: true,
         address: 'Rua Mal. Deodoro, 153, Centro',
@@ -3452,7 +3452,7 @@ module.exports = {
       {
         id: 36870,
         name: 'Cineshow',
-        establishmentId: 4732,
+        establishment_id: 4732,
         cityId: 191,
         active: true,
         address: 'Avenida Saturnino Braga, 369, Centro - Resende Shopping',
@@ -3464,7 +3464,7 @@ module.exports = {
       {
         id: 36871,
         name: 'Cineshow',
-        establishmentId: 4732,
+        establishment_id: 4732,
         cityId: 113,
         active: true,
         address: ' Rua Monte Líbano, 22, Várzea',
@@ -3476,7 +3476,7 @@ module.exports = {
       {
         id: 36872,
         name: 'Cineshow',
-        establishmentId: 4732,
+        establishment_id: 4732,
         cityId: 74,
         active: true,
         address: 'Rua Barão do Rio Branco, 303, Shopping Américo Silva',
@@ -3488,7 +3488,7 @@ module.exports = {
       {
         id: 36873,
         name: 'Cineshow',
-        establishmentId: 4732,
+        establishment_id: 4732,
         cityId: 211,
         active: true,
         address: 'Avenida Marcolino Martins Cabral, 2525, Vila Moema, Farol Shopping',
@@ -3500,7 +3500,7 @@ module.exports = {
       {
         id: 36874,
         name: 'Cineshow',
-        establishmentId: 4732,
+        establishment_id: 4732,
         cityId: 218,
         active: true,
         address: 'Rua Doze, 300, Vila Santa Cecília, Sider Shopping',
@@ -3512,7 +3512,7 @@ module.exports = {
       {
         id: 36946,
         name: 'Cinemas Uniplex',
-        establishmentId: 4762,
+        establishment_id: 4762,
         cityId: 187,
         active: true,
         address: 'Avenida Painguás, 1646, Vila Urepês',
@@ -3524,7 +3524,7 @@ module.exports = {
       {
         id: 36947,
         name: 'Cinemas Uniplex',
-        establishmentId: 4762,
+        establishment_id: 4762,
         cityId: 948,
         active: true,
         address: 'Avenida Dona Paulina De Morais, 590, Jardim Maringá',
@@ -3536,7 +3536,7 @@ module.exports = {
       {
         id: 36948,
         name: 'Cinemas Uniplex',
-        establishmentId: 4762,
+        establishment_id: 4762,
         cityId: 529,
         active: true,
         address: 'Av. Prefeito Paulo Novaes, 5, Centro',
@@ -3548,7 +3548,7 @@ module.exports = {
       {
         id: 36949,
         name: 'Cinemas Uniplex',
-        establishmentId: 4762,
+        establishment_id: 4762,
         cityId: 135,
         active: true,
         address: 'Av. Rui Barbosa, 300, Centro',
@@ -3560,7 +3560,7 @@ module.exports = {
       {
         id: 36950,
         name: 'Cinemas Uniplex',
-        establishmentId: 4762,
+        establishment_id: 4762,
         cityId: 153,
         active: true,
         address: 'Rua Dorval Ceccon, 664, Fatima',
@@ -3572,7 +3572,7 @@ module.exports = {
       {
         id: 36951,
         name: 'Cinemas Uniplex',
-        establishmentId: 4762,
+        establishment_id: 4762,
         cityId: 168,
         active: true,
         address: 'Rua Doutor José Marcondes H de Melo, 146, Centro',
@@ -3584,7 +3584,7 @@ module.exports = {
       {
         id: 36952,
         name: 'Cinemas Uniplex',
-        establishmentId: 4762,
+        establishment_id: 4762,
         cityId: 176,
         active: true,
         address: 'Rua Olavo Bilac, 62, Centro',
@@ -3596,7 +3596,7 @@ module.exports = {
       {
         id: 36953,
         name: 'Cinemas Uniplex',
-        establishmentId: 4762,
+        establishment_id: 4762,
         cityId: 171,
         active: true,
         address: 'Rua Mario Lobo, 106, Centro',
@@ -3608,7 +3608,7 @@ module.exports = {
       {
         id: 36954,
         name: 'Cinemas Uniplex',
-        establishmentId: 4762,
+        establishment_id: 4762,
         cityId: 149,
         active: true,
         address: 'Av. Gabriel Zanette 1455, Próspera',
@@ -3620,7 +3620,7 @@ module.exports = {
       {
         id: 36955,
         name: 'Cinemas Uniplex',
-        establishmentId: 4762,
+        establishment_id: 4762,
         cityId: 183,
         active: true,
         address: 'Rua João Eugênio, 711, Costeira',
@@ -3632,7 +3632,7 @@ module.exports = {
       {
         id: 36956,
         name: 'Cinemas Uniplex',
-        establishmentId: 4762,
+        establishment_id: 4762,
         cityId: 949,
         active: true,
         address: 'Rua Caetano Munhoz da Rocha 1367, Loja 4, Brejatuba',
@@ -3644,7 +3644,7 @@ module.exports = {
       {
         id: 36957,
         name: 'Cinemas Uniplex',
-        establishmentId: 4762,
+        establishment_id: 4762,
         cityId: 393,
         active: true,
         address: 'Av. Senador José Carlos Pereira Pinto,454, Parque Calabouco',
@@ -3656,7 +3656,7 @@ module.exports = {
       {
         id: 37774,
         name: 'Cine A',
-        establishmentId: 5049,
+        establishment_id: 5049,
         cityId: 129,
         active: true,
         address: 'Rua Pres. Artur Bernardes, 609, Centro',
@@ -3668,7 +3668,7 @@ module.exports = {
       {
         id: 37775,
         name: 'Cine A',
-        establishmentId: 5049,
+        establishment_id: 5049,
         cityId: 141,
         active: true,
         address: 'Praça Maastricht, 100 - s/n Loja 6 - Jardim Europa',
@@ -3680,7 +3680,7 @@ module.exports = {
       {
         id: 37776,
         name: 'Cine A',
-        establishmentId: 5049,
+        establishment_id: 5049,
         cityId: 163,
         active: true,
         address: 'Rua Prudente de Moraes, 40 - Centro',
@@ -3692,7 +3692,7 @@ module.exports = {
       {
         id: 37777,
         name: 'Cine A',
-        establishmentId: 5049,
+        establishment_id: 5049,
         cityId: 389,
         active: true,
         address: 'Rua Folha 27, Quadra especial, S/N Shopping Verdes Mares, Nova Marabá',
@@ -3704,7 +3704,7 @@ module.exports = {
       {
         id: 37778,
         name: 'Cine A',
-        establishmentId: 5049,
+        establishment_id: 5049,
         cityId: 191,
         active: true,
         address: 'Avenida Dorival Marcondes Godoy, 500 - Loja 1020, Fazenda do Castelo',
@@ -3716,7 +3716,7 @@ module.exports = {
       {
         id: 37779,
         name: 'Cine A',
-        establishmentId: 5049,
+        establishment_id: 5049,
         cityId: 673,
         active: true,
         address: 'Rua Mal. Floriano, 110, Centro',
@@ -3728,7 +3728,7 @@ module.exports = {
       {
         id: 37780,
         name: 'Cine A',
-        establishmentId: 5049,
+        establishment_id: 5049,
         cityId: 403,
         active: true,
         address: 'Rua Padre Benati, 1200, Centro',
@@ -3740,7 +3740,7 @@ module.exports = {
       {
         id: 37781,
         name: 'Cine A',
-        establishmentId: 5049,
+        establishment_id: 5049,
         cityId: 12,
         active: true,
         address: 'Avenida José Maria Vivácqua Santos, 400, Jardim Camburi',
@@ -3752,7 +3752,7 @@ module.exports = {
       {
         id: 37782,
         name: 'Cine A',
-        establishmentId: 5049,
+        establishment_id: 5049,
         cityId: 387,
         active: true,
         address: 'Avenida Nova Altamira, 1851, Shopping Serra Dourada',
@@ -3764,7 +3764,7 @@ module.exports = {
       {
         id: 37783,
         name: 'Cine A',
-        establishmentId: 5049,
+        establishment_id: 5049,
         cityId: 645,
         active: true,
         address: 'Rua XV de Novembro, 161 - sl 17, Centro',
@@ -3776,7 +3776,7 @@ module.exports = {
       {
         id: 37784,
         name: 'Cine A',
-        establishmentId: 5049,
+        establishment_id: 5049,
         cityId: 173,
         active: true,
         address: 'Rua Dr. Antônio Gonçalves de Faria, 1540 , De Fatima',
@@ -3788,7 +3788,7 @@ module.exports = {
       {
         id: 37785,
         name: 'Cine A',
-        establishmentId: 5049,
+        establishment_id: 5049,
         cityId: 376,
         active: true,
         address: 'Avenida Pres. Vargas, 1740, Jardim Goias',
@@ -3800,7 +3800,7 @@ module.exports = {
       {
         id: 37786,
         name: 'Cine A',
-        establishmentId: 5049,
+        establishment_id: 5049,
         cityId: 986,
         active: true,
         address: 'Avenida Comendador Costa, 289, Centro',
@@ -3812,7 +3812,7 @@ module.exports = {
       {
         id: 37787,
         name: 'Cine A',
-        establishmentId: 5049,
+        establishment_id: 5049,
         cityId: 886,
         active: true,
         address: 'Avenida Adriano Duque de Godoy Sousa, 01, Nossa Sra. da Penha',
@@ -3824,7 +3824,7 @@ module.exports = {
       {
         id: 37788,
         name: 'Cine A',
-        establishmentId: 5049,
+        establishment_id: 5049,
         cityId: 134,
         active: true,
         address: 'Avenida Dona Renata, 4785, Centro',
@@ -3836,7 +3836,7 @@ module.exports = {
       {
         id: 37789,
         name: 'Cine A',
-        establishmentId: 5049,
+        establishment_id: 5049,
         cityId: 161,
         active: true,
         address: 'Avenida Dr. Jerson Dias, 401, Estiva',
@@ -3848,7 +3848,7 @@ module.exports = {
       {
         id: 37790,
         name: 'Cine A',
-        establishmentId: 5049,
+        establishment_id: 5049,
         cityId: 421,
         active: true,
         address: 'Eco Valle Shopping - Estr. Vicinal Chiquito de Aquino, 46, Cruz',
@@ -3860,7 +3860,7 @@ module.exports = {
       {
         id: 37791,
         name: 'Cine A',
-        establishmentId: 5049,
+        establishment_id: 5049,
         cityId: 50,
         active: true,
         address: ' Rua Cel. Otávio Meyer, 160, Centro',
@@ -3872,7 +3872,7 @@ module.exports = {
       {
         id: 37792,
         name: 'Cine A',
-        establishmentId: 5049,
+        establishment_id: 5049,
         cityId: 200,
         active: true,
         address: 'Avenida Dona Gertrudes, 202, Centro',
@@ -3884,7 +3884,7 @@ module.exports = {
       {
         id: 37793,
         name: '.',
-        establishmentId: 5049,
+        establishment_id: 5049,
         cityId: 11,
         active: true,
         address: '.',
@@ -3896,7 +3896,7 @@ module.exports = {
       {
         id: 37794,
         name: 'Cine A',
-        establishmentId: 5049,
+        establishment_id: 5049,
         cityId: 402,
         active: true,
         address: 'Avenida Pres. Getúlio Vargas, 55, Centro',

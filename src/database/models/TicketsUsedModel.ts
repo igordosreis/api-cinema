@@ -4,14 +4,13 @@ import db from '.';
 class TicketsUsedModel extends Model {
   declare id: number;
   declare voucher: string;
-  declare ticketName: string;
-  declare ticketType: string;
-  declare establishmentId: number;
+  declare productId: number;
   declare userId: number;
   declare expireDate: Date;
   declare paymentId: string;
   declare createdAt: Date;
   declare soldAt: Date;
+  declare soldPrice: number;
 }
 
 TicketsUsedModel.init(
@@ -26,15 +25,7 @@ TicketsUsedModel.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    ticketName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    ticketType: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    establishmentId: {
+    productId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
@@ -56,6 +47,10 @@ TicketsUsedModel.init(
     },
     soldAt: {
       type: DataTypes.DATE,
+      defaultValue: null,
+    },
+    soldPrice: {
+      type: DataTypes.DECIMAL(10, 2),
       defaultValue: null,
     },
   },
