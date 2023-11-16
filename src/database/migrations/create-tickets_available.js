@@ -16,8 +16,8 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      cinema_id: {
-        type: Sequelize.STRING,
+      establishment_id: {
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       expire_date: {
@@ -31,9 +31,8 @@ module.exports = {
     }, {
       engine: 'InnoDB',
       charset: 'latin1',
-    }, {
       underscored: true,
-      timestamps: true,
+      timestamps: false,
     });
   },
 

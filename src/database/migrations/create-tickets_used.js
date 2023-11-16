@@ -17,11 +17,11 @@ module.exports = {
         allowNull: false,
       },
       establishment_id: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       user_id: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       expire_date: {

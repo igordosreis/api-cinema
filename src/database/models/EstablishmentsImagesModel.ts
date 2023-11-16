@@ -3,7 +3,7 @@ import db from '.';
 import EstablishmentsModel from './EstablishmentsModel';
 
 class EstablishmentsImagesModel extends Model {
-  declare id: number;
+  declare establishmentId: number;
   declare image: string;
   declare imageCarousel: string;
   declare cover: string;
@@ -12,10 +12,16 @@ class EstablishmentsImagesModel extends Model {
 
 EstablishmentsImagesModel.init(
   {
-    id: {
+    establishmentId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
+      references: {
+        model: 'establishments',
+        key: 'id',
+      },
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
     },
     image: {
       type: DataTypes.STRING,
@@ -35,7 +41,7 @@ EstablishmentsImagesModel.init(
     },
   },
   {
-    modelName: 'establishments_addresses',
+    modelName: 'establishments_images',
     sequelize: db,
     underscored: true,
     timestamps: false,
@@ -47,8 +53,8 @@ EstablishmentsImagesModel.belongsTo(EstablishmentsModel, {
   as: 'establishment',
 });
 EstablishmentsModel.hasMany(EstablishmentsImagesModel, {
-  foreignKey: 'cityId',
-  as: 'city',
+  foreignKey: 'establishmentId',
+  as: 'establishment',
 });
 
 export default EstablishmentsImagesModel;
