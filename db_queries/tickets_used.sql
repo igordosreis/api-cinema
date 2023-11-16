@@ -2,6 +2,8 @@ CREATE TABLE
     "tickets_used" (
         "id" int NOT NULL AUTO_INCREMENT,
         "voucher" varchar(255) NOT NULL,
+        "ticket_name" varchar(255) NOT NULL,
+        "ticket_type" varchar(255) NOT NULL,
         "establishment_id" varchar(255) NOT NULL, 
         "user_id" varchar(255) NOT NULL, 
         "expire_date" datetime DEFAULT NULL,

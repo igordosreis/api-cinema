@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "tsnd --respawn src/server.ts",
     "check-types": "tsc --noEmit --skipLibCheck",
-    "db:reset": "npx -y tsc && sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
+    "db:reset": "npx -y tsc && sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all --debug",
     "prepare": "husky install"
   },
   "dependencies": {

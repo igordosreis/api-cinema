@@ -25,12 +25,7 @@ module.exports = {
       { id: 17, name: 'Pernambuco', abbreviation: 'PE' },
       { id: 18, name: 'Piauí', abbreviation: 'PI' },
       { id: 19, name: 'Rio de Janeiro', abbreviation: 'RJ' },
-      {
-        id: 20,
-        name: 'Rio Grande do Norte',
-      
-        abbreviation: 'RN',
-      },
+      { id: 20, name: 'Rio Grande do Norte', abbreviation: 'RN' },
       { id: 21, name: 'Rio Grande do Sul', abbreviation: 'RS' },
       { id: 22, name: 'Rondônia', abbreviation: 'RO' },
       { id: 23, name: 'Roraima', abbreviation: 'RR' },
