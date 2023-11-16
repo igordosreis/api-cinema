@@ -1,5 +1,7 @@
 import { DataTypes, Model } from 'sequelize';
 import db from '.';
+import CitiesModel from './CitiesModel';
+import EstablishmentsModel from './EstablishmentsModel';
 
 class EstablishmentsAddressesModel extends Model {
   declare id: number;
@@ -27,7 +29,7 @@ EstablishmentsAddressesModel.init(
       allowNull: false,
       references: {
         model: 'establishments',
-        key: 'id', 
+        key: 'id',
       },
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',
@@ -35,7 +37,6 @@ EstablishmentsAddressesModel.init(
     name: {
       type: DataTypes.STRING,
       allowNull: false,
-      
     },
     active: {
       type: DataTypes.BOOLEAN,
@@ -44,14 +45,13 @@ EstablishmentsAddressesModel.init(
     address: {
       type: DataTypes.STRING,
       allowNull: false,
-      
     },
     cityId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'cities', 
-        key: 'id', 
+        model: 'cities',
+        key: 'id',
       },
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',
@@ -59,17 +59,14 @@ EstablishmentsAddressesModel.init(
     latitude: {
       type: DataTypes.TEXT,
       allowNull: false,
-      
     },
     longitude: {
       type: DataTypes.TEXT,
       allowNull: false,
-      
     },
     telephone: {
       type: DataTypes.STRING(40),
       allowNull: true,
-      
     },
     code: {
       type: DataTypes.INTEGER,
@@ -83,5 +80,14 @@ EstablishmentsAddressesModel.init(
     timestamps: false,
   },
 );
+
+EstablishmentsAddressesModel.belongsTo(EstablishmentsModel, {
+  foreignKey: 'establishmentId',
+  as: 'establishment',
+});
+EstablishmentsModel.hasMany(EstablishmentsAddressesModel, { foreignKey: 'cityId', as: 'city' });
+
+EstablishmentsAddressesModel.belongsTo(CitiesModel, { foreignKey: 'cityId', as: 'city' });
+CitiesModel.hasMany(EstablishmentsAddressesModel, { foreignKey: 'cityId', as: 'city' });
 
 export default EstablishmentsAddressesModel;

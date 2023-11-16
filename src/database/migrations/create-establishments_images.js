@@ -6,10 +6,16 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('establishment_images', {
-      id: {
+      establishment_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         primaryKey: true,
+        references: {
+          model: 'establishments',
+          key: 'id', 
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
       },
       image: {
         type: Sequelize.STRING,

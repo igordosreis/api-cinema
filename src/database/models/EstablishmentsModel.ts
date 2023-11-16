@@ -34,75 +34,62 @@ EstablishmentsModel.init(
     name: {
       type: DataTypes.STRING,
       allowNull: false,
-      
     },
     about: {
       type: DataTypes.TEXT('long'),
       allowNull: false,
-      
     },
     brand: {
       type: DataTypes.STRING,
-      
     },
     primaryColor: {
       type: DataTypes.STRING,
       defaultValue: '000000',
       allowNull: false,
-      
     },
     link: {
       type: DataTypes.TEXT('long'),
-      
     },
     linkDescription: {
       type: DataTypes.STRING(80),
       allowNull: false,
-      
     },
     telephone: {
       type: DataTypes.STRING(150),
-      
       defaultValue: null,
     },
     telephoneTwo: {
       type: DataTypes.STRING(150),
-      
       defaultValue: null,
     },
     whatsapp: {
       type: DataTypes.STRING(150),
-      
       defaultValue: null,
     },
     instagram: {
       type: DataTypes.STRING(150),
-      
       defaultValue: null,
     },
     site: {
       type: DataTypes.STRING(150),
-      
       defaultValue: null,
     },
     rules: {
       type: DataTypes.TEXT('long'),
       allowNull: false,
-      
     },
     keyWords: {
       type: DataTypes.TEXT,
-      
     },
     active: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
-    created_at: {
+    createdAt: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,
     },
-    updated_at: {
+    updatedAt: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,
     },
