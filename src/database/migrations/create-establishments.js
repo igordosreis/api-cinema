@@ -47,7 +47,7 @@ module.exports = {
         collate: 'utf8mb3_unicode_ci',
         defaultValue: null,
       },
-      telephone_2: {
+      telephone_two: {
         type: Sequelize.STRING(150),
         collate: 'utf8mb3_unicode_ci',
         defaultValue: null,

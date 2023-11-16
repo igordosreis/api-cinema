@@ -4,47 +4,119 @@ import db from '.';
 class EstablishmentsModel extends Model {
   declare id: number;
   declare name: string;
-  declare stateId: number;
-  declare country: number;
-  declare latitude: string;
-  declare longitude: string;
+  declare about: string;
+  declare brand: string;
+  declare primaryColor: string;
+  declare link: string;
+  declare linkDescription: string;
+  declare telephone: string;
+  declare telephonTwo: string;
+  declare whatsapp: string;
+  declare instagram: string;
+  declare site: string;
+  declare rules: string;
+  declare keyWord: string;
+  declare active: boolean;
+  declare createdAt: Date;
+  declare updatedAt: Date;
+  declare views: number;
+  declare underHighlight: boolean;
 }
 
 EstablishmentsModel.init(
   {
     id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      autoIncrement: true,
       primaryKey: true,
+      autoIncrement: true,
+      allowNull: false,
     },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+      
     },
-    stateId: {
-      type: DataTypes.INTEGER,
+    about: {
+      type: DataTypes.TEXT('long'),
       allowNull: false,
-      references: {
-        model: 'states',
-        key: 'id',
-      },
+      
     },
-    country: {
-      type: DataTypes.INTEGER,
-      defaultValue: null,
-    },
-    latitude: {
+    brand: {
       type: DataTypes.STRING,
+      
+    },
+    primaryColor: {
+      type: DataTypes.STRING,
+      defaultValue: '000000',
+      allowNull: false,
+      
+    },
+    link: {
+      type: DataTypes.TEXT('long'),
+      
+    },
+    linkDescription: {
+      type: DataTypes.STRING(80),
+      allowNull: false,
+      
+    },
+    telephone: {
+      type: DataTypes.STRING(150),
+      
       defaultValue: null,
     },
-    longitude: {
-      type: DataTypes.STRING,
+    telephoneTwo: {
+      type: DataTypes.STRING(150),
+      
       defaultValue: null,
+    },
+    whatsapp: {
+      type: DataTypes.STRING(150),
+      
+      defaultValue: null,
+    },
+    instagram: {
+      type: DataTypes.STRING(150),
+      
+      defaultValue: null,
+    },
+    site: {
+      type: DataTypes.STRING(150),
+      
+      defaultValue: null,
+    },
+    rules: {
+      type: DataTypes.TEXT('long'),
+      allowNull: false,
+      
+    },
+    keyWords: {
+      type: DataTypes.TEXT,
+      
+    },
+    active: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+    },
+    views: {
+      type: DataTypes.BIGINT,
+      defaultValue: 0,
+    },
+    underHighlight: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
     },
   },
   {
-    modelName: 'cities',
+    modelName: 'establishments',
     sequelize: db,
     underscored: true,
     timestamps: false,
