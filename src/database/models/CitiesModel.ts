@@ -31,10 +31,6 @@ CitiesModel.init(
         key: 'id',
       },
     },
-    country: {
-      type: DataTypes.INTEGER,
-      defaultValue: null,
-    },
     latitude: {
       type: DataTypes.STRING,
       defaultValue: null,

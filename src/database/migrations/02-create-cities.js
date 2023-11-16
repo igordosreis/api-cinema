@@ -27,10 +27,6 @@ module.exports = {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
       },
-      country: {
-        type: Sequelize.INTEGER,
-        defaultValue: null,
-      },
       latitude: {
         type: Sequelize.STRING,
         defaultValue: null,
