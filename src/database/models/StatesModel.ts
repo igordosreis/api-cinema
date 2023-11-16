@@ -20,7 +20,7 @@ StatesModel.init(
       allowNull: false,
     },
     abbreviation: {
-      type: DataTypes.STRING(2),
+      type: DataTypes.STRING,
       defaultValue: null,
     },
   },

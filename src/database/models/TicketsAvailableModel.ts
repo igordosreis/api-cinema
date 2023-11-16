@@ -25,11 +25,11 @@ TicketsAvailableModel.init(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    expire_date: {
+    expireDate: {
       type: DataTypes.DATE,
       defaultValue: null,
     },
-    created_at: {
+    createdAt: {
       type: DataTypes.DATE,
       defaultValue: null,
     },
