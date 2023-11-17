@@ -21,7 +21,7 @@ module.exports = {
         allowNull: true,
       },
       ticket_id: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'tickets_used',

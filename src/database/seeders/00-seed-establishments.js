@@ -7,7 +7,7 @@ module.exports = {
     await QueryInterface.bulkInsert('establishments', [
       {
         id: 488,
-        name: 'Cineart',
+        establishment_name: 'Cineart',
         about: 'Cineart sempre teve como foco a tecnologia e a qualidade no atendimento ao público, tornando-se assim líder de mercado de exibição em Minas.',
         primary_color: '#000000',
         link: undefined,
@@ -27,7 +27,7 @@ module.exports = {
       },
       {
         id: 753,
-        name: 'Cinemark',
+        establishment_name: 'Cinemark',
         about: 'É mais que cinema, É Cinemark. Nosso propósito sempre foi o mesmo: oferecer uma experiência cinematográfica inesquecível aos nossos clientes. ',
         primary_color: '#000000',
         link: undefined,
@@ -47,7 +47,7 @@ module.exports = {
       },
       {
         id: 1115,
-        name: 'Cinesystem Cinemas ',
+        establishment_name: 'Cinesystem Cinemas ',
         about: 'A Rede Cinesystem Cinemas está entre as CINCO MAIORES EXIBIDORAS DO PAÍS; Somos a única listada no Bovespa Mais.Não entregamos o filme pelo filme, a promoção pela promoção ou o produto pelo produto. Vendemos o PROGRAMA, o MOMENTO de diversão, a COMPANHIA com amigos, a possibilidade de viver algo ÚNICO.',
         primary_color: '#000000',
         link: undefined,
@@ -67,7 +67,7 @@ module.exports = {
       },
       {
         id: 3091,
-        name: 'UCI Cinemas',
+        establishment_name: 'UCI Cinemas',
         about: 'Sinônimo de qualidade e tecnologia, a UCI Cinemas comemora, em 2017, 20 anos no Brasil e atualmente está presente em 13 cidades do país. UCI Cinemas, a melhor imagem, o melhor som e o melhor público.',
         primary_color: '#000000',
         link: undefined,
@@ -87,7 +87,7 @@ module.exports = {
       },
       {
         id: 3092,
-        name: 'Kinoplex Cinema',
+        establishment_name: 'Kinoplex Cinema',
         about: 'Hoje, o Kinoplex é a maior rede de cinemas 100% brasileira. Há 100 anos levamos a magia e emoção do cinema a todo o país. Possuímos 260 salas, em 19 cidades brasileiras, equipadas com o máximo de tecnologia e conforto para o bem-estar de nossos clientes. São mais de 55 mil poltronas e de 1.000 funcionários, que trabalham com paixão pelo cinema, respeito e total dedicação aos nossos espectadores.',
         primary_color: '#000000',
         link: undefined,
@@ -107,7 +107,7 @@ module.exports = {
       },
       {
         id: 3543,
-        name: 'Cinépolis ',
+        establishment_name: 'Cinépolis ',
         about: 'A Cinépolis é a quarta maior operadora de cinemas do mundo e a maior da América Latina, atualmente com mais de 2200 salas em 8 países.',
         primary_color: '#000000',
         link: undefined,
@@ -127,7 +127,7 @@ module.exports = {
       },
       {
         id: 3564,
-        name: 'Moviecom',
+        establishment_name: 'Moviecom',
         about: 'O cinema está em nosso DNA. Somos uma das maiores exibidoras do país. Somos uma empresa 100% brasileira, com muito orgulho!',
         primary_color: '#000000',
         link: undefined,
@@ -147,7 +147,7 @@ module.exports = {
       },
       {
         id: 4243,
-        name: 'Grupo Cine Cinemas',
+        establishment_name: 'Grupo Cine Cinemas',
         about: 'O Grupo Cine está presente em 9 Estados do Brasil. São 27 cinemas para você se divertir com a sua familia.',
         primary_color: '#000000',
         link: undefined,
@@ -167,7 +167,7 @@ module.exports = {
       },
       {
         id: 4732,
-        name: 'CineShow',
+        establishment_name: 'CineShow',
         about: 'Hoje o CINE SHOW possui 37 salas de cinema do mais alto padrão de qualidade e está presente em 10 cidades. Se tornou a maior rede exibidora da região Sul Fluminense e Serrana do estado do Rio de Janeiro, com salas 100% digitalizadas. Esses códigos não são válidos para o show BTS: Yet to come in cinemas.',
         primary_color: '#000000',
         link: undefined,
@@ -187,7 +187,7 @@ module.exports = {
       },
       {
         id: 4762,
-        name: 'Cinema Uniplex',
+        establishment_name: 'Cinema Uniplex',
         about: 'Cine Uniplex, trazendo a magia do cinema até você! ',
         primary_color: '#000000',
         link: undefined,
@@ -207,7 +207,7 @@ module.exports = {
       },
       {
         id: 5049,
-        name: 'Cine A',
+        establishment_name: 'Cine A',
         about: 'É curioso como as cores do mundo real parecem muito mais reais quando vistas no cinema. O cinema não tem fronteiras nem limites.',
         primary_color: '#000000',
         link: undefined,
