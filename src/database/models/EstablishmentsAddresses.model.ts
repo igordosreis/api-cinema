@@ -1,7 +1,7 @@
 import { DataTypes, Model } from 'sequelize';
 import db from '.';
-import CitiesModel from './CitiesModel';
-import EstablishmentsModel from './EstablishmentsModel';
+import CitiesModel from './Cities.model';
+import EstablishmentsModel from './Establishments.model';
 
 class EstablishmentsAddressesModel extends Model {
   declare id: number;
