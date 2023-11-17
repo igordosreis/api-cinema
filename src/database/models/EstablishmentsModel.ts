@@ -3,7 +3,7 @@ import db from '.';
 
 class EstablishmentsModel extends Model {
   declare id: number;
-  declare name: string;
+  declare establishmentName: string;
   declare about: string;
   declare primaryColor: string;
   declare link: string;
@@ -30,7 +30,7 @@ EstablishmentsModel.init(
       autoIncrement: true,
       allowNull: false,
     },
-    name: {
+    establishmentName: {
       type: DataTypes.STRING,
       allowNull: false,
     },

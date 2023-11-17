@@ -12,7 +12,7 @@ module.exports = {
         autoIncrement: true,
         allowNull: false,
       },
-      name: {
+      establishment_name: {
         type: Sequelize.STRING,
         allowNull: false,
         collate: 'utf8mb3_unicode_ci',
