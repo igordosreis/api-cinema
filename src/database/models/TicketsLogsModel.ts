@@ -1,11 +1,12 @@
 import { DataTypes, Model } from 'sequelize';
 import db from '.';
+import TicketsUsedModel from './TicketsUsedModel';
 
 class TicketsLogsModel extends Model {
   declare id: number;
   declare request: string;
   declare response: string;
-  declare ticket: string;
+  declare ticketId: string;
   declare date: Date;
 }
 
@@ -25,7 +26,7 @@ TicketsLogsModel.init(
       type: DataTypes.STRING,
       allowNull: true,
     },
-    ticket: {
+    ticketId: {
       type: DataTypes.STRING,
       allowNull: true,
     },
@@ -41,5 +42,8 @@ TicketsLogsModel.init(
     timestamps: false,
   },
 );
+
+TicketsLogsModel.belongsTo(TicketsUsedModel, { foreignKey: 'ticketsId', as: 'tickets_used' });
+TicketsUsedModel.hasOne(TicketsLogsModel, { foreignKey: 'ticketsId', as: 'tickets_used' });
 
 export default TicketsLogsModel;

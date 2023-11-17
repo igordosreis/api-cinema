@@ -20,9 +20,15 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true,
       },
-      ticket: {
+      ticket_id: {
         type: Sequelize.STRING,
-        allowNull: true,
+        allowNull: false,
+        references: {
+          model: 'tickets_used',
+          key: 'id', 
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
       },
       date: {
         type: Sequelize.DATE,
