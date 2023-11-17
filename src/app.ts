@@ -1,7 +1,7 @@
 import express from 'express';
 import 'express-async-errors';
 import cors from 'cors';
-// import router from './routes';
+import router from './routes';
 // import httpErrorMiddleware from './middlewares/httpError.middleware';
 
 class App {
@@ -10,7 +10,7 @@ class App {
     this.app.use(express.json());
     this.app.use(cors());
     // this.app.use('/images', express.static(`${__dirname}/images`));
-    // this.app.use(router);
+    this.app.use(router);
     // this.app.use(httpErrorMiddleware);
   }
 
