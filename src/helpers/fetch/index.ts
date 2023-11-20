@@ -19,7 +19,7 @@ const fetch = async (endpoint: string): Promise<IMovieAPIResponse | undefined> =
   }
 };
 
-export const getNowPlaying = async (currentDate: IDate, pastDate: IDate) => {
+export const fetchNowPlaying = async (currentDate: IDate, pastDate: IDate) => {
   const endpoint = `${URL_BASE}${RELEASE_DATE_START}${pastDate}${RELEASE_DATE_END}${currentDate}`;
 
   const data = await fetch(endpoint);
@@ -27,7 +27,7 @@ export const getNowPlaying = async (currentDate: IDate, pastDate: IDate) => {
   return data;
 };
 
-export const getPopular = async (currentDate: IDate, pastDate: IDate) => {
+export const fetchPopular = async (currentDate: IDate, pastDate: IDate) => {
   const endpoint = `${URL_BASE}${RELEASE_DATE_START}${pastDate}${RELEASE_DATE_END}${currentDate}${SORT_BY_POPULARITY}`;
 
   const data = await fetch(endpoint);
@@ -35,7 +35,7 @@ export const getPopular = async (currentDate: IDate, pastDate: IDate) => {
   return data;
 };
 
-export const getUpcoming = async (currentDate: IDate, futureDate: IDate) => {
+export const fetchUpcoming = async (currentDate: IDate, futureDate: IDate) => {
   const endpoint = `${URL_BASE}${RELEASE_DATE_START}${currentDate}${RELEASE_DATE_END}${futureDate}`;
 
   const data = await fetch(endpoint);
@@ -43,7 +43,7 @@ export const getUpcoming = async (currentDate: IDate, futureDate: IDate) => {
   return data;
 };
 
-export const getPremier = async (previousSundayDate: IDate, nextSundayDate: IDate) => {
+export const fetchPremier = async (previousSundayDate: IDate, nextSundayDate: IDate) => {
   const endpoint = `${URL_BASE}${RELEASE_DATE_START}${previousSundayDate}${RELEASE_DATE_END}${nextSundayDate}`;
 
   const data = await fetch(endpoint);
