@@ -43,4 +43,10 @@ export const getUpcoming = async (currentDate: IDate, futureDate: IDate) => {
   return data;
 };
 
-// export const getPremier = async (previousSundayDate: IDate, nextSundayDate: IDate) => {};
+export const getPremier = async (previousSundayDate: IDate, nextSundayDate: IDate) => {
+  const endpoint = `${URL_BASE}${RELEASE_DATE_START}${previousSundayDate}${RELEASE_DATE_END}${nextSundayDate}`;
+
+  const data = await fetch(endpoint);
+
+  return data;
+};
