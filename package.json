@@ -2,7 +2,7 @@
   "name": "backend",
   "main": "./src/api/server.js",
   "scripts": {
-    "dev": "tsnd --respawn src/server.ts",
+    "dev": "tsnd --poll --respawn src/server.ts",
     "check-types": "tsc --noEmit --skipLibCheck",
     "db:reset": "npx -y tsc && sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all --debug",
     "prepare": "husky install"
@@ -20,6 +20,7 @@
   "devDependencies": {
     "@commitlint/cli": "17.6.5",
     "@commitlint/config-angular": "17.6.5",
+    "@faker-js/faker": "^8.3.1",
     "@types/cors": "2.8.13",
     "@types/express": "4.17.17",
     "@types/jsonwebtoken": "^9.0.2",
