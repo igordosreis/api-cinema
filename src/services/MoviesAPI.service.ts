@@ -60,4 +60,10 @@ export default class MoviesAPIService {
 
     return allMoviesPremier;
   }
+
+  public static async getMovieDetails(id: number | string) {
+    const movieDetails = await MoviesAPIModel.getMovieDetails(id);
+
+    return movieDetails;
+  }
 }

@@ -25,4 +25,10 @@ export default class MoviesAPIModel {
 
     return allMoviesPremier;
   }
+
+  public static async getMovieDetails(id: number | string) {
+    const movieDetails = MoviesAPIFetch.fetchMovieDetails(id);
+
+    return movieDetails;
+  }
 }

@@ -7,5 +7,6 @@ moviesAPIRouter.get('/nowplaying', MoviesAPIController.getNowPlaying);
 moviesAPIRouter.get('/popular', MoviesAPIController.getPopular);
 moviesAPIRouter.get('/upcoming', MoviesAPIController.getUpcoming);
 moviesAPIRouter.get('/premier', MoviesAPIController.getPremier);
+moviesAPIRouter.get('/details/:id', MoviesAPIController.getMovieDetails);
 
 export default moviesAPIRouter;
