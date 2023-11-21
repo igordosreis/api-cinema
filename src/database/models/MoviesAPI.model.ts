@@ -1,4 +1,4 @@
-import { fetchNowPlaying, fetchPopular, fetchUpcoming } from '../../helpers/fetch';
+import { fetchNowPlaying, fetchPopular, fetchPremier, fetchUpcoming } from '../../helpers/fetch';
 import { IDate } from '../../interfaces/IUrlDate';
 
 export default class MoviesAPIModel {
@@ -18,5 +18,11 @@ export default class MoviesAPIModel {
     const allMoviesUpcoming = fetchUpcoming(currentDate, futureDate);
 
     return allMoviesUpcoming;
+  }
+
+  public static async getPremier(lastSundayDate: IDate, nextSundayDate: IDate) {
+    const allMoviesPremier = fetchPremier(lastSundayDate, nextSundayDate);
+
+    return allMoviesPremier;
   }
 }

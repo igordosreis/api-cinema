@@ -16,7 +16,6 @@ export default class MoviesAPIService {
     if (allMoviesPlayingNow) {
       const randomizedMoviesOrder = allMoviesPlayingNow.results.sort(() => Math.random() - 0.5);
       allMoviesPlayingNow.results = randomizedMoviesOrder;
-      console.log('allMoviesPlayingNow: ', allMoviesPlayingNow);
     }
 
     return allMoviesPlayingNow;
@@ -47,5 +46,18 @@ export default class MoviesAPIService {
     const allMoviesUpcoming = await MoviesAPIModel.getUpcoming(currentDateISO, pastDateISO);
 
     return allMoviesUpcoming;
+  }
+
+  public static async getPremier() {
+    const currentDate = new Date();
+
+    const lastSundayISO = DateUtils.getLastSunday(currentDate);
+    const nextSundayISO = DateUtils.getNextSunday(currentDate);
+    console.log('lastSundayISO: ', lastSundayISO);
+    console.log('nextSundayISO: ', nextSundayISO);
+
+    const allMoviesPremier = await MoviesAPIModel.getPremier(lastSundayISO, nextSundayISO);
+
+    return allMoviesPremier;
   }
 }
