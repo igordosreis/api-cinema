@@ -1,5 +1,4 @@
 import MoviesAPIModel from '../database/models/MoviesAPI.model';
-import { IMoviesResultsWithLinks } from '../interfaces/IMoviesAPI';
 import DateUtils from '../utils/date.utils';
 import formatMoviesUtil from '../utils/formatMovies.util';
 
@@ -20,13 +19,13 @@ export default class MoviesAPIService {
       const moviesWithImgLinks = formatMoviesUtil.addImgLinksToAllMovies(
         allMoviesPlayingNow.results,
       );
-      // allMoviesPlayingNow.results = moviesWithImgLinks;
+
       const allMoviesPlayingNowWithLinks = {
         ...allMoviesPlayingNow,
         results: moviesWithImgLinks,
       };
 
-      return allMoviesPlayingNowWithLinks as IMoviesResultsWithLinks;
+      return allMoviesPlayingNowWithLinks;
     }
   }
 
@@ -48,7 +47,7 @@ export default class MoviesAPIService {
       );
       allMoviesPlayingSortedByPopular.results = moviesWithImgLinks;
 
-      return allMoviesPlayingSortedByPopular as IMoviesResultsWithLinks;
+      return allMoviesPlayingSortedByPopular;
     }
   }
 
@@ -65,7 +64,7 @@ export default class MoviesAPIService {
       const moviesWithImgLinks = formatMoviesUtil.addImgLinksToAllMovies(allMoviesUpcoming.results);
       allMoviesUpcoming.results = moviesWithImgLinks;
 
-      return allMoviesUpcoming as IMoviesResultsWithLinks;
+      return allMoviesUpcoming;
     }
   }
 
@@ -81,13 +80,17 @@ export default class MoviesAPIService {
       const moviesWithImgLinks = formatMoviesUtil.addImgLinksToAllMovies(allMoviesPremier.results);
       allMoviesPremier.results = moviesWithImgLinks;
 
-      return allMoviesPremier as IMoviesResultsWithLinks;
+      return allMoviesPremier;
     }
   }
 
   public static async getMovieDetails(id: number | string) {
     const movieDetails = await MoviesAPIModel.getMovieDetails(id);
 
-    return movieDetails;
+    if (movieDetails) {
+      const movieDetailsWithImgLinks = formatMoviesUtil.addImgLinksToMovieDetails(movieDetails);
+
+      return movieDetailsWithImgLinks;
+    }
   }
 }
