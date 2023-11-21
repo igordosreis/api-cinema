@@ -1,4 +1,4 @@
-/* eslint-disable import/prefer-default-export */
 import EstablishmentService from './Establishment.service';
+import MoviesAPIService from './MoviesAPI.service';
 
-export { EstablishmentService };
+export { EstablishmentService, MoviesAPIService };
