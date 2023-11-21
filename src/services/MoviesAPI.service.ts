@@ -36,4 +36,16 @@ export default class MoviesAPIService {
 
     return allMoviesPlayingSortedByPopular;
   }
+
+  public static async getUpcoming() {
+    const currentDate = new Date();
+    const addThirtyDaysDate = DateUtils.addDays(currentDate, 30);
+
+    const currentDateISO = DateUtils.formatDateToISO(currentDate);
+    const pastDateISO = DateUtils.formatDateToISO(addThirtyDaysDate);
+
+    const allMoviesUpcoming = await MoviesAPIModel.getUpcoming(currentDateISO, pastDateISO);
+
+    return allMoviesUpcoming;
+  }
 }

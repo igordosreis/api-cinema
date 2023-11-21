@@ -13,4 +13,10 @@ export default class MoviesAPIController {
 
     res.status(200).json(allMoviesPlayingSortedByPopular);
   }
+
+  public static async getUpcoming(_req: Request, res: Response): Promise<void> {
+    const allMoviesUpcoming = await MoviesAPIService.getUpcoming();
+
+    res.status(200).json(allMoviesUpcoming);
+  }
 }

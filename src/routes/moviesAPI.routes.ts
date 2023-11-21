@@ -5,5 +5,6 @@ const moviesAPIRouter = Router();
 
 moviesAPIRouter.get('/nowplaying', MoviesAPIController.getNowPlaying);
 moviesAPIRouter.get('/popular', MoviesAPIController.getPopular);
+moviesAPIRouter.get('/upcoming', MoviesAPIController.getUpcoming);
 
 export default moviesAPIRouter;

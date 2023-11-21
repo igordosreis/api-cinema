@@ -4,7 +4,8 @@ import { IDate } from '../../interfaces/IUrlDate';
 import {
   RELEASE_DATE_END,
   RELEASE_DATE_START,
-  SORT_BY_POPULARITY,
+  SORT_BY_POPULARITY_DESC,
+  SORT_BY_RELEASE_DATE_ASC,
   URL_BASE,
 } from '../../constants';
 import { IMovieAPIResponse } from '../../interfaces/IMoviesAPI';
@@ -28,7 +29,7 @@ export const fetchNowPlaying = async (currentDate: IDate, pastDate: IDate) => {
 };
 
 export const fetchPopular = async (currentDate: IDate, pastDate: IDate) => {
-  const endpoint = `${URL_BASE}${RELEASE_DATE_START}${pastDate}${RELEASE_DATE_END}${currentDate}${SORT_BY_POPULARITY}`;
+  const endpoint = `${URL_BASE}${RELEASE_DATE_START}${pastDate}${RELEASE_DATE_END}${currentDate}${SORT_BY_POPULARITY_DESC}`;
 
   const data = await fetch(endpoint);
 
@@ -36,7 +37,7 @@ export const fetchPopular = async (currentDate: IDate, pastDate: IDate) => {
 };
 
 export const fetchUpcoming = async (currentDate: IDate, futureDate: IDate) => {
-  const endpoint = `${URL_BASE}${RELEASE_DATE_START}${currentDate}${RELEASE_DATE_END}${futureDate}`;
+  const endpoint = `${URL_BASE}${RELEASE_DATE_START}${currentDate}${RELEASE_DATE_END}${futureDate}${SORT_BY_RELEASE_DATE_ASC}`;
 
   const data = await fetch(endpoint);
 
