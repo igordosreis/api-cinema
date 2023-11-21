@@ -1,4 +1,4 @@
-/* eslint-disable import/prefer-default-export */
 import EstablishmentController from './Establishment.controller';
+import MoviesAPIController from './MoviesAPI.controller';
 
-export { EstablishmentController };
+export { EstablishmentController, MoviesAPIController };
