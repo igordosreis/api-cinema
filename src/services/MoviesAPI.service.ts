@@ -8,8 +8,11 @@ export default class MoviesAPIService {
 
     const currentDateISO = DateUtils.formatDateToISO(currentDate);
     const pastDateISO = DateUtils.formatDateToISO(subtractFortyFiveDaysDate);
+    console.log('currentDateISO: ', currentDateISO);
+    console.log('pastDateISO: ', pastDateISO);
 
-    const allMoviesPlayingNow = MoviesAPIModel.getNowPlaying(currentDateISO, pastDateISO);
+    const allMoviesPlayingNow = await MoviesAPIModel.getNowPlaying(currentDateISO, pastDateISO);
+    console.log('allMoviesPlayingNow: ', allMoviesPlayingNow);
 
     return allMoviesPlayingNow;
   }
