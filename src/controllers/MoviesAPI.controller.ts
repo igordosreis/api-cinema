@@ -9,7 +9,7 @@ export default class MoviesAPIController {
   }
 
   public static async getPopular(_req: Request, res: Response): Promise<void> {
-    const allMoviesPlayingSortedByPopular = await MoviesAPIService.getNowPlaying();
+    const allMoviesPlayingSortedByPopular = await MoviesAPIService.getPopular();
 
     res.status(200).json(allMoviesPlayingSortedByPopular);
   }
