@@ -12,8 +12,28 @@ export default class MoviesAPIService {
     console.log('pastDateISO: ', pastDateISO);
 
     const allMoviesPlayingNow = await MoviesAPIModel.getNowPlaying(currentDateISO, pastDateISO);
-    console.log('allMoviesPlayingNow: ', allMoviesPlayingNow);
+
+    if (allMoviesPlayingNow) {
+      const randomizedMoviesOrder = allMoviesPlayingNow.results.sort(() => Math.random() - 0.5);
+      allMoviesPlayingNow.results = randomizedMoviesOrder;
+      console.log('allMoviesPlayingNow: ', allMoviesPlayingNow);
+    }
 
     return allMoviesPlayingNow;
+  }
+
+  public static async getPopular() {
+    const currentDate = new Date();
+    const subtractFortyFiveDaysDate = DateUtils.subtractDays(currentDate, 45);
+
+    const currentDateISO = DateUtils.formatDateToISO(currentDate);
+    const pastDateISO = DateUtils.formatDateToISO(subtractFortyFiveDaysDate);
+
+    const allMoviesPlayingSortedByPopular = await MoviesAPIModel.getNowPlaying(
+      currentDateISO,
+      pastDateISO,
+    );
+
+    return allMoviesPlayingSortedByPopular;
   }
 }
