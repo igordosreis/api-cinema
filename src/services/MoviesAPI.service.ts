@@ -1,3 +1,4 @@
+/* eslint-disable operator-linebreak */
 import MoviesAPIModel from '../database/models/MoviesAPI.model';
 import DateUtils from '../utils/date.utils';
 import formatMoviesUtil from '../utils/formatMovies.util';
@@ -89,8 +90,10 @@ export default class MoviesAPIService {
 
     if (movieDetails) {
       const movieDetailsWithImgLinks = formatMoviesUtil.addImgLinksToMovieDetails(movieDetails);
+      const movieDetailsWithYoutubeLinks =
+        formatMoviesUtil.addYoutubeLinksToMovieDetails(movieDetailsWithImgLinks);
 
-      return movieDetailsWithImgLinks;
+      return movieDetailsWithYoutubeLinks;
     }
   }
 }

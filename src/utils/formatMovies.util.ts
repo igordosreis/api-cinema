@@ -39,6 +39,21 @@ class FormatMovies {
 
     return MovieDetailsWithLinks;
   };
+
+  addYoutubeLinksToMovieDetails = (movieDetails: IMovieDetails): IMovieDetails => {
+    const results = movieDetails.videos.results.map((video) => {
+      const { key, ...newVideoObj } = video;
+
+      const youtubeLink = `https://www.youtube.com/watch?v=${key}`;
+      newVideoObj.youtubeLink = youtubeLink;
+
+      return newVideoObj;
+    });
+
+    const MovieDetailsWithLinks = Object.assign(movieDetails, { videos: results });
+
+    return MovieDetailsWithLinks;
+  };
 }
 
 export default new FormatMovies();
