@@ -3,12 +3,18 @@
 import 'dotenv/config';
 
 // TMDB API
+
 // TMDB API_KEY
 const { API_KEY } = process.env;
 
 // TMDB URLs & ENDPOINTS
-export const URL_BASE = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&include_adult=false&include_video=false&language=pt-BR&region=BR&page=1&with_release_type=2|3`;
+// DISCOVER
+export const URL_DISCOVER_BASE = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&include_adult=false&include_video=false&language=pt-BR&region=BR&page=1&with_release_type=2|3`;
 export const RELEASE_DATE_START = '&release_date.gte=';
 export const RELEASE_DATE_END = '&release_date.lte=';
 export const SORT_BY_POPULARITY_DESC = '&sort_by=popularity.desc'; // API default behaviour
 export const SORT_BY_RELEASE_DATE_ASC = '&primary_release_date.asc';
+
+// MOVIE DETAILS
+export const URL_DETAILS_BASE = 'https://api.themoviedb.org/3/movie/';
+export const DETAILS_AUTH_AND_APPEND = `?api_key=${API_KEY}&append_to_response=videos,images`;
