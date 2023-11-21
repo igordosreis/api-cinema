@@ -10,12 +10,12 @@ import {
   URL_DETAILS_BASE,
   URL_DISCOVER_BASE,
 } from '../constants';
-import { IMovieAPIResponse } from '../interfaces/IMoviesAPI';
+import { IMoviesResults, IMovieDetails } from '../interfaces/IMoviesAPI';
 
 class MoviesAPIFetch {
-  fetch = async (endpoint: string): Promise<IMovieAPIResponse | undefined> => {
+  fetch = async <T>(endpoint: string): Promise<T | undefined> => {
     try {
-      const { data } = await axios.get<IMovieAPIResponse>(endpoint);
+      const { data } = await axios.get<T>(endpoint);
 
       return data;
     } catch (error) {
@@ -26,7 +26,7 @@ class MoviesAPIFetch {
   fetchNowPlaying = async (currentDate: IDate, pastDate: IDate) => {
     const endpoint = `${URL_DISCOVER_BASE}${RELEASE_DATE_START}${pastDate}${RELEASE_DATE_END}${currentDate}`;
 
-    const data = await this.fetch(endpoint);
+    const data = await this.fetch<IMoviesResults>(endpoint);
 
     return data;
   };
@@ -34,7 +34,7 @@ class MoviesAPIFetch {
   fetchPopular = async (currentDate: IDate, pastDate: IDate) => {
     const endpoint = `${URL_DISCOVER_BASE}${RELEASE_DATE_START}${pastDate}${RELEASE_DATE_END}${currentDate}${SORT_BY_POPULARITY_DESC}`;
 
-    const data = await this.fetch(endpoint);
+    const data = await this.fetch<IMoviesResults>(endpoint);
 
     return data;
   };
@@ -42,7 +42,7 @@ class MoviesAPIFetch {
   fetchUpcoming = async (currentDate: IDate, futureDate: IDate) => {
     const endpoint = `${URL_DISCOVER_BASE}${RELEASE_DATE_START}${currentDate}${RELEASE_DATE_END}${futureDate}${SORT_BY_RELEASE_DATE_ASC}`;
 
-    const data = await this.fetch(endpoint);
+    const data = await this.fetch<IMoviesResults>(endpoint);
 
     return data;
   };
@@ -50,7 +50,7 @@ class MoviesAPIFetch {
   fetchPremier = async (previousSundayDate: IDate, nextSundayDate: IDate) => {
     const endpoint = `${URL_DISCOVER_BASE}${RELEASE_DATE_START}${previousSundayDate}${RELEASE_DATE_END}${nextSundayDate}`;
 
-    const data = await this.fetch(endpoint);
+    const data = await this.fetch<IMoviesResults>(endpoint);
 
     return data;
   };
@@ -58,7 +58,7 @@ class MoviesAPIFetch {
   fetchMovieDetails = async (id: number | string) => {
     const endpoint = `${URL_DETAILS_BASE}${id}${DETAILS_AUTH_AND_APPEND}`;
 
-    const data = await this.fetch(endpoint);
+    const data = await this.fetch<IMovieDetails>(endpoint);
 
     return data;
   };

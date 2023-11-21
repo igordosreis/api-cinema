@@ -1,5 +1,7 @@
 import MoviesAPIModel from '../database/models/MoviesAPI.model';
+import { IMoviesResultsWithLinks } from '../interfaces/IMoviesAPI';
 import DateUtils from '../utils/date.utils';
+import formatMoviesUtil from '../utils/formatMovies.util';
 
 export default class MoviesAPIService {
   public static async getNowPlaying() {
@@ -8,17 +10,24 @@ export default class MoviesAPIService {
 
     const currentDateISO = DateUtils.formatDateToISO(currentDate);
     const pastDateISO = DateUtils.formatDateToISO(subtractFortyFiveDaysDate);
-    console.log('currentDateISO: ', currentDateISO);
-    console.log('pastDateISO: ', pastDateISO);
 
     const allMoviesPlayingNow = await MoviesAPIModel.getNowPlaying(currentDateISO, pastDateISO);
 
     if (allMoviesPlayingNow) {
       const randomizedMoviesOrder = allMoviesPlayingNow.results.sort(() => Math.random() - 0.5);
       allMoviesPlayingNow.results = randomizedMoviesOrder;
-    }
 
-    return allMoviesPlayingNow;
+      const moviesWithImgLinks = formatMoviesUtil.addImgLinksToAllMovies(
+        allMoviesPlayingNow.results,
+      );
+      // allMoviesPlayingNow.results = moviesWithImgLinks;
+      const allMoviesPlayingNowWithLinks = {
+        ...allMoviesPlayingNow,
+        results: moviesWithImgLinks,
+      };
+
+      return allMoviesPlayingNowWithLinks as IMoviesResultsWithLinks;
+    }
   }
 
   public static async getPopular() {
@@ -33,7 +42,14 @@ export default class MoviesAPIService {
       pastDateISO,
     );
 
-    return allMoviesPlayingSortedByPopular;
+    if (allMoviesPlayingSortedByPopular) {
+      const moviesWithImgLinks = formatMoviesUtil.addImgLinksToAllMovies(
+        allMoviesPlayingSortedByPopular.results,
+      );
+      allMoviesPlayingSortedByPopular.results = moviesWithImgLinks;
+
+      return allMoviesPlayingSortedByPopular as IMoviesResultsWithLinks;
+    }
   }
 
   public static async getUpcoming() {
@@ -45,7 +61,12 @@ export default class MoviesAPIService {
 
     const allMoviesUpcoming = await MoviesAPIModel.getUpcoming(currentDateISO, pastDateISO);
 
-    return allMoviesUpcoming;
+    if (allMoviesUpcoming) {
+      const moviesWithImgLinks = formatMoviesUtil.addImgLinksToAllMovies(allMoviesUpcoming.results);
+      allMoviesUpcoming.results = moviesWithImgLinks;
+
+      return allMoviesUpcoming as IMoviesResultsWithLinks;
+    }
   }
 
   public static async getPremier() {
@@ -53,12 +74,15 @@ export default class MoviesAPIService {
 
     const lastSundayISO = DateUtils.getLastSunday(currentDate);
     const nextSundayISO = DateUtils.getNextSunday(currentDate);
-    console.log('lastSundayISO: ', lastSundayISO);
-    console.log('nextSundayISO: ', nextSundayISO);
 
     const allMoviesPremier = await MoviesAPIModel.getPremier(lastSundayISO, nextSundayISO);
 
-    return allMoviesPremier;
+    if (allMoviesPremier) {
+      const moviesWithImgLinks = formatMoviesUtil.addImgLinksToAllMovies(allMoviesPremier.results);
+      allMoviesPremier.results = moviesWithImgLinks;
+
+      return allMoviesPremier as IMoviesResultsWithLinks;
+    }
   }
 
   public static async getMovieDetails(id: number | string) {
