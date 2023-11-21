@@ -50,7 +50,7 @@ class FormatMovies {
       return newVideoObj;
     });
 
-    const MovieDetailsWithLinks = Object.assign(movieDetails, { videos: results });
+    const MovieDetailsWithLinks: IMovieDetails = Object.assign(movieDetails, { videos: results });
 
     return MovieDetailsWithLinks;
   };
