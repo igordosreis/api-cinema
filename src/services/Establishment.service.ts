@@ -6,4 +6,6 @@ export default class EstablishmentService {
 
     return allEstablishments;
   }
+
+  // public static async getEstablishmentsByAddress() {}
 }
