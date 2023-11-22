@@ -9,7 +9,7 @@ export default class EstablishmentController {
   }
 
   public static async getAllCities(_req: Request, res: Response): Promise<void> {
-    const allCities = await 'placeholder';
+    const allCities = await EstablishmentService.getAllCities();
 
     res.status(200).json(allCities);
   }
