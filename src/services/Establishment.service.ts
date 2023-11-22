@@ -18,5 +18,11 @@ export default class EstablishmentService {
     return allCities;
   }
 
+  public static async getAllStates() {
+    const allStates = StatesModel.findAll();
+
+    return allStates;
+  }
+
   // public static async getEstablishmentsByAddress() {}
 }

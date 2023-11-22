@@ -15,7 +15,7 @@ export default class EstablishmentController {
   }
 
   public static async getAllStates(_req: Request, res: Response): Promise<void> {
-    const allStates = await 'placeholder';
+    const allStates = await EstablishmentService.getAllStates();
 
     res.status(200).json(allStates);
   }
