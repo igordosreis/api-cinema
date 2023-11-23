@@ -1,10 +1,13 @@
+/* eslint-disable max-lines-per-function */
 /* eslint-disable operator-linebreak */
 import MoviesAPIModel from '../database/models/MoviesAPI.model';
+import { IGenreList, IMovieDetails, IMoviesResults } from '../interfaces/IMoviesAPI';
 import DateUtils from '../utils/date.utils';
 import formatMoviesUtil from '../utils/formatMovies.util';
+import searchMoviesUtil from '../utils/searchMovies.util';
 
 export default class MoviesAPIService {
-  public static async getNowPlaying() {
+  public static async getNowPlaying(): Promise<IMoviesResults | undefined> {
     const currentDate = new Date();
     const subtractFortyFiveDaysDate = DateUtils.subtractDays(currentDate, 45);
 
@@ -30,29 +33,26 @@ export default class MoviesAPIService {
     }
   }
 
-  public static async getPopular() {
+  public static async getPopular(): Promise<IMoviesResults | undefined> {
     const currentDate = new Date();
     const subtractFortyFiveDaysDate = DateUtils.subtractDays(currentDate, 45);
 
     const currentDateISO = DateUtils.formatDateToISO(currentDate);
     const pastDateISO = DateUtils.formatDateToISO(subtractFortyFiveDaysDate);
 
-    const allMoviesPlayingSortedByPopular = await MoviesAPIModel.getNowPlaying(
-      currentDateISO,
-      pastDateISO,
-    );
+    const allMoviesByPopular = await MoviesAPIModel.getNowPlaying(currentDateISO, pastDateISO);
 
-    if (allMoviesPlayingSortedByPopular) {
+    if (allMoviesByPopular) {
       const moviesWithImgLinks = formatMoviesUtil.addImgLinksToAllMovies(
-        allMoviesPlayingSortedByPopular.results,
+        allMoviesByPopular.results,
       );
-      allMoviesPlayingSortedByPopular.results = moviesWithImgLinks;
+      allMoviesByPopular.results = moviesWithImgLinks;
 
-      return allMoviesPlayingSortedByPopular;
+      return allMoviesByPopular;
     }
   }
 
-  public static async getUpcoming() {
+  public static async getUpcoming(): Promise<IMoviesResults | undefined> {
     const currentDate = new Date();
     const addOneDayDate = DateUtils.addDays(currentDate, 1);
     const addThirtyDaysDate = DateUtils.addDays(currentDate, 30);
@@ -70,7 +70,7 @@ export default class MoviesAPIService {
     }
   }
 
-  public static async getPremier() {
+  public static async getPremier(): Promise<IMoviesResults | undefined> {
     const currentDate = new Date();
 
     const lastSundayISO = DateUtils.getLastSunday(currentDate);
@@ -86,7 +86,9 @@ export default class MoviesAPIService {
     }
   }
 
-  public static async getMovieDetails(movieId: number | string) {
+  public static async getMovieDetails(
+    movieId: number | string,
+  ): Promise<IMovieDetails | undefined> {
     const movieDetails = await MoviesAPIModel.getMovieDetails(movieId);
 
     if (movieDetails) {
@@ -98,9 +100,32 @@ export default class MoviesAPIService {
     }
   }
 
-  public static async getGenres() {
+  public static async getGenres(): Promise<IGenreList | undefined> {
     const allMovieGenres = await MoviesAPIModel.getGenres();
 
     return allMovieGenres;
+  }
+
+  public static async getByGenreAndTitle(
+    genreId: string | undefined,
+    titleQuery: string | undefined,
+  ) {
+    const allMoviesByPopular = await this.getPopular();
+    const allMoviesUpcoming = await this.getUpcoming();
+
+    if (allMoviesByPopular && allMoviesUpcoming) {
+      const parsedPopular = searchMoviesUtil.findByGenreAndTitle(
+        allMoviesByPopular,
+        genreId,
+        titleQuery,
+      );
+      const parsedUpcoming = searchMoviesUtil.findByGenreAndTitle(
+        allMoviesByPopular,
+        genreId,
+        titleQuery,
+      );
+
+      return { parsedPopular, parsedUpcoming };
+    }
   }
 }

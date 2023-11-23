@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import axios from 'axios';
 import { IDate } from '../interfaces/IUrlDate';
-import { IMoviesResults, IMovieDetails, GenreList } from '../interfaces/IMoviesAPI';
+import { IMoviesResults, IMovieDetails, IGenreList } from '../interfaces/IMoviesAPI';
 import {
   DETAILS_AUTH_AND_APPEND,
   LANGUAGE_PT_BR,
@@ -45,7 +45,6 @@ class MoviesAPIFetch {
 
   fetchPopular = async (currentDate: IDate, pastDate: IDate) => {
     const endpoint = `${URL_BASE_DISCOVER}${RELEASE_DATE_START}${pastDate}${RELEASE_DATE_END}${currentDate}${SORT_BY_POPULARITY_DESC}`;
-    console.log('endpoint: ', endpoint);
 
     const data = await this.fetch<IMoviesResults>(endpoint);
 
@@ -54,7 +53,9 @@ class MoviesAPIFetch {
 
   fetchUpcoming = async (tomorrowDate: IDate, futureDate: IDate) => {
     const endpoint = `${URL_BASE_DISCOVER}${RELEASE_DATE_START}${tomorrowDate}${RELEASE_DATE_END}${futureDate}${SORT_BY_RELEASE_DATE_ASC}`;
-
+    console.log(`${new Date().toLocaleString('pt-BR', {
+      timeZone: 'America/Sao_Paulo',
+    })}`, endpoint);
     const data = await this.fetch<IMoviesResults>(endpoint);
 
     return data;
@@ -79,7 +80,7 @@ class MoviesAPIFetch {
   fetchGenres = async () => {
     const endpoint = `${URL_BASE_GENRE}${LANGUAGE_PT_BR}`;
 
-    const data = await this.fetch<GenreList>(endpoint);
+    const data = await this.fetch<IGenreList>(endpoint);
 
     return data;
   };

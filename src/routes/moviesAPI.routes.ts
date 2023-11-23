@@ -9,5 +9,6 @@ moviesAPIRouter.get('/upcoming', MoviesAPIController.getUpcoming);
 moviesAPIRouter.get('/premier', MoviesAPIController.getPremier);
 moviesAPIRouter.get('/details/:id', MoviesAPIController.getMovieDetails);
 moviesAPIRouter.get('/genres', MoviesAPIController.getGenres);
+moviesAPIRouter.get('/search', MoviesAPIController.getByGenreAndTitle);
 
 export default moviesAPIRouter;

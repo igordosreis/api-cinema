@@ -10,17 +10,15 @@ export default class EstablishmentController {
     res.status(200).json(allEstablishments);
   }
 
-  public static async getEstablishmentsByAddress(
-    req: Request,
-    res: Response,
-  ): Promise<void> {
+  public static async getEstablishmentsByAddress(req: Request, res: Response): Promise<void> {
     const searchQuery = req as IEstablishmentRawQuery;
     // const { page, limit, distance, latitude, longitude, cityId, stateId } = searchQuery;
-    const formattedQuery = formatQueryRequestUtil.formatQuery(searchQuery);
+    const formattedQuery = formatQueryRequestUtil.formatEstablishmentQuery(searchQuery);
     console.log('formattedQuery: ', formattedQuery);
-    
-    const establishmentsByAddress = await EstablishmentService
-      .getEstablishmentsByAddress(formattedQuery);
+
+    const establishmentsByAddress = await EstablishmentService.getEstablishmentsByAddress(
+      formattedQuery,
+    );
 
     res.status(200).json(establishmentsByAddress);
   }

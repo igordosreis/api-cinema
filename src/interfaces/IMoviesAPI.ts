@@ -142,6 +142,6 @@ interface Genre {
   name: string;
 }
 
-export interface GenreList {
+export interface IGenreList {
   genres: Genre[];
 }
