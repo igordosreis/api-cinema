@@ -65,7 +65,7 @@ class MoviesAPIFetch {
     return data;
   };
 
-  fetchCategories = async () => {
+  fetchGenres = async () => {
     const endpoint = `${URL_BASE_GENRE}${LANGUAGE_PT_BR}`;
 
     const data = await this.fetch<GenreList>(endpoint);
