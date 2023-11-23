@@ -7,6 +7,7 @@ import {
 class QueryFormat {
   formatLimit = ({ query: { limit } }: IEstablishmentRawQuery) => {
     const numberLimit = Number(limit);
+    console.log('numberLimit: ', numberLimit);
     if (!Number.isNaN(numberLimit) && numberLimit >= 0) return numberLimit;
     return 20;
   };
@@ -17,8 +18,13 @@ class QueryFormat {
     return 0;
   };
 
+  // formatDistance = ({ query: { distance, cityId, stateId } }: IEstablishmentRawQuery) => {
+  //   const result = !Number(distance) || cityId || stateId ? 10000 : Number(distance);
+  //   console.log('result: ', result);
+  //   return result;
+  // };
   formatDistance = ({ query: { distance, cityId, stateId } }: IEstablishmentRawQuery) =>
-    ((distance !== undefined && distance !== '') || cityId || stateId ? Number(distance) : 10000);
+    (!Number(distance) || cityId || stateId ? 10000 : Number(distance));
 
   formatCityId = ({ query: { cityId } }: IEstablishmentRawQuery) => Number(cityId) || undefined;
 

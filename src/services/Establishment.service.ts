@@ -41,7 +41,8 @@ export default class EstablishmentService {
   }: IEstablishmentFormattedQuery) {
     const filteredAddresses = sequelize.query(
       GeolocationWithAddressQuery({ term, cityId, stateId }),
-      { type: QueryTypes.SELECT,
+      {
+        type: QueryTypes.SELECT,
         replacements: {
           latitude,
           longitude,

@@ -1,5 +1,5 @@
 /* eslint-disable max-lines-per-function */
-const geoQueryWithAddress = (term: string) => (`SELECT *
+const geoQueryWithAddress = (term: string) => `SELECT *
 FROM (
   SELECT
     a.id,
@@ -31,19 +31,21 @@ FROM (
 ) sub
 WHERE distance <= :distance
 ORDER BY distance
-limit :offset, :limit`);
+limit :offset, :limit`;
 
-const formatAddress = (term: string) => (
-  term.split(' ').map((el) => `a.address like '%${el}%'`).join(' and ')
-);
+const formatAddress = (term: string) =>
+  term
+    .split(' ')
+    .map((el) => `a.address like '%${el}%'`)
+    .join(' and ');
 
-const formatAddressName = (term: string) => (
-  term.split(' ').map((el) => `a.name like '%${el}%'`).join(' and ')
-);
+const formatAddressName = (term: string) =>
+  term
+    .split(' ')
+    .map((el) => `a.name like '%${el}%'`)
+    .join(' and ');
 
-const formatTerm = (term: string) => (
-  `((${formatAddress(term)}) or (${formatAddressName(term)}))`
-);
+const formatTerm = (term: string) => `((${formatAddress(term)}) or (${formatAddressName(term)}))`;
 
 // const formatEstablishmentName = (term: string) => (
 //   term.split(' ').map((el) => `e.name like '%${el}%'`).join(' and ')
@@ -53,16 +55,21 @@ const formatTerm = (term: string) => (
 //   `((${formatAddress(term)}) or (${formatAddressName(term)}) or (${formatEstablishmentName(term)}))`
 // );
 
-const GeolocationWithAddressQuery = (
-  { term, cityId, stateId }
-  : { term?: string, cityId?: number, stateId?: number },
-) => {
+const GeolocationWithAddressQuery = ({
+  term,
+  cityId,
+  stateId,
+}: {
+  term?: string;
+  cityId?: number;
+  stateId?: number;
+}) => {
   // let query = ' and e.id not in (:blackIds)';
-  let query = ' ';
-  if (term) query += ` and ${formatTerm(term)}`;
+  let query = '';
+  if (term) query += `and ${formatTerm(term)}`;
   if (cityId) query += ' and c.id = :cityId';
   else if (stateId) query += ' and s.id = :stateId';
-  
+
   return geoQueryWithAddress(query);
 };
 
