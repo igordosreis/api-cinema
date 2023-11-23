@@ -120,7 +120,7 @@ export default class MoviesAPIService {
         titleQuery,
       );
       const parsedUpcoming = searchMoviesUtil.findByGenreAndTitle(
-        allMoviesByPopular,
+        allMoviesUpcoming,
         genreId,
         titleQuery,
       );

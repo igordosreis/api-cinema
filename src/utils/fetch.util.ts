@@ -55,7 +55,7 @@ class MoviesAPIFetch {
     const endpoint = `${URL_BASE_DISCOVER}${RELEASE_DATE_START}${tomorrowDate}${RELEASE_DATE_END}${futureDate}${SORT_BY_RELEASE_DATE_ASC}`;
     console.log(`${new Date().toLocaleString('pt-BR', {
       timeZone: 'America/Sao_Paulo',
-    })}`, endpoint);
+    })} -- `, endpoint);
     const data = await this.fetch<IMoviesResults>(endpoint);
 
     return data;
