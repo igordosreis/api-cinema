@@ -14,7 +14,7 @@ FROM (
     s.name as state,
     ( 3959 * acos( cos( radians(u.lat) )
               * cos( radians( a.latitude ) )
-              * cos( radians( a.longitude ) - radians(u.lng) )
+              * cos( radians( a.longitude ) - radians( u.lng ) )
               + sin( radians( u.lat ) )
               * sin( radians( a.latitude ) ) ) ) AS distance
   FROM establishments_addresses AS a
