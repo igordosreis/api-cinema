@@ -6,16 +6,16 @@ FROM (
     a.establishment_id as establishmentId,
     a.latitude,
     a.longitude,
-    e.establishment_name,
+    e.name as brand,
     i.image,
     a.name as title,
     a.address as address,
     c.name as city,
     s.name as state,
-    ( 3959 * acos( cos( radians(c.lat) )
+    ( 3959 * acos( cos( radians(u.lat) )
               * cos( radians( a.latitude ) )
-              * cos( radians( a.longitude ) - radians(c.lng) )
-              + sin( radians(c.lat) )
+              * cos( radians( a.longitude ) - radians(u.lng) )
+              + sin( radians( u.lat ) )
               * sin( radians( a.latitude ) ) ) ) AS distance
   FROM establishments_addresses AS a
   JOIN establishments AS e ON a.establishment_id = e.id
@@ -26,7 +26,7 @@ FROM (
     SELECT
       :latitude AS lat,
       :longitude AS lng
-    ) AS c
+    ) AS u
   WHERE e.active = 1 ${term}
 ) sub
 WHERE distance <= :distance
@@ -45,15 +45,18 @@ const formatAddressName = (term: string) =>
     .map((el) => `a.name like '%${el}%'`)
     .join(' and ');
 
-const formatTerm = (term: string) => `((${formatAddress(term)}) or (${formatAddressName(term)}))`;
+// const formatTerm = (term: string) => `((${formatAddress(term)}) or (${formatAddressName(term)}))`;
 
-// const formatEstablishmentName = (term: string) => (
-//   term.split(' ').map((el) => `e.name like '%${el}%'`).join(' and ')
-// );
+const formatEstablishmentName = (term: string) =>
+  term
+    .split(' ')
+    .map((el) => `e.name like '%${el}%'`)
+    .join(' and ');
 
-// const formatTerm = (term: string) => (
-//   `((${formatAddress(term)}) or (${formatAddressName(term)}) or (${formatEstablishmentName(term)}))`
-// );
+const formatTerm = (term: string) =>
+  `((${formatAddress(term)}) or (${formatAddressName(term)}) or (${formatEstablishmentName(
+    term,
+  )}))`;
 
 const GeolocationWithAddressQuery = ({
   term,

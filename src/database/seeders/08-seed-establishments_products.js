@@ -6,7 +6,7 @@ function getRandomEstablishmentId(ids) {
   return ids[Math.floor(Math.random() * ids.length)];
 }
 
-// Helper function to get a random product_name
+// Helper function to get a random name
 function getRandomProductName() {
   const productNames = ['2D', '3D', '2D Semanal', '3D Semanal', 'Pipoca', 'Refrigerante'];
   return productNames[Math.floor(Math.random() * productNames.length)];
@@ -36,7 +36,7 @@ module.exports = {
     const seedData = Array.from({ length: 50 }, (_, _index) => ({
       establishment_id: getRandomEstablishmentId(establishmentIds),
       active: getRandomBoolean(),
-      product_name: getRandomProductName(),
+      name: getRandomProductName(),
       description: faker.lorem.paragraph(1),
       image: `https://${faker.lorem.word()}.jpg`,
       price: generateRandomPrice(5, 100),

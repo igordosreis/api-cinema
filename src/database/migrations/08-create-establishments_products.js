@@ -26,7 +26,7 @@ module.exports = {
         type: Sequelize.BOOLEAN,
         defaultValue: true,
       },
-      product_name: {
+      name: {
         type: Sequelize.STRING,
         allowNull: false,
         collate: 'utf8mb3_unicode_ci',
