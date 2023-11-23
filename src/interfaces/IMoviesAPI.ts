@@ -136,3 +136,12 @@ export interface IMovieDetailsWithImgLinks extends Omit<IMovieDetails, 'Images'>
   backdropImgLink: string;
   images: ImagesWithLinks;
 }
+
+interface Genre {
+  id: number;
+  name: string;
+}
+
+export interface GenreList {
+  genres: Genre[];
+}

@@ -17,15 +17,9 @@ class QueryFormat {
     return 0;
   };
 
-  formatDistance = ({ query: { distance, cityId, stateId } }: IEstablishmentRawQuery) => {
-    const result = cityId || stateId || !(distance !== undefined && distance !== '') 
-      ? 10000 
-      : Number(distance);
-    console.log('result: ', result);
-
-    return result;
-    // (distance !== undefined && distance !== '') || (cityId || stateId) ? Number(distance) : 10000
-  };
+  formatDistance = ({ query: { distance, cityId, stateId } }: IEstablishmentRawQuery) => (
+    (distance !== undefined && distance !== '') || (cityId || stateId) ? Number(distance) : 10000
+  );
 
   formatCityId = ({ query: { cityId } }: IEstablishmentRawQuery) =>
     Number(cityId) || undefined;
