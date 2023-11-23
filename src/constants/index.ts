@@ -17,7 +17,7 @@ export const SORT_BY_RELEASE_DATE_ASC = '&primary_release_date.asc';
 
 // MOVIE DETAILS
 export const URL_BASE_DETAILS = 'https://api.themoviedb.org/3/movie/';
-export const DETAILS_AUTH_AND_APPEND = `?api_key=${API_KEY}&language=pt-BR&region=BR&append_to_response=videos,images&include_image_language=pt,null`;
+export const DETAILS_AUTH_AND_APPEND = `?api_key=${API_KEY}&language=pt-BR&region=BR&append_to_response=videos,images,credits&include_image_language=pt,null`;
 
 // GENRE LIST
 export const URL_BASE_GENRE = `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}`;
