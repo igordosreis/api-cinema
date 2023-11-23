@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 import axios from 'axios';
 import { IDate } from '../interfaces/IUrlDate';
+import { IMoviesResults, IMovieDetails, GenreList } from '../interfaces/IMoviesAPI';
 import {
   DETAILS_AUTH_AND_APPEND,
   LANGUAGE_PT_BR,
@@ -12,7 +13,14 @@ import {
   URL_BASE_DISCOVER,
   URL_BASE_GENRE,
 } from '../constants';
-import { IMoviesResults, IMovieDetails, GenreList } from '../interfaces/IMoviesAPI';
+
+// interface FetchParams {
+//   firstDate: Date;
+//   secondDate: Date;
+//   fetchType: 'nowplaying' | 'popular';
+//   movieId?: number | string;
+//   genreId?: number | string;
+// }
 
 class MoviesAPIFetch {
   fetch = async <T>(endpoint: string): Promise<T | undefined> => {
@@ -25,6 +33,8 @@ class MoviesAPIFetch {
     }
   };
 
+  // getMovies = async (fetchParams: FetchParams) => {};
+
   fetchNowPlaying = async (currentDate: IDate, pastDate: IDate) => {
     const endpoint = `${URL_BASE_DISCOVER}${RELEASE_DATE_START}${pastDate}${RELEASE_DATE_END}${currentDate}`;
 
@@ -35,14 +45,15 @@ class MoviesAPIFetch {
 
   fetchPopular = async (currentDate: IDate, pastDate: IDate) => {
     const endpoint = `${URL_BASE_DISCOVER}${RELEASE_DATE_START}${pastDate}${RELEASE_DATE_END}${currentDate}${SORT_BY_POPULARITY_DESC}`;
+    console.log('endpoint: ', endpoint);
 
     const data = await this.fetch<IMoviesResults>(endpoint);
 
     return data;
   };
 
-  fetchUpcoming = async (currentDate: IDate, futureDate: IDate) => {
-    const endpoint = `${URL_BASE_DISCOVER}${RELEASE_DATE_START}${currentDate}${RELEASE_DATE_END}${futureDate}${SORT_BY_RELEASE_DATE_ASC}`;
+  fetchUpcoming = async (tomorrowDate: IDate, futureDate: IDate) => {
+    const endpoint = `${URL_BASE_DISCOVER}${RELEASE_DATE_START}${tomorrowDate}${RELEASE_DATE_END}${futureDate}${SORT_BY_RELEASE_DATE_ASC}`;
 
     const data = await this.fetch<IMoviesResults>(endpoint);
 
@@ -57,8 +68,8 @@ class MoviesAPIFetch {
     return data;
   };
 
-  fetchMovieDetails = async (id: number | string) => {
-    const endpoint = `${URL_BASE_DETAILS}${id}${DETAILS_AUTH_AND_APPEND}`;
+  fetchMovieDetails = async (movieId: number | string) => {
+    const endpoint = `${URL_BASE_DETAILS}${movieId}${DETAILS_AUTH_AND_APPEND}`;
 
     const data = await this.fetch<IMovieDetails>(endpoint);
 

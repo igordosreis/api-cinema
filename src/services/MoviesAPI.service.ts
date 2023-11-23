@@ -54,12 +54,13 @@ export default class MoviesAPIService {
 
   public static async getUpcoming() {
     const currentDate = new Date();
+    const addOneDayDate = DateUtils.addDays(currentDate, 1);
     const addThirtyDaysDate = DateUtils.addDays(currentDate, 30);
 
-    const currentDateISO = DateUtils.formatDateToISO(currentDate);
-    const pastDateISO = DateUtils.formatDateToISO(addThirtyDaysDate);
+    const tomorrowDateISO = DateUtils.formatDateToISO(addOneDayDate);
+    const futureDateISO = DateUtils.formatDateToISO(addThirtyDaysDate);
 
-    const allMoviesUpcoming = await MoviesAPIModel.getUpcoming(currentDateISO, pastDateISO);
+    const allMoviesUpcoming = await MoviesAPIModel.getUpcoming(tomorrowDateISO, futureDateISO);
 
     if (allMoviesUpcoming) {
       const moviesWithImgLinks = formatMoviesUtil.addImgLinksToAllMovies(allMoviesUpcoming.results);
@@ -85,8 +86,8 @@ export default class MoviesAPIService {
     }
   }
 
-  public static async getMovieDetails(id: number | string) {
-    const movieDetails = await MoviesAPIModel.getMovieDetails(id);
+  public static async getMovieDetails(movieId: number | string) {
+    const movieDetails = await MoviesAPIModel.getMovieDetails(movieId);
 
     if (movieDetails) {
       const movieDetailsWithImgLinks = formatMoviesUtil.addImgLinksToMovieDetails(movieDetails);

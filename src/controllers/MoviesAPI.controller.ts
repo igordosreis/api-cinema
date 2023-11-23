@@ -27,9 +27,9 @@ export default class MoviesAPIController {
   }
 
   public static async getMovieDetails(req: Request, res: Response): Promise<void> {
-    const { id } = req.params;
+    const { id: movieId } = req.params;
 
-    const movieDetails = await MoviesAPIService.getMovieDetails(id);
+    const movieDetails = await MoviesAPIService.getMovieDetails(movieId);
 
     res.status(200).json(movieDetails);
   }

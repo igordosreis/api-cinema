@@ -14,8 +14,8 @@ export default class MoviesAPIModel {
     return allMoviesPlayingSortedByPopular;
   }
 
-  public static async getUpcoming(currentDate: IDate, futureDate: IDate) {
-    const allMoviesUpcoming = MoviesAPIFetch.fetchUpcoming(currentDate, futureDate);
+  public static async getUpcoming(tomorrowDate: IDate, futureDate: IDate) {
+    const allMoviesUpcoming = MoviesAPIFetch.fetchUpcoming(tomorrowDate, futureDate);
 
     return allMoviesUpcoming;
   }
@@ -26,8 +26,8 @@ export default class MoviesAPIModel {
     return allMoviesPremier;
   }
 
-  public static async getMovieDetails(id: number | string) {
-    const movieDetails = MoviesAPIFetch.fetchMovieDetails(id);
+  public static async getMovieDetails(movieId: number | string) {
+    const movieDetails = MoviesAPIFetch.fetchMovieDetails(movieId);
 
     return movieDetails;
   }
