@@ -8,5 +8,6 @@ moviesAPIRouter.get('/popular', MoviesAPIController.getPopular);
 moviesAPIRouter.get('/upcoming', MoviesAPIController.getUpcoming);
 moviesAPIRouter.get('/premier', MoviesAPIController.getPremier);
 moviesAPIRouter.get('/details/:id', MoviesAPIController.getMovieDetails);
+moviesAPIRouter.get('/genres', MoviesAPIController.getGenres);
 
 export default moviesAPIRouter;

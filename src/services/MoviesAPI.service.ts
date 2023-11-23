@@ -96,4 +96,10 @@ export default class MoviesAPIService {
       return movieDetailsWithYoutubeLinks;
     }
   }
+
+  public static async getGenres() {
+    const allMovieGenres = await MoviesAPIModel.getGenres();
+
+    return allMovieGenres;
+  }
 }

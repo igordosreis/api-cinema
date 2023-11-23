@@ -20,5 +20,5 @@ export const URL_BASE_DETAILS = 'https://api.themoviedb.org/3/movie/';
 export const DETAILS_AUTH_AND_APPEND = `?api_key=${API_KEY}&language=pt-BR&region=BR&append_to_response=videos,images&include_image_language=pt,null`;
 
 // GENRE LIST
-export const URL_BASE_GENRE = 'https://api.themoviedb.org/3/genre/movie/list';
-export const LANGUAGE_PT_BR = '?language=pt-br';
+export const URL_BASE_GENRE = `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}`;
+export const LANGUAGE_PT_BR = '&language=pt-br';

@@ -31,4 +31,10 @@ export default class MoviesAPIModel {
 
     return movieDetails;
   }
+
+  public static async getGenres() {
+    const movieGenres = MoviesAPIFetch.fetchGenres();
+
+    return movieGenres;
+  }
 }
