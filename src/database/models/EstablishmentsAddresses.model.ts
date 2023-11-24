@@ -85,7 +85,10 @@ EstablishmentsAddressesModel.belongsTo(EstablishmentsModel, {
   foreignKey: 'establishmentId',
   as: 'establishment',
 });
-EstablishmentsModel.hasMany(EstablishmentsAddressesModel, { foreignKey: 'cityId', as: 'city' });
+EstablishmentsModel.hasMany(EstablishmentsAddressesModel, {
+  foreignKey: 'establishmentId',
+  as: 'establishment',
+});
 
 EstablishmentsAddressesModel.belongsTo(CitiesModel, { foreignKey: 'cityId', as: 'city' });
 CitiesModel.hasMany(EstablishmentsAddressesModel, { foreignKey: 'cityId', as: 'city' });

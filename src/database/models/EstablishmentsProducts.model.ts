@@ -73,6 +73,9 @@ EstablishmentsProductsModel.belongsTo(EstablishmentsModel, {
   foreignKey: 'establishmentId',
   as: 'establishment',
 });
-EstablishmentsModel.hasMany(EstablishmentsProductsModel, { foreignKey: 'cityId', as: 'city' });
+EstablishmentsModel.hasMany(EstablishmentsProductsModel, {
+  foreignKey: 'establishmentId',
+  as: 'establishment',
+});
 
 export default EstablishmentsProductsModel;

@@ -1,5 +1,6 @@
 import { DataTypes, Model } from 'sequelize';
 import db from '.';
+import EstablishmentsProductsModel from './EstablishmentsProducts.model';
 
 class VouchersUsedModel extends Model {
   declare id: number;
@@ -61,5 +62,14 @@ VouchersUsedModel.init(
     timestamps: false,
   },
 );
+
+VouchersUsedModel.belongsTo(EstablishmentsProductsModel, {
+  foreignKey: 'productId',
+  as: 'product',
+});
+EstablishmentsProductsModel.hasMany(VouchersUsedModel, {
+  foreignKey: 'productId',
+  as: 'product',
+});
 
 export default VouchersUsedModel;
