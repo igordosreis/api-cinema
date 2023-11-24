@@ -21,14 +21,20 @@ class CustomError extends Error {
 
 export default CustomError;
 
-export const FetchError: ICustomError = {
+export const fetchError: ICustomError = {
   status: 503,
-  message: 'Servidor indisponível.',
-  title: 'Servidor indisponível, tente novamente mais tarde.',
+  title: 'Servidor indisponível.',
+  message: 'Servidor indisponível, tente novamente mais tarde.',
 };
 
 export const unauthorizedRequest: ICustomError = {
   status: 400,
-  message: 'Acesso não autorizado',
-  title: 'Acesso não autorizado. Faça login para acessar esse serviço.',
+  title: 'Acesso não autorizado',
+  message: 'Acesso não autorizado. Faça login para acessar esse serviço.',
+};
+
+export const tokenNotFound: ICustomError = {
+  status: 400,
+  title: 'Token não encontrado',
+  message: 'Token não encontrado. Faça login para acessar esse serviço.',
 };

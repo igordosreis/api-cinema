@@ -1,6 +1,6 @@
 import FetchMoviesAPI from '../../utils/fetchMoviesAPI.util';
 import { IDate } from '../../interfaces/IUrlDate';
-import CustomError, { FetchError } from '../../utils/customError.util';
+import CustomError, { fetchError } from '../../utils/customError.util';
 
 export default class MoviesAPIModel {
   public static async getNowPlaying(currentDate: IDate, pastDate: IDate) {
@@ -9,7 +9,7 @@ export default class MoviesAPIModel {
 
       return allMoviesPlayingNow;
     } catch {
-      throw new CustomError(FetchError);
+      throw new CustomError(fetchError);
     }
   }
 
@@ -22,7 +22,7 @@ export default class MoviesAPIModel {
 
       return allMoviesPlayingSortedByPopular;
     } catch {
-      throw new CustomError(FetchError);
+      throw new CustomError(fetchError);
     }
   }
 
@@ -32,7 +32,7 @@ export default class MoviesAPIModel {
 
       return allMoviesUpcoming;
     } catch {
-      throw new CustomError(FetchError);
+      throw new CustomError(fetchError);
     }
   }
 
@@ -42,7 +42,7 @@ export default class MoviesAPIModel {
 
       return allMoviesPremier;
     } catch {
-      throw new CustomError(FetchError);
+      throw new CustomError(fetchError);
     }
   }
 
@@ -52,7 +52,7 @@ export default class MoviesAPIModel {
 
       return movieDetails;
     } catch {
-      throw new CustomError(FetchError);
+      throw new CustomError(fetchError);
     }
   }
 
@@ -62,7 +62,7 @@ export default class MoviesAPIModel {
 
       return movieGenres;
     } catch {
-      throw new CustomError(FetchError);
+      throw new CustomError(fetchError);
     }
   }
 }

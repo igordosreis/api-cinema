@@ -1,11 +1,16 @@
 import { Router } from 'express';
 import { EstablishmentController } from '../controllers';
+import authMiddleware from '../middlewares/auth.middleware';
 
 const establishmentRouter = Router();
 
-establishmentRouter.get('/', EstablishmentController.getAllEstablishments);
-establishmentRouter.get('/search', EstablishmentController.getEstablishmentsByAddress);
-establishmentRouter.get('/cities', EstablishmentController.getAllCities);
-establishmentRouter.get('/states', EstablishmentController.getAllStates);
+establishmentRouter.get('/', authMiddleware, EstablishmentController.getAllEstablishments);
+establishmentRouter.get(
+  '/search',
+  authMiddleware,
+  EstablishmentController.getEstablishmentsByAddress,
+);
+establishmentRouter.get('/cities', authMiddleware, EstablishmentController.getAllCities);
+establishmentRouter.get('/states', authMiddleware, EstablishmentController.getAllStates);
 
 export default establishmentRouter;

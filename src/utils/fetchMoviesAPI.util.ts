@@ -13,7 +13,7 @@ import {
   TMDB_URL_BASE_DISCOVER,
   TMDB_URL_BASE_GENRE,
 } from '../constants';
-import CustomError, { FetchError } from './customError.util';
+import CustomError, { fetchError } from './customError.util';
 
 // interface FetchParams {
 //   firstDate: Date;
@@ -30,7 +30,7 @@ class FetchMoviesAPI {
 
       return data;
     } catch {
-      throw new CustomError(FetchError);
+      throw new CustomError(fetchError);
     }
   };
 
