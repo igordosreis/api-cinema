@@ -2,7 +2,6 @@ export type ICustomError = {
   status: number;
   message: string;
   title: string;
-  timestamp: string;
 };
 
 class CustomError extends Error {
@@ -13,7 +12,7 @@ class CustomError extends Error {
   constructor(error: ICustomError) {
     super(error.message);
     this.status = error.status;
-    this.title = error.timestamp;
+    this.title = error.title;
     this.timestamp = new Date().toLocaleString('pt-BR', {
       timeZone: 'America/Sao_Paulo',
     });
@@ -21,3 +20,9 @@ class CustomError extends Error {
 }
 
 export default CustomError;
+
+export const FetchError: ICustomError = {
+  status: 503,
+  message: 'Servidor indisponível.',
+  title: 'Servidor indisponível, tente novamente mais tarde.',
+};

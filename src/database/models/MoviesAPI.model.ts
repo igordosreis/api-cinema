@@ -1,41 +1,68 @@
 import MoviesAPIFetch from '../../utils/fetch.util';
 import { IDate } from '../../interfaces/IUrlDate';
+import CustomError, { FetchError } from '../../utils/customError.util';
 
 export default class MoviesAPIModel {
   public static async getNowPlaying(currentDate: IDate, pastDate: IDate) {
-    const allMoviesPlayingNow = await MoviesAPIFetch.fetchNowPlaying(currentDate, pastDate);
+    try {
+      const allMoviesPlayingNow = await MoviesAPIFetch.fetchNowPlaying(currentDate, pastDate);
 
-    return allMoviesPlayingNow;
+      return allMoviesPlayingNow;
+    } catch {
+      throw new CustomError(FetchError);
+    }
   }
 
   public static async getPopular(currentDate: IDate, pastDate: IDate) {
-    const allMoviesPlayingSortedByPopular = await MoviesAPIFetch
-      .fetchPopular(currentDate, pastDate);
+    try {
+      const allMoviesPlayingSortedByPopular = await MoviesAPIFetch.fetchPopular(
+        currentDate,
+        pastDate,
+      );
 
-    return allMoviesPlayingSortedByPopular;
+      return allMoviesPlayingSortedByPopular;
+    } catch {
+      throw new CustomError(FetchError);
+    }
   }
 
   public static async getUpcoming(tomorrowDate: IDate, futureDate: IDate) {
-    const allMoviesUpcoming = await MoviesAPIFetch.fetchUpcoming(tomorrowDate, futureDate);
+    try {
+      const allMoviesUpcoming = await MoviesAPIFetch.fetchUpcoming(tomorrowDate, futureDate);
 
-    return allMoviesUpcoming;
+      return allMoviesUpcoming;
+    } catch {
+      throw new CustomError(FetchError);
+    }
   }
 
   public static async getPremier(lastSundayDate: IDate, nextSundayDate: IDate) {
-    const allMoviesPremier = await MoviesAPIFetch.fetchPremier(lastSundayDate, nextSundayDate);
+    try {
+      const allMoviesPremier = await MoviesAPIFetch.fetchPremier(lastSundayDate, nextSundayDate);
 
-    return allMoviesPremier;
+      return allMoviesPremier;
+    } catch {
+      throw new CustomError(FetchError);
+    }
   }
 
   public static async getMovieDetails(movieId: number | string) {
-    const movieDetails = await MoviesAPIFetch.fetchMovieDetails(movieId);
+    try {
+      const movieDetails = await MoviesAPIFetch.fetchMovieDetails(movieId);
 
-    return movieDetails;
+      return movieDetails;
+    } catch {
+      throw new CustomError(FetchError);
+    }
   }
 
   public static async getGenres() {
-    const movieGenres = await MoviesAPIFetch.fetchGenres();
+    try {
+      const movieGenres = await MoviesAPIFetch.fetchGenres();
 
-    return movieGenres;
+      return movieGenres;
+    } catch {
+      throw new CustomError(FetchError);
+    }
   }
 }
