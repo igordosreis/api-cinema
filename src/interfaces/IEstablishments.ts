@@ -21,6 +21,7 @@ export interface IEstablishmentRawQuery extends Request {
   longitude: string | undefined;
   cityId: string;
   stateId: string;
+  brandId: number | string;
   term: string;
 }
 
@@ -32,5 +33,6 @@ export interface IEstablishmentFormattedQuery {
   longitude: string | undefined;
   cityId: number | undefined;
   stateId: number | undefined;
+  brandId: number | undefined;
   term: string;
 }

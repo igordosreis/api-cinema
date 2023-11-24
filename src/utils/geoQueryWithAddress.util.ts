@@ -3,7 +3,7 @@ const geoQueryWithAddress = (term: string) => `SELECT *
 FROM (
   SELECT
     a.id,
-    a.establishment_id as establishmentId,
+    a.establishment_id as brandId,
     a.latitude,
     a.longitude,
     e.name as brand,
@@ -62,14 +62,17 @@ const GeolocationWithAddressQuery = ({
   term,
   cityId,
   stateId,
+  brandId,
 }: {
   term?: string;
   cityId?: number;
   stateId?: number;
+  brandId?: number;
 }) => {
   // let query = ' and e.id not in (:blackIds)';
   let query = '';
   if (term) query += `and ${formatTerm(term)}`;
+  if (brandId) query += ' and e.id = :brandId';
   if (cityId) query += ' and c.id = :cityId';
   else if (stateId) query += ' and s.id = :stateId';
 

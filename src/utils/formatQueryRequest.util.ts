@@ -35,14 +35,17 @@ class QueryFormat {
   formatLongitude = ({ query: { longitude } }: IEstablishmentRawQuery) =>
     longitude || '-43.9386685';
 
+  formatBrandId = ({ query: { brandId } }: IEstablishmentRawQuery) => Number(brandId) || undefined;
+
   formatEstablishmentQuery = (req: IEstablishmentRawQuery) =>
     ({
       limit: this.formatLimit(req),
       page: this.formatPage(req),
-      distance: this.formatDistance(req),
       cityId: this.formatCityId(req),
       stateId: this.formatStateId(req),
+      brandId: this.formatBrandId(req),
       term: req.query.term as string,
+      distance: this.formatDistance(req),
       latitude: this.formatLatitude(req),
       longitude: this.formatLongitude(req),
     } as IEstablishmentFormattedQuery);
