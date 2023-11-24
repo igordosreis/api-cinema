@@ -18,6 +18,12 @@ module.exports = {
       product_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        references: {
+          model: 'establishments_products',
+          key: 'id', 
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
       },
       user_id: {
         type: Sequelize.INTEGER,

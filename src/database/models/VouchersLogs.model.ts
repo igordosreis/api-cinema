@@ -6,7 +6,7 @@ class VouchersLogsModel extends Model {
   declare id: number;
   declare request: string;
   declare response: string;
-  declare ticketId: string;
+  declare voucherId: string;
   declare date: Date;
 }
 
@@ -26,7 +26,7 @@ VouchersLogsModel.init(
       type: DataTypes.STRING,
       allowNull: true,
     },
-    ticketId: {
+    voucherId: {
       type: DataTypes.STRING,
       allowNull: true,
     },

@@ -20,7 +20,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true,
       },
-      ticket_id: {
+      voucher_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
