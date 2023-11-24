@@ -4,7 +4,7 @@ import {
   IEstablishmentRawQuery,
 } from '../interfaces/IEstablishments';
 
-class QueryFormat {
+class FormatQueryRequest {
   formatLimit = ({ query: { limit } }: IEstablishmentRawQuery) => {
     const numberLimit = Number(limit);
     console.log('numberLimit: ', numberLimit);
@@ -51,4 +51,4 @@ class QueryFormat {
     } as IEstablishmentFormattedQuery);
 }
 
-export default new QueryFormat();
+export default new FormatQueryRequest();

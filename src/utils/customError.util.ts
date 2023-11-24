@@ -26,3 +26,9 @@ export const FetchError: ICustomError = {
   message: 'Servidor indisponível.',
   title: 'Servidor indisponível, tente novamente mais tarde.',
 };
+
+export const unauthorizedRequest: ICustomError = {
+  status: 400,
+  message: 'Acesso não autorizado',
+  title: 'Acesso não autorizado. Faça login para acessar esse serviço.',
+};

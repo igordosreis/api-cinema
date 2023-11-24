@@ -23,7 +23,10 @@ export const DETAILS_AUTH_AND_APPEND = `?api_key=${API_KEY}&language=pt-BR&regio
 export const TMDB_URL_BASE_GENRE = `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}`;
 export const LANGUAGE_PT_BR = '&language=pt-br';
 
-// SUPERAPP AUTH
+// SUPERAPP
+
+// SUPERAPP BEARER_TOKEN
+export const { BEARER_TOKEN } = process.env;
 
 // SUPERAPP URLs & ENDPOINTS
 export const SUPERAPP_URL_BASE_AUTH =

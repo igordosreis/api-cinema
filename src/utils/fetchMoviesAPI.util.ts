@@ -23,7 +23,7 @@ import CustomError, { FetchError } from './customError.util';
 //   genreId?: number | string;
 // }
 
-class MoviesAPIFetch {
+class FetchMoviesAPI {
   fetch = async <T>(endpoint: string): Promise<T | undefined> => {
     try {
       const { data } = await axios.get<T>(endpoint);
@@ -85,4 +85,4 @@ class MoviesAPIFetch {
   };
 }
 
-export default new MoviesAPIFetch();
+export default new FetchMoviesAPI();
