@@ -102,10 +102,51 @@ interface ImagesWithLinks {
   posters: ImageWithLinks[];
 }
 
+export interface CastMember {
+  adult: boolean;
+  gender: number;
+  id: number;
+  known_for_department: string;
+  name: string;
+  original_name: string;
+  popularity: number;
+  profile_path: string | null;
+  cast_id: number;
+  character: string;
+  credit_id: string;
+  order: number;
+}
+
+export interface CrewMember {
+  adult: boolean;
+  gender: number;
+  id: number;
+  known_for_department: string;
+  name: string;
+  original_name: string;
+  popularity: number;
+  profile_path: string | null;
+  credit_id: string;
+  department: string;
+  job: string;
+}
+
+interface Credits {
+  cast: CastMember[];
+  crew: CrewMember[];
+}
+
+interface BelongsToCollection {
+  id: number;
+  name: string;
+  poster_path: string;
+  backdrop_path: string;
+}
+
 export interface IMovieDetails {
   adult: boolean;
   backdrop_path: string;
-  belongs_to_collection: null | any; // Adjust this based on the actual type
+  belongs_to_collection: BelongsToCollection | null;
   budget: number;
   genres: Genre[];
   homepage: string;
@@ -130,6 +171,7 @@ export interface IMovieDetails {
   vote_count: number;
   videos: Videos;
   images: Images;
+  credits: Credits;
 }
 
 export interface IMovieDetailsWithImgLinks extends Omit<IMovieDetails, 'Images'> {

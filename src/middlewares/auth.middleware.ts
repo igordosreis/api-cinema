@@ -7,8 +7,10 @@ import { NextFunction, Request, Response } from 'express';
 import authRequestsUtil from '../utils/authRequests.util';
 
 const authMiddleware = (req: Request, _res: Response, next: NextFunction) => {
-  // const token: string | undefined = req.headers.authorization;
-  
+  // --- FOR TESTING PURPOSES --- FOR TESTING PURPOSES --- FOR TESTING PURPOSES
+  // const token: string | undefined = req.headers.authorization; // --- FOR TE
+  // --- FOR TESTING PURPOSES --- FOR TESTING PURPOSES --- FOR TESTING PURPOSES
+
   // --- FOR TESTING PURPOSES --- FOR TESTING PURPOSES --- FOR TESTING PURPOSES
   const token = process.env.TEST_USER_TOKEN; // --- FOR TESTING PURPOSES --- FO
   // --- FOR TESTING PURPOSES --- FOR TESTING PURPOSES --- FOR TESTING PURPOSES

@@ -1,4 +1,7 @@
+/* eslint-disable max-lines-per-function */
 import {
+  CastMember,
+  CrewMember,
   IMovieDetails,
   // IMovieDetailsWithImgLinks,
   IMovieInfo,
@@ -16,6 +19,13 @@ class FormatMovies {
     return moviesWithImgLinks;
   };
 
+  sliceFiveFromCastDetails = (cast: CastMember[]) => cast.slice(0, 5);
+
+  filterCrewForDirectorAndProducers = (crew: CrewMember[]) =>
+    crew.filter(
+      ({ job }) => job === 'Director' || job === 'Producer' || job === 'Executive Producer',
+    );
+
   addImgLinksToMovieDetails = (movieDetails: IMovieDetails): IMovieDetails => {
     const backdrops = movieDetails.images.backdrops.map((image) => ({
       ...image,
@@ -29,12 +39,24 @@ class FormatMovies {
       ...image,
       file_path: `https://image.tmdb.org/t/p/original${image.file_path}`,
     }));
+    const cast = this.sliceFiveFromCastDetails(movieDetails.credits.cast).map((actor) => ({
+      ...actor,
+      profile_path: `https://image.tmdb.org/t/p/original${actor.profile_path}`,
+    }));
+    const crew = this.filterCrewForDirectorAndProducers(movieDetails.credits.crew).map(
+      (crewMember) => ({
+        ...crewMember,
+        profile_path: `https://image.tmdb.org/t/p/original${crewMember.profile_path}`,
+      }),
+    );
 
     const images = { backdrops, logos, posters };
+    const credits = { cast, crew };
 
     const MovieDetailsWithLinks: IMovieDetails = Object.assign(movieDetails, {
       backdrop_path: `https://image.tmdb.org/t/p/original${movieDetails.backdrop_path}`,
       images,
+      credits,
     });
 
     return MovieDetailsWithLinks;

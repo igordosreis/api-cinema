@@ -13,13 +13,11 @@ class AuthRequests {
     const isTokenNotFound = !userToken;
 
     if (isTokenNotFound) {
-      console.log('ENTREI - isTokenNotFound: ', isTokenNotFound);
       throw new CustomError(tokenNotFound);
     }
 
     try {
       const endpoint = SUPERAPP_URL_BASE_AUTH;
-      console.log('userToken: ', userToken);
 
       const formattedToken = this.formatToken(userToken);
 
