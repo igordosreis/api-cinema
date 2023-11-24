@@ -1,9 +1,9 @@
 import { DataTypes, Model } from 'sequelize';
 import db from '.';
 
-class TicketsUsedModel extends Model {
+class VouchersUsedModel extends Model {
   declare id: number;
-  declare voucher: string;
+  declare voucherCode: string;
   declare productId: number;
   declare userId: number;
   declare expireDate: Date;
@@ -13,7 +13,7 @@ class TicketsUsedModel extends Model {
   declare soldPrice: number;
 }
 
-TicketsUsedModel.init(
+VouchersUsedModel.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -21,7 +21,7 @@ TicketsUsedModel.init(
       autoIncrement: true,
       primaryKey: true,
     },
-    voucher: {
+    voucherCode: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -55,11 +55,11 @@ TicketsUsedModel.init(
     },
   },
   {
-    modelName: 'tickets_used',
+    modelName: 'vouchers_used',
     sequelize: db,
     underscored: true,
     timestamps: false,
   },
 );
 
-export default TicketsUsedModel;
+export default VouchersUsedModel;

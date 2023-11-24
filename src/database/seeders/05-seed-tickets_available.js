@@ -26,21 +26,21 @@ function generateUniqueVoucher() {
 
 module.exports = {
   up: async (queryInterface, _Sequelize) => {
-    // Generate 30 entries for the 'tickets_available' table
+    // Generate 30 entries for the 'vouchers_available' table
     const seedData = Array.from({ length: 30 }, (_, index) => ({
       id: index + 31,
-      voucher: generateUniqueVoucher(),
+      voucher_code: generateUniqueVoucher(),
       product_id: Math.floor(Math.random() * 1001), // Random number between 0 and 1000
       expire_date: generateRandomDate(2022, 2023),
       created_at: generateRandomDate(2022, 2023),
     }));
 
-    // Insert seed data into the 'tickets_available' table
-    await queryInterface.bulkInsert('tickets_available', seedData, {});
+    // Insert seed data into the 'vouchers_available' table
+    await queryInterface.bulkInsert('vouchers_available', seedData, {});
   },
 
   down: async (queryInterface) => {
-    // Remove all entries from the 'tickets_available' table
-    await queryInterface.bulkDelete('tickets_available', null, {});
+    // Remove all entries from the 'vouchers_available' table
+    await queryInterface.bulkDelete('vouchers_available', null, {});
   },
 };

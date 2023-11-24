@@ -1,8 +1,8 @@
 import { DataTypes, Model } from 'sequelize';
 import db from '.';
-import TicketsUsedModel from './TicketsUsed.model';
+import VouchersUsedModel from './VouchersUsed.model';
 
-class TicketsLogsModel extends Model {
+class VouchersLogsModel extends Model {
   declare id: number;
   declare request: string;
   declare response: string;
@@ -10,7 +10,7 @@ class TicketsLogsModel extends Model {
   declare date: Date;
 }
 
-TicketsLogsModel.init(
+VouchersLogsModel.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -36,14 +36,14 @@ TicketsLogsModel.init(
     },
   },
   {
-    modelName: 'tickets_logs',
+    modelName: 'vouchers_logs',
     sequelize: db,
     underscored: true,
     timestamps: false,
   },
 );
 
-TicketsLogsModel.belongsTo(TicketsUsedModel, { foreignKey: 'ticketsId', as: 'tickets_used' });
-TicketsUsedModel.hasOne(TicketsLogsModel, { foreignKey: 'ticketsId', as: 'tickets_used' });
+VouchersLogsModel.belongsTo(VouchersUsedModel, { foreignKey: 'vouchersId', as: 'vouchers_used' });
+VouchersUsedModel.hasOne(VouchersLogsModel, { foreignKey: 'vouchersId', as: 'vouchers_used' });
 
-export default TicketsLogsModel;
+export default VouchersLogsModel;

@@ -5,38 +5,42 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('tickets_available', {
+    await queryInterface.createTable('vouchers_logs', {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
       },
-      voucher: {
+      request: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
-      product_id: {
+      response: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      ticket_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        references: {
+          model: 'vouchers_used',
+          key: 'id', 
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
       },
-      expire_date: {
-        type: Sequelize.DATE,
-        defaultValue: null,
-      },
-      created_at: {
+      date: {
         type: Sequelize.DATE,
         defaultValue: null,
       },
     }, {
-      engine: 'InnoDB',
-      charset: 'latin1',
       underscored: true,
       timestamps: false,
     });
   },
 
   down: async (queryInterface) => {
-    await queryInterface.dropTable('tickets_available');
+    await queryInterface.dropTable('vouchers_logs');
   },
 };

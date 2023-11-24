@@ -25,7 +25,7 @@ module.exports = {
       [ticketIds[i], ticketIds[j]] = [ticketIds[j], ticketIds[i]];
     }
 
-    // Generate 30 entries for the 'tickets_logs' table
+    // Generate 30 entries for the 'vouchers_logs' table
     const seedData = Array.from({ length: 30 }, (_, index) => ({
       request: faker.lorem.sentences(2),
       response: faker.lorem.sentences(2),
@@ -33,12 +33,12 @@ module.exports = {
       date: generateRandomDate(2020, 2023),
     }));
 
-    // Insert seed data into the 'tickets_logs' table
-    await queryInterface.bulkInsert('tickets_logs', seedData, {});
+    // Insert seed data into the 'vouchers_logs' table
+    await queryInterface.bulkInsert('vouchers_logs', seedData, {});
   },
 
   down: async (queryInterface) => {
-    // Remove all entries from the 'tickets_logs' table
-    await queryInterface.bulkDelete('tickets_logs', null, {});
+    // Remove all entries from the 'vouchers_logs' table
+    await queryInterface.bulkDelete('vouchers_logs', null, {});
   },
 };

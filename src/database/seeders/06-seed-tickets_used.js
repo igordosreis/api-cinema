@@ -46,10 +46,10 @@ function generateRandomPrice(min, max) {
 
 module.exports = {
   up: async (queryInterface, _Sequelize) => {
-    // Generate 10 entries for the 'tickets_used' table
+    // Generate 10 entries for the 'vouchers_used' table
     const seedData = Array.from({ length: 30 }, (_, index) => ({
       id: index + 1,
-      voucher: generateUniqueVoucher(),
+      voucher_code: generateUniqueVoucher(),
       product_id: Math.floor(Math.random() * 1001), // Random number between 0 and 1000
       user_id: Math.floor(Math.random() * 10000) + 1, // Random number between 1 and 10000
       expire_date: generateRandomDate(2022, 2023),
@@ -59,12 +59,12 @@ module.exports = {
       sold_price: generateRandomPrice(10, 300),
     }));
 
-    // Insert seed data into the 'tickets_used' table
-    await queryInterface.bulkInsert('tickets_used', seedData, {});
+    // Insert seed data into the 'vouchers_used' table
+    await queryInterface.bulkInsert('vouchers_used', seedData, {});
   },
 
   down: async (queryInterface) => {
-    // Remove all entries from the 'tickets_used' table
-    await queryInterface.bulkDelete('tickets_used', null, {});
+    // Remove all entries from the 'vouchers_used' table
+    await queryInterface.bulkDelete('vouchers_used', null, {});
   },
 };
