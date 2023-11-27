@@ -3,8 +3,9 @@ import {
   IEstablishmentFormattedQuery,
   IEstablishmentRawQuery,
 } from '../interfaces/IEstablishments';
+import { IProductFormattedQuery, IProductRawQuery } from '../interfaces/IProducts';
 
-class FormatQueryRequest {
+class FormatRequestQuery {
   formatLimit = ({ query: { limit } }: IEstablishmentRawQuery) => {
     const numberLimit = Number(limit);
     console.log('numberLimit: ', numberLimit);
@@ -18,11 +19,6 @@ class FormatQueryRequest {
     return 0;
   };
 
-  // formatDistance = ({ query: { distance, cityId, stateId } }: IEstablishmentRawQuery) => {
-  //   const result = !Number(distance) || cityId || stateId ? 10000 : Number(distance);
-  //   console.log('result: ', result);
-  //   return result;
-  // };
   formatDistance = ({ query: { distance, cityId, stateId } }: IEstablishmentRawQuery) =>
     (!Number(distance) || cityId || stateId ? 10000 : Number(distance));
 
@@ -49,6 +45,26 @@ class FormatQueryRequest {
       latitude: this.formatLatitude(req),
       longitude: this.formatLongitude(req),
     } as IEstablishmentFormattedQuery);
+
+  formatTerm = ({ query: { term } }: IProductRawQuery) =>
+    ((typeof term === 'string') ? term.toLowerCase() : undefined);
+
+  formatType = ({ query: { type } }: IProductRawQuery) =>
+    ((typeof type === 'string') ? type.toLowerCase() : undefined);
+
+  formatEstablishmentId = ({ query: { establishmentId } }: IProductRawQuery) => 
+    Number(establishmentId) || undefined;
+
+  formatAvailable = ({ query: { available } }: IProductRawQuery) =>
+    ((available === 'true') ? true : undefined); 
+
+  formatProductQuery = (req: IProductRawQuery): IProductFormattedQuery => 
+    ({
+      term: this.formatTerm(req),
+      type: this.formatType(req),
+      establishmentId: this.formatEstablishmentId(req),
+      available: this.formatAvailable(req),
+    });
 }
 
-export default new FormatQueryRequest();
+export default new FormatRequestQuery();

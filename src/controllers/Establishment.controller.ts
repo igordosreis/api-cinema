@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
 import { EstablishmentService } from '../services';
 import { IEstablishmentRawQuery } from '../interfaces/IEstablishments';
-import formatQueryRequestUtil from '../utils/formatQueryRequest.util';
+import { IProductRawQuery } from '../interfaces/IProducts';
+import formatRequestQueryUtil from '../utils/formatRequestQuery.util';
 
 export default class EstablishmentController {
   public static async getAllEstablishments(_req: Request, res: Response): Promise<void> {
@@ -12,10 +13,8 @@ export default class EstablishmentController {
 
   public static async getEstablishmentsByAddress(req: Request, res: Response): Promise<void> {
     const searchQuery = req as IEstablishmentRawQuery;
-    // const { page, limit, distance, latitude, longitude, cityId, stateId } = searchQuery;
-    const formattedQuery = formatQueryRequestUtil.formatEstablishmentQuery(searchQuery);
-    console.log('formattedQuery: ', formattedQuery);
 
+    const formattedQuery = formatRequestQueryUtil.formatEstablishmentQuery(searchQuery);
     const establishmentsByAddress = await EstablishmentService.getEstablishmentsByAddress(
       formattedQuery,
     );
@@ -35,8 +34,11 @@ export default class EstablishmentController {
     res.status(200).json(allStates);
   }
 
-  public static async getAllProducts(_req: Request, res: Response): Promise<void> {
-    const allProducts = await EstablishmentService.getAllProducts();
+  public static async getAllProducts(req: Request, res: Response): Promise<void> {
+    const searchQuery = req as IProductRawQuery;
+
+    const formattedQuery = formatRequestQueryUtil.formatProductQuery(searchQuery);
+    const allProducts = await EstablishmentService.getAllProducts(formattedQuery);
 
     res.status(200).json(allProducts);
   }

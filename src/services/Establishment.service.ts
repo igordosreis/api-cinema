@@ -5,9 +5,11 @@ import CitiesModel from '../database/models/Cities.model';
 import EstablishmentsModel from '../database/models/Establishments.model';
 import StatesModel from '../database/models/States.model';
 import { IEstablishmentFormattedQuery } from '../interfaces/IEstablishments';
-import GeolocationWithAddressQuery from '../utils/geoQueryWithAddress.util';
+import createGeoSearchSqlQuery from '../utils/createGeoSearchSqlQuery.util';
 import EstablishmentsProductsModel from '../database/models/EstablishmentsProducts.model';
 import VouchersAvailableModel from '../database/models/VouchersAvailable.model';
+import { IProductFormattedQuery } from '../interfaces/IProducts';
+import createProductSearchSqlizeQueryUtil from '../utils/createProductSearchSqlizeQuery.util';
 
 export default class EstablishmentService {
   public static async getAllEstablishments(): Promise<EstablishmentsModel[]> {
@@ -43,7 +45,7 @@ export default class EstablishmentService {
     term,
   }: IEstablishmentFormattedQuery) {
     const filteredAddresses = db.query(
-      GeolocationWithAddressQuery({ term, cityId, stateId, brandId }),
+      createGeoSearchSqlQuery({ term, cityId, stateId, brandId }),
       {
         type: QueryTypes.SELECT,
         replacements: {
@@ -62,10 +64,11 @@ export default class EstablishmentService {
     return filteredAddresses;
   }
 
-  public static async getAllProducts() {
+  public static async getAllProducts(formattedQuery: IProductFormattedQuery) {
     const allProducts = await EstablishmentsProductsModel.findAll({
+      // subQuery: false,
       attributes: {
-        include: [[sequelize.fn('COUNT', sequelize.col('vouchers_available.id')), 'count']],
+        include: [[sequelize.fn('COUNT', sequelize.col('product.id')), 'vouchersQuantity']],
       },
       include: [
         {
@@ -74,6 +77,8 @@ export default class EstablishmentService {
           as: 'product',
         },
       ],
+      group: ['establishments_products.id'],
+      where: createProductSearchSqlizeQueryUtil.create(formattedQuery),
     });
 
     return allProducts;

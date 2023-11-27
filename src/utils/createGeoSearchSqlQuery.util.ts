@@ -58,7 +58,7 @@ const formatTerm = (term: string) =>
     term,
   )}))`;
 
-const GeolocationWithAddressQuery = ({
+const createGeoSearchSqlQuery = ({
   term,
   cityId,
   stateId,
@@ -79,4 +79,4 @@ const GeolocationWithAddressQuery = ({
   return geoQueryWithAddress(query);
 };
 
-export default GeolocationWithAddressQuery;
+export default createGeoSearchSqlQuery;

@@ -14,8 +14,8 @@ export interface IEstablishmentAddress {
 }
 
 export interface IEstablishmentRawQuery extends Request {
-  page: number | string;
   limit: number | string;
+  page: number | string;
   distance: number | string;
   latitude: string | undefined;
   longitude: string | undefined;
