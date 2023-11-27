@@ -10,7 +10,7 @@ class CreateProductSearchSqlizeQuery {
     if (available) searchQuery.push({ active: available });
 
     return {
-      [Op.or]: searchQuery,
+      [Op.and]: searchQuery,
     };
   };
 
