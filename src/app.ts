@@ -1,8 +1,9 @@
-import express from 'express';
 import 'express-async-errors';
+import express from 'express';
 import cors from 'cors';
 import router from './routes';
 import errorMiddleware from './middlewares/error.middleware';
+import authMiddleware from './middlewares/auth.middleware';
 
 class App {
   constructor() {
@@ -10,6 +11,7 @@ class App {
     this.app.use(express.json());
     this.app.use(cors());
     // this.app.use('/images', express.static(`${__dirname}/images`));
+    this.app.use(authMiddleware);
     this.app.use(router);
     this.app.use(errorMiddleware);
   }
