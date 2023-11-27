@@ -50,11 +50,11 @@ EstablishmentsImagesModel.init(
 
 EstablishmentsImagesModel.belongsTo(EstablishmentsModel, {
   foreignKey: 'establishmentId',
-  as: 'establishment',
+  as: 'images',
 });
 EstablishmentsModel.hasMany(EstablishmentsImagesModel, {
   foreignKey: 'establishmentId',
-  as: 'establishment',
+  as: 'images',
 });
 
 export default EstablishmentsImagesModel;

@@ -19,7 +19,7 @@ FROM (
               * sin( radians( a.latitude ) ) ) ) AS distance
   FROM establishments_addresses AS a
   JOIN establishments AS e ON a.establishment_id = e.id
-  JOIN establishment_images AS i ON e.id = i.establishment_id
+  JOIN establishments_images AS i ON e.id = i.establishment_id
   JOIN cities as c on c.id = a.city_id
   JOIN states as s on s.id = c.state_id
   JOIN (

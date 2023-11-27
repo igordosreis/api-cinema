@@ -4,7 +4,7 @@
 
 module.exports = {
   up: async (QueryInterface) => {
-    await QueryInterface.bulkInsert('establishment_images', [
+    await QueryInterface.bulkInsert('establishments_images', [
       {
         establishment_id: 488,
         image: '488.png',
@@ -75,6 +75,6 @@ module.exports = {
   },
 
   down: async (queryInterface) => {
-    await queryInterface.bulkDelete('establishment_images', null, {});
+    await queryInterface.bulkDelete('establishments_images', null, {});
   },
 };

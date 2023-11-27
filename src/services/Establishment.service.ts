@@ -4,16 +4,19 @@ import db from '../database/models';
 import CitiesModel from '../database/models/Cities.model';
 import EstablishmentsModel from '../database/models/Establishments.model';
 import StatesModel from '../database/models/States.model';
-import { IEstablishmentFormattedQuery } from '../interfaces/IEstablishments';
 import createGeoSearchSqlQuery from '../utils/createGeoSearchSqlQuery.util';
 import EstablishmentsProductsModel from '../database/models/EstablishmentsProducts.model';
 import VouchersAvailableModel from '../database/models/VouchersAvailable.model';
 import { IProductFormattedQuery } from '../interfaces/IProducts';
+import { IEstablishmentFormattedQuery } from '../interfaces/IEstablishments';
 import createProductSearchSqlizeQueryUtil from '../utils/createProductSearchSqlizeQuery.util';
+import EstablishmentsImagesModel from '../database/models/EstablishmentsImages.model';
 
 export default class EstablishmentService {
   public static async getAllEstablishments(): Promise<EstablishmentsModel[]> {
-    const allEstablishments = EstablishmentsModel.findAll();
+    const allEstablishments = EstablishmentsModel.findAll({
+      include: [{ model: EstablishmentsImagesModel, as: 'images' }],
+    });
 
     return allEstablishments;
   }
