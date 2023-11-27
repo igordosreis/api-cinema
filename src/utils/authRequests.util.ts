@@ -1,7 +1,7 @@
 /* eslint-disable max-lines-per-function */
 import axios from 'axios';
 import { BEARER_TOKEN, SUPERAPP_URL_BASE_AUTH } from '../constants';
-import CustomError, { tokenNotFound, unauthorizedRequest } from './customError.util';
+import CustomError, { userTokenNotFound, unauthorizedRequest } from './customError.util';
 import { IUserInfo } from '../interfaces/IUser';
 
 class AuthRequests {
@@ -9,18 +9,17 @@ class AuthRequests {
     ? userToken
     : userToken.split(' ')[1]);
 
-  validateBearerToken = async (userToken: string | undefined) => {
-    const isTokenNotFound = !userToken;
+  validateCinemaTokens = async (userToken: string | undefined) => {
+    const isUserTokenNotFound = !userToken;
 
-    if (isTokenNotFound) {
-      throw new CustomError(tokenNotFound);
+    if (isUserTokenNotFound) {
+      throw new CustomError(userTokenNotFound);
     }
 
     try {
       const endpoint = SUPERAPP_URL_BASE_AUTH;
 
       const formattedToken = this.formatToken(userToken);
-
       const { data: userInfo } = await axios.post<IUserInfo>(
         endpoint,
         { token: `${formattedToken}` },

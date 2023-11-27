@@ -15,7 +15,7 @@ const authMiddleware = (req: Request, _res: Response, next: NextFunction) => {
   const token = process.env.TEST_USER_TOKEN; // --- FOR TESTING PURPOSES --- FO
   // --- FOR TESTING PURPOSES --- FOR TESTING PURPOSES --- FOR TESTING PURPOSES
 
-  const userInfo = authRequestsUtil.validateBearerToken(token);
+  const userInfo = authRequestsUtil.validateCinemaTokens(token);
   req.body.userInfo = userInfo;
 
   next();

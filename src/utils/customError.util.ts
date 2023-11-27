@@ -33,8 +33,8 @@ export const unauthorizedRequest: ICustomError = {
   message: 'Acesso não autorizado. Faça login para acessar esse serviço.',
 };
 
-export const tokenNotFound: ICustomError = {
+export const userTokenNotFound: ICustomError = {
   status: 400,
-  title: 'Token não encontrado',
-  message: 'Token não encontrado. Faça login para acessar esse serviço.',
+  title: 'Usuário não encontrado',
+  message: 'Usuário não encontrado. Faça login para acessar esse serviço.',
 };
