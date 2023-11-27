@@ -27,8 +27,8 @@ function generateUniqueVoucher() {
 module.exports = {
   up: async (queryInterface, _Sequelize) => {
     // Generate 30 entries for the 'vouchers_available' table
-    const seedData = Array.from({ length: 30 }, (_, index) => ({
-      id: index + 31,
+    const seedData = Array.from({ length: 100 }, (_, index) => ({
+      id: index + 101,
       voucher_code: generateUniqueVoucher(),
       product_id: Math.floor(Math.random() * 50), // Random number between 0 and 50
       expire_date: generateRandomDate(2022, 2023),

@@ -17,19 +17,19 @@ function generateRandomDate(startYear, endYear) {
 module.exports = {
   up: async (queryInterface, _Sequelize) => {
     // Generate 30 unique ticket IDs between 1 and 30
-    const ticketIds = Array.from({ length: 30 }, (_, index) => index + 1);
+    const voucherIds = Array.from({ length: 30 }, (_, index) => index + 1);
 
     // Shuffle the array to randomize the order
-    for (let i = ticketIds.length - 1; i > 0; i -= 1) {
+    for (let i = voucherIds.length - 1; i > 0; i -= 1) {
       const j = Math.floor(Math.random() * (i + 1));
-      [ticketIds[i], ticketIds[j]] = [ticketIds[j], ticketIds[i]];
+      [voucherIds[i], voucherIds[j]] = [voucherIds[j], voucherIds[i]];
     }
 
     // Generate 30 entries for the 'vouchers_logs' table
     const seedData = Array.from({ length: 30 }, (_, index) => ({
       request: faker.lorem.sentences(2),
       response: faker.lorem.sentences(2),
-      ticket_id: ticketIds[index],
+      voucher_id: voucherIds[index],
       date: generateRandomDate(2020, 2023),
     }));
 

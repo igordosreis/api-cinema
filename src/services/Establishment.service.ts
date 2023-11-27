@@ -1,6 +1,6 @@
 /* eslint-disable max-lines-per-function */
 import { QueryTypes } from 'sequelize';
-import sequelize from '../database/models';
+import db from '../database/models';
 import CitiesModel from '../database/models/Cities.model';
 import EstablishmentsModel from '../database/models/Establishments.model';
 import StatesModel from '../database/models/States.model';
@@ -40,7 +40,7 @@ export default class EstablishmentService {
     brandId,
     term,
   }: IEstablishmentFormattedQuery) {
-    const filteredAddresses = sequelize.query(
+    const filteredAddresses = db.query(
       GeolocationWithAddressQuery({ term, cityId, stateId, brandId }),
       {
         type: QueryTypes.SELECT,

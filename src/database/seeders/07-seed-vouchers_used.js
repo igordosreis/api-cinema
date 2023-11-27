@@ -47,7 +47,7 @@ function generateRandomPrice(min, max) {
 module.exports = {
   up: async (queryInterface, _Sequelize) => {
     // Generate 10 entries for the 'vouchers_used' table
-    const seedData = Array.from({ length: 30 }, (_, index) => ({
+    const seedData = Array.from({ length: 100 }, (_, index) => ({
       id: index + 1,
       voucher_code: generateUniqueVoucher(),
       product_id: Math.floor(Math.random() * 50), // Random number between 0 and 50
