@@ -12,6 +12,6 @@ establishmentRouter.get(
 );
 establishmentRouter.get('/cities', authMiddleware, EstablishmentController.getAllCities);
 establishmentRouter.get('/states', authMiddleware, EstablishmentController.getAllStates);
-establishmentRouter.get('/products', authMiddleware, EstablishmentController.getAllProducts);
+establishmentRouter.get('/products', authMiddleware, EstablishmentController.getProductsByQuery);
 
 export default establishmentRouter;

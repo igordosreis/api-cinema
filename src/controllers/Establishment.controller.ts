@@ -34,11 +34,11 @@ export default class EstablishmentController {
     res.status(200).json(allStates);
   }
 
-  public static async getAllProducts(req: Request, res: Response): Promise<void> {
+  public static async getProductsByQuery(req: Request, res: Response): Promise<void> {
     const searchQuery = req as IProductRawQuery;
 
     const formattedQuery = formatRequestQueryUtil.formatProductQuery(searchQuery);
-    const allProducts = await EstablishmentService.getAllProducts(formattedQuery);
+    const allProducts = await EstablishmentService.getProductsByQuery(formattedQuery);
 
     res.status(200).json(allProducts);
   }

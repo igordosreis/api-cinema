@@ -64,7 +64,7 @@ export default class EstablishmentService {
     return filteredAddresses;
   }
 
-  public static async getAllProducts(formattedQuery: IProductFormattedQuery) {
+  public static async getProductsByQuery(formattedQuery: IProductFormattedQuery) {
     const allProducts = await EstablishmentsProductsModel.findAll({
       // subQuery: false,
       attributes: {
