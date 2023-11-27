@@ -4,7 +4,7 @@ import authMiddleware from '../middlewares/auth.middleware';
 
 const establishmentRouter = Router();
 
-establishmentRouter.get('/', authMiddleware, EstablishmentController.getAllEstablishments);
+establishmentRouter.get('/brands', authMiddleware, EstablishmentController.getAllEstablishments);
 establishmentRouter.get(
   '/search',
   authMiddleware,
