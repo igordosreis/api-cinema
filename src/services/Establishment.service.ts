@@ -71,13 +71,15 @@ export default class EstablishmentService {
     const allProducts = await EstablishmentsProductsModel.findAll({
       // subQuery: false,
       attributes: {
-        include: [[sequelize.fn('COUNT', sequelize.col('product.id')), 'vouchersQuantity']],
+        include: [
+          [sequelize.fn('COUNT', sequelize.col('vouchersAvailable.id')), 'vouchersQuantity'],
+        ],
       },
       include: [
         {
           model: VouchersAvailableModel,
           attributes: [],
-          as: 'product',
+          as: 'vouchersAvailable',
         },
       ],
       group: ['establishments_products.id'],
