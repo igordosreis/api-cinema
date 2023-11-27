@@ -34,4 +34,10 @@ export default class EstablishmentController {
 
     res.status(200).json(allStates);
   }
+
+  public static async getAllProducts(_req: Request, res: Response): Promise<void> {
+    const allProducts = await EstablishmentService.getAllProducts();
+
+    res.status(200).json(allProducts);
+  }
 }

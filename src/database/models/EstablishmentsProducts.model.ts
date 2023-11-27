@@ -6,7 +6,7 @@ class EstablishmentsProductsModel extends Model {
   declare id: number;
   declare establishmentId: number;
   declare active: boolean;
-  declare productName: string;
+  declare name: string;
   declare description: string;
   declare image: string;
   declare price: number;
@@ -36,7 +36,7 @@ EstablishmentsProductsModel.init(
       type: DataTypes.BOOLEAN,
       defaultValue: true,
     },
-    productName: {
+    name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -62,7 +62,7 @@ EstablishmentsProductsModel.init(
     },
   },
   {
-    modelName: 'establishments_addresses',
+    modelName: 'establishments_products',
     sequelize: db,
     underscored: true,
     timestamps: false,

@@ -1,11 +1,13 @@
 /* eslint-disable max-lines-per-function */
-import { QueryTypes } from 'sequelize';
+import sequelize, { QueryTypes } from 'sequelize';
 import db from '../database/models';
 import CitiesModel from '../database/models/Cities.model';
 import EstablishmentsModel from '../database/models/Establishments.model';
 import StatesModel from '../database/models/States.model';
 import { IEstablishmentFormattedQuery } from '../interfaces/IEstablishments';
 import GeolocationWithAddressQuery from '../utils/geoQueryWithAddress.util';
+import EstablishmentsProductsModel from '../database/models/EstablishmentsProducts.model';
+import VouchersAvailableModel from '../database/models/VouchersAvailable.model';
 
 export default class EstablishmentService {
   public static async getAllEstablishments(): Promise<EstablishmentsModel[]> {
@@ -58,5 +60,22 @@ export default class EstablishmentService {
     );
 
     return filteredAddresses;
+  }
+
+  public static async getAllProducts() {
+    const allProducts = await EstablishmentsProductsModel.findAll({
+      attributes: {
+        include: [[sequelize.fn('COUNT', sequelize.col('vouchers_available.id')), 'count']],
+      },
+      include: [
+        {
+          model: VouchersAvailableModel,
+          attributes: [],
+          as: 'product',
+        },
+      ],
+    });
+
+    return allProducts;
   }
 }

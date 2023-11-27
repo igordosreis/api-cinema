@@ -40,6 +40,7 @@ VouchersAvailableModel.init(
     sequelize: db,
     underscored: true,
     timestamps: false,
+    freezeTableName: true,
   },
 );
 
