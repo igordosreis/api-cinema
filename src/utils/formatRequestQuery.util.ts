@@ -47,10 +47,10 @@ class FormatRequestQuery {
     } as IEstablishmentFormattedQuery);
 
   formatTerm = ({ query: { term } }: IProductRawQuery) =>
-    ((typeof term === 'string') ? term.toLowerCase() : undefined);
+    ((typeof term === 'string') ? term : undefined);
 
   formatType = ({ query: { type } }: IProductRawQuery) =>
-    ((typeof type === 'string') ? type.toLowerCase() : undefined);
+    ((typeof type === 'string') ? type : undefined);
 
   formatEstablishmentId = ({ query: { establishmentId } }: IProductRawQuery) => 
     Number(establishmentId) || undefined;

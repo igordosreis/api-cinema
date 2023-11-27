@@ -4,11 +4,16 @@ import { IProductFormattedQuery } from '../interfaces/IProducts';
 class CreateProductSearchSqlizeQuery {
   addParams = ({ term, establishmentId, type, available }: IProductFormattedQuery) => {
     const searchQuery = [];
-    if (term) searchQuery.push({ name: { [Op.like]: term } }, { description: { [Op.like]: term } });
+    if (term) {
+      searchQuery.push({
+        [Op.or]: { name: { [Op.substring]: term }, description: { [Op.substring]: term } },
+      });
+    }
     if (type) searchQuery.push({ type: { [Op.like]: type } });
     if (establishmentId) searchQuery.push({ establishmentId });
     if (available) searchQuery.push({ active: available });
 
+    console.log('searchQuery: ', searchQuery);
     return {
       [Op.and]: searchQuery,
     };
