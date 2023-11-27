@@ -2,7 +2,7 @@ import { Op } from 'sequelize';
 import { IProductFormattedQuery } from '../interfaces/IProducts';
 
 class CreateProductSearchSqlizeQuery {
-  addParams = ({ term, establishmentId, type, available }: IProductFormattedQuery) => {
+  private addParams = ({ term, establishmentId, type, available }: IProductFormattedQuery) => {
     const searchQuery = [];
     if (term) {
       searchQuery.push({
@@ -13,7 +13,6 @@ class CreateProductSearchSqlizeQuery {
     if (establishmentId) searchQuery.push({ establishmentId });
     if (available) searchQuery.push({ active: available });
 
-    console.log('searchQuery: ', searchQuery);
     return {
       [Op.and]: searchQuery,
     };
@@ -21,6 +20,7 @@ class CreateProductSearchSqlizeQuery {
 
   create = (formattedQuery: IProductFormattedQuery) => {
     const areThereAnyParams = Object.values(formattedQuery).some((param) => param);
+
     return areThereAnyParams ? this.addParams(formattedQuery) : {};
   };
 }

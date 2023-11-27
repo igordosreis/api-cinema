@@ -5,7 +5,7 @@ import CustomError, { userTokenNotFound, unauthorizedRequest } from './customErr
 import { IUserInfo } from '../interfaces/IUser';
 
 class AuthRequests {
-  formatToken = (userToken: string) => (userToken.split(' ').length === 1
+  private formatToken = (userToken: string) => (userToken.split(' ').length === 1
     ? userToken
     : userToken.split(' ')[1]);
 

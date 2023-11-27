@@ -9,6 +9,13 @@ import {
 } from '../interfaces/IMoviesAPI';
 
 class FormatMovies {
+  private sliceFiveFromCastDetails = (cast: CastMember[]) => cast.slice(0, 5);
+
+  private filterCrewForDirectorAndProducers = (crew: CrewMember[]) =>
+    crew.filter(
+      ({ job }) => job === 'Director' || job === 'Producer' || job === 'Executive Producer',
+    );
+    
   addImgLinksToAllMovies = (moviesArray: IMovieInfo[]): IMovieInfo[] => {
     const moviesWithImgLinks = moviesArray.map((movie) => ({
       ...movie,
@@ -18,13 +25,6 @@ class FormatMovies {
 
     return moviesWithImgLinks;
   };
-
-  sliceFiveFromCastDetails = (cast: CastMember[]) => cast.slice(0, 5);
-
-  filterCrewForDirectorAndProducers = (crew: CrewMember[]) =>
-    crew.filter(
-      ({ job }) => job === 'Director' || job === 'Producer' || job === 'Executive Producer',
-    );
 
   addImgLinksToMovieDetails = (movieDetails: IMovieDetails): IMovieDetails => {
     const backdrops = movieDetails.images.backdrops.map((image) => ({

@@ -24,7 +24,7 @@ import CustomError, { fetchError } from './customError.util';
 // }
 
 class FetchMoviesAPI {
-  fetch = async <T>(endpoint: string): Promise<T | undefined> => {
+  private fetch = async <T>(endpoint: string): Promise<T | undefined> => {
     try {
       const { data } = await axios.get<T>(endpoint);
 
