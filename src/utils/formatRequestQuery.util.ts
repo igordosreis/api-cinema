@@ -28,11 +28,11 @@ class FormatRequestQuery {
   private formatStateId = ({ query: { stateId } }: IEstablishmentRawQuery) => 
     Number(stateId) || undefined;
 
-  private formatLatitude = ({ query: { latitude } }: IEstablishmentRawQuery) => 
-    latitude || '-19.919052';
+  private formatLatitude = (req: IEstablishmentRawQuery) => 
+    req.query.latitude || req.body.userInfo.location.latitude || '-19.919052';
 
-  private formatLongitude = ({ query: { longitude } }: IEstablishmentRawQuery) =>
-    longitude || '-43.9386685';
+  private formatLongitude = (req: IEstablishmentRawQuery) =>
+    req.query.longitude || req.body.userInfo.location.longitude || '-43.9386685';
 
   private formatBrandId = ({ query: { brandId } }: IEstablishmentRawQuery) => 
     Number(brandId) || undefined;
@@ -50,7 +50,7 @@ class FormatRequestQuery {
       longitude: this.formatLongitude(req),
     } as IEstablishmentFormattedQuery);
 
-  private formatTerm = ({ query: { term } }: IProductRawQuery) =>
+  private formatProductTerm = ({ query: { term } }: IProductRawQuery) =>
     ((typeof term === 'string') ? term : undefined);
 
   private formatType = ({ query: { type } }: IProductRawQuery) =>
@@ -64,7 +64,7 @@ class FormatRequestQuery {
 
   formatProductQuery = (req: IProductRawQuery): IProductFormattedQuery => 
     ({
-      term: this.formatTerm(req),
+      term: this.formatProductTerm(req),
       type: this.formatType(req),
       establishmentId: this.formatEstablishmentId(req),
       available: this.formatAvailable(req),
