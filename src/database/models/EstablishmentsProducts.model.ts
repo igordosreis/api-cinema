@@ -71,11 +71,11 @@ EstablishmentsProductsModel.init(
 
 EstablishmentsProductsModel.belongsTo(EstablishmentsModel, {
   foreignKey: 'establishmentId',
-  as: 'establishment',
+  as: 'products',
 });
 EstablishmentsModel.hasMany(EstablishmentsProductsModel, {
   foreignKey: 'establishmentId',
-  as: 'establishment',
+  as: 'products',
 });
 
 export default EstablishmentsProductsModel;

@@ -1,5 +1,4 @@
 /* eslint-disable max-lines-per-function */
-
 import { NextFunction, Request, Response } from 'express';
 import authRequestsUtil from '../utils/authRequests.util';
 

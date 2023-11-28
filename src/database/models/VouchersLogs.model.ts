@@ -43,7 +43,7 @@ VouchersLogsModel.init(
   },
 );
 
-VouchersLogsModel.belongsTo(VouchersUsedModel, { foreignKey: 'voucherId', as: 'vouchers_used' });
-VouchersUsedModel.hasOne(VouchersLogsModel, { foreignKey: 'voucherId', as: 'vouchers_used' });
+VouchersLogsModel.belongsTo(VouchersUsedModel, { foreignKey: 'voucherId', as: 'vouchersLogs' });
+VouchersUsedModel.hasOne(VouchersLogsModel, { foreignKey: 'voucherId', as: 'vouchersLogs' });
 
 export default VouchersLogsModel;
