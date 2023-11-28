@@ -4,12 +4,13 @@
 import {
   CastMember,
   CrewMember,
-  IGenreInfo,
+  IGenreList,
   IMovieDetails,
   // IMovieDetailsWithImgLinks,
   IMovieInfo,
   // IMovieInfoWithImgLinks,
 } from '../interfaces/IMoviesAPI';
+import fetchMoviesAPIUtil from './fetchMoviesAPI.util';
 
 class FormatMovies {
   private sliceFiveFromCastDetails = (cast: CastMember[]) => cast.slice(0, 5);
@@ -19,7 +20,7 @@ class FormatMovies {
       ({ job }) => job === 'Director' || job === 'Producer' || job === 'Executive Producer',
     );
 
-  addImgLinksToAllMovies = (moviesArray: IMovieInfo[]): IMovieInfo[] => {
+  private addImgLinksToAllMovies = (moviesArray: IMovieInfo[]): IMovieInfo[] => {
     const moviesWithImgLinks = moviesArray.map((movie) => ({
       ...movie,
       backdrop_path: `https://image.tmdb.org/t/p/original${movie.backdrop_path}`,
@@ -29,26 +30,40 @@ class FormatMovies {
     return moviesWithImgLinks;
   };
 
-  addGenresNamesToAllMovies = (moviesArray: IMovieInfo[], genresList: IGenreInfo[]) => {
-    const moviesWithParsedGenres = moviesArray.map((movie) => {
-      const parsedGenres = movie.genre_ids.map((movieGenreId) => {
-        const currentGenreObject = genresList.find((genre) => genre.id === movieGenreId);
+  private addGenresNamesToAllMovies = async (moviesArray: IMovieInfo[]) => {
+    const genresList: IGenreList | undefined = await fetchMoviesAPIUtil.fetchGenres();
+    if (genresList) {
+      const { genres } = genresList;
+      const moviesWithParsedGenres = moviesArray.map((movie) => {
+        const parsedGenres = movie?.genre_ids.map((movieGenreId) => {
+          const currentGenreObject = genres.find((genre) => genre.id === movieGenreId);
 
-        return currentGenreObject;
+          return currentGenreObject;
+        });
+
+        return {
+          ...movie,
+          genre_ids: parsedGenres,
+        };
       });
 
-      const { genre_ids, ...movieInfo } = movie;
-
-      return {
-        ...movieInfo,
-        genresInfo: parsedGenres,
-      };
-    });
-
-    return moviesWithParsedGenres;
+      return moviesWithParsedGenres;
+    }
   };
 
-  addImgLinksToMovieDetails = (movieDetails: IMovieDetails): IMovieDetails => {
+  formatAllMovies = async (
+    moviesArray: IMovieInfo[],
+    isRandomized?: boolean,
+  ): Promise<IMovieInfo[] | undefined> => {
+    const allMoviesWithImgLinks = isRandomized
+      ? this.addImgLinksToAllMovies(moviesArray).sort(() => Math.random() - 0.5)
+      : this.addImgLinksToAllMovies(moviesArray);
+    const allMoviesWithLinksAndGenres = await this.addGenresNamesToAllMovies(allMoviesWithImgLinks);
+
+    return allMoviesWithLinksAndGenres;
+  };
+
+  private addImgLinksToMovieDetails = (movieDetails: IMovieDetails): IMovieDetails => {
     const backdrops = movieDetails.images.backdrops.map((image) => ({
       ...image,
       file_path: `https://image.tmdb.org/t/p/original${image.file_path}`,
@@ -75,16 +90,16 @@ class FormatMovies {
     const images = { backdrops, logos, posters };
     const credits = { cast, crew };
 
-    const MovieDetailsWithLinks: IMovieDetails = Object.assign(movieDetails, {
+    const movieDetailsWithImageLinks: IMovieDetails = Object.assign(movieDetails, {
       backdrop_path: `https://image.tmdb.org/t/p/original${movieDetails.backdrop_path}`,
       images,
       credits,
     });
 
-    return MovieDetailsWithLinks;
+    return movieDetailsWithImageLinks;
   };
 
-  addYoutubeLinksToMovieDetails = (movieDetails: IMovieDetails): IMovieDetails => {
+  private addYoutubeLinksToMovieDetails = (movieDetails: IMovieDetails): IMovieDetails => {
     const results = movieDetails.videos.results.map((video) => {
       const { key, ...newVideoObj } = video;
 
@@ -94,9 +109,20 @@ class FormatMovies {
       return newVideoObj;
     });
 
-    const MovieDetailsWithLinks: IMovieDetails = Object.assign(movieDetails, { videos: results });
+    const movieDetailsWithYoutubeLinks: IMovieDetails = Object.assign(movieDetails, {
+      videos: results,
+    });
 
-    return MovieDetailsWithLinks;
+    return movieDetailsWithYoutubeLinks;
+  };
+
+  formatMovieDetails = (movieDetails: IMovieDetails): IMovieDetails => {
+    const movieDetailsWithImageLinks = this.addImgLinksToMovieDetails(movieDetails);
+    const movieDetailsWithImageAndYoutubeLinks = this.addYoutubeLinksToMovieDetails(
+      movieDetailsWithImageLinks,
+    );
+
+    return movieDetailsWithImageAndYoutubeLinks;
   };
 }
 

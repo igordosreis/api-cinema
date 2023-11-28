@@ -17,19 +17,16 @@ export default class MoviesAPIService {
     const allMoviesPlayingNow = await MoviesAPIModel.getNowPlaying(currentDateISO, pastDateISO);
 
     if (allMoviesPlayingNow) {
-      const randomizedMoviesOrder = allMoviesPlayingNow.results.sort(() => Math.random() - 0.5);
-      allMoviesPlayingNow.results = randomizedMoviesOrder;
-
-      const moviesWithImgLinks = formatMoviesUtil.addImgLinksToAllMovies(
+      const parsedMovies = await formatMoviesUtil.formatAllMovies(
         allMoviesPlayingNow.results,
+        true,
       );
 
-      const allMoviesPlayingNowWithLinks = {
-        ...allMoviesPlayingNow,
-        results: moviesWithImgLinks,
-      };
+      if (parsedMovies) {
+        allMoviesPlayingNow.results = parsedMovies;
 
-      return allMoviesPlayingNowWithLinks;
+        return allMoviesPlayingNow;
+      }
     }
   }
 
@@ -43,12 +40,13 @@ export default class MoviesAPIService {
     const allMoviesByPopular = await MoviesAPIModel.getNowPlaying(currentDateISO, pastDateISO);
 
     if (allMoviesByPopular) {
-      const moviesWithImgLinks = formatMoviesUtil.addImgLinksToAllMovies(
-        allMoviesByPopular.results,
-      );
-      allMoviesByPopular.results = moviesWithImgLinks;
+      const parsedMovies = await formatMoviesUtil.formatAllMovies(allMoviesByPopular.results);
 
-      return allMoviesByPopular;
+      if (parsedMovies) {
+        allMoviesByPopular.results = parsedMovies;
+
+        return allMoviesByPopular;
+      }
     }
   }
 
@@ -63,10 +61,13 @@ export default class MoviesAPIService {
     const allMoviesUpcoming = await MoviesAPIModel.getUpcoming(tomorrowDateISO, futureDateISO);
 
     if (allMoviesUpcoming) {
-      const moviesWithImgLinks = formatMoviesUtil.addImgLinksToAllMovies(allMoviesUpcoming.results);
-      allMoviesUpcoming.results = moviesWithImgLinks;
+      const parsedMovies = await formatMoviesUtil.formatAllMovies(allMoviesUpcoming.results);
 
-      return allMoviesUpcoming;
+      if (parsedMovies) {
+        allMoviesUpcoming.results = parsedMovies;
+
+        return allMoviesUpcoming;
+      }
     }
   }
 
@@ -79,10 +80,13 @@ export default class MoviesAPIService {
     const allMoviesPremier = await MoviesAPIModel.getPremier(lastSundayISO, nextSundayISO);
 
     if (allMoviesPremier) {
-      const moviesWithImgLinks = formatMoviesUtil.addImgLinksToAllMovies(allMoviesPremier.results);
-      allMoviesPremier.results = moviesWithImgLinks;
+      const parsedMovies = await formatMoviesUtil.formatAllMovies(allMoviesPremier.results);
 
-      return allMoviesPremier;
+      if (parsedMovies) {
+        allMoviesPremier.results = parsedMovies;
+
+        return allMoviesPremier;
+      }
     }
   }
 
@@ -92,11 +96,9 @@ export default class MoviesAPIService {
     const movieDetails = await MoviesAPIModel.getMovieDetails(movieId);
 
     if (movieDetails) {
-      const movieDetailsWithImgLinks = formatMoviesUtil.addImgLinksToMovieDetails(movieDetails);
-      const movieDetailsWithYoutubeLinks =
-        formatMoviesUtil.addYoutubeLinksToMovieDetails(movieDetailsWithImgLinks);
+      const movieDetailsWithLinks = formatMoviesUtil.formatMovieDetails(movieDetails);
 
-      return movieDetailsWithYoutubeLinks;
+      return movieDetailsWithLinks;
     }
   }
 

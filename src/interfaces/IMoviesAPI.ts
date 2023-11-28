@@ -16,7 +16,7 @@ export type IMoviesResultsWithLinks = {
 export interface IMovieInfo {
   adult: boolean;
   backdrop_path: string;
-  genre_ids: number[];
+  genre_ids: number[] | (IGenreInfo | undefined)[];
   id: number;
   original_language: string;
   original_title: string;
