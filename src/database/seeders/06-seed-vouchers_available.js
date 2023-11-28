@@ -31,8 +31,8 @@ module.exports = {
       id: index + 101,
       voucher_code: generateUniqueVoucher(),
       product_id: Math.floor(Math.random() * 49) + 1, // Random number between 1 and 50
-      expire_date: generateRandomDate(2022, 2023),
-      created_at: generateRandomDate(2022, 2023),
+      expire_date: generateRandomDate(2024, 2025),
+      // created_at: generateRandomDate(2022, 2023),
     }));
 
     // Insert seed data into the 'vouchers_available' table

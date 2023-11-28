@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-var-requires */
 // const { loremCharacters } = require('./seeders.helpers');
 const { faker } = require('@faker-js/faker');
@@ -30,7 +32,7 @@ module.exports = {
       request: faker.lorem.sentences(2),
       response: faker.lorem.sentences(2),
       voucher_id: voucherIds[index],
-      date: generateRandomDate(2020, 2023),
+      // date: generateRandomDate(2020, 2023),
     }));
 
     // Insert seed data into the 'vouchers_logs' table
