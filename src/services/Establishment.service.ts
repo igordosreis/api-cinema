@@ -68,8 +68,7 @@ export default class EstablishmentService {
   }
 
   public static async getProductsByQuery(formattedQuery: IProductFormattedQuery) {
-    const allProducts = await EstablishmentsProductsModel.findAll({
-      // subQuery: false,
+    const filteredProducts = await EstablishmentsProductsModel.findAll({
       attributes: {
         include: [
           [sequelize.fn('COUNT', sequelize.col('vouchersAvailable.id')), 'vouchersQuantity'],
@@ -90,6 +89,6 @@ export default class EstablishmentService {
       where: createProductSearchSqlizeQueryUtil.create(formattedQuery),
     });
 
-    return allProducts;
+    return filteredProducts;
   }
 }

@@ -38,8 +38,8 @@ export default class EstablishmentController {
     const searchQuery = req as IProductRawQuery;
 
     const formattedQuery = formatRequestQueryUtil.formatProductQuery(searchQuery);
-    const allProducts = await EstablishmentService.getProductsByQuery(formattedQuery);
+    const filteredProducts = await EstablishmentService.getProductsByQuery(formattedQuery);
 
-    res.status(200).json(allProducts);
+    res.status(200).json(filteredProducts);
   }
 }
