@@ -12,6 +12,12 @@ import {
 } from '../interfaces/IMoviesAPI';
 import fetchMoviesAPIUtil from './fetchMoviesAPI.util';
 
+interface formatMoviesParams {
+  moviesArray: IMovieInfo[];
+  isRandomized?: boolean;
+  isSorted?: boolean;
+}
+
 class FormatMovies {
   private sortByReleaseDate = (moviesArray: IMovieInfo[]): IMovieInfo[] => {
     const sortedMoviesByReleaseDate = moviesArray.sort(
@@ -37,7 +43,7 @@ class FormatMovies {
     if (genresList) {
       const { genres } = genresList;
       const moviesWithParsedGenres = moviesArray.map((movie) => {
-        const parsedGenres = movie?.genre_ids.map((movieGenreId) => {
+        const parsedGenres = movie.genre_ids.map((movieGenreId) => {
           const currentGenreObject = genres.find((genre) => genre.id === movieGenreId);
 
           return currentGenreObject;
@@ -57,11 +63,7 @@ class FormatMovies {
     moviesArray,
     isRandomized,
     isSorted,
-  }: {
-    moviesArray: IMovieInfo[];
-    isRandomized?: boolean;
-    isSorted?: boolean;
-  }): Promise<IMovieInfo[] | undefined> => {
+  }: formatMoviesParams): Promise<IMovieInfo[] | undefined> => {
     if (isRandomized) {
       const allMoviesWithImgLinks = this.addImgLinksToAllMovies(moviesArray).sort(
         () => Math.random() - 0.5,
