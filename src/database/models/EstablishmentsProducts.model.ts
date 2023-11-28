@@ -1,6 +1,7 @@
 import { DataTypes, Model } from 'sequelize';
 import db from '.';
 import EstablishmentsModel from './Establishments.model';
+import EstablishmentsImagesModel from './EstablishmentsImages.model';
 
 class EstablishmentsProductsModel extends Model {
   declare id: number;
@@ -76,6 +77,15 @@ EstablishmentsProductsModel.belongsTo(EstablishmentsModel, {
 EstablishmentsModel.hasMany(EstablishmentsProductsModel, {
   foreignKey: 'establishmentId',
   as: 'products',
+});
+
+EstablishmentsProductsModel.belongsTo(EstablishmentsImagesModel, {
+  foreignKey: 'establishmentId',
+  as: 'imagesBrand',
+});
+EstablishmentsImagesModel.hasMany(EstablishmentsProductsModel, {
+  foreignKey: 'establishmentId',
+  as: 'imagesBrand',
 });
 
 export default EstablishmentsProductsModel;

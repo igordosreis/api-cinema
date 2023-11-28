@@ -81,6 +81,10 @@ export default class EstablishmentService {
           attributes: [],
           as: 'vouchersAvailable',
         },
+        {
+          model: EstablishmentsImagesModel,
+          as: 'imagesBrand',
+        },
       ],
       group: ['establishments_products.id'],
       where: createProductSearchSqlizeQueryUtil.create(formattedQuery),
