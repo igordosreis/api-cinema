@@ -7,7 +7,8 @@ class VouchersLogsModel extends Model {
   declare request: string;
   declare response: string;
   declare voucherId: string;
-  declare date: Date;
+  declare createdAt: Date;
+  declare updatedAt: Date;
 }
 
 VouchersLogsModel.init(
@@ -30,9 +31,13 @@ VouchersLogsModel.init(
       type: DataTypes.STRING,
       allowNull: true,
     },
-    date: {
+    createdAt: {
       type: DataTypes.DATE,
-      defaultValue: null,
+      // defaultValue: DataTypes.NOW,
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      // defaultValue: DataTypes.NOW,
     },
   },
   {

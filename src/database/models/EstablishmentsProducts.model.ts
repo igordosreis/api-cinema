@@ -13,6 +13,8 @@ class EstablishmentsProductsModel extends Model {
   declare price: number;
   declare rules: string;
   declare type: string;
+  declare createdAt: Date;
+  declare updatedAt: Date;
 }
 
 EstablishmentsProductsModel.init(
@@ -60,6 +62,14 @@ EstablishmentsProductsModel.init(
     type: {
       type: DataTypes.STRING,
       allowNull: true,
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      // defaultValue: DataTypes.NOW,
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      // defaultValue: DataTypes.NOW,
     },
   },
   {

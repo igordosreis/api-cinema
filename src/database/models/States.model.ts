@@ -5,6 +5,8 @@ class StatesModel extends Model {
   declare id: number;
   declare name: string;
   declare abbreviation: string;
+  declare createdAt: Date;
+  declare updatedAt: Date;
 }
 
 StatesModel.init(
@@ -22,6 +24,14 @@ StatesModel.init(
     abbreviation: {
       type: DataTypes.STRING,
       defaultValue: null,
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      // defaultValue: DataTypes.NOW,
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      // defaultValue: DataTypes.NOW,
     },
   },
   {

@@ -10,6 +10,7 @@ class VouchersUsedModel extends Model {
   declare expireDate: Date;
   declare paymentId: string;
   declare createdAt: Date;
+  declare updatedAt: Date;
   declare soldAt: Date;
   declare soldPrice: number;
 }
@@ -44,7 +45,11 @@ VouchersUsedModel.init(
     },
     createdAt: {
       type: DataTypes.DATE,
-      defaultValue: null,
+      // defaultValue: DataTypes.NOW,
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      // defaultValue: DataTypes.NOW,
     },
     soldAt: {
       type: DataTypes.DATE,

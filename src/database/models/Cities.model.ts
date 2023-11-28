@@ -8,6 +8,8 @@ class CitiesModel extends Model {
   declare stateId: number;
   declare latitude: string;
   declare longitude: string;
+  declare createdAt: Date;
+  declare updatedAt: Date;
 }
 
 CitiesModel.init(
@@ -37,6 +39,14 @@ CitiesModel.init(
     longitude: {
       type: DataTypes.STRING,
       defaultValue: null,
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      // defaultValue: DataTypes.NOW,
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      // defaultValue: DataTypes.NOW,
     },
   },
   {

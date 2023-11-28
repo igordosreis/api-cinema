@@ -8,6 +8,8 @@ class EstablishmentsImagesModel extends Model {
   declare imageCarousel: string;
   declare cover: string;
   declare resizeColor: string;
+  declare createdAt: Date;
+  declare updatedAt: Date;
 }
 
 EstablishmentsImagesModel.init(
@@ -38,6 +40,14 @@ EstablishmentsImagesModel.init(
     resizeColor: {
       type: DataTypes.STRING,
       defaultValue: '#ffffff',
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      // defaultValue: DataTypes.NOW,
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      // defaultValue: DataTypes.NOW,
     },
   },
   {

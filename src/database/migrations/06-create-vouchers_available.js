@@ -32,7 +32,11 @@ module.exports = {
       },
       created_at: {
         type: Sequelize.DATE,
-        defaultValue: null,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+      },
+      updated_at: {
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
     }, {
       engine: 'InnoDB',

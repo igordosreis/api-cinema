@@ -14,6 +14,8 @@ class EstablishmentsAddressesModel extends Model {
   declare longitude: string;
   declare telephone: string;
   declare code: string;
+  declare createdAt: Date;
+  declare updatedAt: Date;
 }
 
 EstablishmentsAddressesModel.init(
@@ -71,6 +73,14 @@ EstablishmentsAddressesModel.init(
     code: {
       type: DataTypes.INTEGER,
       allowNull: true,
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      // defaultValue: DataTypes.NOW,
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      // defaultValue: DataTypes.NOW,
     },
   },
   {
