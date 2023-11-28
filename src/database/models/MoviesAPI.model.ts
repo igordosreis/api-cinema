@@ -3,9 +3,9 @@ import { IDate } from '../../interfaces/IUrlDate';
 import CustomError, { fetchError } from '../../utils/customError.util';
 
 export default class MoviesAPIModel {
-  public static async getNowPlaying(currentDate: IDate, pastDate: IDate) {
+  public static async getNowPlaying(pastDate: IDate, currentDate: IDate) {
     try {
-      const allMoviesPlayingNow = await FetchMoviesAPI.fetchNowPlaying(currentDate, pastDate);
+      const allMoviesPlayingNow = await FetchMoviesAPI.fetchAllMovies(pastDate, currentDate);
 
       return allMoviesPlayingNow;
     } catch {
@@ -13,11 +13,11 @@ export default class MoviesAPIModel {
     }
   }
 
-  public static async getPopular(currentDate: IDate, pastDate: IDate) {
+  public static async getPopular(pastDate: IDate, currentDate: IDate) {
     try {
-      const allMoviesPlayingSortedByPopular = await FetchMoviesAPI.fetchPopular(
-        currentDate,
+      const allMoviesPlayingSortedByPopular = await FetchMoviesAPI.fetchAllMovies(
         pastDate,
+        currentDate,
       );
 
       return allMoviesPlayingSortedByPopular;
@@ -28,7 +28,7 @@ export default class MoviesAPIModel {
 
   public static async getUpcoming(tomorrowDate: IDate, futureDate: IDate) {
     try {
-      const allMoviesUpcoming = await FetchMoviesAPI.fetchUpcoming(tomorrowDate, futureDate);
+      const allMoviesUpcoming = await FetchMoviesAPI.fetchAllMovies(tomorrowDate, futureDate);
 
       return allMoviesUpcoming;
     } catch {
@@ -38,7 +38,7 @@ export default class MoviesAPIModel {
 
   public static async getPremier(lastSundayDate: IDate, nextSundayDate: IDate) {
     try {
-      const allMoviesPremier = await FetchMoviesAPI.fetchPremier(lastSundayDate, nextSundayDate);
+      const allMoviesPremier = await FetchMoviesAPI.fetchAllMovies(lastSundayDate, nextSundayDate);
 
       return allMoviesPremier;
     } catch {
@@ -48,7 +48,7 @@ export default class MoviesAPIModel {
 
   public static async getPreview(tomorrowDate: IDate, futureDate: IDate) {
     try {
-      const allMoviesPreview = await FetchMoviesAPI.fetchPreview(tomorrowDate, futureDate);
+      const allMoviesPreview = await FetchMoviesAPI.fetchAllMovies(tomorrowDate, futureDate);
 
       return allMoviesPreview;
     } catch {

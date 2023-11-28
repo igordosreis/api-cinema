@@ -7,8 +7,6 @@ import {
   LANGUAGE_PT_BR,
   RELEASE_DATE_END,
   RELEASE_DATE_START,
-  SORT_BY_POPULARITY_DESC,
-  SORT_BY_RELEASE_DATE_ASC,
   TMDB_URL_BASE_DETAILS,
   TMDB_URL_BASE_DISCOVER,
   TMDB_URL_BASE_GENRE,
@@ -36,40 +34,8 @@ class FetchMoviesAPI {
 
   // getMovies = async (fetchParams: FetchParams) => {};
 
-  fetchNowPlaying = async (currentDate: IDate, pastDate: IDate) => {
-    const endpoint = `${TMDB_URL_BASE_DISCOVER}${RELEASE_DATE_START}${pastDate}${RELEASE_DATE_END}${currentDate}`;
-
-    const data = await this.fetch<IMoviesResults>(endpoint);
-
-    return data;
-  };
-
-  fetchPopular = async (currentDate: IDate, pastDate: IDate) => {
-    const endpoint = `${TMDB_URL_BASE_DISCOVER}${RELEASE_DATE_START}${pastDate}${RELEASE_DATE_END}${currentDate}${SORT_BY_POPULARITY_DESC}`;
-
-    const data = await this.fetch<IMoviesResults>(endpoint);
-
-    return data;
-  };
-
-  fetchUpcoming = async (tomorrowDate: IDate, futureDate: IDate) => {
-    const endpoint = `${TMDB_URL_BASE_DISCOVER}${RELEASE_DATE_START}${tomorrowDate}${RELEASE_DATE_END}${futureDate}${SORT_BY_RELEASE_DATE_ASC}`;
-
-    const data = await this.fetch<IMoviesResults>(endpoint);
-
-    return data;
-  };
-
-  fetchPremier = async (previousSundayDate: IDate, nextSundayDate: IDate) => {
-    const endpoint = `${TMDB_URL_BASE_DISCOVER}${RELEASE_DATE_START}${previousSundayDate}${RELEASE_DATE_END}${nextSundayDate}`;
-
-    const data = await this.fetch<IMoviesResults>(endpoint);
-
-    return data;
-  };
-
-  fetchPreview = async (tomorrowDate: IDate, futureDate: IDate) => {
-    const endpoint = `${TMDB_URL_BASE_DISCOVER}${RELEASE_DATE_START}${tomorrowDate}${RELEASE_DATE_END}${futureDate}`;
+  fetchAllMovies = async (beforeDate: IDate, afterDate: IDate) => {
+    const endpoint = `${TMDB_URL_BASE_DISCOVER}${RELEASE_DATE_START}${beforeDate}${RELEASE_DATE_END}${afterDate}`;
 
     const data = await this.fetch<IMoviesResults>(endpoint);
 

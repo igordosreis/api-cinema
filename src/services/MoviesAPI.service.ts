@@ -14,7 +14,7 @@ export default class MoviesAPIService {
     const currentDateISO = DateUtils.formatDateToISO(currentDate);
     const pastDateISO = DateUtils.formatDateToISO(subtractFortyFiveDaysDate);
 
-    const allMoviesPlayingNow = await MoviesAPIModel.getNowPlaying(currentDateISO, pastDateISO);
+    const allMoviesPlayingNow = await MoviesAPIModel.getNowPlaying(pastDateISO, currentDateISO);
 
     if (allMoviesPlayingNow) {
       const parsedMovies = await formatMoviesUtil.formatAllMovies({
@@ -37,7 +37,7 @@ export default class MoviesAPIService {
     const currentDateISO = DateUtils.formatDateToISO(currentDate);
     const pastDateISO = DateUtils.formatDateToISO(subtractFortyFiveDaysDate);
 
-    const allMoviesByPopular = await MoviesAPIModel.getNowPlaying(currentDateISO, pastDateISO);
+    const allMoviesByPopular = await MoviesAPIModel.getNowPlaying(pastDateISO, currentDateISO);
 
     if (allMoviesByPopular) {
       const parsedMovies = await formatMoviesUtil.formatAllMovies({
