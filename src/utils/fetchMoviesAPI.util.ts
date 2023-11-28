@@ -68,6 +68,14 @@ class FetchMoviesAPI {
     return data;
   };
 
+  fetchPreview = async (tomorrowDate: IDate, futureDate: IDate) => {
+    const endpoint = `${TMDB_URL_BASE_DISCOVER}${RELEASE_DATE_START}${tomorrowDate}${RELEASE_DATE_END}${futureDate}`;
+
+    const data = await this.fetch<IMoviesResults>(endpoint);
+
+    return data;
+  };
+
   fetchMovieDetails = async (movieId: number | string) => {
     const endpoint = `${TMDB_URL_BASE_DETAILS}${movieId}${DETAILS_AUTH_AND_APPEND}`;
 

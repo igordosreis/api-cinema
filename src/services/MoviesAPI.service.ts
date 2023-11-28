@@ -97,6 +97,20 @@ export default class MoviesAPIService {
     }
   }
 
+  public static async getPreview() {
+    const currentDate = new Date();
+
+    const addOneDayDate = DateUtils.addDays(currentDate, 1);
+    const addEightDaysDate = DateUtils.addDays(currentDate, 8);
+
+    const tomorrowDateISO = DateUtils.formatDateToISO(addOneDayDate);
+    const futureDateISO = DateUtils.formatDateToISO(addEightDaysDate);
+
+    const allMoviesPreview = await MoviesAPIModel.getPreview(tomorrowDateISO, futureDateISO);
+
+    return allMoviesPreview;
+  }
+
   public static async getMovieDetails(
     movieId: number | string,
   ): Promise<IMovieDetails | undefined> {

@@ -46,6 +46,16 @@ export default class MoviesAPIModel {
     }
   }
 
+  public static async getPreview(tomorrowDate: IDate, futureDate: IDate) {
+    try {
+      const allMoviesPreview = await FetchMoviesAPI.fetchPreview(tomorrowDate, futureDate);
+
+      return allMoviesPreview;
+    } catch {
+      throw new CustomError(fetchError);
+    }
+  }
+
   public static async getMovieDetails(movieId: number | string) {
     try {
       const movieDetails = await FetchMoviesAPI.fetchMovieDetails(movieId);
