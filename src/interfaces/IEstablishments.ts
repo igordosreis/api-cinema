@@ -34,5 +34,5 @@ export interface IEstablishmentFormattedQuery {
   cityId: number | undefined;
   stateId: number | undefined;
   brandId: number | undefined;
-  term: string;
+  term: string | undefined;
 }

@@ -6,6 +6,9 @@ import {
 import { IProductFormattedQuery, IProductRawQuery } from '../interfaces/IProducts';
 
 class FormatRequestQuery {
+  private formatTerm = ({ query: { term } }: IProductRawQuery | IEstablishmentRawQuery) =>
+    ((typeof term === 'string') ? term : undefined);
+    
   private formatLimit = ({ query: { limit } }: IEstablishmentRawQuery) => {
     const numberLimit = Number(limit);
     console.log('numberLimit: ', numberLimit);
@@ -44,14 +47,11 @@ class FormatRequestQuery {
       cityId: this.formatCityId(req),
       stateId: this.formatStateId(req),
       brandId: this.formatBrandId(req),
-      term: req.query.term as string,
+      term: this.formatTerm(req),
       distance: this.formatDistance(req),
       latitude: this.formatLatitude(req),
       longitude: this.formatLongitude(req),
     } as IEstablishmentFormattedQuery);
-
-  private formatProductTerm = ({ query: { term } }: IProductRawQuery) =>
-    ((typeof term === 'string') ? term : undefined);
 
   private formatType = ({ query: { type } }: IProductRawQuery) =>
     ((typeof type === 'string') ? type : undefined);
@@ -64,7 +64,7 @@ class FormatRequestQuery {
 
   formatProductQuery = (req: IProductRawQuery): IProductFormattedQuery => 
     ({
-      term: this.formatProductTerm(req),
+      term: this.formatTerm(req),
       type: this.formatType(req),
       establishmentId: this.formatEstablishmentId(req),
       available: this.formatAvailable(req),
