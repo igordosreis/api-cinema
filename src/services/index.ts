@@ -1,5 +1,5 @@
-import EstablishmentService from './Establishment.service';
+import EstablishmentsService from './Establishments.service';
 import MoviesAPIService from './MoviesAPI.service';
-import VouchersService from './Vouchers.service';
+import VouchersService from './Users.service';
 
-export { EstablishmentService, MoviesAPIService, VouchersService };
+export { EstablishmentsService, MoviesAPIService, VouchersService };

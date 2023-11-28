@@ -12,7 +12,7 @@ import { IEstablishmentFormattedQuery } from '../interfaces/IEstablishments';
 import createProductSearchSqlizeQueryUtil from '../utils/createProductSearchSqlizeQuery.util';
 import EstablishmentsImagesModel from '../database/models/EstablishmentsImages.model';
 
-export default class EstablishmentService {
+export default class EstablishmentsService {
   public static async getAllEstablishments(): Promise<EstablishmentsModel[]> {
     const allEstablishments = EstablishmentsModel.findAll({
       include: [{ model: EstablishmentsImagesModel, as: 'images' }],

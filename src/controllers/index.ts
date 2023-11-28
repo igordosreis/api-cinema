@@ -1,4 +1,4 @@
-import EstablishmentController from './Establishment.controller';
+import EstablishmentsController from './Establishments.controller';
 import MoviesAPIController from './MoviesAPI.controller';
 
-export { EstablishmentController, MoviesAPIController };
+export { EstablishmentsController, MoviesAPIController };
