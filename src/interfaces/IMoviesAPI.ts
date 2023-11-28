@@ -35,7 +35,7 @@ export interface IMovieInfoWithImgLinks extends IMovieInfo {
   posterImgLink: string;
 }
 
-interface Genre {
+interface GenreInfo {
   id: number;
   name: string;
 }
@@ -148,7 +148,7 @@ export interface IMovieDetails {
   backdrop_path: string;
   belongs_to_collection: BelongsToCollection | null;
   budget: number;
-  genres: Genre[];
+  genres: GenreInfo[];
   homepage: string;
   id: number;
   imdb_id: string;
@@ -179,11 +179,11 @@ export interface IMovieDetailsWithImgLinks extends Omit<IMovieDetails, 'Images'>
   images: ImagesWithLinks;
 }
 
-interface Genre {
+export interface IGenreInfo {
   id: number;
   name: string;
 }
 
 export interface IGenreList {
-  genres: Genre[];
+  genres: IGenreInfo[];
 }

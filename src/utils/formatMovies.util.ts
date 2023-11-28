@@ -1,7 +1,10 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable camelcase */
 /* eslint-disable max-lines-per-function */
 import {
   CastMember,
   CrewMember,
+  IGenreInfo,
   IMovieDetails,
   // IMovieDetailsWithImgLinks,
   IMovieInfo,
@@ -15,7 +18,7 @@ class FormatMovies {
     crew.filter(
       ({ job }) => job === 'Director' || job === 'Producer' || job === 'Executive Producer',
     );
-    
+
   addImgLinksToAllMovies = (moviesArray: IMovieInfo[]): IMovieInfo[] => {
     const moviesWithImgLinks = moviesArray.map((movie) => ({
       ...movie,
@@ -24,6 +27,25 @@ class FormatMovies {
     }));
 
     return moviesWithImgLinks;
+  };
+
+  addGenresNamesToAllMovies = (moviesArray: IMovieInfo[], genresList: IGenreInfo[]) => {
+    const moviesWithParsedGenres = moviesArray.map((movie) => {
+      const parsedGenres = movie.genre_ids.map((movieGenreId) => {
+        const currentGenreObject = genresList.find((genre) => genre.id === movieGenreId);
+
+        return currentGenreObject;
+      });
+
+      const { genre_ids, ...movieInfo } = movie;
+
+      return {
+        ...movieInfo,
+        genresInfo: parsedGenres,
+      };
+    });
+
+    return moviesWithParsedGenres;
   };
 
   addImgLinksToMovieDetails = (movieDetails: IMovieDetails): IMovieDetails => {
