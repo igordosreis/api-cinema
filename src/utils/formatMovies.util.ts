@@ -13,12 +13,14 @@ import {
 import fetchMoviesAPIUtil from './fetchMoviesAPI.util';
 
 class FormatMovies {
-  private sliceFiveFromCastDetails = (cast: CastMember[]) => cast.slice(0, 5);
-
-  private filterCrewForDirectorAndProducers = (crew: CrewMember[]) =>
-    crew.filter(
-      ({ job }) => job === 'Director' || job === 'Producer' || job === 'Executive Producer',
+  private sortByReleaseDate = (moviesArray: IMovieInfo[]): IMovieInfo[] => {
+    const sortedMoviesByReleaseDate = moviesArray.sort(
+      (movieA, movieB) =>
+        new Date(movieA.release_date).getTime() - new Date(movieB.release_date).getTime(),
     );
+
+    return sortedMoviesByReleaseDate;
+  };
 
   private addImgLinksToAllMovies = (moviesArray: IMovieInfo[]): IMovieInfo[] => {
     const moviesWithImgLinks = moviesArray.map((movie) => ({
@@ -51,17 +53,48 @@ class FormatMovies {
     }
   };
 
-  formatAllMovies = async (
-    moviesArray: IMovieInfo[],
-    isRandomized?: boolean,
-  ): Promise<IMovieInfo[] | undefined> => {
-    const allMoviesWithImgLinks = isRandomized
-      ? this.addImgLinksToAllMovies(moviesArray).sort(() => Math.random() - 0.5)
-      : this.addImgLinksToAllMovies(moviesArray);
+  formatAllMovies = async ({
+    moviesArray,
+    isRandomized,
+    isSorted,
+  }: {
+    moviesArray: IMovieInfo[];
+    isRandomized?: boolean;
+    isSorted?: boolean;
+  }): Promise<IMovieInfo[] | undefined> => {
+    if (isRandomized) {
+      const allMoviesWithImgLinks = this.addImgLinksToAllMovies(moviesArray).sort(
+        () => Math.random() - 0.5,
+      );
+      const allMoviesWithLinksAndGenres = await this.addGenresNamesToAllMovies(
+        allMoviesWithImgLinks,
+      );
+
+      return allMoviesWithLinksAndGenres;
+    }
+
+    if (isSorted) {
+      const allMoviesWithImgLinks = this.addImgLinksToAllMovies(moviesArray);
+      const sortedAllMoviesWithImgLinks = this.sortByReleaseDate(allMoviesWithImgLinks);
+      const allMoviesWithLinksAndGenres = await this.addGenresNamesToAllMovies(
+        sortedAllMoviesWithImgLinks,
+      );
+
+      return allMoviesWithLinksAndGenres;
+    }
+
+    const allMoviesWithImgLinks = this.addImgLinksToAllMovies(moviesArray);
     const allMoviesWithLinksAndGenres = await this.addGenresNamesToAllMovies(allMoviesWithImgLinks);
 
     return allMoviesWithLinksAndGenres;
   };
+
+  private sliceFiveFromCastDetails = (cast: CastMember[]) => cast.slice(0, 5);
+
+  private filterCrewForDirectorAndProducers = (crew: CrewMember[]) =>
+    crew.filter(
+      ({ job }) => job === 'Director' || job === 'Producer' || job === 'Executive Producer',
+    );
 
   private addImgLinksToMovieDetails = (movieDetails: IMovieDetails): IMovieDetails => {
     const backdrops = movieDetails.images.backdrops.map((image) => ({

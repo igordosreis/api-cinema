@@ -17,10 +17,10 @@ export default class MoviesAPIService {
     const allMoviesPlayingNow = await MoviesAPIModel.getNowPlaying(currentDateISO, pastDateISO);
 
     if (allMoviesPlayingNow) {
-      const parsedMovies = await formatMoviesUtil.formatAllMovies(
-        allMoviesPlayingNow.results,
-        true,
-      );
+      const parsedMovies = await formatMoviesUtil.formatAllMovies({
+        moviesArray: allMoviesPlayingNow.results,
+        isRandomized: true,
+      });
 
       if (parsedMovies) {
         allMoviesPlayingNow.results = parsedMovies;
@@ -40,7 +40,9 @@ export default class MoviesAPIService {
     const allMoviesByPopular = await MoviesAPIModel.getNowPlaying(currentDateISO, pastDateISO);
 
     if (allMoviesByPopular) {
-      const parsedMovies = await formatMoviesUtil.formatAllMovies(allMoviesByPopular.results);
+      const parsedMovies = await formatMoviesUtil.formatAllMovies({
+        moviesArray: allMoviesByPopular.results,
+      });
 
       if (parsedMovies) {
         allMoviesByPopular.results = parsedMovies;
@@ -61,7 +63,10 @@ export default class MoviesAPIService {
     const allMoviesUpcoming = await MoviesAPIModel.getUpcoming(tomorrowDateISO, futureDateISO);
 
     if (allMoviesUpcoming) {
-      const parsedMovies = await formatMoviesUtil.formatAllMovies(allMoviesUpcoming.results);
+      const parsedMovies = await formatMoviesUtil.formatAllMovies({
+        moviesArray: allMoviesUpcoming.results,
+        isSorted: true,
+      });
 
       if (parsedMovies) {
         allMoviesUpcoming.results = parsedMovies;
@@ -80,7 +85,9 @@ export default class MoviesAPIService {
     const allMoviesPremier = await MoviesAPIModel.getPremier(lastSundayISO, nextSundayISO);
 
     if (allMoviesPremier) {
-      const parsedMovies = await formatMoviesUtil.formatAllMovies(allMoviesPremier.results);
+      const parsedMovies = await formatMoviesUtil.formatAllMovies({
+        moviesArray: allMoviesPremier.results,
+      });
 
       if (parsedMovies) {
         allMoviesPremier.results = parsedMovies;
