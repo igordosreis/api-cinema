@@ -7,7 +7,7 @@ import formatMoviesUtil from '../utils/formatMovies.util';
 import searchMoviesUtil from '../utils/searchMovies.util';
 
 export default class MoviesAPIService {
-  public static async getNowPlaying(): Promise<IMoviesResults | undefined> {
+  public static async getNowPlaying(): Promise<IMoviesResults> {
     const currentDate = new Date();
     const subtractFortyFiveDaysDate = DateUtils.subtractDays(currentDate, 45);
 
@@ -16,21 +16,17 @@ export default class MoviesAPIService {
 
     const allMoviesPlayingNow = await MoviesAPIModel.getNowPlaying(pastDateISO, currentDateISO);
 
-    if (allMoviesPlayingNow) {
-      const parsedMovies = await formatMoviesUtil.formatAllMovies({
-        moviesArray: allMoviesPlayingNow.results,
-        isRandomized: true,
-      });
+    const parsedMovies = await formatMoviesUtil.formatAllMovies({
+      moviesArray: allMoviesPlayingNow.results,
+      isRandomized: true,
+    });
 
-      if (parsedMovies) {
-        allMoviesPlayingNow.results = parsedMovies;
+    allMoviesPlayingNow.results = parsedMovies;
 
-        return allMoviesPlayingNow;
-      }
-    }
+    return allMoviesPlayingNow;
   }
 
-  public static async getPopular(): Promise<IMoviesResults | undefined> {
+  public static async getPopular(): Promise<IMoviesResults> {
     const currentDate = new Date();
     const subtractFortyFiveDaysDate = DateUtils.subtractDays(currentDate, 45);
 
@@ -39,20 +35,16 @@ export default class MoviesAPIService {
 
     const allMoviesByPopular = await MoviesAPIModel.getNowPlaying(pastDateISO, currentDateISO);
 
-    if (allMoviesByPopular) {
-      const parsedMovies = await formatMoviesUtil.formatAllMovies({
-        moviesArray: allMoviesByPopular.results,
-      });
+    const parsedMovies = await formatMoviesUtil.formatAllMovies({
+      moviesArray: allMoviesByPopular.results,
+    });
 
-      if (parsedMovies) {
-        allMoviesByPopular.results = parsedMovies;
+    allMoviesByPopular.results = parsedMovies;
 
-        return allMoviesByPopular;
-      }
-    }
+    return allMoviesByPopular;
   }
 
-  public static async getUpcoming(): Promise<IMoviesResults | undefined> {
+  public static async getUpcoming(): Promise<IMoviesResults> {
     const currentDate = new Date();
     const addOneDayDate = DateUtils.addDays(currentDate, 1);
     const addThirtyDaysDate = DateUtils.addDays(currentDate, 30);
@@ -62,21 +54,17 @@ export default class MoviesAPIService {
 
     const allMoviesUpcoming = await MoviesAPIModel.getUpcoming(tomorrowDateISO, futureDateISO);
 
-    if (allMoviesUpcoming) {
-      const parsedMovies = await formatMoviesUtil.formatAllMovies({
-        moviesArray: allMoviesUpcoming.results,
-        isSorted: true,
-      });
+    const parsedMovies = await formatMoviesUtil.formatAllMovies({
+      moviesArray: allMoviesUpcoming.results,
+      isSorted: true,
+    });
 
-      if (parsedMovies) {
-        allMoviesUpcoming.results = parsedMovies;
+    allMoviesUpcoming.results = parsedMovies;
 
-        return allMoviesUpcoming;
-      }
-    }
+    return allMoviesUpcoming;
   }
 
-  public static async getPremier(): Promise<IMoviesResults | undefined> {
+  public static async getPremier(): Promise<IMoviesResults> {
     const currentDate = new Date();
 
     const lastSundayISO = DateUtils.getLastSunday(currentDate);
@@ -84,17 +72,13 @@ export default class MoviesAPIService {
 
     const allMoviesPremier = await MoviesAPIModel.getPremier(lastSundayISO, nextSundayISO);
 
-    if (allMoviesPremier) {
-      const parsedMovies = await formatMoviesUtil.formatAllMovies({
-        moviesArray: allMoviesPremier.results,
-      });
+    const parsedMovies = await formatMoviesUtil.formatAllMovies({
+      moviesArray: allMoviesPremier.results,
+    });
 
-      if (parsedMovies) {
-        allMoviesPremier.results = parsedMovies;
+    allMoviesPremier.results = parsedMovies;
 
-        return allMoviesPremier;
-      }
-    }
+    return allMoviesPremier;
   }
 
   public static async getPreview() {
@@ -111,19 +95,21 @@ export default class MoviesAPIService {
     return allMoviesPreview;
   }
 
-  public static async getMovieDetails(
-    movieId: number | string,
-  ): Promise<IMovieDetails | undefined> {
+  // public static async getHighlights() {
+  //   const allMoviesByPopular = await this.getPopular();
+  //   const allMoviesUpcoming = await this.getUpcoming();
+
+  // }
+
+  public static async getMovieDetails(movieId: number | string): Promise<IMovieDetails> {
     const movieDetails = await MoviesAPIModel.getMovieDetails(movieId);
 
-    if (movieDetails) {
-      const movieDetailsWithLinks = formatMoviesUtil.formatMovieDetails(movieDetails);
+    const movieDetailsWithLinks = formatMoviesUtil.formatMovieDetails(movieDetails);
 
-      return movieDetailsWithLinks;
-    }
+    return movieDetailsWithLinks;
   }
 
-  public static async getGenres(): Promise<IGenreList | undefined> {
+  public static async getGenres(): Promise<IGenreList> {
     const allMovieGenres = await MoviesAPIModel.getGenres();
 
     return allMovieGenres;
@@ -136,19 +122,17 @@ export default class MoviesAPIService {
     const allMoviesByPopular = await this.getPopular();
     const allMoviesUpcoming = await this.getUpcoming();
 
-    if (allMoviesByPopular && allMoviesUpcoming) {
-      const parsedPopular = searchMoviesUtil.findByGenreAndTitle(
-        allMoviesByPopular,
-        genreId,
-        titleQuery,
-      );
-      const parsedUpcoming = searchMoviesUtil.findByGenreAndTitle(
-        allMoviesUpcoming,
-        genreId,
-        titleQuery,
-      );
+    const parsedPopular = searchMoviesUtil.findByGenreAndTitle(
+      allMoviesByPopular,
+      genreId,
+      titleQuery,
+    );
+    const parsedUpcoming = searchMoviesUtil.findByGenreAndTitle(
+      allMoviesUpcoming,
+      genreId,
+      titleQuery,
+    );
 
-      return { parsedPopular, parsedUpcoming };
-    }
+    return { parsedPopular, parsedUpcoming };
   }
 }

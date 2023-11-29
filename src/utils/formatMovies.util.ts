@@ -39,31 +39,29 @@ class FormatMovies {
   };
 
   private addGenresNamesToAllMovies = async (moviesArray: IMovieInfo[]) => {
-    const genresList: IGenreList | undefined = await fetchMoviesAPIUtil.fetchGenres();
-    if (genresList) {
-      const { genres } = genresList;
-      const moviesWithParsedGenres = moviesArray.map((movie) => {
-        const parsedGenres = movie.genre_ids.map((movieGenreId) => {
-          const currentGenreObject = genres.find((genre) => genre.id === movieGenreId);
+    const { genres }: IGenreList = await fetchMoviesAPIUtil.fetchGenres();
 
-          return currentGenreObject;
-        });
+    const moviesWithParsedGenres = moviesArray.map((movie) => {
+      const parsedGenres = movie.genre_ids.map((movieGenreId) => {
+        const currentGenreObject = genres.find((genre) => genre.id === movieGenreId);
 
-        return {
-          ...movie,
-          genre_ids: parsedGenres,
-        };
+        return currentGenreObject;
       });
 
-      return moviesWithParsedGenres;
-    }
+      return {
+        ...movie,
+        genre_ids: parsedGenres,
+      };
+    });
+
+    return moviesWithParsedGenres;
   };
 
   formatAllMovies = async ({
     moviesArray,
     isRandomized,
     isSorted,
-  }: formatMoviesParams): Promise<IMovieInfo[] | undefined> => {
+  }: formatMoviesParams): Promise<IMovieInfo[]> => {
     if (isRandomized) {
       const allMoviesWithImgLinks = this.addImgLinksToAllMovies(moviesArray).sort(
         () => Math.random() - 0.5,
