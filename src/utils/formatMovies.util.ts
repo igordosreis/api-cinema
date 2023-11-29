@@ -13,11 +13,15 @@ import {
 import dateUtils from './date.utils';
 import fetchMoviesAPIUtil from './fetchMoviesAPI.util';
 
-interface IFormatMoviesParams {
+type IFormatMoviesParams = {
+  moviesArray: IMovieInfo[];
+  isSortedByReleaseDate?: boolean;
+  isRandomized?: undefined;
+} | {
   moviesArray: IMovieInfo[];
   isRandomized?: boolean;
-  isSortedByReleaseDate?: boolean;
-}
+  isSortedByReleaseDate?: undefined;
+};
 
 class FormatMovies {
   private sortByReleaseDate = (moviesArray: IMovieInfo[]): IMovieInfo[] => {
@@ -83,7 +87,7 @@ class FormatMovies {
 
   formatAllMovies = async ({
     moviesArray,
-    isRandomized,
+    isRandomized, 
     isSortedByReleaseDate,
   }: IFormatMoviesParams): Promise<IMovieInfo[]> => {
     if (isRandomized) {

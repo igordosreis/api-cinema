@@ -26,7 +26,6 @@ class FetchMoviesAPI {
 
   fetchAllMovies = async (beforeDate: IDate, afterDate: IDate) => {
     const endpoint = `${TMDB_URL_BASE_DISCOVER}${RELEASE_DATE_START}${beforeDate}${RELEASE_DATE_END}${afterDate}`;
-    console.log('endpoint: ', endpoint);
 
     const data = await this.fetch<IMoviesResults>(endpoint);
 

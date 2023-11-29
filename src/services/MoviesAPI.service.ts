@@ -90,11 +90,6 @@ export default class MoviesAPIService {
     const tomorrowDateISO = DateUtils.formatDateToISO(addOneDayDate);
     const futureDateISO = DateUtils.formatDateToISO(addEightDaysDate);
 
-    console.log('currentDate :', currentDate);
-    console.log('addEightDaysDate :', addEightDaysDate);
-    console.log('futureDateISO :', futureDateISO);
-    console.log('addEightDaysDate.getTime :', new Date(addEightDaysDate.getTime()));
-
     const allMoviesPreview = await MoviesAPIModel.getPreview(tomorrowDateISO, futureDateISO);
 
     return allMoviesPreview;
