@@ -103,8 +103,9 @@ class FormatMovies {
     if (isSortedByReleaseDate) {
       const moviesWithImg = this.addImgLinksToAllMovies(moviesArray);
       const sortedMoviesWithImg = this.sortByReleaseDate(moviesWithImg);
+      const sortedMoviesWithImgAndGenre = await this.addGenresNamesToAllMovies(sortedMoviesWithImg);
       const sortedMoviesWithImgGenreAndRelease = this.addReleaseInfoToAllMovies(
-        sortedMoviesWithImg,
+        sortedMoviesWithImgAndGenre,
       );
 
       return sortedMoviesWithImgGenreAndRelease;
