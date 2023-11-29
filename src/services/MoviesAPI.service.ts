@@ -95,11 +95,19 @@ export default class MoviesAPIService {
     return allMoviesPreview;
   }
 
-  // public static async getHighlights() {
-  //   const allMoviesByPopular = await this.getPopular();
-  //   const allMoviesUpcoming = await this.getUpcoming();
+  public static async getHighlight() {
+    const allMoviesByPopular = await this.getPopular();
+    const allMoviesUpcoming = await this.getUpcoming();
 
-  // }
+    const allMoviesHighlight: IMoviesResults = {
+      page: allMoviesByPopular.page + allMoviesUpcoming.page,
+      total_pages: allMoviesByPopular.total_pages + allMoviesUpcoming.total_pages,
+      total_results: allMoviesByPopular.total_results + allMoviesUpcoming.total_results,
+      results: [...allMoviesByPopular.results, ...allMoviesUpcoming.results],
+    };
+
+    return allMoviesHighlight;
+  }
 
   public static async getMovieDetails(movieId: number | string): Promise<IMovieDetails> {
     const movieDetails = await MoviesAPIModel.getMovieDetails(movieId);
@@ -133,6 +141,6 @@ export default class MoviesAPIService {
       titleQuery,
     );
 
-    return { parsedPopular, parsedUpcoming };
+    return { allMoviesPopular: parsedPopular, allMoviesUpcoming: parsedUpcoming };
   }
 }

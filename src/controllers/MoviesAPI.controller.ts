@@ -32,6 +32,12 @@ export default class MoviesAPIController {
     res.status(200).json(allMoviesPreview);
   }
 
+  public static async getHighlight(_req: Request, res: Response): Promise<void> {
+    const allMoviesHighlight = await MoviesAPIService.getHighlight();
+
+    res.status(200).json(allMoviesHighlight);
+  }
+
   public static async getMovieDetails(req: Request, res: Response): Promise<void> {
     const { id: movieId } = req.params;
 
