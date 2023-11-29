@@ -20,20 +20,20 @@ export default class MoviesAPIController {
     res.status(200).json(allMoviesUpcoming);
   }
 
-  public static async getPremier(_req: Request, res: Response): Promise<void> {
-    const allMoviesPremier = await MoviesAPIService.getPremier();
+  public static async getPremieres(_req: Request, res: Response): Promise<void> {
+    const allMoviesPremier = await MoviesAPIService.getPremieres();
 
     res.status(200).json(allMoviesPremier);
   }
 
-  public static async getPreview(_req: Request, res: Response): Promise<void> {
-    const allMoviesPreview = await MoviesAPIService.getPreview();
+  public static async getPreviews(_req: Request, res: Response): Promise<void> {
+    const allMoviesPreview = await MoviesAPIService.getPreviews();
 
     res.status(200).json(allMoviesPreview);
   }
 
-  public static async getHighlight(_req: Request, res: Response): Promise<void> {
-    const allMoviesHighlight = await MoviesAPIService.getHighlight();
+  public static async getHighlights(_req: Request, res: Response): Promise<void> {
+    const allMoviesHighlight = await MoviesAPIService.getHighlights();
 
     res.status(200).json(allMoviesHighlight);
   }

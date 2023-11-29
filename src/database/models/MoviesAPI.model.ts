@@ -36,7 +36,7 @@ export default class MoviesAPIModel {
     }
   }
 
-  public static async getPremier(lastSundayDate: IDate, nextSundayDate: IDate) {
+  public static async getPremieres(lastSundayDate: IDate, nextSundayDate: IDate) {
     try {
       const allMoviesPremier = await FetchMoviesAPI.fetchAllMovies(lastSundayDate, nextSundayDate);
 

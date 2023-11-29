@@ -64,13 +64,13 @@ export default class MoviesAPIService {
     return allMoviesUpcoming;
   }
 
-  public static async getPremier(): Promise<IMoviesResults> {
+  public static async getPremieres(): Promise<IMoviesResults> {
     const currentDate = new Date();
 
     const lastSundayISO = DateUtils.getLastSunday(currentDate);
     const nextSundayISO = DateUtils.getNextSunday(currentDate);
 
-    const allMoviesPremier = await MoviesAPIModel.getPremier(lastSundayISO, nextSundayISO);
+    const allMoviesPremier = await MoviesAPIModel.getPremieres(lastSundayISO, nextSundayISO);
 
     const parsedMovies = await formatMoviesUtil.formatAllMovies({
       moviesArray: allMoviesPremier.results,
@@ -81,7 +81,7 @@ export default class MoviesAPIService {
     return allMoviesPremier;
   }
 
-  public static async getPreview() {
+  public static async getPreviews() {
     const currentDate = new Date();
 
     const addOneDayDate = DateUtils.addDays(currentDate, 1);
@@ -95,7 +95,7 @@ export default class MoviesAPIService {
     return allMoviesPreview;
   }
 
-  public static async getHighlight() {
+  public static async getHighlights() {
     const allMoviesByPopular = await this.getPopular();
     const allMoviesUpcoming = await this.getUpcoming();
 

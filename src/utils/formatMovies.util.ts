@@ -118,7 +118,11 @@ class FormatMovies {
     return moviesWithImgGenreAndRelease;
   };
 
-  private sliceFiveFromCastDetails = (cast: CastMember[]) => cast.slice(0, 5);
+  // formatHighlights = (popularMovies: IMovieInfo[], upcomingMovies: IMovieInfo[]) => {
+
+  // };
+
+  private getFirstFiveElements = <T>(cast: T[]) => cast.slice(0, 5);
 
   private filterCrewForDirectorAndProducers = (crew: CrewMember[]) =>
     crew.filter(
@@ -138,7 +142,7 @@ class FormatMovies {
       ...image,
       file_path: `https://image.tmdb.org/t/p/original${image.file_path}`,
     }));
-    const cast = this.sliceFiveFromCastDetails(movieDetails.credits.cast).map((actor) => ({
+    const cast = this.getFirstFiveElements<CastMember>(movieDetails.credits.cast).map((actor) => ({
       ...actor,
       profile_path: `https://image.tmdb.org/t/p/original${actor.profile_path}`,
     }));
