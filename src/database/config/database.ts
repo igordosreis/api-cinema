@@ -8,7 +8,7 @@ const config: Options = {
   host: process.env.DB_HOST || 'localhost',
   port: Number(process.env.DB_PORT) || 3072,
   dialect: 'mysql',
-  timezone: 'America/Sao_Paulo', // -03:00
+  timezone: '-03:00', // -03:00 / 'America/Sao_Paulo'
 };
 
 export = config;

@@ -10,12 +10,13 @@ import {
   IMovieInfo,
   // IMovieInfoWithImgLinks,
 } from '../interfaces/IMoviesAPI';
+import dateUtils from './date.utils';
 import fetchMoviesAPIUtil from './fetchMoviesAPI.util';
 
-interface formatMoviesParams {
+interface IFormatMoviesParams {
   moviesArray: IMovieInfo[];
   isRandomized?: boolean;
-  isSorted?: boolean;
+  isSortedByReleaseDate?: boolean;
 }
 
 class FormatMovies {
@@ -57,36 +58,59 @@ class FormatMovies {
     return moviesWithParsedGenres;
   };
 
+  private addReleaseInfoToAllMovies = async (moviesArray: IMovieInfo[]) => {
+    const currentDate = new Date();
+    
+    const parsedMovies = moviesArray.map((movie) => {
+      const movieReleaseDate = new Date(movie.release_date);
+      const isReleased = currentDate.getTime() >= movieReleaseDate.getTime();
+      
+      return isReleased
+        ? {
+          ...movie,
+          isReleased,
+          daysRemainingAsNowPlaying: 45 - dateUtils.differenceInDays(movieReleaseDate, currentDate),
+        }
+        : {
+          ...movie,
+          isReleased,
+          daysToRelease: dateUtils.differenceInDays(currentDate, movieReleaseDate),
+        };
+    });
+
+    return parsedMovies;
+  };
+
   formatAllMovies = async ({
     moviesArray,
     isRandomized,
-    isSorted,
-  }: formatMoviesParams): Promise<IMovieInfo[]> => {
+    isSortedByReleaseDate,
+  }: IFormatMoviesParams): Promise<IMovieInfo[]> => {
     if (isRandomized) {
-      const allMoviesWithImgLinks = this.addImgLinksToAllMovies(moviesArray).sort(
+      const moviesWithImg = this.addImgLinksToAllMovies(moviesArray).sort(
         () => Math.random() - 0.5,
       );
-      const allMoviesWithLinksAndGenres = await this.addGenresNamesToAllMovies(
-        allMoviesWithImgLinks,
-      );
+      const moviesWithImgAndGenre = await this.addGenresNamesToAllMovies(moviesWithImg);
+      const moviesWithImgGenreAndRelease = this.addReleaseInfoToAllMovies(moviesWithImgAndGenre);
 
-      return allMoviesWithLinksAndGenres;
+      return moviesWithImgGenreAndRelease;
     }
 
-    if (isSorted) {
-      const allMoviesWithImgLinks = this.addImgLinksToAllMovies(moviesArray);
-      const sortedAllMoviesWithImgLinks = this.sortByReleaseDate(allMoviesWithImgLinks);
-      const allMoviesWithLinksAndGenres = await this.addGenresNamesToAllMovies(
-        sortedAllMoviesWithImgLinks,
+    if (isSortedByReleaseDate) {
+      const moviesWithImg = this.addImgLinksToAllMovies(moviesArray);
+      const sortedMoviesWithImg = this.sortByReleaseDate(moviesWithImg);
+      const sortedMoviesWithImgGenreAndRelease = this.addReleaseInfoToAllMovies(
+        sortedMoviesWithImg,
       );
 
-      return allMoviesWithLinksAndGenres;
+      return sortedMoviesWithImgGenreAndRelease;
     }
 
-    const allMoviesWithImgLinks = this.addImgLinksToAllMovies(moviesArray);
-    const allMoviesWithLinksAndGenres = await this.addGenresNamesToAllMovies(allMoviesWithImgLinks);
+    const moviesWithImg = this.addImgLinksToAllMovies(moviesArray);
+    const moviesWithImgAndGenre = await this.addGenresNamesToAllMovies(moviesWithImg);
+    const moviesWithImgGenreAndRelease = this.addReleaseInfoToAllMovies(moviesWithImgAndGenre);
 
-    return allMoviesWithLinksAndGenres;
+    return moviesWithImgGenreAndRelease;
   };
 
   private sliceFiveFromCastDetails = (cast: CastMember[]) => cast.slice(0, 5);
@@ -149,13 +173,33 @@ class FormatMovies {
     return movieDetailsWithYoutubeLinks;
   };
 
-  formatMovieDetails = (movieDetails: IMovieDetails): IMovieDetails => {
-    const movieDetailsWithImageLinks = this.addImgLinksToMovieDetails(movieDetails);
-    const movieDetailsWithImageAndYoutubeLinks = this.addYoutubeLinksToMovieDetails(
-      movieDetailsWithImageLinks,
-    );
+  private addReleaseInfoToMovieDetails = (movieDetails: IMovieDetails) => {
+    const currentDate = new Date();
+    const movieReleaseDate = new Date(movieDetails.release_date);
+    const isReleased = currentDate.getTime() >= movieReleaseDate.getTime();
+    
+    return isReleased
+      ? {
+        ...movieDetails,
+        isReleased,
+        daysRemainingAsNowPlaying: 45 - dateUtils
+          .differenceInDays(movieReleaseDate, currentDate),
+      }
+      : {
+        ...movieDetails,
+        isReleased,
+        daysToRelease: dateUtils.differenceInDays(currentDate, movieReleaseDate),
+      };
+  };
 
-    return movieDetailsWithImageAndYoutubeLinks;
+  formatMovieDetails = (movieDetails: IMovieDetails): IMovieDetails => {
+    const movieWithImg = this.addImgLinksToMovieDetails(movieDetails);
+    const movieWithImgAndYoutube = this.addYoutubeLinksToMovieDetails(
+      movieWithImg,
+    );
+    const movieWithImgYoutubeAndRelease = this.addReleaseInfoToMovieDetails(movieWithImgAndYoutube);
+
+    return movieWithImgYoutubeAndRelease;
   };
 }
 

@@ -28,6 +28,9 @@ export interface IMovieInfo {
   video: boolean;
   vote_average: number;
   vote_count: number;
+  isReleased?: boolean;
+  daysToRelease?: number;
+  daysRemainingAsNowPlaying?: number;
 }
 
 export interface IMovieInfoWithImgLinks extends IMovieInfo {
@@ -172,6 +175,7 @@ export interface IMovieDetails {
   videos: Videos;
   images: Images;
   credits: Credits;
+  daysRemainingAsNowPlaying?: number;
 }
 
 export interface IMovieDetailsWithImgLinks extends Omit<IMovieDetails, 'Images'> {

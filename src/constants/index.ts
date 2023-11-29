@@ -9,7 +9,7 @@ const { API_KEY } = process.env;
 
 // TMDB URLs & ENDPOINTS
 // TMDB DISCOVER
-export const TMDB_URL_BASE_DISCOVER = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&include_adult=false&include_video=false&language=pt-BR&region=BR&page=1&with_release_type=2|3`;
+export const TMDB_URL_BASE_DISCOVER = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&include_adult=false&include_video=false&language=pt-BR&region=BR&page=1&with_release_type=2|3&include_video=true`;
 export const RELEASE_DATE_START = '&release_date.gte=';
 export const RELEASE_DATE_END = '&release_date.lte=';
 export const SORT_BY_POPULARITY_DESC = '&sort_by=popularity.desc'; // API default behaviour

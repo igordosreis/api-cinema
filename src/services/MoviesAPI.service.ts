@@ -56,7 +56,7 @@ export default class MoviesAPIService {
 
     const parsedMovies = await formatMoviesUtil.formatAllMovies({
       moviesArray: allMoviesUpcoming.results,
-      isSorted: true,
+      isSortedByReleaseDate: true,
     });
 
     allMoviesUpcoming.results = parsedMovies;
@@ -89,6 +89,11 @@ export default class MoviesAPIService {
 
     const tomorrowDateISO = DateUtils.formatDateToISO(addOneDayDate);
     const futureDateISO = DateUtils.formatDateToISO(addEightDaysDate);
+
+    console.log('currentDate :', currentDate);
+    console.log('addEightDaysDate :', addEightDaysDate);
+    console.log('futureDateISO :', futureDateISO);
+    console.log('addEightDaysDate.getTime :', new Date(addEightDaysDate.getTime()));
 
     const allMoviesPreview = await MoviesAPIModel.getPreview(tomorrowDateISO, futureDateISO);
 

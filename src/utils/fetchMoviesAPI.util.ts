@@ -13,14 +13,6 @@ import {
 } from '../constants';
 import CustomError, { fetchError } from './customError.util';
 
-// interface FetchParams {
-//   firstDate: Date;
-//   secondDate: Date;
-//   fetchType: 'nowplaying' | 'popular';
-//   movieId?: number | string;
-//   genreId?: number | string;
-// }
-
 class FetchMoviesAPI {
   private fetch = async <T>(endpoint: string): Promise<T> => {
     try {
@@ -32,10 +24,9 @@ class FetchMoviesAPI {
     }
   };
 
-  // getMovies = async (fetchParams: FetchParams) => {};
-
   fetchAllMovies = async (beforeDate: IDate, afterDate: IDate) => {
     const endpoint = `${TMDB_URL_BASE_DISCOVER}${RELEASE_DATE_START}${beforeDate}${RELEASE_DATE_END}${afterDate}`;
+    console.log('endpoint: ', endpoint);
 
     const data = await this.fetch<IMoviesResults>(endpoint);
 
