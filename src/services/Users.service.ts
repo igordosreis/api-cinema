@@ -1,8 +1,8 @@
-import VouchersUsedModel from '../database/models/VouchersUsed.model';
+import VouchersUserModel from '../database/models/VouchersUser.model';
 
 export default class UsersService {
   public static async getUserVoucherHistory(userId: number) {
-    const userVoucherHistory = await VouchersUsedModel.findAll({
+    const userVoucherHistory = await VouchersUserModel.findAll({
       where: { userId },
     });
 

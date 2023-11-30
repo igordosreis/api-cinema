@@ -2,7 +2,7 @@ import { DataTypes, Model } from 'sequelize';
 import db from '.';
 import EstablishmentsProductsModel from './EstablishmentsProducts.model';
 
-class VouchersUsedModel extends Model {
+class VouchersUserModel extends Model {
   declare id: number;
   declare voucherCode: string;
   declare productId: number;
@@ -15,7 +15,7 @@ class VouchersUsedModel extends Model {
   declare soldPrice: number;
 }
 
-VouchersUsedModel.init(
+VouchersUserModel.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -61,7 +61,7 @@ VouchersUsedModel.init(
     },
   },
   {
-    modelName: 'vouchers_used',
+    modelName: 'vouchers_user',
     sequelize: db,
     underscored: true,
     timestamps: false,
@@ -69,13 +69,13 @@ VouchersUsedModel.init(
   },
 );
 
-VouchersUsedModel.belongsTo(EstablishmentsProductsModel, {
+VouchersUserModel.belongsTo(EstablishmentsProductsModel, {
   foreignKey: 'productId',
-  as: 'vouchersUsed',
+  as: 'vouchersUser',
 });
-EstablishmentsProductsModel.hasMany(VouchersUsedModel, {
+EstablishmentsProductsModel.hasMany(VouchersUserModel, {
   foreignKey: 'productId',
-  as: 'vouchersUsed',
+  as: 'vouchersUser',
 });
 
-export default VouchersUsedModel;
+export default VouchersUserModel;

@@ -1,5 +1,5 @@
 CREATE TABLE
-    "vouchers_used" (
+    "vouchers_user" (
         "id" int NOT NULL AUTO_INCREMENT,
         "voucher" varchar(255) NOT NULL,
         "ticket_name" varchar(255) NOT NULL,

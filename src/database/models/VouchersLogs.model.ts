@@ -1,6 +1,6 @@
 import { DataTypes, Model } from 'sequelize';
 import db from '.';
-import VouchersUsedModel from './VouchersUsed.model';
+import VouchersUserModel from './VouchersUser.model';
 
 class VouchersLogsModel extends Model {
   declare id: number;
@@ -49,7 +49,7 @@ VouchersLogsModel.init(
   },
 );
 
-VouchersLogsModel.belongsTo(VouchersUsedModel, { foreignKey: 'voucherId', as: 'vouchersLogs' });
-VouchersUsedModel.hasOne(VouchersLogsModel, { foreignKey: 'voucherId', as: 'vouchersLogs' });
+VouchersLogsModel.belongsTo(VouchersUserModel, { foreignKey: 'voucherId', as: 'vouchersLogs' });
+VouchersUserModel.hasOne(VouchersLogsModel, { foreignKey: 'voucherId', as: 'vouchersLogs' });
 
 export default VouchersLogsModel;
