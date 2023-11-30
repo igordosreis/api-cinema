@@ -84,7 +84,7 @@ class FormatMovies {
     isSortedByReleaseDate,
   }: IFormatMoviesParams): Promise<IMovieInfo[]> => {
     const genresList = await this.getGenresList();
-    const formatedMovies = moviesArray.map((movie): IMovieInfo => {
+    const formatedMovies = moviesArray.slice(0, 8).map((movie): IMovieInfo => {
       const formatedMovie = {
         ...movie,
         backdrop_path: this.parseImgPathToImgLink(movie.backdrop_path),
@@ -168,14 +168,14 @@ class FormatMovies {
   };
 
   formatMovieDetails = (movieDetails: IMovieDetails): IMovieDetails => {
-    const movieWithImgYoutubeAndRelease = {
+    const movieWithImgYoutubeAndReleaseInfo = {
       ...movieDetails,
       ...this.addImgLinksToMovieDetails(movieDetails),
       videos: this.addYoutubeLinksToMovieDetails(movieDetails),
       ...this.addReleaseInfoToMovie(movieDetails),
     };
 
-    return movieWithImgYoutubeAndRelease;
+    return movieWithImgYoutubeAndReleaseInfo;
   };
 }
 

@@ -1,8 +1,8 @@
 /* eslint-disable camelcase */
 export type IMoviesResults = {
-  page: number;
+  page?: number;
   results: IMovieInfo[];
-  total_pages: number;
+  total_pages?: number;
   total_results: number;
 };
 
