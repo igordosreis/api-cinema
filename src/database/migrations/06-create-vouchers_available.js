@@ -26,6 +26,10 @@ module.exports = {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
       },
+      reserved: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+      },
       expire_date: {
         type: Sequelize.DATE,
         defaultValue: null,

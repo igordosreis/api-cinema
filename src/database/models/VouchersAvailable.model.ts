@@ -6,6 +6,7 @@ class VouchersAvailableModel extends Model {
   declare id: number;
   declare voucherCode: string;
   declare productId: string;
+  declare reserved: string;
   declare expireDate: Date;
   declare createdAt: Date;
   declare updatedAt: Date;
