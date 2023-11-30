@@ -11,14 +11,11 @@ function generateRandomDate(startYear, endYear) {
 
 // Helper function to generate a unique voucher string
 function generateUniqueVoucher() {
-  const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   let voucher = '';
 
-  for (let i = 0; i < 30; i += 1) {
+  for (let i = 0; i < 8; i += 1) {
     voucher += characters.charAt(Math.floor(Math.random() * characters.length));
-    if (i === 9 || i === 19) {
-      voucher += '.';
-    }
   }
 
   return voucher;
