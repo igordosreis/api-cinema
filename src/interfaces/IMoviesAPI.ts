@@ -16,7 +16,7 @@ export type IMoviesResultsWithLinks = {
 export interface IMovieInfo {
   adult: boolean;
   backdrop_path: string;
-  genre_ids: number[] | (IGenreInfo | undefined)[];
+  genre_ids: (number | IGenreInfo)[];
   id: number;
   original_language: string;
   original_title: string;
@@ -175,7 +175,9 @@ export interface IMovieDetails {
   videos: Videos;
   images: Images;
   credits: Credits;
+  isReleased?: boolean;
   daysRemainingAsNowPlaying?: number;
+  daysToRelease?: number;
 }
 
 export interface IMovieDetailsWithImgLinks extends Omit<IMovieDetails, 'Images'> {

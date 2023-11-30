@@ -1,14 +1,14 @@
+/* eslint-disable function-paren-newline */
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable camelcase */
 /* eslint-disable max-lines-per-function */
 import {
   CastMember,
   CrewMember,
+  IGenreInfo,
   IGenreList,
   IMovieDetails,
-  // IMovieDetailsWithImgLinks,
   IMovieInfo,
-  // IMovieInfoWithImgLinks,
 } from '../interfaces/IMoviesAPI';
 import dateUtils from './date.utils';
 import fetchMoviesAPIUtil from './fetchMoviesAPI.util';
@@ -33,56 +33,49 @@ class FormatMovies {
     return sortedMoviesByReleaseDate;
   };
 
-  private addImgLinksToAllMovies = (moviesArray: IMovieInfo[]): IMovieInfo[] => {
-    const moviesWithImgLinks = moviesArray.map((movie) => ({
-      ...movie,
-      backdrop_path: `https://image.tmdb.org/t/p/original${movie.backdrop_path}`,
-      poster_path: `https://image.tmdb.org/t/p/original${movie.poster_path}`,
-    }));
+  private parseImgPathToImgLink = (imagePath: string | null): string => {
+    const imageLink = `https://image.tmdb.org/t/p/original${imagePath}`;
 
-    return moviesWithImgLinks;
+    return imageLink;
   };
 
-  private addGenresNamesToAllMovies = async (moviesArray: IMovieInfo[]) => {
-    const { genres }: IGenreList = await fetchMoviesAPIUtil.fetchGenres();
+  private getGenresList = async (): Promise<IGenreInfo[]> => {
+    const { genres: genresList }: IGenreList = await fetchMoviesAPIUtil.fetchGenres();
 
-    const moviesWithParsedGenres = moviesArray.map((movie) => {
-      const parsedGenres = movie.genre_ids.map((movieGenreId) => {
-        const currentGenreObject = genres.find((genre) => genre.id === movieGenreId);
+    return genresList;
+  };
 
-        return currentGenreObject;
-      });
+  private parseGenresNames = (
+    genreIds: (number | IGenreInfo)[],
+    genresList: IGenreInfo[],
+  ): (number | IGenreInfo)[] => {
+    const parsedGenres = genreIds.map((movieGenreId) => {
+      const currentGenreObject = genresList.find((genre) => genre.id === movieGenreId);
 
-      return {
-        ...movie,
-        genre_ids: parsedGenres,
-      };
+      return currentGenreObject || movieGenreId;
     });
 
-    return moviesWithParsedGenres;
+    return parsedGenres;
   };
 
-  private addReleaseInfoToAllMovies = async (moviesArray: IMovieInfo[]) => {
+  private addReleaseInfoToMovie = (
+    movie: IMovieInfo | IMovieDetails,
+  ): Pick<IMovieInfo, 'isReleased' | 'daysRemainingAsNowPlaying' | 'daysToRelease'>
+  | Pick<IMovieDetails, 'isReleased' | 'daysRemainingAsNowPlaying' | 'daysToRelease'> => {
     const currentDate = new Date();
     
-    const parsedMovies = moviesArray.map((movie) => {
-      const movieReleaseDate = new Date(movie.release_date);
-      const isReleased = currentDate.getTime() >= movieReleaseDate.getTime();
-      
-      return isReleased
-        ? {
-          ...movie,
-          isReleased,
-          daysRemainingAsNowPlaying: 45 - dateUtils.differenceInDays(movieReleaseDate, currentDate),
-        }
-        : {
-          ...movie,
-          isReleased,
-          daysToRelease: dateUtils.differenceInDays(currentDate, movieReleaseDate),
-        };
-    });
-
-    return parsedMovies;
+    const movieReleaseDate = new Date(movie.release_date);
+    const isReleased = currentDate.getTime() >= movieReleaseDate.getTime();
+    
+    return isReleased
+      ? {
+        isReleased,
+        daysRemainingAsNowPlaying: 45 - dateUtils.differenceInDays(movieReleaseDate, currentDate),
+      }
+      : {
+        isReleased,
+        daysToRelease: dateUtils.differenceInDays(currentDate, movieReleaseDate),
+      };
   };
 
   formatAllMovies = async ({
@@ -90,37 +83,33 @@ class FormatMovies {
     isRandomized, 
     isSortedByReleaseDate,
   }: IFormatMoviesParams): Promise<IMovieInfo[]> => {
-    if (isRandomized) {
-      const moviesWithImg = this.addImgLinksToAllMovies(moviesArray).sort(
-        () => Math.random() - 0.5,
-      );
-      const moviesWithImgAndGenre = await this.addGenresNamesToAllMovies(moviesWithImg);
-      const moviesWithImgGenreAndRelease = this.addReleaseInfoToAllMovies(moviesWithImgAndGenre);
+    const genresList = await this.getGenresList();
+    const formatedMovies = moviesArray.map((movie): IMovieInfo => {
+      const formatedMovie = {
+        ...movie,
+        backdrop_path: this.parseImgPathToImgLink(movie.backdrop_path),
+        poster_path: this.parseImgPathToImgLink(movie.poster_path),
+        genre_ids: this.parseGenresNames(movie.genre_ids, genresList),
+        ...this.addReleaseInfoToMovie(movie),
+      };
 
-      return moviesWithImgGenreAndRelease;
+      return formatedMovie;
+    });
+
+    if (isRandomized) {
+      const randomizedFormattedMovies = formatedMovies.sort(() => Math.random() - 0.5);
+
+      return randomizedFormattedMovies;
     }
 
     if (isSortedByReleaseDate) {
-      const moviesWithImg = this.addImgLinksToAllMovies(moviesArray);
-      const sortedMoviesWithImg = this.sortByReleaseDate(moviesWithImg);
-      const sortedMoviesWithImgAndGenre = await this.addGenresNamesToAllMovies(sortedMoviesWithImg);
-      const sortedMoviesWithImgGenreAndRelease = this.addReleaseInfoToAllMovies(
-        sortedMoviesWithImgAndGenre,
-      );
+      const sortedFormattedMovies = this.sortByReleaseDate(formatedMovies);
 
-      return sortedMoviesWithImgGenreAndRelease;
+      return sortedFormattedMovies;
     }
 
-    const moviesWithImg = this.addImgLinksToAllMovies(moviesArray);
-    const moviesWithImgAndGenre = await this.addGenresNamesToAllMovies(moviesWithImg);
-    const moviesWithImgGenreAndRelease = this.addReleaseInfoToAllMovies(moviesWithImgAndGenre);
-
-    return moviesWithImgGenreAndRelease;
+    return formatedMovies;
   };
-
-  // formatHighlights = (popularMovies: IMovieInfo[], upcomingMovies: IMovieInfo[]) => {
-
-  // };
 
   private getFirstFiveElements = <T>(cast: T[]) => cast.slice(0, 5);
 
@@ -129,43 +118,43 @@ class FormatMovies {
       ({ job }) => job === 'Director' || job === 'Producer' || job === 'Executive Producer',
     );
 
-  private addImgLinksToMovieDetails = (movieDetails: IMovieDetails): IMovieDetails => {
+  private addImgLinksToMovieDetails = (movieDetails: IMovieDetails) => {
     const backdrops = movieDetails.images.backdrops.map((image) => ({
       ...image,
-      file_path: `https://image.tmdb.org/t/p/original${image.file_path}`,
+      file_path: this.parseImgPathToImgLink(image.file_path),
     }));
     const logos = movieDetails.images.logos.map((image) => ({
       ...image,
-      file_path: `https://image.tmdb.org/t/p/original${image.file_path}`,
+      file_path: this.parseImgPathToImgLink(image.file_path),
     }));
     const posters = movieDetails.images.posters.map((image) => ({
       ...image,
-      file_path: `https://image.tmdb.org/t/p/original${image.file_path}`,
+      file_path: this.parseImgPathToImgLink(image.file_path),
     }));
     const cast = this.getFirstFiveElements<CastMember>(movieDetails.credits.cast).map((actor) => ({
       ...actor,
-      profile_path: `https://image.tmdb.org/t/p/original${actor.profile_path}`,
+      profile_path: this.parseImgPathToImgLink(actor.profile_path),
     }));
     const crew = this.filterCrewForDirectorAndProducers(movieDetails.credits.crew).map(
       (crewMember) => ({
         ...crewMember,
-        profile_path: `https://image.tmdb.org/t/p/original${crewMember.profile_path}`,
+        profile_path: this.parseImgPathToImgLink(crewMember.profile_path),
       }),
     );
 
     const images = { backdrops, logos, posters };
     const credits = { cast, crew };
 
-    const movieDetailsWithImageLinks: IMovieDetails = Object.assign(movieDetails, {
-      backdrop_path: `https://image.tmdb.org/t/p/original${movieDetails.backdrop_path}`,
+    const movieDetailsWithImageLinks = {
+      backdrop_path: this.parseImgPathToImgLink(movieDetails.backdrop_path),
       images,
       credits,
-    });
+    };
 
     return movieDetailsWithImageLinks;
   };
 
-  private addYoutubeLinksToMovieDetails = (movieDetails: IMovieDetails): IMovieDetails => {
+  private addYoutubeLinksToMovieDetails = (movieDetails: IMovieDetails) => {
     const results = movieDetails.videos.results.map((video) => {
       const { key, ...newVideoObj } = video;
 
@@ -175,38 +164,16 @@ class FormatMovies {
       return newVideoObj;
     });
 
-    const movieDetailsWithYoutubeLinks: IMovieDetails = Object.assign(movieDetails, {
-      videos: results,
-    });
-
-    return movieDetailsWithYoutubeLinks;
-  };
-
-  private addReleaseInfoToMovieDetails = (movieDetails: IMovieDetails) => {
-    const currentDate = new Date();
-    const movieReleaseDate = new Date(movieDetails.release_date);
-    const isReleased = currentDate.getTime() >= movieReleaseDate.getTime();
-    
-    return isReleased
-      ? {
-        ...movieDetails,
-        isReleased,
-        daysRemainingAsNowPlaying: 45 - dateUtils
-          .differenceInDays(movieReleaseDate, currentDate),
-      }
-      : {
-        ...movieDetails,
-        isReleased,
-        daysToRelease: dateUtils.differenceInDays(currentDate, movieReleaseDate),
-      };
+    return { results };
   };
 
   formatMovieDetails = (movieDetails: IMovieDetails): IMovieDetails => {
-    const movieWithImg = this.addImgLinksToMovieDetails(movieDetails);
-    const movieWithImgAndYoutube = this.addYoutubeLinksToMovieDetails(
-      movieWithImg,
-    );
-    const movieWithImgYoutubeAndRelease = this.addReleaseInfoToMovieDetails(movieWithImgAndYoutube);
+    const movieWithImgYoutubeAndRelease = {
+      ...movieDetails,
+      ...this.addImgLinksToMovieDetails(movieDetails),
+      videos: this.addYoutubeLinksToMovieDetails(movieDetails),
+      ...this.addReleaseInfoToMovie(movieDetails),
+    };
 
     return movieWithImgYoutubeAndRelease;
   };
