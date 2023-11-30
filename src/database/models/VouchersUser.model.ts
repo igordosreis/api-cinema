@@ -7,6 +7,7 @@ class VouchersUserModel extends Model {
   declare voucherCode: string;
   declare productId: number;
   declare userId: number;
+  declare active: boolean;
   declare expireDate: Date;
   declare paymentId: string;
   declare createdAt: Date;

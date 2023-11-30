@@ -29,6 +29,11 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
+      active: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: true,
+      },
       expire_date: {
         type: Sequelize.DATE,
         defaultValue: null,

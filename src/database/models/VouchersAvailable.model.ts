@@ -28,6 +28,10 @@ VouchersAvailableModel.init(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    reserved: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
     expireDate: {
       type: DataTypes.DATE,
       defaultValue: null,
