@@ -78,13 +78,15 @@ class FormatMovies {
       };
   };
 
+  private getTopEightPopularMovies = (movies: IMovieInfo[]) => movies.slice(0, 8);
+
   formatAllMovies = async ({
     moviesArray,
     isRandomized, 
     isSortedByReleaseDate,
   }: IFormatMoviesParams): Promise<IMovieInfo[]> => {
     const genresList = await this.getGenresList();
-    const formatedMovies = moviesArray.slice(0, 8).map((movie): IMovieInfo => {
+    const formatedMovies = this.getTopEightPopularMovies(moviesArray).map((movie): IMovieInfo => {
       const formatedMovie = {
         ...movie,
         backdrop_path: this.parseImgPathToImgLink(movie.backdrop_path),
