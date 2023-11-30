@@ -79,6 +79,7 @@ export default class EstablishmentsService {
           model: VouchersAvailableModel,
           attributes: [],
           as: 'vouchersAvailable',
+          where: { reserved: 0 },
         },
         {
           model: EstablishmentsImagesModel,
