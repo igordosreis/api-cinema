@@ -12,4 +12,13 @@ export default class UsersController {
 
     res.status(200).json(userVoucherHistory);
   }
+
+  public static async getVouchersByProductId(req: Request, res: Response): Promise<void> {
+    const { productId } = req.query;
+
+    const pasrsedProductId = Number(productId);
+    const userVoucherHistory = await UsersService.getVouchersByProductId(pasrsedProductId);
+
+    res.status(200).json(userVoucherHistory);
+  }
 }
