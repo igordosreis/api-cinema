@@ -1,5 +1,5 @@
 /* eslint-disable max-lines-per-function */
-import sequelize, { QueryTypes } from 'sequelize';
+import sequelize, { QueryTypes, Op } from 'sequelize';
 import db from '../database/models';
 import CitiesModel from '../database/models/Cities.model';
 import EstablishmentsModel from '../database/models/Establishments.model';
@@ -79,7 +79,12 @@ export default class EstablishmentsService {
           model: VouchersAvailableModel,
           attributes: [],
           as: 'vouchersAvailable',
-          where: { reserved: 0 },
+          where: {
+            reserved: 0,
+            expireDate: {
+              [Op.gt]: new Date(),
+            },
+          },
         },
         {
           model: EstablishmentsImagesModel,

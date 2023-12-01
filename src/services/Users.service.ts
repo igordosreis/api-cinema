@@ -1,6 +1,9 @@
+import { Op } from 'sequelize';
+// import db from '../database/models';
 import EstablishmentsProductsModel from '../database/models/EstablishmentsProducts.model';
 import VouchersAvailableModel from '../database/models/VouchersAvailable.model';
 import VouchersUserModel from '../database/models/VouchersUser.model';
+// import { IVoucherCode } from '../interfaces/IVouchers';
 
 export default class UsersService {
   public static async getUserVoucherHistory(userId: number) {
@@ -23,7 +26,12 @@ export default class UsersService {
         {
           model: VouchersAvailableModel,
           as: 'vouchersAvailable',
-          where: { reserved: 0 },
+          where: {
+            reserved: 0,
+            expireDate: {
+              [Op.gt]: new Date(),
+            },
+          },
         },
       ],
       where: { id: productId },
@@ -32,4 +40,22 @@ export default class UsersService {
 
     return allProductVouchers;
   }
+
+  // public static async changeVouchersReservedStatus(vouchersCodes1) {
+  //   const t = await db.transaction();
+  //   try {
+  //     const vouchersCodes = await this.getVouchersByProductId();
+  //     const updatedVouchersPromise = vouchersCodes.map(async (voucher) => {
+  //       const { voucherCode, reservedStatus } = voucher;
+  //       await VouchersAvailableModel.update(
+  //         { reserved: reservedStatus },
+  //         { where: { voucherCode }, transaction: t },
+  //       );
+  //     });
+  //     Promise.all(updatedVouchersPromise);
+  //     await t.commit();
+  //   } catch {
+
+  //   }
+  // }
 }

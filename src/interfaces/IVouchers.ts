@@ -2,11 +2,13 @@ export interface IVoucherAvailable {
   id: number;
   voucherCode: string;
   productId: number;
+  reserved: boolean;
   expireDate: Date | null;
   createdAt: Date | null;
+  updatedAt: Date | null;
 }
 
-export interface IVoucherUsed extends IVoucherAvailable {
+export interface IVoucherUser extends IVoucherAvailable {
   paymentId: string | null;
   userId: string | null;
   soldAt: string | null;
@@ -19,4 +21,10 @@ export interface IVoucherLog {
   response: string;
   voucherId: number;
   date: Date | null;
+}
+
+export interface IVoucherCode {
+  id?: number;
+  voucherCode: string;
+  reservedStatus: boolean;
 }
