@@ -11,6 +11,7 @@ import { IProductFormattedQuery } from '../interfaces/IProducts';
 import { IEstablishmentFormattedQuery } from '../interfaces/IEstablishments';
 import createProductSearchSqlizeQueryUtil from '../utils/createProductSearchSqlizeQuery.util';
 import EstablishmentsImagesModel from '../database/models/EstablishmentsImages.model';
+import { MINIMUM_PRODUCT_QUANTITY } from '../constants';
 
 export default class EstablishmentsService {
   public static async getAllEstablishments(): Promise<EstablishmentsModel[]> {
@@ -72,6 +73,10 @@ export default class EstablishmentsService {
       attributes: {
         include: [
           [sequelize.fn('COUNT', sequelize.col('vouchersAvailable.id')), 'vouchersQuantity'],
+          [
+            sequelize.literal(`COUNT(vouchersAvailable.id) > ${MINIMUM_PRODUCT_QUANTITY}`),
+            'isAvailable',
+          ],
         ],
       },
       include: [

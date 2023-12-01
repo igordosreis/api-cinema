@@ -1,4 +1,5 @@
 import { Request } from 'express';
+import { IVoucherAvailable } from './IVouchers';
 
 export interface IProducts {
   id: number;
@@ -10,6 +11,7 @@ export interface IProducts {
   price: number;
   rules: string;
   type: string | null;
+  isAvailable?: boolean;
 }
 
 export interface IProductRawQuery extends Request {
@@ -24,4 +26,8 @@ export interface IProductFormattedQuery {
   available: boolean | undefined;
   type: string | undefined;
   establishmentId: number | undefined;
+}
+
+export interface IProductWithVouchers extends IProducts {
+  vouchersAvailable: IVoucherAvailable[];
 }

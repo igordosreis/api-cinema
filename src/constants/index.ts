@@ -2,10 +2,13 @@
 /* eslint-disable max-len */
 import 'dotenv/config';
 
+// NUMBERS
+export const { MINIMUM_PRODUCT_QUANTITY } = process.env;
+
 // TMDB API
 
 // TMDB API_KEY
-const { API_KEY } = process.env;
+export const { API_KEY } = process.env;
 
 // TMDB URLs & ENDPOINTS
 // TMDB DISCOVER

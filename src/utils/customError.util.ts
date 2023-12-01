@@ -38,3 +38,9 @@ export const userTokenNotFound: ICustomError = {
   title: 'Usuário não encontrado',
   message: 'Usuário não encontrado. Faça login para acessar esse serviço.',
 };
+
+export const vouchersUnavailable: ICustomError = {
+  status: 404,
+  title: 'Vouchers indisponíveis',
+  message: 'Não há mais vouchers disponíveis para esse produto',
+};

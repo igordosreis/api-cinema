@@ -1,9 +1,17 @@
+/* eslint-disable max-lines-per-function */
 import { Op } from 'sequelize';
-// import db from '../database/models';
+import db from '../database/models';
 import EstablishmentsProductsModel from '../database/models/EstablishmentsProducts.model';
 import VouchersAvailableModel from '../database/models/VouchersAvailable.model';
 import VouchersUserModel from '../database/models/VouchersUser.model';
-// import { IVoucherCode } from '../interfaces/IVouchers';
+import { IProductWithVouchers } from '../interfaces/IProducts';
+import CustomError, { vouchersUnavailable } from '../utils/customError.util';
+
+interface UpdateVouchersParams {
+  productId: number;
+  reservedStatus: boolean;
+  amount: number;
+}
 
 export default class UsersService {
   public static async getUserVoucherHistory(userId: number) {
@@ -20,7 +28,9 @@ export default class UsersService {
     //   where: { productId },
     //   order: [['expireDate', 'ASC']],
     // });
-    const allProductVouchers = await EstablishmentsProductsModel.findAll({
+
+    // return allProductVouchers[0];
+    const productWithVouchers = await EstablishmentsProductsModel.findAll({
       attributes: { exclude: ['createdAt', 'updatedAt'] },
       include: [
         {
@@ -38,24 +48,37 @@ export default class UsersService {
       order: [[{ model: VouchersAvailableModel, as: 'vouchersAvailable' }, 'expireDate', 'ASC']],
     });
 
-    return allProductVouchers;
+    return productWithVouchers as unknown as IProductWithVouchers;
   }
 
-  // public static async changeVouchersReservedStatus(vouchersCodes1) {
-  //   const t = await db.transaction();
-  //   try {
-  //     const vouchersCodes = await this.getVouchersByProductId();
-  //     const updatedVouchersPromise = vouchersCodes.map(async (voucher) => {
-  //       const { voucherCode, reservedStatus } = voucher;
-  //       await VouchersAvailableModel.update(
-  //         { reserved: reservedStatus },
-  //         { where: { voucherCode }, transaction: t },
-  //       );
-  //     });
-  //     Promise.all(updatedVouchersPromise);
-  //     await t.commit();
-  //   } catch {
+  public static async changeVouchersReservedStatus({
+    productId,
+    reservedStatus,
+    amount,
+  }: UpdateVouchersParams) {
+    const t = await db.transaction();
+    try {
+      const productInfo = await this.getVouchersByProductId(productId);
 
-  //   }
-  // }
+      if (!productInfo.isAvailable) throw new CustomError(vouchersUnavailable);
+
+      const updatedVouchersPromise = productInfo.vouchersAvailable
+        .slice(0, amount)
+        .map(async (voucher) => {
+          const { voucherCode } = voucher;
+          await VouchersAvailableModel.update(
+            { reserved: reservedStatus },
+            { where: { voucherCode }, transaction: t },
+          );
+        });
+
+      await Promise.all(updatedVouchersPromise);
+
+      await t.commit();
+    } catch {
+      t.rollback();
+
+      throw new CustomError(vouchersUnavailable);
+    }
+  }
 }
