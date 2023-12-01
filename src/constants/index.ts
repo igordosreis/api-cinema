@@ -3,7 +3,7 @@
 import 'dotenv/config';
 
 // NUMBERS
-export const { MINIMUM_PRODUCT_QUANTITY } = process.env;
+export const { MINIMUM_VOUCHER_QUANTITY } = process.env;
 
 // TMDB API
 
