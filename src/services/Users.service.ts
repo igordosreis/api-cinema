@@ -53,7 +53,7 @@ export default class UsersService {
         .map(async (voucher) => {
           const { voucherCode } = voucher;
           const updatePromise = await VouchersAvailableModel.update(
-            { reserved: reserveStatus, userId },
+            { reserved: reserveStatus, userId, reservedPrice: productInfo.price },
             { where: { voucherCode }, transaction: t },
           );
 
