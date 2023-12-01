@@ -33,7 +33,7 @@ export default class UsersController {
       reserveStatus,
     );
 
-    await UsersService.changeVouchersReservedStatus(formattedRequest);
+    await UsersService.changeVouchersReserveStatus(formattedRequest);
 
     res.status(200).end();
   }

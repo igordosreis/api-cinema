@@ -47,7 +47,7 @@ export default class UsersService {
     return results as unknown as IProductWithVouchers;
   }
 
-  public static async changeVouchersReservedStatus(updateVoucherParams: UpdateVouchersParams) {
+  public static async changeVouchersReserveStatus(updateVoucherParams: UpdateVouchersParams) {
     const t = await db.transaction();
     try {
       const { productId, reserveStatus, userId, amount } = updateVoucherParams;
