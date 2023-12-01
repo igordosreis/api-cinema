@@ -18,11 +18,8 @@ class Vouchers {
     const areVouchersBelowMinimumQty = totalVouchersAvailable < Number(MINIMUM_VOUCHER_QUANTITY);
     if (areVouchersBelowMinimumQty) throw new CustomError(vouchersUnavailable);
 
-    const areVouchersBelowRequestedQty = totalVouchersAvailable < amount;
-    console.log(
-      '---------- areVouchersBelowRequestedQty ---------- ',
-      areVouchersBelowRequestedQty,
-    );
+    const areVouchersBelowRequestedQty = (Number(MINIMUM_VOUCHER_QUANTITY) 
+      > totalVouchersAvailable - amount);
     if (areVouchersBelowRequestedQty) throw new CustomError(vouchersNotEnough);
   };
 }
