@@ -19,13 +19,6 @@ export default class UsersService {
   }
 
   public static async getVouchersByProductId(productId: number) {
-    // const allProductVouchers = await VouchersAvailableModel.findAll({
-    //   attributes: { exclude: ['createdAt', 'updatedAt'] },
-    //   where: { productId },
-    //   order: [['expireDate', 'ASC']],
-    // });
-
-    // return allProductVouchers[0];
     const [results] = await EstablishmentsProductsModel.findAll({
       attributes: { exclude: ['createdAt', 'updatedAt'] },
       include: [
@@ -70,10 +63,10 @@ export default class UsersService {
       await Promise.all(updatedVouchersPromise);
 
       await t.commit();
-    } catch (error: CustomError | any) {
+    } catch (error: CustomError | unknown) {
       t.rollback();
 
-      if (error.status) throw error;
+      if (error instanceof CustomError) throw error;
       throw new CustomError(vouchersUnavailable);
     }
   }

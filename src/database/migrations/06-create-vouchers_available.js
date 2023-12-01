@@ -34,6 +34,10 @@ module.exports = {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
       },
+      reserved_price: {
+        type: Sequelize.DECIMAL(10, 2),
+        defaultValue: null,
+      },
       expire_date: {
         type: Sequelize.DATE,
         defaultValue: null,

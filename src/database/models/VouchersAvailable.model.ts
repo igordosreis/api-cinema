@@ -8,6 +8,7 @@ class VouchersAvailableModel extends Model {
   declare productId: string;
   declare userId: string;
   declare reserved: string;
+  declare reservedPrice: number;
   declare expireDate: Date;
   declare createdAt: Date;
   declare updatedAt: Date;
@@ -36,6 +37,10 @@ VouchersAvailableModel.init(
     reserved: {
       type: DataTypes.INTEGER,
       allowNull: false,
+    },
+    reservedPrice: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
     },
     expireDate: {
       type: DataTypes.DATE,
