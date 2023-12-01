@@ -26,6 +26,10 @@ module.exports = {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
       },
+      user_id: {
+        type: Sequelize.INTEGER,
+        defaultValue: null,
+      },
       reserved: {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
