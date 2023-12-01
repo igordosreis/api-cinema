@@ -29,18 +29,24 @@ export const fetchError: ICustomError = {
 
 export const unauthorizedRequest: ICustomError = {
   status: 400,
-  title: 'Acesso não autorizado',
+  title: 'Acesso não autorizado.',
   message: 'Acesso não autorizado. Faça login para acessar esse serviço.',
 };
 
 export const userTokenNotFound: ICustomError = {
   status: 400,
-  title: 'Usuário não encontrado',
+  title: 'Usuário não encontrado.',
   message: 'Usuário não encontrado. Faça login para acessar esse serviço.',
 };
 
 export const vouchersUnavailable: ICustomError = {
   status: 404,
-  title: 'Vouchers indisponíveis',
-  message: 'Não há mais vouchers disponíveis para esse produto',
+  title: 'Vouchers indisponíveis.',
+  message: 'Não há mais vouchers disponíveis para esse produto.',
+};
+
+export const vouchersNotEnough: ICustomError = {
+  status: 404,
+  title: 'Vouchers insuficientes.',
+  message: 'Não há vouchers suficientes para atender o seu pedido.',
 };

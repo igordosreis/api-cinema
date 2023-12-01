@@ -4,6 +4,7 @@ import {
   IEstablishmentRawQuery,
 } from '../interfaces/IEstablishments';
 import { IProductFormattedQuery, IProductRawQuery } from '../interfaces/IProducts';
+import { IReserveVoucherFormattedQuery, IReserveVoucherRawQuery } from '../interfaces/IVouchers';
 
 class FormatRequestQuery {
   private formatTerm = ({ query: { term } }: IProductRawQuery | IEstablishmentRawQuery) =>
@@ -68,6 +69,32 @@ class FormatRequestQuery {
       type: this.formatType(req),
       establishmentId: this.formatEstablishmentId(req),
       available: this.formatAvailable(req),
+    });
+
+  private formatProductId = ({ query: { productId } }: IReserveVoucherRawQuery) => 
+    Number(productId);
+
+  private formatUserId = ({
+    body: {
+      userInfo: {
+        user: { id: userId },
+      },
+    },
+  }: IReserveVoucherRawQuery) => 
+    Number(userId);
+
+  private formatAmount = ({ query: { amount } }: IReserveVoucherRawQuery) => 
+    Number(amount);
+  
+  formatReserveVouchersQuery = (
+    req: IReserveVoucherRawQuery,
+    reserveStatus: boolean,
+  ): IReserveVoucherFormattedQuery =>
+    ({
+      productId: this.formatProductId(req),
+      userId: this.formatUserId(req),
+      amount: this.formatAmount(req),
+      reserveStatus,
     });
 }
 

@@ -6,12 +6,8 @@ import VouchersAvailableModel from '../database/models/VouchersAvailable.model';
 import VouchersUserModel from '../database/models/VouchersUser.model';
 import { IProductWithVouchers } from '../interfaces/IProducts';
 import CustomError, { vouchersUnavailable } from '../utils/customError.util';
-
-interface UpdateVouchersParams {
-  productId: number;
-  reservedStatus: boolean;
-  amount: number;
-}
+import { UpdateVouchersParams } from '../interfaces/IVouchers';
+import vouchersUtil from '../utils/vouchers.util';
 
 export default class UsersService {
   public static async getUserVoucherHistory(userId: number) {
@@ -30,7 +26,7 @@ export default class UsersService {
     // });
 
     // return allProductVouchers[0];
-    const productWithVouchers = await EstablishmentsProductsModel.findAll({
+    const [results] = await EstablishmentsProductsModel.findAll({
       attributes: { exclude: ['createdAt', 'updatedAt'] },
       include: [
         {
@@ -48,36 +44,36 @@ export default class UsersService {
       order: [[{ model: VouchersAvailableModel, as: 'vouchersAvailable' }, 'expireDate', 'ASC']],
     });
 
-    return productWithVouchers as unknown as IProductWithVouchers;
+    return results as unknown as IProductWithVouchers;
   }
 
-  public static async changeVouchersReservedStatus({
-    productId,
-    reservedStatus,
-    amount,
-  }: UpdateVouchersParams) {
+  public static async changeVouchersReservedStatus(updateVoucherParams: UpdateVouchersParams) {
     const t = await db.transaction();
     try {
+      const { productId, reserveStatus, userId, amount } = updateVoucherParams;
       const productInfo = await this.getVouchersByProductId(productId);
 
-      if (!productInfo.isAvailable) throw new CustomError(vouchersUnavailable);
+      vouchersUtil.validateRequestParams(productInfo, updateVoucherParams);
 
       const updatedVouchersPromise = productInfo.vouchersAvailable
         .slice(0, amount)
         .map(async (voucher) => {
           const { voucherCode } = voucher;
-          await VouchersAvailableModel.update(
-            { reserved: reservedStatus },
+          const updatePromise = await VouchersAvailableModel.update(
+            { reserved: reserveStatus, userId },
             { where: { voucherCode }, transaction: t },
           );
+
+          return updatePromise;
         });
 
       await Promise.all(updatedVouchersPromise);
 
       await t.commit();
-    } catch {
+    } catch (error: CustomError | any) {
       t.rollback();
 
+      if (error.status) throw error;
       throw new CustomError(vouchersUnavailable);
     }
   }

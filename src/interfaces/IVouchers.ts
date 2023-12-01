@@ -1,3 +1,5 @@
+import { Request } from 'express';
+
 export interface IVoucherAvailable {
   id: number;
   voucherCode: string;
@@ -27,4 +29,24 @@ export interface IVoucherCode {
   id?: number;
   voucherCode: string;
   reservedStatus: boolean;
+}
+
+export interface IReserveVoucherRawQuery extends Request {
+  productId: string | undefined;
+  userId: string | undefined;
+  amount: number | undefined;
+}
+
+export interface IReserveVoucherFormattedQuery {
+  productId: number;
+  userId: number;
+  amount: number;
+  reserveStatus: boolean;
+}
+
+export interface UpdateVouchersParams {
+  productId: number;
+  userId: number;
+  amount: number;
+  reserveStatus: boolean;
 }
