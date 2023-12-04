@@ -1,11 +1,11 @@
 /* eslint-disable max-lines-per-function */
-import { Op } from 'sequelize';
+import { Transaction, Op } from 'sequelize';
 import db from '../database/models';
 import EstablishmentsProductsModel from '../database/models/EstablishmentsProducts.model';
 import VouchersAvailableModel from '../database/models/VouchersAvailable.model';
 import VouchersUserModel from '../database/models/VouchersUser.model';
 import { IProductWithVouchers } from '../interfaces/IProducts';
-import CustomError, { vouchersUnavailable } from '../utils/customError.util';
+import CustomError, { voucherServiceUnavailable } from '../utils/customError.util';
 import { UpdateVouchersParams } from '../interfaces/IVouchers';
 import vouchersUtil from '../utils/vouchers.util';
 
@@ -18,7 +18,7 @@ export default class UsersService {
     return userVoucherHistory;
   }
 
-  public static async getVouchersByProductId(productId: number) {
+  public static async getVouchersByProductId(productId: number, transaction?: Transaction) {
     const [results] = await EstablishmentsProductsModel.findAll({
       attributes: { exclude: ['createdAt', 'updatedAt'] },
       include: [
@@ -33,6 +33,7 @@ export default class UsersService {
           },
         },
       ],
+      transaction: transaction || null,
       where: { id: productId },
       order: [[{ model: VouchersAvailableModel, as: 'vouchersAvailable' }, 'expireDate', 'ASC']],
     });
@@ -44,7 +45,7 @@ export default class UsersService {
     const t = await db.transaction();
     try {
       const { productId, reserveStatus, userId, amount } = updateVoucherParams;
-      const productInfo = await this.getVouchersByProductId(productId);
+      const productInfo = await this.getVouchersByProductId(productId, t);
 
       vouchersUtil.validateRequestParams(productInfo, updateVoucherParams);
 
@@ -67,7 +68,7 @@ export default class UsersService {
       t.rollback();
 
       if (error instanceof CustomError) throw error;
-      throw new CustomError(vouchersUnavailable);
+      throw new CustomError(voucherServiceUnavailable);
     }
   }
 }

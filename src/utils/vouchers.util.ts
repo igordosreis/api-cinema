@@ -12,15 +12,15 @@ class Vouchers {
     updateVoucherParams: UpdateVouchersParams,
   ) => {
     const { vouchersAvailable } = productInfo;
-    const { amount } = updateVoucherParams;
+    const { amount: amountRequested } = updateVoucherParams;
 
     const totalVouchersAvailable = vouchersAvailable.length;
     const areVouchersBelowMinimumQty = totalVouchersAvailable < Number(MINIMUM_VOUCHER_QUANTITY);
-    if (areVouchersBelowMinimumQty) throw new CustomError(vouchersUnavailable);
+    if (areVouchersBelowMinimumQty) throw new CustomError(vouchersNotEnough);
 
     const areVouchersBelowRequestedQty = (Number(MINIMUM_VOUCHER_QUANTITY) 
-      > totalVouchersAvailable - amount);
-    if (areVouchersBelowRequestedQty) throw new CustomError(vouchersNotEnough);
+      > totalVouchersAvailable - amountRequested);
+    if (areVouchersBelowRequestedQty) throw new CustomError(vouchersUnavailable);
   };
 }
 

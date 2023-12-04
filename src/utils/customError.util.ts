@@ -50,3 +50,9 @@ export const vouchersNotEnough: ICustomError = {
   title: 'Vouchers insuficientes.',
   message: 'Não há vouchers suficientes para atender o seu pedido.',
 };
+
+export const voucherServiceUnavailable: ICustomError = {
+  status: 503,
+  title: 'Operacão indisponível.',
+  message: 'Essa operação está indisponível no momento, tente novamente mais tarde.',
+};
