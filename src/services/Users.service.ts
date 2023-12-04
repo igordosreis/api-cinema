@@ -63,6 +63,7 @@ export default class UsersService {
       vouchersUtil.validateRequestParams(productInfo, updateVoucherParams);
 
       const vouchers = productInfo.vouchersAvailable.slice(0, amountRequested);
+
       const updateReservePromise = vouchers.map(async (voucher) => {
         const { voucherCode } = voucher;
         const updatePromise = await VouchersAvailableModel.update(
@@ -72,7 +73,6 @@ export default class UsersService {
 
         return updatePromise;
       });
-
       await Promise.all(updateReservePromise);
 
       await t.commit();

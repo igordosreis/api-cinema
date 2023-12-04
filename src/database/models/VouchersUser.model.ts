@@ -6,7 +6,7 @@ class VouchersUserModel extends Model {
   declare id: number;
   declare voucherCode: string;
   declare productId: number;
-  declare userId: number;
+  declare orderId: number;
   declare active: boolean;
   declare expireDate: Date;
   declare paymentId: string;
@@ -32,16 +32,24 @@ VouchersUserModel.init(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    userId: {
+    orderId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+    },
+    active: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
     },
     expireDate: {
       type: DataTypes.DATE,
       defaultValue: null,
     },
-    paymentId: {
-      type: DataTypes.STRING,
+    soldAt: {
+      type: DataTypes.DATE,
+      defaultValue: null,
+    },
+    soldPrice: {
+      type: DataTypes.DECIMAL(10, 2),
       defaultValue: null,
     },
     createdAt: {
@@ -51,14 +59,6 @@ VouchersUserModel.init(
     updatedAt: {
       type: DataTypes.DATE,
       // defaultValue: DataTypes.NOW,
-    },
-    soldAt: {
-      type: DataTypes.DATE,
-      defaultValue: null,
-    },
-    soldPrice: {
-      type: DataTypes.DECIMAL(10, 2),
-      defaultValue: null,
     },
   },
   {

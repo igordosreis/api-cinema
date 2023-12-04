@@ -5,43 +5,32 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('vouchers_available', {
+    await queryInterface.createTable('orders', {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
       },
-      voucher_code: {
+      user_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      status: {
         type: Sequelize.STRING,
         allowNull: false,
-      },
-      product_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'establishments_products',
-          key: 'id', 
-        },
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE',
-      },
-      order_id: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'orders',
-          key: 'id', 
-        },
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE',
-      },
-      sold_price: {
-        type: Sequelize.DECIMAL(10, 2),
-        defaultValue: null,
+        defaultValue: 'pending',
       },
       expire_date: {
         type: Sequelize.DATE,
         defaultValue: null,
+      },
+      payment_id: {
+        type: Sequelize.STRING,
+        defaultValue: null,
+      },
+      total_price: {
+        type: Sequelize.DECIMAL(10, 2),
+        allowNull: false,
       },
       created_at: {
         type: Sequelize.DATE,
@@ -52,14 +41,14 @@ module.exports = {
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
     }, {
-      engine: 'InnoDB',
-      charset: 'latin1',
       underscored: true,
       timestamps: false,
+      engine: 'InnoDB',
+      charset: 'latin1',
     });
   },
 
   down: async (queryInterface) => {
-    await queryInterface.dropTable('vouchers_available');
+    await queryInterface.dropTable('orders');
   },
 };

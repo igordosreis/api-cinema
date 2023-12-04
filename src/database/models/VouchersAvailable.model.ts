@@ -1,14 +1,14 @@
 import { DataTypes, Model } from 'sequelize';
 import db from '.';
 import EstablishmentsProductsModel from './EstablishmentsProducts.model';
+import OrdersModel from './Orders.model';
 
 class VouchersAvailableModel extends Model {
   declare id: number;
   declare voucherCode: string;
-  declare productId: string;
-  declare userId: string;
-  declare reserved: string;
-  declare reservedPrice: number;
+  declare productId: number;
+  declare orderId: number;
+  declare soldPrice: number;
   declare expireDate: Date;
   declare createdAt: Date;
   declare updatedAt: Date;
@@ -30,15 +30,11 @@ VouchersAvailableModel.init(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    userId: {
+    orderId: {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-    reserved: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    reservedPrice: {
+    soldPrice: {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
@@ -71,6 +67,15 @@ VouchersAvailableModel.belongsTo(EstablishmentsProductsModel, {
 EstablishmentsProductsModel.hasMany(VouchersAvailableModel, {
   foreignKey: 'productId',
   as: 'vouchersAvailable',
+});
+
+VouchersAvailableModel.belongsTo(OrdersModel, {
+  foreignKey: 'orderId',
+  as: 'vouchersOrder',
+});
+OrdersModel.hasMany(VouchersAvailableModel, {
+  foreignKey: 'orderId',
+  as: 'vouchersOrder',
 });
 
 export default VouchersAvailableModel;
