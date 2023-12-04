@@ -1,4 +1,5 @@
 import { Request } from 'express';
+import { IUserInfo } from './IUser';
 
 export interface IVoucherAvailable {
   id: number;
@@ -31,19 +32,29 @@ export interface IVoucherCode {
   reservedStatus: boolean;
 }
 
-export interface IOrderRequestRawQuery extends Request {
-  productId: string | undefined;
-  userId: string | undefined;
-  amount: number | undefined;
+export interface IOrderInfoRaw {
+  productId: string | number;
+  amountRequested: string | number;
 }
 
-export interface IOrderRequestFormattedQuery {
+export interface IOrderInfoFormatted {
   productId: number;
-  userId: number;
   amountRequested: number;
 }
 
-export interface UpdateVouchersParams {
+export interface IOrderRequestRawBody extends Request {
+  body: {
+    orderInfo: IOrderInfoRaw[];
+    userInfo: IUserInfo;
+  };
+}
+
+export interface IOrderRequestFormattedBody {
+  userId: number;
+  orderInfo: IOrderInfoFormatted[];
+}
+
+export interface ICreateOrderParams {
   productId: number;
   userId: number;
   amountRequested: number;

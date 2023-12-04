@@ -5,6 +5,7 @@ import {
   startOfWeek,
   endOfWeek,
   differenceInCalendarDays,
+  addHours,
 } from 'date-fns';
 
 class DateUtils {
@@ -20,6 +21,8 @@ class DateUtils {
 
   differenceInDays = (beforeDate: Date, afterDate: Date) =>
     differenceInCalendarDays(afterDate, beforeDate);
+
+  addOneHour = (currentDate: Date) => formatISO(addHours(currentDate, 1));
 }
 
 export default new DateUtils();

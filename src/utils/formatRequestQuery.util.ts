@@ -4,7 +4,11 @@ import {
   IEstablishmentRawQuery,
 } from '../interfaces/IEstablishments';
 import { IProductFormattedQuery, IProductRawQuery } from '../interfaces/IProducts';
-import { IOrderRequestFormattedQuery, IOrderRequestRawQuery } from '../interfaces/IVouchers';
+import { 
+  IOrderInfoRaw,
+  IOrderRequestFormattedBody,
+  IOrderRequestRawBody,
+} from '../interfaces/IVouchers';
 
 class FormatRequestQuery {
   private formatTerm = ({ query: { term } }: IProductRawQuery | IEstablishmentRawQuery) =>
@@ -71,8 +75,11 @@ class FormatRequestQuery {
       available: this.formatAvailable(req),
     });
 
-  private formatProductId = ({ query: { productId } }: IOrderRequestRawQuery) => 
+  private formatProductId = (productId: number | string) => 
     Number(productId);
+    
+  private formatAmount = (amount: number | string) => 
+    Number(amount);
 
   private formatUserId = ({
     body: {
@@ -80,19 +87,19 @@ class FormatRequestQuery {
         user: { id: userId },
       },
     },
-  }: IOrderRequestRawQuery) => 
+  }: IOrderRequestRawBody) => 
     Number(userId);
 
-  private formatAmount = ({ query: { amount } }: IOrderRequestRawQuery) => 
-    Number(amount);
+  private formatOrderInfo = ({ body: { orderInfo } }: IOrderRequestRawBody) => orderInfo
+    .map(({ productId, amountRequested }: IOrderInfoRaw) => ({
+      productId: this.formatProductId(productId),
+      amountRequested: this.formatAmount(amountRequested),
+    }));
   
-  formatCreateOrderQuery = (
-    req: IOrderRequestRawQuery,
-  ): IOrderRequestFormattedQuery =>
+  formatCreateOrder = (req: IOrderRequestRawBody): IOrderRequestFormattedBody =>
     ({
-      productId: this.formatProductId(req),
       userId: this.formatUserId(req),
-      amountRequested: this.formatAmount(req),
+      orderInfo: this.formatOrderInfo(req),
     });
 }
 
