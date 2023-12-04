@@ -7,7 +7,7 @@ import VouchersUserModel from '../database/models/VouchersUser.model';
 import { IProductWithVouchers } from '../interfaces/IProducts';
 import CustomError, { voucherServiceUnavailable } from '../utils/customError.util';
 import { UpdateVouchersParams } from '../interfaces/IVouchers';
-import vouchersUtil from '../utils/vouchers.util';
+import ordersUtil from '../utils/orders.util';
 
 export default class UsersService {
   public static async getUserVoucherHistory(userId: number) {
@@ -26,7 +26,7 @@ export default class UsersService {
           model: VouchersAvailableModel,
           as: 'vouchersAvailable',
           where: {
-            reserved: 0,
+            orderId: null,
             expireDate: {
               [Op.gt]: new Date(),
             },
@@ -54,20 +54,20 @@ export default class UsersService {
     // return allProductVouchers as unknown as IProductWithVouchers;
   }
 
-  public static async changeVouchersReserveStatus(updateVoucherParams: UpdateVouchersParams) {
+  public static async createOrder(updateVoucherParams: UpdateVouchersParams) {
     const t = await db.transaction();
     try {
-      const { productId, reserveStatus, userId, amountRequested } = updateVoucherParams;
+      const { productId, userId, amountRequested } = updateVoucherParams;
       const productInfo = await this.getVouchersByProductId(productId, t);
 
-      vouchersUtil.validateRequestParams(productInfo, updateVoucherParams);
+      ordersUtil.validateVouchersAmount(productInfo, updateVoucherParams);
 
       const vouchers = productInfo.vouchersAvailable.slice(0, amountRequested);
 
       const updateReservePromise = vouchers.map(async (voucher) => {
         const { voucherCode } = voucher;
         const updatePromise = await VouchersAvailableModel.update(
-          { reserved: reserveStatus, userId, reservedPrice: productInfo.price },
+          { userId, soldPrice: productInfo.price },
           { where: { voucherCode }, transaction: t },
         );
 

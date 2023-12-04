@@ -6,8 +6,8 @@ import { IProductWithVouchers } from '../interfaces/IProducts';
 import { UpdateVouchersParams } from '../interfaces/IVouchers';
 import CustomError, { vouchersNotEnough, vouchersUnavailable } from './customError.util';
 
-class Vouchers {
-  validateRequestParams = (
+class Orders {
+  validateVouchersAmount = (
     productInfo: IProductWithVouchers,
     updateVoucherParams: UpdateVouchersParams,
   ) => {
@@ -24,4 +24,4 @@ class Vouchers {
   };
 }
 
-export default new Vouchers();
+export default new Orders();

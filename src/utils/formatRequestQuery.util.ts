@@ -4,7 +4,7 @@ import {
   IEstablishmentRawQuery,
 } from '../interfaces/IEstablishments';
 import { IProductFormattedQuery, IProductRawQuery } from '../interfaces/IProducts';
-import { IReserveVoucherFormattedQuery, IReserveVoucherRawQuery } from '../interfaces/IVouchers';
+import { IOrderRequestFormattedQuery, IOrderRequestRawQuery } from '../interfaces/IVouchers';
 
 class FormatRequestQuery {
   private formatTerm = ({ query: { term } }: IProductRawQuery | IEstablishmentRawQuery) =>
@@ -71,7 +71,7 @@ class FormatRequestQuery {
       available: this.formatAvailable(req),
     });
 
-  private formatProductId = ({ query: { productId } }: IReserveVoucherRawQuery) => 
+  private formatProductId = ({ query: { productId } }: IOrderRequestRawQuery) => 
     Number(productId);
 
   private formatUserId = ({
@@ -80,21 +80,19 @@ class FormatRequestQuery {
         user: { id: userId },
       },
     },
-  }: IReserveVoucherRawQuery) => 
+  }: IOrderRequestRawQuery) => 
     Number(userId);
 
-  private formatAmount = ({ query: { amount } }: IReserveVoucherRawQuery) => 
+  private formatAmount = ({ query: { amount } }: IOrderRequestRawQuery) => 
     Number(amount);
   
-  formatReserveVouchersQuery = (
-    req: IReserveVoucherRawQuery,
-    reserveStatus: boolean,
-  ): IReserveVoucherFormattedQuery =>
+  formatCreateOrderQuery = (
+    req: IOrderRequestRawQuery,
+  ): IOrderRequestFormattedQuery =>
     ({
       productId: this.formatProductId(req),
       userId: this.formatUserId(req),
       amountRequested: this.formatAmount(req),
-      reserveStatus,
     });
 }
 

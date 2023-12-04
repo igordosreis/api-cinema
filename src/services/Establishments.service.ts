@@ -85,7 +85,7 @@ export default class EstablishmentsService {
           attributes: [],
           as: 'vouchersAvailable',
           where: {
-            reserved: 0,
+            orderId: null,
             expireDate: {
               [Op.gt]: new Date(),
             },

@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import UsersService from '../services/Users.service';
 import { IUserInfo } from '../interfaces/IUser';
 import formatRequestQueryUtil from '../utils/formatRequestQuery.util';
-import { IReserveVoucherRawQuery } from '../interfaces/IVouchers';
+import { IOrderRequestRawQuery } from '../interfaces/IVouchers';
 
 export default class UsersController {
   public static async getUserVoucherHistory(req: Request, res: Response): Promise<void> {
@@ -24,16 +24,12 @@ export default class UsersController {
     res.status(200).json(userVoucherHistory);
   }
 
-  public static async reserveVouchersByProductId(req: Request, res: Response): Promise<void> {
-    const reserveQuery = req as IReserveVoucherRawQuery;
-    const reserveStatus = true;
+  public static async createOrder(req: Request, res: Response): Promise<void> {
+    const reserveQuery = req as IOrderRequestRawQuery;
 
-    const formattedRequest = formatRequestQueryUtil.formatReserveVouchersQuery(
-      reserveQuery,
-      reserveStatus,
-    );
+    const formattedRequest = formatRequestQueryUtil.formatCreateOrderQuery(reserveQuery);
 
-    await UsersService.changeVouchersReserveStatus(formattedRequest);
+    await UsersService.createOrder(formattedRequest);
 
     res.status(200).end();
   }

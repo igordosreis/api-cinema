@@ -31,22 +31,20 @@ export interface IVoucherCode {
   reservedStatus: boolean;
 }
 
-export interface IReserveVoucherRawQuery extends Request {
+export interface IOrderRequestRawQuery extends Request {
   productId: string | undefined;
   userId: string | undefined;
   amount: number | undefined;
 }
 
-export interface IReserveVoucherFormattedQuery {
+export interface IOrderRequestFormattedQuery {
   productId: number;
   userId: number;
   amountRequested: number;
-  reserveStatus: boolean;
 }
 
 export interface UpdateVouchersParams {
   productId: number;
   userId: number;
   amountRequested: number;
-  reserveStatus: boolean;
 }
