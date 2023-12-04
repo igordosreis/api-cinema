@@ -71,11 +71,11 @@ EstablishmentsProductsModel.hasMany(VouchersAvailableModel, {
 
 VouchersAvailableModel.belongsTo(OrdersModel, {
   foreignKey: 'orderId',
-  as: 'vouchersOrder',
+  as: 'vouchersOrderUnpaid',
 });
 OrdersModel.hasMany(VouchersAvailableModel, {
   foreignKey: 'orderId',
-  as: 'vouchersOrder',
+  as: 'vouchersOrderUnpaid',
 });
 
 export default VouchersAvailableModel;
