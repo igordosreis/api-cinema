@@ -12,7 +12,7 @@ class Vouchers {
     updateVoucherParams: UpdateVouchersParams,
   ) => {
     const { vouchersAvailable } = productInfo;
-    const { amount: amountRequested } = updateVoucherParams;
+    const { amountRequested } = updateVoucherParams;
 
     const totalVouchersAvailable = vouchersAvailable.length;
     const areVouchersBelowMinimumQty = totalVouchersAvailable < Number(MINIMUM_VOUCHER_QUANTITY);

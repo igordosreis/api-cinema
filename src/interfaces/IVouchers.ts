@@ -40,13 +40,13 @@ export interface IReserveVoucherRawQuery extends Request {
 export interface IReserveVoucherFormattedQuery {
   productId: number;
   userId: number;
-  amount: number;
+  amountRequested: number;
   reserveStatus: boolean;
 }
 
 export interface UpdateVouchersParams {
   productId: number;
   userId: number;
-  amount: number;
+  amountRequested: number;
   reserveStatus: boolean;
 }

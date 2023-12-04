@@ -93,7 +93,7 @@ class FormatRequestQuery {
     ({
       productId: this.formatProductId(req),
       userId: this.formatUserId(req),
-      amount: this.formatAmount(req),
+      amountRequested: this.formatAmount(req),
       reserveStatus,
     });
 }

@@ -39,29 +39,41 @@ export default class UsersService {
     });
 
     return results as unknown as IProductWithVouchers;
+    // const allProductVouchers = await VouchersAvailableModel.findAll({
+    //   attributes: { exclude: ['createdAt', 'updatedAt'] },
+    //   where: { productId },
+    //   order: [['expireDate', 'ASC']],
+    //   include: [
+    //     {
+    //       model: EstablishmentsProductsModel,
+    //       as: 'vouchersAvailable',
+    //     },
+    //   ],
+    // });
+
+    // return allProductVouchers as unknown as IProductWithVouchers;
   }
 
   public static async changeVouchersReserveStatus(updateVoucherParams: UpdateVouchersParams) {
     const t = await db.transaction();
     try {
-      const { productId, reserveStatus, userId, amount } = updateVoucherParams;
+      const { productId, reserveStatus, userId, amountRequested } = updateVoucherParams;
       const productInfo = await this.getVouchersByProductId(productId, t);
 
       vouchersUtil.validateRequestParams(productInfo, updateVoucherParams);
 
-      const updatedVouchersPromise = productInfo.vouchersAvailable
-        .slice(0, amount)
-        .map(async (voucher) => {
-          const { voucherCode } = voucher;
-          const updatePromise = await VouchersAvailableModel.update(
-            { reserved: reserveStatus, userId, reservedPrice: productInfo.price },
-            { where: { voucherCode }, transaction: t },
-          );
+      const vouchers = productInfo.vouchersAvailable.slice(0, amountRequested);
+      const updateReservePromise = vouchers.map(async (voucher) => {
+        const { voucherCode } = voucher;
+        const updatePromise = await VouchersAvailableModel.update(
+          { reserved: reserveStatus, userId, reservedPrice: productInfo.price },
+          { where: { voucherCode }, transaction: t },
+        );
 
-          return updatePromise;
-        });
+        return updatePromise;
+      });
 
-      await Promise.all(updatedVouchersPromise);
+      await Promise.all(updateReservePromise);
 
       await t.commit();
     } catch (error: CustomError | unknown) {
