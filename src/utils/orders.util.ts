@@ -24,17 +24,22 @@ class Orders {
   calculateTotalPriceAndTotalUnits = (productsInfo: IProductWithSelectedVouchers[]) => {
     const totals = productsInfo.reduce(
       (accTotals, currProduct) => {
+        // const capitalizedType = currProduct.type.charAt(0).toUpperCase() 
+        //   + currProduct.type.slice(1);
         const subTotal = currProduct.price * currProduct.vouchersSelected.length;
 
         const totalPrice = accTotals.totalPrice + subTotal;
         const totalUnits = accTotals.totalUnits + currProduct.vouchersSelected.length;
-
-        return { totalPrice, totalUnits };
+        
+        console.log('-- - - - - - -- --- -- - - -- ----- -- - -accTotals: ', accTotals);
+        return { totalPrice, totalUnits, [`${currProduct.type}s`]: totalUnits };
       },
       { totalPrice: 0, totalUnits: 0 },
     );
 
-    return totals;
+    const { totalUnits, ...restOfTotals } = totals;
+    
+    return restOfTotals;
   };
 }
 

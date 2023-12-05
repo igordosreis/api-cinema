@@ -73,7 +73,6 @@ export default class UsersService {
           ordersUtil.validateVouchersAmount(productPromise, amountRequested);
 
           const { vouchersAvailable, ...restOfInfo } = productPromise;
-
           const productInfo = {
             ...restOfInfo.dataValues,
             vouchersSelected: vouchersAvailable.slice(0, amountRequested),
@@ -83,14 +82,14 @@ export default class UsersService {
         });
       const productsWithSelectedVouchers = await Promise.all(productsWithSelectedVouchersPromise);
 
-      const { totalPrice, totalUnits } = ordersUtil.calculateTotalPriceAndTotalUnits(
+      const totals = ordersUtil.calculateTotalPriceAndTotalUnits(
         productsWithSelectedVouchers,
       );
 
       const expireDate = dateUtils.addFiveMinutes(new Date());
 
       const { id: orderId } = await OrdersModel.create(
-        { totalPrice, totalUnits, expireDate, userId },
+        { ...totals, expireDate, userId },
         { transaction: t },
       );
 
@@ -100,8 +99,7 @@ export default class UsersService {
           
           const vouchersUpdatedPromise = vouchersSelected.map(async (voucher) => {
             const { voucherCode } = voucher;
-            console.log('-- -- -- -- -- -- orderId', orderId);
-            console.log('-- -- -- -- -- productInfo.price', productInfo.price);
+            
             const voucherPromise = await VouchersAvailableModel.update(
               { orderId, soldPrice: productInfo.price },
               { where: { voucherCode }, transaction: t },

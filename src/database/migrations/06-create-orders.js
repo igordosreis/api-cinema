@@ -33,9 +33,13 @@ module.exports = {
         type: Sequelize.DECIMAL(10, 2),
         allowNull: false,
       },
-      total_units: {
+      total_consumables: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        defaultValue: null,
+      },
+      total_tickets: {
+        type: Sequelize.INTEGER,
+        defaultValue: null,
       },
       created_at: {
         type: Sequelize.DATE,
