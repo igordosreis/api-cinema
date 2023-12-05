@@ -8,8 +8,9 @@ module.exports = {
     await queryInterface.createTable('orders', {
       id: {
         type: Sequelize.INTEGER,
-        allowNull: false,
         primaryKey: true,
+        autoIncrement: true,
+        allowNull: false,
       },
       user_id: {
         type: Sequelize.INTEGER,
@@ -22,7 +23,7 @@ module.exports = {
       },
       expire_date: {
         type: Sequelize.DATE,
-        defaultValue: null,
+        allowNull: false,
       },
       payment_id: {
         type: Sequelize.STRING,

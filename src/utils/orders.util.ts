@@ -2,11 +2,14 @@
 /* eslint-disable camelcase */
 /* eslint-disable @typescript-eslint/naming-convention */
 import { MINIMUM_VOUCHER_QUANTITY } from '../constants';
-import { IProductWithVouchers } from '../interfaces/IProducts';
+import {
+  IProductFromGetById,
+  IProductWithSelectedVouchers,
+} from '../interfaces/IProducts';
 import CustomError, { vouchersNotEnough, vouchersUnavailable } from './customError.util';
 
 class Orders {
-  validateVouchersAmount = (productInfo: IProductWithVouchers, amountRequested: number) => {
+  validateVouchersAmount = (productInfo: IProductFromGetById, amountRequested: number) => {
     const { vouchersAvailable } = productInfo;
 
     const totalVouchersAvailable = vouchersAvailable.length;
@@ -16,6 +19,22 @@ class Orders {
     const areVouchersBelowRequestedQty = Number(MINIMUM_VOUCHER_QUANTITY)
       > totalVouchersAvailable - amountRequested;
     if (areVouchersBelowRequestedQty) throw new CustomError(vouchersUnavailable);
+  };
+
+  calculateTotalPriceAndTotalUnits = (productsInfo: IProductWithSelectedVouchers[]) => {
+    const totals = productsInfo.reduce(
+      (accTotals, currProduct) => {
+        const subTotal = currProduct.price * currProduct.vouchersSelected.length;
+
+        const totalPrice = accTotals.totalPrice + subTotal;
+        const totalUnits = accTotals.totalUnits + currProduct.vouchersSelected.length;
+
+        return { totalPrice, totalUnits };
+      },
+      { totalPrice: 0, totalUnits: 0 },
+    );
+
+    return totals;
   };
 }
 

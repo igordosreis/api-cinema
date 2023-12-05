@@ -1,7 +1,9 @@
 import { Request } from 'express';
 import { IVoucherAvailable } from './IVouchers';
+import EstablishmentsProductsModel from '../database/models/EstablishmentsProducts.model';
+import VouchersAvailableModel from '../database/models/VouchersAvailable.model';
 
-export interface IProducts {
+export interface IProduct {
   id: number;
   establishmentId: number;
   active: boolean;
@@ -28,6 +30,14 @@ export interface IProductFormattedQuery {
   establishmentId: number | undefined;
 }
 
-export interface IProductWithVouchers extends IProducts {
+export interface IProductWithVouchers extends IProduct {
   vouchersAvailable: IVoucherAvailable[];
 }
+
+export interface IProductWithSelectedVouchers extends IProduct {
+  vouchersSelected: IVoucherAvailable[];
+}
+
+export type IProductFromGetById = EstablishmentsProductsModel & {
+  vouchersAvailable: Array<VouchersAvailableModel>;
+};

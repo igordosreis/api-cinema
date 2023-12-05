@@ -26,9 +26,8 @@ export default class UsersController {
 
   public static async createOrder(req: Request, res: Response): Promise<void> {
     const orderRequest = req as IOrderRequestRawBody;
-
     const formattedRequest = formatRequestQueryUtil.formatCreateOrder(orderRequest);
-
+    
     await UsersService.createOrder(formattedRequest);
 
     res.status(200).end();

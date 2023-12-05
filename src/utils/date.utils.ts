@@ -5,7 +5,7 @@ import {
   startOfWeek,
   endOfWeek,
   differenceInCalendarDays,
-  addHours,
+  addMinutes,
 } from 'date-fns';
 
 class DateUtils {
@@ -22,13 +22,13 @@ class DateUtils {
   differenceInDays = (beforeDate: Date, afterDate: Date) =>
     differenceInCalendarDays(afterDate, beforeDate);
 
-  addOneHour = (currentDate: Date) => {
+  addFiveMinutes = (currentDate: Date) => {
     const currentDateToBrazilTimezone = currentDate.toLocaleString('pt-BR', {
       timeZone: 'America/Sao_Paulo',
     });
     const dateObjectConvertedFromDateString = new Date(currentDateToBrazilTimezone);
 
-    return formatISO(addHours(dateObjectConvertedFromDateString, 1));
+    return formatISO(addMinutes(dateObjectConvertedFromDateString, 5));
   };
 }
 

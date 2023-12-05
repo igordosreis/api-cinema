@@ -5,7 +5,7 @@ export interface IVoucherAvailable {
   id: number;
   voucherCode: string;
   productId: number;
-  reserved: boolean;
+  orderId: number;
   expireDate: Date | null;
   createdAt: Date | null;
   updatedAt: Date | null;

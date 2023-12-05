@@ -4,7 +4,10 @@ import db from '../database/models';
 import EstablishmentsProductsModel from '../database/models/EstablishmentsProducts.model';
 import VouchersAvailableModel from '../database/models/VouchersAvailable.model';
 import VouchersUserModel from '../database/models/VouchersUser.model';
-import { IProductWithVouchers } from '../interfaces/IProducts';
+import {
+  IProductFromGetById,
+  IProductWithSelectedVouchers,
+} from '../interfaces/IProducts';
 import CustomError, { voucherServiceUnavailable } from '../utils/customError.util';
 import { IOrderRequestFormattedBody } from '../interfaces/IVouchers';
 import ordersUtil from '../utils/orders.util';
@@ -23,7 +26,7 @@ export default class UsersService {
   }
 
   public static async getVouchersByProductId(productId: number, transaction?: Transaction) {
-    const [results] = await EstablishmentsProductsModel.findAll({
+    const results = await EstablishmentsProductsModel.findOne({
       attributes: { exclude: ['createdAt', 'updatedAt'] },
       include: [
         {
@@ -42,7 +45,8 @@ export default class UsersService {
       order: [[{ model: VouchersAvailableModel, as: 'vouchersAvailable' }, 'expireDate', 'ASC']],
     });
 
-    return results as unknown as IProductWithVouchers;
+    return results as IProductFromGetById;
+    // return results.dataValues as unknown as IProductWithVouchers;
     // const allProductVouchers = await VouchersAvailableModel.findAll({
     //   attributes: { exclude: ['createdAt', 'updatedAt'] },
     //   where: { productId },
@@ -58,60 +62,67 @@ export default class UsersService {
     // return allProductVouchers as unknown as IProductWithVouchers;
   }
 
-  public static async createOrder(updateVoucherParams: IOrderRequestFormattedBody) {
+  public static async createOrder(orderRequest: IOrderRequestFormattedBody) {
     const t = await db.transaction();
     try {
-      const { userId, orderInfo } = updateVoucherParams;
+      const { userId, orderInfo } = orderRequest;
 
-      const productsInfoPromise = orderInfo.map(async ({ productId, amountRequested }) => {
-        const productPromise = await this.getVouchersByProductId(productId, t);
-        ordersUtil.validateVouchersAmount(productPromise, amountRequested);
+      const productsWithSelectedVouchersPromise: Promise<IProductWithSelectedVouchers>[] = orderInfo
+        .map(async ({ productId, amountRequested }) => {
+          const productPromise = await this.getVouchersByProductId(productId, t);
+          ordersUtil.validateVouchersAmount(productPromise, amountRequested);
 
-        const productInfo = {
-          ...productPromise,
-          selectedVouchers: productPromise.vouchersAvailable.slice(0, amountRequested),
-        };
+          const { vouchersAvailable, ...restOfInfo } = productPromise;
 
-        return productInfo;
-      });
-      const productsInfo = await Promise.all(productsInfoPromise);
+          const productInfo = {
+            ...restOfInfo.dataValues,
+            vouchersSelected: vouchersAvailable.slice(0, amountRequested),
+          };
 
-      const totals = productsInfo.reduce(
-        (accTotals, currProduct) => {
-          const subTotal = currProduct.price * currProduct.selectedVouchers.length;
+          return productInfo;
+        });
+      const productsWithSelectedVouchers = await Promise.all(productsWithSelectedVouchersPromise);
 
-          const totalPrice = accTotals.totalPrice + subTotal;
-          const totalUnits = accTotals.totalUnits + currProduct.selectedVouchers.length;
-
-          return { totalPrice, totalUnits };
-        },
-        { totalPrice: 0, totalUnits: 0 },
+      const { totalPrice, totalUnits } = ordersUtil.calculateTotalPriceAndTotalUnits(
+        productsWithSelectedVouchers,
       );
 
-      const expireDate = dateUtils.addOneHour(new Date());
+      const expireDate = dateUtils.addFiveMinutes(new Date());
 
       const { id: orderId } = await OrdersModel.create(
-        { ...totals, expireDate, userId },
+        { totalPrice, totalUnits, expireDate, userId },
         { transaction: t },
       );
-      console.log('orderId: ', orderId);
 
-      // const updateReservePromise = vouchers.map(async (voucher) => {
-      //   const { voucherCode } = voucher;
-      //   const updatePromise = await VouchersAvailableModel.update(
-      //     { orderId, userId, soldPrice: productInfo.price },
-      //     { where: { voucherCode }, transaction: t },
-      //   );
+      const vouchersUpdatedOrderIdPromise = productsWithSelectedVouchers.map(
+        async (productInfo) => {
+          const { vouchersSelected } = productInfo;
+          
+          const vouchersUpdatedPromise = vouchersSelected.map(async (voucher) => {
+            const { voucherCode } = voucher;
+            console.log('-- -- -- -- -- -- orderId', orderId);
+            console.log('-- -- -- -- -- productInfo.price', productInfo.price);
+            const voucherPromise = await VouchersAvailableModel.update(
+              { orderId, soldPrice: productInfo.price },
+              { where: { voucherCode }, transaction: t },
+            );
 
-      //   return updatePromise;
-      // });
-      // await Promise.all(updateReservePromise);
+            return voucherPromise;
+          });
+          const vouchersUpdated = await Promise.all(vouchersUpdatedPromise);
+
+          return vouchersUpdated;
+        },
+      );
+
+      await Promise.all(vouchersUpdatedOrderIdPromise);
 
       await t.commit();
     } catch (error: CustomError | unknown) {
       t.rollback();
 
       if (error instanceof CustomError) throw error;
+      // throw error;
       throw new CustomError(voucherServiceUnavailable);
     }
   }
