@@ -22,7 +22,14 @@ class DateUtils {
   differenceInDays = (beforeDate: Date, afterDate: Date) =>
     differenceInCalendarDays(afterDate, beforeDate);
 
-  addOneHour = (currentDate: Date) => formatISO(addHours(currentDate, 1));
+  addOneHour = (currentDate: Date) => {
+    const currentDateToBrazilTimezone = currentDate.toLocaleString('pt-BR', {
+      timeZone: 'America/Sao_Paulo',
+    });
+    const dateObjectConvertedFromDateString = new Date(currentDateToBrazilTimezone);
+
+    return formatISO(addHours(dateObjectConvertedFromDateString, 1));
+  };
 }
 
 export default new DateUtils();

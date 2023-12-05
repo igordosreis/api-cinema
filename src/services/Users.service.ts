@@ -88,13 +88,7 @@ export default class UsersService {
         { totalPrice: 0, totalUnits: 0 },
       );
 
-      const expireDate = dateUtils.addOneHour(
-        new Date(
-          new Date().toLocaleString('pt-BR', {
-            timeZone: 'America/Sao_Paulo',
-          }),
-        ),
-      );
+      const expireDate = dateUtils.addOneHour(new Date());
 
       const { id: orderId } = await OrdersModel.create(
         { ...totals, expireDate, userId },
