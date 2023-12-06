@@ -10,7 +10,7 @@ class OrdersModel extends Model {
   declare totalUnits: number;
   declare totalConsumables: number;
   declare totalTickets: number;
-  declare expireDate: Date;
+  declare expireAt: Date;
   declare createdAt: Date;
   declare updatedAt: Date;
 }
@@ -44,7 +44,7 @@ OrdersModel.init(
     totalTickets: {
       type: DataTypes.INTEGER,
     },
-    expireDate: {
+    expireAt: {
       type: DataTypes.DATE,
     },
     createdAt: {

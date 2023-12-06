@@ -86,7 +86,7 @@ export default class EstablishmentsService {
           as: 'vouchersAvailable',
           where: {
             orderId: null,
-            expireDate: {
+            expireAt: {
               [Op.gt]: new Date(),
             },
           },

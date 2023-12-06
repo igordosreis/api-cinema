@@ -9,7 +9,7 @@ class VouchersAvailableModel extends Model {
   declare productId: number;
   declare orderId: number;
   declare soldPrice: number;
-  declare expireDate: Date;
+  declare expireAt: Date;
   declare createdAt: Date;
   declare updatedAt: Date;
 }
@@ -38,7 +38,7 @@ VouchersAvailableModel.init(
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-    expireDate: {
+    expireAt: {
       type: DataTypes.DATE,
       defaultValue: null,
     },

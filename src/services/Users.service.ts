@@ -4,10 +4,7 @@ import db from '../database/models';
 import EstablishmentsProductsModel from '../database/models/EstablishmentsProducts.model';
 import VouchersAvailableModel from '../database/models/VouchersAvailable.model';
 import VouchersUserModel from '../database/models/VouchersUser.model';
-import {
-  IProductFromGetById,
-  IProductWithSelectedVouchers,
-} from '../interfaces/IProducts';
+import { IProductFromGetById, IProductWithSelectedVouchers } from '../interfaces/IProducts';
 import CustomError, { voucherServiceUnavailable } from '../utils/customError.util';
 import { IOrderInfoFormatted, IOrderRequestFormattedBody } from '../interfaces/IVouchers';
 import ordersUtil from '../utils/orders.util';
@@ -34,7 +31,7 @@ export default class UsersService {
           as: 'vouchersAvailable',
           where: {
             orderId: null,
-            expireDate: {
+            expireAt: {
               [Op.gt]: new Date(),
             },
           },
@@ -42,7 +39,7 @@ export default class UsersService {
       ],
       transaction: transaction || null,
       where: { id: productId },
-      order: [[{ model: VouchersAvailableModel, as: 'vouchersAvailable' }, 'expireDate', 'ASC']],
+      order: [[{ model: VouchersAvailableModel, as: 'vouchersAvailable' }, 'expireAt', 'ASC']],
     });
 
     return results as IProductFromGetById;
@@ -55,14 +52,12 @@ export default class UsersService {
 
       const productsWithSelectedVouchers = await this.getProductWithSelectedVouchers(orderInfo, t);
 
-      const totals = ordersUtil.calculateTotalPriceAndTotalUnits(
-        productsWithSelectedVouchers,
-      );
+      const totals = ordersUtil.calculateTotalPriceAndTotalUnits(productsWithSelectedVouchers);
 
-      const expireDate = dateUtils.addFiveMinutes(new Date());
+      const expireAt = dateUtils.addFiveMinutes(new Date());
 
       const { id: orderId } = await OrdersModel.create(
-        { ...totals, expireDate, userId },
+        { ...totals, expireAt, userId },
         { transaction: t },
       );
 
@@ -79,7 +74,7 @@ export default class UsersService {
       throw new CustomError(voucherServiceUnavailable);
     }
   }
-  
+
   private static async getProductWithSelectedVouchers(
     orderInfo: IOrderInfoFormatted[],
     transaction: Transaction,
@@ -98,7 +93,7 @@ export default class UsersService {
         return productInfo;
       });
     const productsWithSelectedVouchers = await Promise.all(productsWithSelectedVouchersPromise);
-  
+
     return productsWithSelectedVouchers;
   }
 
@@ -107,22 +102,20 @@ export default class UsersService {
     orderId: number,
     transaction: Transaction,
   ) {
-    const vouchersUpdatedOrderIdPromise = productsWithSelectedVouchers.map(
-      async (productInfo) => {
-        const { vouchersSelected } = productInfo;
-        
-        const vouchersUpdatedPromise = vouchersSelected.map(async (voucher) => {
-          const { voucherCode } = voucher;
-          
-          await VouchersAvailableModel.update(
-            { orderId, soldPrice: productInfo.price },
-            { where: { voucherCode }, transaction },
-          );
-        });
+    const vouchersUpdatedOrderIdPromise = productsWithSelectedVouchers.map(async (productInfo) => {
+      const { vouchersSelected } = productInfo;
 
-        await Promise.all(vouchersUpdatedPromise);
-      },
-    );
+      const vouchersUpdatedPromise = vouchersSelected.map(async (voucher) => {
+        const { voucherCode } = voucher;
+
+        await VouchersAvailableModel.update(
+          { orderId, soldPrice: productInfo.price },
+          { where: { voucherCode }, transaction },
+        );
+      });
+
+      await Promise.all(vouchersUpdatedPromise);
+    });
 
     await Promise.all(vouchersUpdatedOrderIdPromise);
   }

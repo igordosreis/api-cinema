@@ -9,7 +9,7 @@ class VouchersUserModel extends Model {
   declare productId: number;
   declare orderId: number;
   declare active: boolean;
-  declare expireDate: Date;
+  declare expireAt: Date;
   declare paymentId: string;
   declare createdAt: Date;
   declare updatedAt: Date;
@@ -41,7 +41,7 @@ VouchersUserModel.init(
       type: DataTypes.BOOLEAN,
       defaultValue: true,
     },
-    expireDate: {
+    expireAt: {
       type: DataTypes.DATE,
       defaultValue: null,
     },

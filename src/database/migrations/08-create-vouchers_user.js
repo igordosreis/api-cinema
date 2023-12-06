@@ -39,7 +39,7 @@ module.exports = {
         allowNull: false,
         defaultValue: true,
       },
-      expire_date: {
+      expire_at: {
         type: Sequelize.DATE,
         defaultValue: null,
       },

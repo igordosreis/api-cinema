@@ -21,7 +21,7 @@ module.exports = {
         allowNull: false,
         defaultValue: 'pending',
       },
-      expire_date: {
+      expire_at: {
         type: Sequelize.DATE,
         allowNull: false,
       },
