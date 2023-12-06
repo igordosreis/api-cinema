@@ -101,6 +101,8 @@ export default class UsersService {
 
       const totals = ordersUtil.calculateTotalPriceAndTotalUnits(productsWithSelectedVouchers);
 
+      // adicionar aqui verificação de se a quantidade de vouchers de cada tipo está dentro do permitido para esse usuário
+      
       const expireAt = dateUtils.addFiveMinutes(new Date());
 
       const { id: orderId } = await OrdersModel.create(
