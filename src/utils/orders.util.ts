@@ -28,6 +28,7 @@ class Orders {
   calculateTotalPriceAndTotalUnits = (productsInfo: IProductWithSelectedVouchers[]) => {
     const totals = productsInfo.reduce(
       (accTotals, currProduct) => {
+        // const subTotal = Number((currProduct.price * currProduct.vouchersSelected.length).toFixed(2)) || 0;
         const subTotal = currProduct.price * currProduct.vouchersSelected.length;
         const totalPrice = accTotals.totalPrice + subTotal;
 
@@ -38,7 +39,7 @@ class Orders {
         
         const newAccTotals = { 
           ...accTotals,
-          totalPrice,
+          totalPrice: Number(totalPrice.toFixed(2)),
           totalUnits,
           [formattedType as keyof AccTotals]: totalOfType, 
         };
@@ -48,9 +49,7 @@ class Orders {
       { totalPrice: 0, totalUnits: 0 } as AccTotals,
     );
 
-    const { totalUnits, ...restOfTotals } = totals;
-    
-    return restOfTotals;
+    return totals;
   };
 }
 
