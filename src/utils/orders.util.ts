@@ -34,14 +34,17 @@ class Orders {
         const totalUnits = accTotals.totalUnits + currProduct.vouchersSelected.length;
 
         const formattedType = `total${currProduct.type.charAt(0).toUpperCase()}${currProduct.type.slice(1)}s`;
-        const totalOfType = accTotals[formattedType as keyof PriceUnitAndTypeTotals] + 1 || 1;
-        
+        const totalOfType = productsInfo
+          .filter(({ type }) => type === currProduct.type)
+          .reduce((accTypeTotal, currType) => (accTypeTotal + currType.vouchersSelected.length), 0);
+
         const newAccTotals = { 
           ...accTotals,
           totalPrice: Number(totalPrice.toFixed(2)),
           totalUnits,
           [formattedType as keyof PriceUnitAndTypeTotals]: totalOfType, 
         };
+        console.log('- - - --- - - -- -- - --- -- - --  -- --- - newAccTotals: ', newAccTotals);
 
         return newAccTotals;
       },
