@@ -2,7 +2,7 @@ export interface IPaymentOrderRequest {
   userId: number;
   orderId: number;
   expireAt: string;
-  value: number;
+  value: string;
   webhook: string;
   name: string;
 }
