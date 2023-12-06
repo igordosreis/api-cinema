@@ -10,6 +10,7 @@ import { IOrderInfoFormatted, IOrderRequestFormattedBody } from '../interfaces/I
 import ordersUtil from '../utils/orders.util';
 import OrdersModel from '../database/models/Orders.model';
 import dateUtils from '../utils/date.utils';
+import paymentUtil from '../utils/payment.util';
 
 export default class UsersService {
   public static async getUserVoucherHistory(userId: number) {
@@ -45,37 +46,7 @@ export default class UsersService {
     return results as IProductFromGetById;
   }
 
-  public static async createOrder(orderRequest: IOrderRequestFormattedBody) {
-    const t = await db.transaction();
-    try {
-      const { userId, orderInfo } = orderRequest;
-
-      const productsWithSelectedVouchers = await this.getProductWithSelectedVouchers(orderInfo, t);
-
-      const totals = ordersUtil.calculateTotalPriceAndTotalUnits(productsWithSelectedVouchers);
-
-      const expireAt = dateUtils.addFiveMinutes(new Date());
-
-      const { id: orderId } = await OrdersModel.create(
-        { ...totals, expireAt, userId },
-        { transaction: t },
-      );
-
-      await this.updateVouchersOnCreateOrder(productsWithSelectedVouchers, orderId, t);
-
-      await t.commit();
-
-      // -- chamar microservice pagamento para enviar 'create payment'--
-    } catch (error: CustomError | unknown) {
-      t.rollback();
-
-      if (error instanceof CustomError) throw error;
-      // throw error;
-      throw new CustomError(voucherServiceUnavailable);
-    }
-  }
-
-  private static async getProductWithSelectedVouchers(
+  private static async getProductsWithSelectedVouchers(
     orderInfo: IOrderInfoFormatted[],
     transaction: Transaction,
   ) {
@@ -118,5 +89,38 @@ export default class UsersService {
     });
 
     await Promise.all(vouchersUpdatedOrderIdPromise);
+  }
+
+  public static async createOrder(orderRequest: IOrderRequestFormattedBody) {
+    const t = await db.transaction();
+    try {
+      const { userId, orderInfo } = orderRequest;
+
+      const productsWithSelectedVouchers = await this.getProductsWithSelectedVouchers(orderInfo, t);
+
+      const totals = ordersUtil.calculateTotalPriceAndTotalUnits(productsWithSelectedVouchers);
+
+      const expireAt = dateUtils.addFiveMinutes(new Date());
+
+      const { id: orderId } = await OrdersModel.create(
+        { ...totals, expireAt, userId },
+        { transaction: t },
+      );
+
+      await this.updateVouchersOnCreateOrder(productsWithSelectedVouchers, orderId, t);
+
+      await t.commit();
+
+      const { id: paymentId } = await paymentUtil
+        .createPayment({ orderId, userId, value: totals.totalPrice, expireAt });
+
+      await OrdersModel.update({ paymentId }, { where: { orderId } });
+    } catch (error: CustomError | unknown) {
+      t.rollback();
+
+      if (error instanceof CustomError) throw error;
+      // throw error;
+      throw new CustomError(voucherServiceUnavailable);
+    }
   }
 }

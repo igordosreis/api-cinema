@@ -54,5 +54,11 @@ export const vouchersNotEnough: ICustomError = {
 export const voucherServiceUnavailable: ICustomError = {
   status: 503,
   title: 'Operacão indisponível.',
-  message: 'Essa operação está indisponível no momento, tente novamente mais tarde.',
+  message: 'Essa operação está indisponível no momento. Tente novamente mais tarde.',
+};
+
+export const paymentOrderError: ICustomError = {
+  status: 503,
+  title: 'Pagamento não realizado.',
+  message: 'Erro ao realizar o pagamento. Tente novamente mais tarde.',
 };
