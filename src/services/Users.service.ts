@@ -11,6 +11,7 @@ import ordersUtil from '../utils/orders.util';
 import OrdersModel from '../database/models/Orders.model';
 import dateUtils from '../utils/date.utils';
 import paymentUtil from '../utils/payment.util';
+import { IPaymentOrderRequest } from '../interfaces/IPayment';
 
 export default class UsersService {
   public static async getUserVoucherHistory(userId: number) {
@@ -109,7 +110,7 @@ export default class UsersService {
 
       await this.updateVouchersOnCreateOrder(productsWithSelectedVouchers, orderId, t);
 
-      const paymentOrderRequest = {
+      const paymentOrderRequest: Omit<IPaymentOrderRequest, 'webhook' | 'name'> = {
         orderId,
         userId,
         value: totals.totalPrice.toString(),
@@ -124,7 +125,7 @@ export default class UsersService {
       t.rollback();
 
       if (error instanceof CustomError) throw error;
-      
+
       throw new CustomError(voucherServiceUnavailable);
     }
   }

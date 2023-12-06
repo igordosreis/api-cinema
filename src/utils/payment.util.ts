@@ -5,19 +5,11 @@ import { IPaymentOrderRequest, IPaymentOrderResponse } from '../interfaces/IPaym
 import CustomError, { paymentOrderError } from './customError.util';
 
 class Payment {
-  createPayment = async ({
-    userId,
-    orderId,
-    expireAt,
-    value,
-  }: Omit<IPaymentOrderRequest, 'webhook' | 'name'>) => {
+  createPayment = async (paymentOrderRequest: Omit<IPaymentOrderRequest, 'webhook' | 'name'>) => {
     try {
       const endpoint = CREATE_PAYMENT_URL;
       const body: IPaymentOrderRequest = {
-        userId,
-        orderId,
-        expireAt,
-        value,
+        ...paymentOrderRequest,
         webhook: EMAIL_WEBHOOK_MOCK,
         name: 'Pagamento - Módulo Cinema',
       };
@@ -30,7 +22,7 @@ class Payment {
       return data;
     } catch (error: CustomError | unknown) {
       if (error instanceof CustomError) throw error;
-      
+
       throw new CustomError(paymentOrderError);
     }
   };
