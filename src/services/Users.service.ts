@@ -116,11 +116,14 @@ export default class UsersService {
         value: totals.totalPrice.toString(),
         expireAt,
       };
-      const { id: paymentId } = await paymentUtil.createPayment(paymentOrderRequest);
+      const paymentOrderResponse = await paymentUtil.createPayment(paymentOrderRequest);
+      const { id: paymentId, paymentModules } = paymentOrderResponse;
 
       await OrdersModel.update({ paymentId }, { where: { id: orderId }, transaction: t });
 
       await t.commit();
+
+      return { orderId, paymentId, paymentModules };
     } catch (error: CustomError | unknown) {
       t.rollback();
 

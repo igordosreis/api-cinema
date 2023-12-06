@@ -7,7 +7,14 @@ export interface IPaymentOrderRequest {
   name: string;
 }
 
+export interface IPaymentModule {
+  id: number;
+  name: string;
+}
+
 export interface IPaymentOrderResponse extends IPaymentOrderRequest {
   id: number;
   productId: number;
+  status: 'paid' | 'waiting' | 'cancelled' | 'expired';
+  paymentModules: IPaymentModule[];
 }
