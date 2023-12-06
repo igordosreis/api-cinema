@@ -19,7 +19,7 @@ module.exports = {
       status: {
         type: Sequelize.STRING,
         allowNull: false,
-        defaultValue: 'pending',
+        defaultValue: 'waiting',
       },
       expire_at: {
         type: Sequelize.DATE,
