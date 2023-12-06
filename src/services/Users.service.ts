@@ -85,6 +85,7 @@ export default class UsersService {
       const totals = ordersUtil.calculateTotalPriceAndTotalUnits(
         productsWithSelectedVouchers,
       );
+      console.log('totals: ', totals);
 
       const expireDate = dateUtils.addFiveMinutes(new Date());
 

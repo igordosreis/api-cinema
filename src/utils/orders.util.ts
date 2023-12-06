@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable max-lines-per-function */
 /* eslint-disable camelcase */
 /* eslint-disable @typescript-eslint/naming-convention */
@@ -7,6 +8,9 @@ import {
   IProductWithSelectedVouchers,
 } from '../interfaces/IProducts';
 import CustomError, { vouchersNotEnough, vouchersUnavailable } from './customError.util';
+
+type Totals = 'totalPrice' | 'totalUnits' | 'totalConsumables' | 'totalTickets';
+type AccTotals = Record<Totals, number>;
 
 class Orders {
   validateVouchersAmount = (productInfo: IProductFromGetById, amountRequested: number) => {
@@ -24,17 +28,24 @@ class Orders {
   calculateTotalPriceAndTotalUnits = (productsInfo: IProductWithSelectedVouchers[]) => {
     const totals = productsInfo.reduce(
       (accTotals, currProduct) => {
-        // const capitalizedType = currProduct.type.charAt(0).toUpperCase() 
-        //   + currProduct.type.slice(1);
         const subTotal = currProduct.price * currProduct.vouchersSelected.length;
-
         const totalPrice = accTotals.totalPrice + subTotal;
+
         const totalUnits = accTotals.totalUnits + currProduct.vouchersSelected.length;
+
+        const formattedType = `total${currProduct.type.charAt(0).toUpperCase()}${currProduct.type.slice(1)}s`;
+        const totalOfType = accTotals[formattedType as keyof AccTotals] + 1 || 1;
         
-        console.log('-- - - - - - -- --- -- - - -- ----- -- - -accTotals: ', accTotals);
-        return { totalPrice, totalUnits, [`${currProduct.type}s`]: totalUnits };
+        const newAccTotals = { 
+          ...accTotals,
+          totalPrice,
+          totalUnits,
+          [formattedType as keyof AccTotals]: totalOfType, 
+        };
+        console.log('-- - - - - - -- --- -- - - -- ----- -- - -acc: ', newAccTotals);
+        return newAccTotals;
       },
-      { totalPrice: 0, totalUnits: 0 },
+      { totalPrice: 0, totalUnits: 0 } as AccTotals,
     );
 
     const { totalUnits, ...restOfTotals } = totals;
