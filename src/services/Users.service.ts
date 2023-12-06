@@ -108,13 +108,13 @@ export default class UsersService {
       );
 
       await this.updateVouchersOnCreateOrder(productsWithSelectedVouchers, orderId, t);
-
-      await t.commit();
-
+      
       const { id: paymentId } = await paymentUtil
         .createPayment({ orderId, userId, value: totals.totalPrice, expireAt });
+      
+      await OrdersModel.update({ paymentId }, { where: { orderId }, transaction: t });
 
-      await OrdersModel.update({ paymentId }, { where: { orderId } });
+      await t.commit();
     } catch (error: CustomError | unknown) {
       t.rollback();
 
