@@ -33,6 +33,10 @@ module.exports = {
         type: Sequelize.DECIMAL(10, 2),
         allowNull: false,
       },
+      total_units: {
+        type: Sequelize.INTEGER,
+        defaultValue: null,
+      },
       total_consumables: {
         type: Sequelize.INTEGER,
         defaultValue: null,
