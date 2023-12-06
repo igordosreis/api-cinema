@@ -22,13 +22,15 @@ class DateUtils {
   differenceInDays = (beforeDate: Date, afterDate: Date) =>
     differenceInCalendarDays(afterDate, beforeDate);
 
-  addFiveMinutes = (currentDate: Date) => {
-    const currentDateToBrazilTimezone = currentDate.toLocaleString('pt-BR', {
+  addFiveMinutes = (currentDate: Date) => formatISO(addMinutes(currentDate, 5));
+
+  adjustDateToBrazilTimezone = (date: Date) => {
+    const currentDateToBrazilTimezone = date.toLocaleString('pt-BR', {
       timeZone: 'America/Sao_Paulo',
     });
     const dateObjectConvertedFromDateString = new Date(currentDateToBrazilTimezone);
 
-    return formatISO(addMinutes(dateObjectConvertedFromDateString, 5));
+    return new Date(formatISO(dateObjectConvertedFromDateString));
   };
 }
 

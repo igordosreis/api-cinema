@@ -27,7 +27,7 @@ class AuthRequests {
           headers: { authorization: `${BEARER_TOKEN}` },
         },
       );
-
+      
       return userInfo;
     } catch {
       throw new CustomError(unauthorizedRequest);

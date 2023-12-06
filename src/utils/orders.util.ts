@@ -10,7 +10,7 @@ import {
 import CustomError, { vouchersNotEnough, vouchersUnavailable } from './customError.util';
 
 type Totals = 'totalPrice' | 'totalUnits' | 'totalConsumables' | 'totalTickets';
-type AccTotals = Record<Totals, number>;
+type PriceUnitAndTypeTotals = Record<Totals, number>;
 
 class Orders {
   validateVouchersAmount = (productInfo: IProductFromGetById, amountRequested: number) => {
@@ -18,35 +18,34 @@ class Orders {
 
     const totalVouchersAvailable = vouchersAvailable.length;
     const areVouchersBelowMinimumQty = totalVouchersAvailable < Number(MINIMUM_VOUCHER_QUANTITY);
-    if (areVouchersBelowMinimumQty) throw new CustomError(vouchersNotEnough);
+    if (areVouchersBelowMinimumQty) throw new CustomError(vouchersUnavailable);
 
     const areVouchersBelowRequestedQty = Number(MINIMUM_VOUCHER_QUANTITY)
       > totalVouchersAvailable - amountRequested;
-    if (areVouchersBelowRequestedQty) throw new CustomError(vouchersUnavailable);
+    if (areVouchersBelowRequestedQty) throw new CustomError(vouchersNotEnough);
   };
 
   calculateTotalPriceAndTotalUnits = (productsInfo: IProductWithSelectedVouchers[]) => {
     const totals = productsInfo.reduce(
       (accTotals, currProduct) => {
-        // const subTotal = Number((currProduct.price * currProduct.vouchersSelected.length).toFixed(2)) || 0;
         const subTotal = currProduct.price * currProduct.vouchersSelected.length;
         const totalPrice = accTotals.totalPrice + subTotal;
 
         const totalUnits = accTotals.totalUnits + currProduct.vouchersSelected.length;
 
         const formattedType = `total${currProduct.type.charAt(0).toUpperCase()}${currProduct.type.slice(1)}s`;
-        const totalOfType = accTotals[formattedType as keyof AccTotals] + 1 || 1;
+        const totalOfType = accTotals[formattedType as keyof PriceUnitAndTypeTotals] + 1 || 1;
         
         const newAccTotals = { 
           ...accTotals,
           totalPrice: Number(totalPrice.toFixed(2)),
           totalUnits,
-          [formattedType as keyof AccTotals]: totalOfType, 
+          [formattedType as keyof PriceUnitAndTypeTotals]: totalOfType, 
         };
-        console.log('-- - - - - - -- --- -- - - -- ----- -- - -acc: ', newAccTotals);
+
         return newAccTotals;
       },
-      { totalPrice: 0, totalUnits: 0 } as AccTotals,
+      { totalPrice: 0, totalUnits: 0 } as PriceUnitAndTypeTotals,
     );
 
     return totals;

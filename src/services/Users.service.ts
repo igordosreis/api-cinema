@@ -9,7 +9,7 @@ import {
   IProductWithSelectedVouchers,
 } from '../interfaces/IProducts';
 import CustomError, { voucherServiceUnavailable } from '../utils/customError.util';
-import { IOrderRequestFormattedBody } from '../interfaces/IVouchers';
+import { IOrderInfoFormatted, IOrderRequestFormattedBody } from '../interfaces/IVouchers';
 import ordersUtil from '../utils/orders.util';
 import OrdersModel from '../database/models/Orders.model';
 import dateUtils from '../utils/date.utils';
@@ -46,20 +46,6 @@ export default class UsersService {
     });
 
     return results as IProductFromGetById;
-    // return results.dataValues as unknown as IProductWithVouchers;
-    // const allProductVouchers = await VouchersAvailableModel.findAll({
-    //   attributes: { exclude: ['createdAt', 'updatedAt'] },
-    //   where: { productId },
-    //   order: [['expireDate', 'ASC']],
-    //   include: [
-    //     {
-    //       model: EstablishmentsProductsModel,
-    //       as: 'vouchersAvailable',
-    //     },
-    //   ],
-    // });
-
-    // return allProductVouchers as unknown as IProductWithVouchers;
   }
 
   public static async createOrder(orderRequest: IOrderRequestFormattedBody) {
@@ -67,25 +53,11 @@ export default class UsersService {
     try {
       const { userId, orderInfo } = orderRequest;
 
-      const productsWithSelectedVouchersPromise: Promise<IProductWithSelectedVouchers>[] = orderInfo
-        .map(async ({ productId, amountRequested }) => {
-          const productPromise = await this.getVouchersByProductId(productId, t);
-          ordersUtil.validateVouchersAmount(productPromise, amountRequested);
-
-          const { vouchersAvailable, ...restOfInfo } = productPromise;
-          const productInfo = {
-            ...restOfInfo.dataValues,
-            vouchersSelected: vouchersAvailable.slice(0, amountRequested),
-          };
-
-          return productInfo;
-        });
-      const productsWithSelectedVouchers = await Promise.all(productsWithSelectedVouchersPromise);
+      const productsWithSelectedVouchers = await this.getProductWithSelectedVouchers(orderInfo, t);
 
       const totals = ordersUtil.calculateTotalPriceAndTotalUnits(
         productsWithSelectedVouchers,
       );
-      console.log('totals: ', totals);
 
       const expireDate = dateUtils.addFiveMinutes(new Date());
 
@@ -94,29 +66,11 @@ export default class UsersService {
         { transaction: t },
       );
 
-      const vouchersUpdatedOrderIdPromise = productsWithSelectedVouchers.map(
-        async (productInfo) => {
-          const { vouchersSelected } = productInfo;
-          
-          const vouchersUpdatedPromise = vouchersSelected.map(async (voucher) => {
-            const { voucherCode } = voucher;
-            
-            const voucherPromise = await VouchersAvailableModel.update(
-              { orderId, soldPrice: productInfo.price },
-              { where: { voucherCode }, transaction: t },
-            );
-
-            return voucherPromise;
-          });
-          const vouchersUpdated = await Promise.all(vouchersUpdatedPromise);
-
-          return vouchersUpdated;
-        },
-      );
-
-      await Promise.all(vouchersUpdatedOrderIdPromise);
+      await this.updateVouchersOnCreateOrder(productsWithSelectedVouchers, orderId, t);
 
       await t.commit();
+
+      // -- chamar microservice pagamento para enviar 'create payment'--
     } catch (error: CustomError | unknown) {
       t.rollback();
 
@@ -124,5 +78,52 @@ export default class UsersService {
       // throw error;
       throw new CustomError(voucherServiceUnavailable);
     }
+  }
+  
+  private static async getProductWithSelectedVouchers(
+    orderInfo: IOrderInfoFormatted[],
+    transaction: Transaction,
+  ) {
+    const productsWithSelectedVouchersPromise: Promise<IProductWithSelectedVouchers>[] = orderInfo
+      .map(async ({ productId, amountRequested }) => {
+        const productPromise = await this.getVouchersByProductId(productId, transaction);
+        ordersUtil.validateVouchersAmount(productPromise, amountRequested);
+
+        const { vouchersAvailable, ...restOfInfo } = productPromise;
+        const productInfo = {
+          ...restOfInfo.dataValues,
+          vouchersSelected: vouchersAvailable.slice(0, amountRequested),
+        };
+
+        return productInfo;
+      });
+    const productsWithSelectedVouchers = await Promise.all(productsWithSelectedVouchersPromise);
+  
+    return productsWithSelectedVouchers;
+  }
+
+  private static async updateVouchersOnCreateOrder(
+    productsWithSelectedVouchers: IProductWithSelectedVouchers[],
+    orderId: number,
+    transaction: Transaction,
+  ) {
+    const vouchersUpdatedOrderIdPromise = productsWithSelectedVouchers.map(
+      async (productInfo) => {
+        const { vouchersSelected } = productInfo;
+        
+        const vouchersUpdatedPromise = vouchersSelected.map(async (voucher) => {
+          const { voucherCode } = voucher;
+          
+          await VouchersAvailableModel.update(
+            { orderId, soldPrice: productInfo.price },
+            { where: { voucherCode }, transaction },
+          );
+        });
+
+        await Promise.all(vouchersUpdatedPromise);
+      },
+    );
+
+    await Promise.all(vouchersUpdatedOrderIdPromise);
   }
 }
