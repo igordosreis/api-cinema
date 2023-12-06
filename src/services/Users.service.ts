@@ -109,22 +109,22 @@ export default class UsersService {
 
       await this.updateVouchersOnCreateOrder(productsWithSelectedVouchers, orderId, t);
 
-      const { id: paymentId } = await paymentUtil.createPayment({
+      const paymentOrderRequest = {
         orderId,
         userId,
         value: totals.totalPrice.toString(),
         expireAt,
-      });
+      };
+      const { id: paymentId } = await paymentUtil.createPayment(paymentOrderRequest);
 
       await OrdersModel.update({ paymentId }, { where: { id: orderId }, transaction: t });
 
       await t.commit();
     } catch (error: CustomError | unknown) {
-      console.log('- - -- - - - --- -- - - --- - error in USER SERVICE: ', error);
       t.rollback();
 
       if (error instanceof CustomError) throw error;
-      throw error;
+      
       throw new CustomError(voucherServiceUnavailable);
     }
   }
