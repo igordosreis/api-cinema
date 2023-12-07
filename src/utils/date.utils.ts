@@ -30,6 +30,7 @@ class DateUtils {
     });
     const dateObjectConvertedFromDateString = new Date(currentDateToBrazilTimezone);
 
+    // Essa função retorna um Date porque todas as funções do date-fns tem Date como argumento
     return new Date(formatISO(dateObjectConvertedFromDateString));
   };
 }

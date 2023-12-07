@@ -12,6 +12,7 @@ import OrdersModel from '../database/models/Orders.model';
 import dateUtils from '../utils/date.utils';
 import paymentUtil from '../utils/payment.util';
 import { IPaymentOrderRequest } from '../interfaces/IPayment';
+import { IOrderSearchFormatted } from '../interfaces/IOrder';
 
 export default class UsersService {
   public static async getUserVoucherHistory(userId: number) {
@@ -133,5 +134,32 @@ export default class UsersService {
 
       throw new CustomError(voucherServiceUnavailable);
     }
+  }
+
+  public static async getOrderById({ orderId, userId }: IOrderSearchFormatted) {
+    const orderInfo = await OrdersModel.findOne({
+      include: [
+        {
+          model: VouchersAvailableModel,
+          as: 'vouchersAvailable',
+          where: {
+            orderId,
+            userId,
+          },
+        },
+        {
+          model: VouchersUserModel,
+          as: 'vouchersUser',
+          where: {
+            orderId,
+            userId,
+          },
+        },
+      ],
+      where: { id: orderId, userId },
+      order: [['createdAt', 'ASC']],
+    });
+
+    return orderInfo;
   }
 }

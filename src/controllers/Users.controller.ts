@@ -3,6 +3,7 @@ import UsersService from '../services/Users.service';
 import { IUserInfo } from '../interfaces/IUser';
 import formatRequestQueryUtil from '../utils/formatRequestQuery.util';
 import { IOrderRequestRawBody } from '../interfaces/IVouchers';
+import { IOrderSearchRaw } from '../interfaces/IOrder';
 
 export default class UsersController {
   public static async getUserVoucherHistory(req: Request, res: Response): Promise<void> {
@@ -31,5 +32,14 @@ export default class UsersController {
     const createOrderResponse = await UsersService.createOrder(formattedRequest);
 
     res.status(200).json(createOrderResponse);
+  }
+
+  public static async getOrderById(req: Request, res: Response): Promise<void> {
+    const orderSearchRaw = req as unknown as IOrderSearchRaw;
+    const orderSearchFormatted = formatRequestQueryUtil.formatOrderSearch(orderSearchRaw);
+
+    const orderById = await UsersService.getOrderById(orderSearchFormatted);
+
+    res.status(200).json(orderById);
   }
 }

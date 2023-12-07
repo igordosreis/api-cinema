@@ -3,6 +3,7 @@ import {
   IEstablishmentFormattedQuery,
   IEstablishmentRawQuery,
 } from '../interfaces/IEstablishments';
+import { IOrderSearchFormatted, IOrderSearchRaw } from '../interfaces/IOrder';
 import { IProductFormattedQuery, IProductRawQuery } from '../interfaces/IProducts';
 import { 
   IOrderInfoRaw,
@@ -101,6 +102,13 @@ class FormatRequestQuery {
       userId: this.formatUserId(req),
       orderInfo: this.formatOrderInfo(req),
     });
+  
+  private convertStringToNumber = (string: string | number): number => Number(string);
+
+  formatOrderSearch = (req: IOrderSearchRaw): IOrderSearchFormatted => ({
+    orderId: this.convertStringToNumber(req.body.userInfo.user.id),
+    userId: this.convertStringToNumber(req.query.orderId),
+  });
 }
 
 export default new FormatRequestQuery();
