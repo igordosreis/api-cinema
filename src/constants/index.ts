@@ -5,6 +5,12 @@ import 'dotenv/config';
 // NUMBERS
 export const { MINIMUM_VOUCHER_QUANTITY } = process.env;
 
+// STRINGS
+export const STATUS_WAITING = 'waiting';
+export const STATUS_PAID = 'paid';
+export const STATUS_CANCELLED = 'cancelled';
+export const STATUS_EXPIRED = 'expired';
+
 // TMDB API
 
 // TMDB API_KEY
@@ -38,4 +44,5 @@ export const SUPERAPP_URL_BASE_AUTH =
 
 // SUPERAPP PAYMENT MICROSERVICE
 export const CREATE_PAYMENT_URL = 'https://node.clubecerto.com.br/superapp/microservices/payment/';
-export const EMAIL_WEBHOOK_MOCK = 'https://node.clubecerto.com.br/superapp/webhook/mocks/email/igor';
+export const EMAIL_WEBHOOK_MOCK =
+  'https://node.clubecerto.com.br/superapp/webhook/mocks/email/igor';

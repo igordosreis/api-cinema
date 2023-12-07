@@ -6,16 +6,16 @@ import VouchersAvailableModel from '../database/models/VouchersAvailable.model';
 import VouchersUserModel from '../database/models/VouchersUser.model';
 import { IProductFromGetById, IProductWithSelectedVouchers } from '../interfaces/IProducts';
 import CustomError, { voucherServiceUnavailable } from '../utils/customError.util';
-import { IOrderInfoFormatted, IOrderRequestFormattedBody } from '../interfaces/IVouchers';
+import { IOrderRequestFormatted, IOrderRequestFormattedBody } from '../interfaces/IVouchers';
 import ordersUtil from '../utils/orders.util';
 import OrdersModel from '../database/models/Orders.model';
 import dateUtils from '../utils/date.utils';
 import paymentUtil from '../utils/payment.util';
 import { IPaymentOrderRequest } from '../interfaces/IPayment';
-import { IOrderSearchFormatted } from '../interfaces/IOrder';
+import { IOrderInfo, IOrderSearchFormatted } from '../interfaces/IOrder';
 
 export default class UsersService {
-  public static async getUserVoucherHistory(userId: number) {
+  public static async getUserOrderHistory(userId: number) {
     // ---------- DEPRECADO ---------- DEPRECADO ---------- DEPRECADO
     const userVoucherHistory = await VouchersUserModel.findAll({
       where: { userId },
@@ -26,7 +26,7 @@ export default class UsersService {
   }
 
   public static async getVouchersByProductId(productId: number, transaction?: Transaction) {
-    const results = await EstablishmentsProductsModel.findOne({
+    const product = await EstablishmentsProductsModel.findOne({
       attributes: { exclude: ['createdAt', 'updatedAt'] },
       include: [
         {
@@ -45,11 +45,11 @@ export default class UsersService {
       order: [[{ model: VouchersAvailableModel, as: 'vouchersAvailable' }, 'expireAt', 'ASC']],
     });
 
-    return results as IProductFromGetById;
+    return product as IProductFromGetById;
   }
 
   private static async getProductsWithSelectedVouchers(
-    orderInfo: IOrderInfoFormatted[],
+    orderInfo: IOrderRequestFormatted[],
     transaction: Transaction,
   ) {
     const productsWithSelectedVouchersPromise: Promise<IProductWithSelectedVouchers>[] = orderInfo
@@ -103,7 +103,7 @@ export default class UsersService {
       const totals = ordersUtil.calculateTotalPriceAndTotalUnits(productsWithSelectedVouchers);
 
       // adicionar aqui verificação de se a quantidade de vouchers de cada tipo está dentro do permitido para esse usuário
-      
+
       const expireAt = dateUtils.addFiveMinutes(new Date());
 
       const { id: orderId } = await OrdersModel.create(
@@ -136,10 +136,7 @@ export default class UsersService {
     }
   }
 
-  public static async getOrderById({ orderId, userId }: IOrderSearchFormatted) {
-    console.log('- - -- - - -- --- - - - - -- - -- - --- - - - orderId: ', orderId);
-    console.log('- - -- - - -- --- - - - - -- - -- - --- - - - userId: ', userId);
-
+  public static async getOrderById({ orderId, userId, transaction }: IOrderSearchFormatted) {
     const orderInfo = await OrdersModel.findOne({
       include: [
         {
@@ -161,8 +158,9 @@ export default class UsersService {
       ],
       where: { id: orderId, userId },
       order: [['createdAt', 'ASC']],
+      transaction,
     });
-    console.log('- - -- - - -- --- - - - - -- - -- - --- - - - orderInfo: ', orderInfo);
-    return orderInfo;
+
+    return orderInfo as IOrderInfo;
   }
 }

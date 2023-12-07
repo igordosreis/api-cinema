@@ -5,16 +5,16 @@ import {
 } from '../interfaces/IEstablishments';
 import { IOrderSearchFormatted, IOrderSearchRaw } from '../interfaces/IOrder';
 import { IProductFormattedQuery, IProductRawQuery } from '../interfaces/IProducts';
-import { 
-  IOrderInfoRaw,
+import {
+  IOrderRequestRaw,
   IOrderRequestFormattedBody,
   IOrderRequestRawBody,
 } from '../interfaces/IVouchers';
 
 class FormatRequestQuery {
   private formatTerm = ({ query: { term } }: IProductRawQuery | IEstablishmentRawQuery) =>
-    ((typeof term === 'string') ? term : undefined);
-    
+    (typeof term === 'string' ? term : undefined);
+
   private formatLimit = ({ query: { limit } }: IEstablishmentRawQuery) => {
     const numberLimit = Number(limit);
     console.log('numberLimit: ', numberLimit);
@@ -31,19 +31,19 @@ class FormatRequestQuery {
   private formatDistance = ({ query: { distance, cityId, stateId } }: IEstablishmentRawQuery) =>
     (!Number(distance) || cityId || stateId ? 10000 : Number(distance));
 
-  private formatCityId = ({ query: { cityId } }: IEstablishmentRawQuery) => 
+  private formatCityId = ({ query: { cityId } }: IEstablishmentRawQuery) =>
     Number(cityId) || undefined;
 
-  private formatStateId = ({ query: { stateId } }: IEstablishmentRawQuery) => 
+  private formatStateId = ({ query: { stateId } }: IEstablishmentRawQuery) =>
     Number(stateId) || undefined;
 
-  private formatLatitude = (req: IEstablishmentRawQuery) => 
+  private formatLatitude = (req: IEstablishmentRawQuery) =>
     req.query.latitude || req.body.userInfo.location.latitude || '-19.919052';
 
   private formatLongitude = (req: IEstablishmentRawQuery) =>
     req.query.longitude || req.body.userInfo.location.longitude || '-43.9386685';
 
-  private formatBrandId = ({ query: { brandId } }: IEstablishmentRawQuery) => 
+  private formatBrandId = ({ query: { brandId } }: IEstablishmentRawQuery) =>
     Number(brandId) || undefined;
 
   formatEstablishmentQuery = (req: IEstablishmentRawQuery) =>
@@ -60,27 +60,24 @@ class FormatRequestQuery {
     } as IEstablishmentFormattedQuery);
 
   private formatType = ({ query: { type } }: IProductRawQuery) =>
-    ((typeof type === 'string') ? type : undefined);
+    (typeof type === 'string' ? type : undefined);
 
-  private formatEstablishmentId = ({ query: { establishmentId } }: IProductRawQuery) => 
+  private formatEstablishmentId = ({ query: { establishmentId } }: IProductRawQuery) =>
     Number(establishmentId) || undefined;
 
   private formatAvailable = ({ query: { available } }: IProductRawQuery) =>
-    ((available === 'true') ? true : undefined); 
+    (available === 'true' ? true : undefined);
 
-  formatProductQuery = (req: IProductRawQuery): IProductFormattedQuery => 
-    ({
-      term: this.formatTerm(req),
-      type: this.formatType(req),
-      establishmentId: this.formatEstablishmentId(req),
-      available: this.formatAvailable(req),
-    });
+  formatProductQuery = (req: IProductRawQuery): IProductFormattedQuery => ({
+    term: this.formatTerm(req),
+    type: this.formatType(req),
+    establishmentId: this.formatEstablishmentId(req),
+    available: this.formatAvailable(req),
+  });
 
-  private formatProductId = (productId: number | string) => 
-    Number(productId);
-    
-  private formatAmount = (amount: number | string) => 
-    Number(amount);
+  private formatProductId = (productId: number | string) => Number(productId);
+
+  private formatAmount = (amount: number | string) => Number(amount);
 
   private formatUserId = ({
     body: {
@@ -88,21 +85,19 @@ class FormatRequestQuery {
         user: { id: userId },
       },
     },
-  }: IOrderRequestRawBody) => 
-    Number(userId);
+  }: IOrderRequestRawBody) => Number(userId);
 
-  private formatOrderInfo = ({ body: { orderInfo } }: IOrderRequestRawBody) => orderInfo
-    .map(({ productId, amountRequested }: IOrderInfoRaw) => ({
+  private formatOrderInfo = ({ body: { orderInfo } }: IOrderRequestRawBody) =>
+    orderInfo.map(({ productId, amountRequested }: IOrderRequestRaw) => ({
       productId: this.formatProductId(productId),
       amountRequested: this.formatAmount(amountRequested),
     }));
-  
-  formatCreateOrder = (req: IOrderRequestRawBody): IOrderRequestFormattedBody =>
-    ({
-      userId: this.formatUserId(req),
-      orderInfo: this.formatOrderInfo(req),
-    });
-  
+
+  formatCreateOrder = (req: IOrderRequestRawBody): IOrderRequestFormattedBody => ({
+    userId: this.formatUserId(req),
+    orderInfo: this.formatOrderInfo(req),
+  });
+
   private convertStringToNumber = (string: string | number): number => Number(string);
 
   formatOrderSearch = (req: IOrderSearchRaw): IOrderSearchFormatted => ({

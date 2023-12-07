@@ -1,4 +1,4 @@
-export type PaymentStatus = 'paid' | 'waiting' | 'cancelled' | 'expired';
+export type IPaymentStatus = 'paid' | 'waiting' | 'cancelled' | 'expired';
 
 export interface IPaymentOrderRequest {
   userId: number;
@@ -17,6 +17,6 @@ export interface IPaymentModule {
 export interface IPaymentOrderResponse extends IPaymentOrderRequest {
   id: number;
   productId: number;
-  status: PaymentStatus;
+  status: IPaymentStatus;
   paymentModules: IPaymentModule[];
 }

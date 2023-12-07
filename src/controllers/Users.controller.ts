@@ -11,7 +11,7 @@ export default class UsersController {
       user: { id: userId },
     }: IUserInfo = req.body.userInfo;
 
-    const userVoucherHistory = await UsersService.getUserVoucherHistory(userId);
+    const userVoucherHistory = await UsersService.getUserOrderHistory(userId);
 
     res.status(200).json(userVoucherHistory);
   }

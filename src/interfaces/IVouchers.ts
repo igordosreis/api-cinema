@@ -32,26 +32,26 @@ export interface IVoucherCode {
   reservedStatus: boolean;
 }
 
-export interface IOrderInfoRaw {
+export interface IOrderRequestRaw {
   productId: string | number;
   amountRequested: string | number;
 }
 
-export interface IOrderInfoFormatted {
+export interface IOrderRequestFormatted {
   productId: number;
   amountRequested: number;
 }
 
 export interface IOrderRequestRawBody extends Request {
   body: {
-    orderInfo: IOrderInfoRaw[];
+    orderInfo: IOrderRequestRaw[];
     userInfo: IUserInfo;
   };
 }
 
 export interface IOrderRequestFormattedBody {
   userId: number;
-  orderInfo: IOrderInfoFormatted[];
+  orderInfo: IOrderRequestFormatted[];
 }
 
 export interface ICreateOrderParams {
