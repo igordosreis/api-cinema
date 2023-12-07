@@ -137,29 +137,32 @@ export default class UsersService {
   }
 
   public static async getOrderById({ orderId, userId }: IOrderSearchFormatted) {
+    console.log('- - -- - - -- --- - - - - -- - -- - --- - - - orderId: ', orderId);
+    console.log('- - -- - - -- --- - - - - -- - -- - --- - - - userId: ', userId);
+
     const orderInfo = await OrdersModel.findOne({
       include: [
         {
           model: VouchersAvailableModel,
-          as: 'vouchersAvailable',
+          as: 'vouchersOrderUnpaid',
           where: {
             orderId,
-            userId,
           },
+          required: false,
         },
         {
           model: VouchersUserModel,
-          as: 'vouchersUser',
+          as: 'vouchersOrderPaid',
           where: {
             orderId,
-            userId,
           },
+          required: false,
         },
       ],
       where: { id: orderId, userId },
       order: [['createdAt', 'ASC']],
     });
-
+    console.log('- - -- - - -- --- - - - - -- - -- - --- - - - orderInfo: ', orderInfo);
     return orderInfo;
   }
 }

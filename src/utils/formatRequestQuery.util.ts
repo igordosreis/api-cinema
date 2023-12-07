@@ -106,8 +106,8 @@ class FormatRequestQuery {
   private convertStringToNumber = (string: string | number): number => Number(string);
 
   formatOrderSearch = (req: IOrderSearchRaw): IOrderSearchFormatted => ({
-    orderId: this.convertStringToNumber(req.body.userInfo.user.id),
-    userId: this.convertStringToNumber(req.query.orderId),
+    userId: this.convertStringToNumber(req.body.userInfo.user.id),
+    orderId: this.convertStringToNumber(req.query.orderId),
   });
 }
 
