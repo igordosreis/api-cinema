@@ -146,6 +146,9 @@ export default class UsersService {
             orderId,
           },
           required: false,
+          attributes: {
+            exclude: ['createdAt', 'updatedAt'],
+          },
         },
         {
           model: VouchersUserModel,
@@ -154,6 +157,9 @@ export default class UsersService {
             orderId,
           },
           required: false,
+          attributes: {
+            exclude: ['createdAt', 'updatedAt'],
+          },
         },
       ],
       where: { id: orderId, userId },

@@ -6,16 +6,15 @@ export interface IVoucherAvailable {
   voucherCode: string;
   productId: number;
   orderId: number;
-  expireAt: Date | null;
-  createdAt: Date | null;
-  updatedAt: Date | null;
+  soldPrice: string | null;
+  expireAt: Date;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface IVoucherUser extends IVoucherAvailable {
-  paymentId: string | null;
-  userId: string | null;
-  soldAt: string | null;
-  soldPrice: number;
+  soldAt: string;
+  active: boolean;
 }
 
 export interface IVoucherLog {

@@ -45,7 +45,7 @@ module.exports = {
       },
       sold_at: {
         type: Sequelize.DATE,
-        defaultValue: null,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
       sold_price: {
         type: Sequelize.DECIMAL(10, 2),

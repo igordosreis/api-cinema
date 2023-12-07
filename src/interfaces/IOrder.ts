@@ -1,7 +1,9 @@
 import { Transaction } from 'sequelize';
 import { IUserInfo } from './IUser';
-import { IVoucherAvailable, IVoucherUser } from './IVouchers';
+// import { IVoucherAvailable, IVoucherUser } from './IVouchers';
 import OrdersModel from '../database/models/Orders.model';
+import VouchersAvailableModel from '../database/models/VouchersAvailable.model';
+import VouchersUserModel from '../database/models/VouchersUser.model';
 
 export interface IOrderSearchRaw extends Express.Request {
   query: {
@@ -23,6 +25,18 @@ export interface IOrderSucessUpdate {
   userId: number;
 }
 
+export interface IOrderFailedUpdate {
+  orderId: number;
+  userId: number;
+  status: string;
+}
+
+export interface IOrderUpdate {
+  orderId: number;
+  userId: number;
+  status: string;
+}
+
 // export interface IOrderInfo {
 //   id: number;
 //   userId: number;
@@ -40,6 +54,6 @@ export interface IOrderSucessUpdate {
 // }
 
 export type IOrderInfo = OrdersModel & {
-  vouchersOrderUnpaid: IVoucherAvailable[];
-  vouchersOrderPaid: IVoucherUser[];
+  vouchersOrderUnpaid: VouchersAvailableModel[];
+  vouchersOrderPaid: VouchersUserModel[];
 };
