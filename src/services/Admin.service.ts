@@ -17,17 +17,17 @@ export default class AdminService {
         this.orderSuccess(updateParams);
       },
       cancelled: async (updateParams: IOrderUpdate) => {
-        console.log(updateParams);
+        this.orderFail(updateParams);
       },
       expired: async (updateParams: IOrderUpdate) => {
-        console.log(updateParams);
+        this.orderFail(updateParams);
       },
       waiting: async () => {},
     };
 
     const updateOrder = statusHandler[status];
 
-    if (!updateOrder) throw new Error();
+    if (!updateOrder) throw new Error('Status inválido');
 
     await updateOrder({ orderId, userId, status });
   }
@@ -40,21 +40,33 @@ export default class AdminService {
         userId,
         transaction: t,
       });
-
       const parsedVouchersOrderUnpaid = vouchersOrderUnpaid.map((voucher) => voucher.dataValues);
+
       await VouchersUserModel.bulkCreate(parsedVouchersOrderUnpaid, { transaction: t });
       await VouchersAvailableModel.destroy({
         where: { orderId },
         transaction: t,
       });
-      await OrdersModel.update({ status: 'paid' }, { where: { orderId }, transaction: t });
+      await OrdersModel.update({ status: 'paid' }, { where: { orderId, userId }, transaction: t });
     } catch (error) {
       console.log(error);
       throw new Error();
     }
   }
 
-  private static async orderFailed({ orderId, userId, status }: IOrderFailedUpdate) {
+  private static async orderFail({ orderId, userId, status }: IOrderFailedUpdate) {
+    const t = await db.transaction();
+    try {
+      await VouchersAvailableModel.update(
+        { orderId: null, soldPrice: null },
+        { where: { orderId }, transaction: t },
+      );
+      await OrdersModel.update({ status }, { where: { orderId, userId } });
+    } catch (error) {
+      console.log(error);
+      throw new Error();
+    }
+
     console.log(orderId, userId, status);
   }
 }
