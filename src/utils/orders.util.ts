@@ -34,7 +34,7 @@ class Orders {
         const totalUnits = accTotals.totalUnits + currProduct.vouchersSelected.length;
 
         const formattedType = `total${currProduct.type.charAt(0).toUpperCase()}${currProduct.type.slice(1)}s`;
-        const totalOfType = productsInfo
+        const totalOfType = accTotals[formattedType as keyof PriceUnitAndTypeTotals] || productsInfo
           .filter(({ type }) => type === currProduct.type)
           .reduce((accTypeTotal, currType) => (accTypeTotal + currType.vouchersSelected.length), 0);
 
@@ -44,7 +44,6 @@ class Orders {
           totalUnits,
           [formattedType as keyof PriceUnitAndTypeTotals]: totalOfType, 
         };
-        console.log('- - - --- - - -- -- - --- -- - --  -- --- - newAccTotals: ', newAccTotals);
 
         return newAccTotals;
       },
