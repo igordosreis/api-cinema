@@ -41,13 +41,19 @@ export default class AdminService {
         transaction: t,
       });
       const parsedVouchersOrderUnpaid = vouchersOrderUnpaid.map((voucher) => voucher.dataValues);
+      console.log('- -- - --- - ---- -- - -  - - - -- - - - -- -orderId: ', orderId);
+      console.log('- -- - --- - ---- -- - -  - - - -- - - - -- -userId: ', userId);
+      console.log('- -- - --- - ---- - -- -parsedVouchersOrderUnpaid: ', parsedVouchersOrderUnpaid);
 
       await VouchersUserModel.bulkCreate(parsedVouchersOrderUnpaid, { transaction: t });
       await VouchersAvailableModel.destroy({
         where: { orderId },
         transaction: t,
       });
-      await OrdersModel.update({ status: 'paid' }, { where: { orderId, userId }, transaction: t });
+      await OrdersModel.update(
+        { status: 'paid' },
+        { where: { id: orderId, userId }, transaction: t },
+      );
     } catch (error) {
       console.log(error);
       throw new Error();
@@ -61,7 +67,7 @@ export default class AdminService {
         { orderId: null, soldPrice: null },
         { where: { orderId }, transaction: t },
       );
-      await OrdersModel.update({ status }, { where: { orderId, userId } });
+      await OrdersModel.update({ status }, { where: { id: orderId, userId } });
     } catch (error) {
       console.log(error);
       throw new Error();

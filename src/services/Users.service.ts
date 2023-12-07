@@ -130,6 +130,7 @@ export default class UsersService {
     } catch (error: CustomError | unknown) {
       t.rollback();
 
+      console.log('- -- - -- -- -- - - --  - - -- - -- - ---- -- -- - --- - - - -error: ', error);
       if (error instanceof CustomError) throw error;
 
       throw new CustomError(voucherServiceUnavailable);
