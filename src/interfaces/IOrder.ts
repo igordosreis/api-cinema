@@ -23,6 +23,7 @@ export interface IOrderSearchFormatted {
 export interface IOrderSucessUpdate {
   orderId: number;
   userId: number;
+  status: string;
 }
 
 export interface IOrderFailedUpdate {

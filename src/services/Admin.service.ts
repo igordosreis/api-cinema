@@ -32,7 +32,7 @@ export default class AdminService {
     await updateOrder({ orderId, userId, status });
   }
 
-  private static async orderSuccess({ orderId, userId }: IOrderSucessUpdate) {
+  private static async orderSuccess({ orderId, userId, status }: IOrderSucessUpdate) {
     const t = await db.transaction();
     try {
       const { vouchersOrderUnpaid } = await UsersService.getOrderById({
@@ -51,7 +51,7 @@ export default class AdminService {
         transaction: t,
       });
       await OrdersModel.update(
-        { status: 'paid', expireAt: null },
+        { status, expireAt: null },
         {
           where: { id: orderId, userId },
           transaction: t,
