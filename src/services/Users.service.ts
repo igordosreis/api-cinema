@@ -15,14 +15,32 @@ import { IPaymentOrderRequest } from '../interfaces/IPayment';
 import { IOrderInfo, IOrderSearchFormatted } from '../interfaces/IOrder';
 
 export default class UsersService {
-  public static async getUserOrderHistory(userId: number) {
-    // ---------- DEPRECADO ---------- DEPRECADO ---------- DEPRECADO
-    const userVoucherHistory = await VouchersUserModel.findAll({
+  public static async getAllOrders(userId: number) {
+    console.log('-- - -- -- --  - -- - - -- -- -- - - - -- - -- - --   userId: ', userId);
+
+    const allUserOrders = await OrdersModel.findAll({
+      include: [
+        {
+          model: VouchersAvailableModel,
+          as: 'vouchersOrderUnpaid',
+          required: false,
+          attributes: {
+            exclude: ['createdAt', 'updatedAt', 'voucherCode'],
+          },
+        },
+        {
+          model: VouchersUserModel,
+          as: 'vouchersOrderPaid',
+          required: false,
+          attributes: {
+            exclude: ['createdAt', 'updatedAt'],
+          },
+        },
+      ],
       where: { userId },
     });
 
-    return userVoucherHistory;
-    return `${userId} DEPRECADO`;
+    return allUserOrders;
   }
 
   public static async getVouchersByProductId(productId: number, transaction?: Transaction) {
@@ -137,7 +155,16 @@ export default class UsersService {
     }
   }
 
-  public static async getOrderById({ orderId, userId, transaction }: IOrderSearchFormatted) {
+  public static async getOrderById({
+    orderId,
+    userId,
+    transaction,
+    isAdmin,
+  }: IOrderSearchFormatted) {
+    const attributes = isAdmin
+      ? { exclude: ['createdAt', 'updatedAt'] }
+      : { exclude: ['createdAt', 'updatedAt', 'voucherCode'] };
+
     const orderInfo = await OrdersModel.findOne({
       include: [
         {
@@ -147,9 +174,7 @@ export default class UsersService {
             orderId,
           },
           required: false,
-          attributes: {
-            exclude: ['createdAt', 'updatedAt'],
-          },
+          attributes,
         },
         {
           model: VouchersUserModel,

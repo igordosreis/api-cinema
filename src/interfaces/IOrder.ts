@@ -18,6 +18,7 @@ export interface IOrderSearchFormatted {
   orderId: number;
   userId: number;
   transaction?: Transaction;
+  isAdmin?: boolean;
 }
 
 export interface IOrderSucessUpdate {

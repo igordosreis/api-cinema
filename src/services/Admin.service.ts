@@ -39,6 +39,7 @@ export default class AdminService {
         orderId,
         userId,
         transaction: t,
+        isAdmin: true,
       });
       const parsedVouchersOrderUnpaid = vouchersOrderUnpaid.map((voucher) => ({
         ...voucher.dataValues,

@@ -6,14 +6,14 @@ import { IOrderRequestRawBody } from '../interfaces/IVouchers';
 import { IOrderSearchRaw } from '../interfaces/IOrder';
 
 export default class UsersController {
-  public static async getUserVoucherHistory(req: Request, res: Response): Promise<void> {
+  public static async getAllOrders(req: Request, res: Response): Promise<void> {
     const {
       user: { id: userId },
     }: IUserInfo = req.body.userInfo;
 
-    const userVoucherHistory = await UsersService.getUserOrderHistory(userId);
+    const allUserOrders = await UsersService.getAllOrders(userId);
 
-    res.status(200).json(userVoucherHistory);
+    res.status(200).json(allUserOrders);
   }
 
   public static async getVouchersByProductId(req: Request, res: Response): Promise<void> {
