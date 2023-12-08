@@ -14,13 +14,13 @@ export default class AdminService {
     // type StatusHandler = keyof typeof statusHandler;
     const statusHandler = {
       paid: async (updateParams: IOrderUpdate) => {
-        this.orderSuccess(updateParams);
+        await this.orderSuccess(updateParams);
       },
       cancelled: async (updateParams: IOrderUpdate) => {
-        this.orderFail(updateParams);
+        await this.orderFail(updateParams);
       },
       expired: async (updateParams: IOrderUpdate) => {
-        this.orderFail(updateParams);
+        await this.orderFail(updateParams);
       },
       waiting: async () => {},
     };
@@ -40,10 +40,10 @@ export default class AdminService {
         userId,
         transaction: t,
       });
-      const parsedVouchersOrderUnpaid = vouchersOrderUnpaid.map((voucher) => voucher.dataValues);
-      console.log('- -- - --- - ---- -- - -  - - - -- - - - -- -orderId: ', orderId);
-      console.log('- -- - --- - ---- -- - -  - - - -- - - - -- -userId: ', userId);
-      console.log('- -- - --- - ---- - -- -parsedVouchersOrderUnpaid: ', parsedVouchersOrderUnpaid);
+      const parsedVouchersOrderUnpaid = vouchersOrderUnpaid.map((voucher) => ({
+        ...voucher.dataValues,
+        soldAt: new Date(),
+      }));
 
       await VouchersUserModel.bulkCreate(parsedVouchersOrderUnpaid, { transaction: t });
       await VouchersAvailableModel.destroy({
@@ -51,10 +51,17 @@ export default class AdminService {
         transaction: t,
       });
       await OrdersModel.update(
-        { status: 'paid' },
-        { where: { id: orderId, userId }, transaction: t },
+        { status: 'paid', expireAt: null },
+        {
+          where: { id: orderId, userId },
+          transaction: t,
+        },
       );
+
+      await t.commit();
     } catch (error) {
+      await t.rollback();
+
       console.log(error);
       throw new Error();
     }

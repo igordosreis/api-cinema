@@ -37,6 +37,7 @@ module.exports = {
       },
       sold_price: {
         type: Sequelize.DECIMAL(10, 2),
+        allowNull: true,
         defaultValue: null,
       },
       expire_at: {

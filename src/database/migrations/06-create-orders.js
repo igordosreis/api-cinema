@@ -23,7 +23,7 @@ module.exports = {
       },
       expire_at: {
         type: Sequelize.DATE,
-        allowNull: false,
+        allowNull: true,
       },
       payment_id: {
         type: Sequelize.STRING,

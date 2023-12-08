@@ -36,7 +36,7 @@ VouchersAvailableModel.init(
     },
     soldPrice: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     expireAt: {
       type: DataTypes.DATE,
