@@ -203,7 +203,7 @@ export default class UsersService {
     try {
       const { status } = await this.getOrderById({ orderId, userId, transaction: t });
       if (status !== STATUS_WAITING) throw new CustomError(unauthorizedCancel);
-
+      
       await VouchersAvailableModel.update(
         { orderId: null, soldPrice: null },
         { where: { orderId }, transaction: t },
