@@ -46,7 +46,7 @@ VouchersUserModel.init(
     },
     soldAt: {
       type: DataTypes.DATE,
-      defaultValue: null,
+      allowNull: true,
     },
     soldPrice: {
       type: DataTypes.DECIMAL(10, 2),

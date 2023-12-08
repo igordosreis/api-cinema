@@ -3,7 +3,7 @@ import db from '../database/models';
 import OrdersModel from '../database/models/Orders.model';
 import VouchersAvailableModel from '../database/models/VouchersAvailable.model';
 import VouchersUserModel from '../database/models/VouchersUser.model';
-import { IOrderFailedUpdate, IOrderSucessUpdate, IOrderUpdate } from '../interfaces/IOrder';
+import { IOrderUpdate } from '../interfaces/IOrder';
 import { IPaymentOrderResponse } from '../interfaces/IPayment';
 import UsersService from './Users.service';
 
@@ -32,7 +32,7 @@ export default class AdminService {
     await updateOrder({ orderId, userId, status });
   }
 
-  private static async orderSuccess({ orderId, userId, status }: IOrderSucessUpdate) {
+  private static async orderSuccess({ orderId, userId, status }: IOrderUpdate) {
     const t = await db.transaction();
     try {
       const { vouchersOrderUnpaid } = await UsersService.getOrderById({
@@ -42,7 +42,7 @@ export default class AdminService {
       });
       const parsedVouchersOrderUnpaid = vouchersOrderUnpaid.map((voucher) => ({
         ...voucher.dataValues,
-        soldAt: new Date(),
+        // soldAt: new Date(),
       }));
 
       await VouchersUserModel.bulkCreate(parsedVouchersOrderUnpaid, { transaction: t });
@@ -67,7 +67,7 @@ export default class AdminService {
     }
   }
 
-  private static async orderFail({ orderId, userId, status }: IOrderFailedUpdate) {
+  private static async orderFail({ orderId, userId, status }: IOrderUpdate) {
     const t = await db.transaction();
     try {
       await VouchersAvailableModel.update(
