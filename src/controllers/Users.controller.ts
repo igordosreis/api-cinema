@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import UsersService from '../services/Users.service';
+import OrdersService from '../services/Orders.service';
 import { IUserInfo } from '../interfaces/IUser';
 import formatRequestQueryUtil from '../utils/formatRequestQuery.util';
 import { IOrderRequestRawBody } from '../interfaces/IVouchers';
@@ -11,25 +11,16 @@ export default class UsersController {
       user: { id: userId },
     }: IUserInfo = req.body.userInfo;
 
-    const allUserOrders = await UsersService.getAllOrders(userId);
+    const allUserOrders = await OrdersService.getAllOrders(userId);
 
     res.status(200).json(allUserOrders);
-  }
-
-  public static async getVouchersByProductId(req: Request, res: Response): Promise<void> {
-    const { productId } = req.query;
-
-    const parsedProductId = Number(productId);
-    const userVoucherHistory = await UsersService.getVouchersByProductId(parsedProductId);
-
-    res.status(200).json(userVoucherHistory);
   }
 
   public static async createOrder(req: Request, res: Response): Promise<void> {
     const orderRequest = req as IOrderRequestRawBody;
     const formattedRequest = formatRequestQueryUtil.formatCreateOrder(orderRequest);
 
-    const createOrderResponse = await UsersService.createOrder(formattedRequest);
+    const createOrderResponse = await OrdersService.createOrder(formattedRequest);
 
     res.status(200).json(createOrderResponse);
   }
@@ -38,7 +29,7 @@ export default class UsersController {
     const orderSearchRaw = req as unknown as IOrderSearchRaw;
     const orderSearchFormatted = formatRequestQueryUtil.formatOrderSearch(orderSearchRaw);
 
-    await UsersService.cancelOrder(orderSearchFormatted);
+    await OrdersService.cancelOrder(orderSearchFormatted);
 
     res.status(200).end();
   }
@@ -47,7 +38,7 @@ export default class UsersController {
     const orderSearchRaw = req as unknown as IOrderSearchRaw;
     const orderSearchFormatted = formatRequestQueryUtil.formatOrderSearch(orderSearchRaw);
 
-    const orderById = await UsersService.getOrderById(orderSearchFormatted);
+    const orderById = await OrdersService.getOrderById(orderSearchFormatted);
 
     res.status(200).json(orderById);
   }

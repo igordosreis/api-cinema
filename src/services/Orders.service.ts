@@ -18,7 +18,7 @@ import { IPaymentOrderRequest } from '../interfaces/IPayment';
 import { IOrderInfo, IOrderSearchFormatted } from '../interfaces/IOrder';
 import { STATUS_CANCELLED, STATUS_WAITING } from '../constants';
 
-export default class UsersService {
+export default class OrdersService {
   public static async getAllOrders(userId: number) {
     const allUserOrders = await OrdersModel.findAll({
       include: [
@@ -45,7 +45,7 @@ export default class UsersService {
     return allUserOrders;
   }
 
-  public static async getVouchersByProductId(productId: number, transaction?: Transaction) {
+  private static async getVouchersByProductId(productId: number, transaction?: Transaction) {
     const product = await EstablishmentsProductsModel.findOne({
       attributes: { exclude: ['createdAt', 'updatedAt'] },
       include: [
@@ -203,7 +203,7 @@ export default class UsersService {
     try {
       const { status } = await this.getOrderById({ orderId, userId, transaction: t });
       if (status !== STATUS_WAITING) throw new CustomError(unauthorizedCancel);
-      
+
       await VouchersAvailableModel.update(
         { orderId: null, soldPrice: null },
         { where: { orderId }, transaction: t },

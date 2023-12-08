@@ -5,7 +5,7 @@ import VouchersAvailableModel from '../database/models/VouchersAvailable.model';
 import VouchersUserModel from '../database/models/VouchersUser.model';
 import { IOrderUpdate } from '../interfaces/IOrder';
 import { IPaymentOrderResponse } from '../interfaces/IPayment';
-import UsersService from './Users.service';
+import OrdersService from './Orders.service';
 
 export default class AdminService {
   public static async resolvePaymentStatus(paymentOrderResponse: IPaymentOrderResponse) {
@@ -35,7 +35,7 @@ export default class AdminService {
   private static async orderSuccess({ orderId, userId, status }: IOrderUpdate) {
     const t = await db.transaction();
     try {
-      const { vouchersOrderUnpaid } = await UsersService.getOrderById({
+      const { vouchersOrderUnpaid } = await OrdersService.getOrderById({
         orderId,
         userId,
         transaction: t,
@@ -43,7 +43,6 @@ export default class AdminService {
       });
       const parsedVouchersOrderUnpaid = vouchersOrderUnpaid.map((voucher) => ({
         ...voucher.dataValues,
-        // soldAt: new Date(),
       }));
 
       await VouchersUserModel.bulkCreate(parsedVouchersOrderUnpaid, { transaction: t });

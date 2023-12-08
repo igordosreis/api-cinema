@@ -8,7 +8,4 @@ usersRouter.post('/orders/create', UsersController.createOrder);
 usersRouter.get('/orders/details', UsersController.getOrderById);
 usersRouter.post('/orders/details', UsersController.cancelOrder);
 
-// PARA TESTE
-usersRouter.get('/vouchers_product', UsersController.getVouchersByProductId);
-
 export default usersRouter;
