@@ -13,6 +13,7 @@ import dateUtils from '../utils/date.utils';
 import paymentUtil from '../utils/payment.util';
 import { IPaymentOrderRequest } from '../interfaces/IPayment';
 import { IOrderInfo, IOrderSearchFormatted } from '../interfaces/IOrder';
+import { STATUS_CANCELLED } from '../constants';
 
 export default class UsersService {
   public static async getAllOrders(userId: number) {
@@ -194,5 +195,29 @@ export default class UsersService {
     });
 
     return orderInfo as IOrderInfo;
+  }
+
+  public static async cancelOrder(orderId: number) {
+    const t = await db.transaction();
+    try {
+      await VouchersAvailableModel.update(
+        { orderId: null, soldPrice: null },
+        { where: { orderId }, transaction: t },
+      );
+
+      await OrdersModel.update(
+        { status: STATUS_CANCELLED },
+        { where: { orderId }, transaction: t },
+      );
+
+      t.commit();
+    } catch (error: CustomError | unknown) {
+      t.rollback();
+
+      console.log('- -- - -- -- -- - - --  - - -- - -- - ---- -- -- - --- - - - -error: ', error);
+      if (error instanceof CustomError) throw error;
+
+      throw new CustomError(voucherServiceUnavailable);
+    }
   }
 }
