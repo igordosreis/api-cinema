@@ -76,7 +76,11 @@ export default class AdminService {
         { where: { orderId }, transaction: t },
       );
       await OrdersModel.update({ status }, { where: { id: orderId, userId } });
+      
+      await t.commit();
     } catch (error) {
+      await t.rollback();
+
       console.log(error);
       throw new Error();
     }

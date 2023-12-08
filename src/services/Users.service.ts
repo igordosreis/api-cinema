@@ -5,7 +5,10 @@ import EstablishmentsProductsModel from '../database/models/EstablishmentsProduc
 import VouchersAvailableModel from '../database/models/VouchersAvailable.model';
 import VouchersUserModel from '../database/models/VouchersUser.model';
 import { IProductFromGetById, IProductWithSelectedVouchers } from '../interfaces/IProducts';
-import CustomError, { voucherServiceUnavailable } from '../utils/customError.util';
+import CustomError, {
+  unauthorizedCancel,
+  voucherServiceUnavailable,
+} from '../utils/customError.util';
 import { IOrderRequestFormatted, IOrderRequestFormattedBody } from '../interfaces/IVouchers';
 import ordersUtil from '../utils/orders.util';
 import OrdersModel from '../database/models/Orders.model';
@@ -13,12 +16,10 @@ import dateUtils from '../utils/date.utils';
 import paymentUtil from '../utils/payment.util';
 import { IPaymentOrderRequest } from '../interfaces/IPayment';
 import { IOrderInfo, IOrderSearchFormatted } from '../interfaces/IOrder';
-import { STATUS_CANCELLED } from '../constants';
+import { STATUS_CANCELLED, STATUS_WAITING } from '../constants';
 
 export default class UsersService {
   public static async getAllOrders(userId: number) {
-    console.log('-- - -- -- --  - -- - - -- -- -- - - - -- - -- - --   userId: ', userId);
-
     const allUserOrders = await OrdersModel.findAll({
       include: [
         {
@@ -197,9 +198,12 @@ export default class UsersService {
     return orderInfo as IOrderInfo;
   }
 
-  public static async cancelOrder(orderId: number) {
+  public static async cancelOrder({ orderId, userId }: IOrderSearchFormatted) {
     const t = await db.transaction();
     try {
+      const { status } = await this.getOrderById({ orderId, userId, transaction: t });
+      if (status !== STATUS_WAITING) throw new CustomError(unauthorizedCancel);
+
       await VouchersAvailableModel.update(
         { orderId: null, soldPrice: null },
         { where: { orderId }, transaction: t },
@@ -207,12 +211,12 @@ export default class UsersService {
 
       await OrdersModel.update(
         { status: STATUS_CANCELLED },
-        { where: { orderId }, transaction: t },
+        { where: { id: orderId, userId }, transaction: t },
       );
 
-      t.commit();
+      await t.commit();
     } catch (error: CustomError | unknown) {
-      t.rollback();
+      await t.rollback();
 
       console.log('- -- - -- -- -- - - --  - - -- - -- - ---- -- -- - --- - - - -error: ', error);
       if (error instanceof CustomError) throw error;

@@ -62,3 +62,9 @@ export const paymentOrderError: ICustomError = {
   title: 'Pagamento não realizado.',
   message: 'Erro ao realizar o pagamento. Tente novamente mais tarde.',
 };
+
+export const unauthorizedCancel: ICustomError = {
+  status: 400,
+  title: 'Cancelamento não autorizado.',
+  message: 'Somente pedidos com pagamento pendente podem ser cancelados.',
+};
