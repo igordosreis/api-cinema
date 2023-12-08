@@ -34,6 +34,15 @@ export default class UsersController {
     res.status(200).json(createOrderResponse);
   }
 
+  public static async cancelOrder(req: Request, res: Response): Promise<void> {
+    const orderId = req.query;
+    const orderIdToNumber = Number(orderId);
+
+    await UsersService.cancelOrder(orderIdToNumber);
+
+    res.status(200).end();
+  }
+
   public static async getOrderById(req: Request, res: Response): Promise<void> {
     const orderSearchRaw = req as unknown as IOrderSearchRaw;
     const orderSearchFormatted = formatRequestQueryUtil.formatOrderSearch(orderSearchRaw);
