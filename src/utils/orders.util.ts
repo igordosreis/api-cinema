@@ -13,7 +13,7 @@ type Totals = 'totalPrice' | 'totalUnits' | 'totalConsumables' | 'totalTickets';
 type PriceUnitAndTypeTotals = Record<Totals, number>;
 
 class Orders {
-  validateVouchersAmount = (productInfo: IProductFromGetById, amountRequested: number) => {
+  validateRequestAmount = (productInfo: IProductFromGetById, amountRequested: number) => {
     const { vouchersAvailable } = productInfo;
 
     const totalVouchersAvailable = vouchersAvailable.length;

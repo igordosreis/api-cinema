@@ -19,32 +19,6 @@ import { IOrderInfo, IOrderSearchFormatted } from '../interfaces/IOrder';
 import { STATUS_CANCELLED, STATUS_WAITING } from '../constants';
 
 export default class OrdersService {
-  public static async getAllOrders(userId: number) {
-    const allUserOrders = await OrdersModel.findAll({
-      include: [
-        {
-          model: VouchersAvailableModel,
-          as: 'vouchersOrderUnpaid',
-          required: false,
-          attributes: {
-            exclude: ['createdAt', 'updatedAt', 'voucherCode'],
-          },
-        },
-        {
-          model: VouchersUserModel,
-          as: 'vouchersOrderPaid',
-          required: false,
-          attributes: {
-            exclude: ['createdAt', 'updatedAt'],
-          },
-        },
-      ],
-      where: { userId },
-    });
-
-    return allUserOrders;
-  }
-
   private static async getVouchersByProductId(productId: number, transaction?: Transaction) {
     const product = await EstablishmentsProductsModel.findOne({
       attributes: { exclude: ['createdAt', 'updatedAt'] },
@@ -75,7 +49,7 @@ export default class OrdersService {
     const productsWithSelectedVouchersPromise: Promise<IProductWithSelectedVouchers>[] = orderInfo
       .map(async ({ productId, amountRequested }) => {
         const productPromise = await this.getVouchersByProductId(productId, transaction);
-        ordersUtil.validateVouchersAmount(productPromise, amountRequested);
+        ordersUtil.validateRequestAmount(productPromise, amountRequested);
 
         const { vouchersAvailable, ...restOfInfo } = productPromise;
         const productInfo = {
@@ -157,6 +131,59 @@ export default class OrdersService {
     }
   }
 
+  public static async cancelOrder({ orderId, userId }: IOrderSearchFormatted) {
+    const t = await db.transaction();
+    try {
+      const { status } = await this.getOrderById({ orderId, userId, transaction: t });
+      if (status !== STATUS_WAITING) throw new CustomError(unauthorizedCancel);
+
+      await VouchersAvailableModel.update(
+        { orderId: null, soldPrice: null },
+        { where: { orderId }, transaction: t },
+      );
+
+      await OrdersModel.update(
+        { status: STATUS_CANCELLED },
+        { where: { id: orderId, userId }, transaction: t },
+      );
+
+      await t.commit();
+    } catch (error: CustomError | unknown) {
+      await t.rollback();
+
+      console.log('- -- - -- -- -- - - --  - - -- - -- - ---- -- -- - --- - - - -error: ', error);
+      if (error instanceof CustomError) throw error;
+
+      throw new CustomError(voucherServiceUnavailable);
+    }
+  }
+
+  public static async getAllOrders(userId: number) {
+    const allUserOrders = await OrdersModel.findAll({
+      include: [
+        {
+          model: VouchersAvailableModel,
+          as: 'vouchersOrderUnpaid',
+          required: false,
+          attributes: {
+            exclude: ['createdAt', 'updatedAt', 'voucherCode'],
+          },
+        },
+        {
+          model: VouchersUserModel,
+          as: 'vouchersOrderPaid',
+          required: false,
+          attributes: {
+            exclude: ['createdAt', 'updatedAt'],
+          },
+        },
+      ],
+      where: { userId },
+    });
+
+    return allUserOrders;
+  }
+
   public static async getOrderById({
     orderId,
     userId,
@@ -196,32 +223,5 @@ export default class OrdersService {
     });
 
     return orderInfo as IOrderInfo;
-  }
-
-  public static async cancelOrder({ orderId, userId }: IOrderSearchFormatted) {
-    const t = await db.transaction();
-    try {
-      const { status } = await this.getOrderById({ orderId, userId, transaction: t });
-      if (status !== STATUS_WAITING) throw new CustomError(unauthorizedCancel);
-
-      await VouchersAvailableModel.update(
-        { orderId: null, soldPrice: null },
-        { where: { orderId }, transaction: t },
-      );
-
-      await OrdersModel.update(
-        { status: STATUS_CANCELLED },
-        { where: { id: orderId, userId }, transaction: t },
-      );
-
-      await t.commit();
-    } catch (error: CustomError | unknown) {
-      await t.rollback();
-
-      console.log('- -- - -- -- -- - - --  - - -- - -- - ---- -- -- - --- - - - -error: ', error);
-      if (error instanceof CustomError) throw error;
-
-      throw new CustomError(voucherServiceUnavailable);
-    }
   }
 }
