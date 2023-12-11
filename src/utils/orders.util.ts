@@ -60,6 +60,7 @@ class Orders {
       totalConsumables: totalConsumablesInCurrentMonth,
       totalTickets: totalTicketsInCurrentMonth,
     } = userTotalsInCurrentMonth;
+
     const isUserRequestOverPlanLimit = totalConsumablesInCurrentMonth + orderTotals.totalConsumables > planInfo?.dataValues.limitPerType
       || totalTicketsInCurrentMonth + orderTotals.totalTickets > planInfo?.dataValues.limitPerType;
 
