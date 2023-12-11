@@ -6,7 +6,7 @@ import { Op } from 'sequelize';
 import { MINIMUM_VOUCHER_QUANTITY, STATUS_PAID, STATUS_WAITING } from '../constants';
 import OrdersModel from '../database/models/Orders.model';
 import PlansModel from '../database/models/Plans.model';
-import { IOrderValidatePlan, IOrdersDetails, PriceUnitAndTypeTotals } from '../interfaces/IOrder';
+import { IOrderValidatePlan, PriceUnitAndTypeTotals } from '../interfaces/IOrder';
 import {
   IProductFromGetById,
   IProductWithRequestedVouchers,
@@ -47,7 +47,7 @@ class Orders {
       },
     });
     const userTotalsInCurrentMonth = userOrderInCurrentMonth.reduce((accTotal, currOrder) => {
-      const orderInfo: IOrdersDetails = currOrder.dataValues;
+      const orderInfo: OrdersModel = currOrder.dataValues;
       const newAccTotal = {
         totalConsumables: accTotal.totalConsumables + orderInfo.totalConsumables,
         totalTickets: accTotal.totalTickets + orderInfo.totalTickets,
