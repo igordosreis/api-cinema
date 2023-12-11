@@ -1,3 +1,4 @@
+import { Request } from 'express';
 import { Transaction } from 'sequelize';
 import { IUserInfo } from './IUser';
 // import { IVoucherAvailable, IVoucherUser } from './IVouchers';
@@ -82,3 +83,32 @@ export type IOrderInfo = OrdersModel & {
   vouchersOrderUnpaid: VouchersAvailableModel[];
   vouchersOrderPaid: VouchersUserModel[];
 };
+
+export interface IOrderRequestRaw {
+  productId: string | number;
+  amountRequested: string | number;
+}
+
+export interface IOrderRequestFormatted {
+  productId: number;
+  amountRequested: number;
+}
+
+export interface IOrderRequestRawBody extends Request {
+  body: {
+    orderInfo: IOrderRequestRaw[];
+    userInfo: IUserInfo;
+  };
+}
+
+export interface IOrderRequestFormattedBody {
+  userId: number;
+  cinemaPlan: string;
+  orderInfo: IOrderRequestFormatted[];
+}
+
+export interface ICreateOrderParams {
+  productId: number;
+  userId: number;
+  amountRequested: number;
+}

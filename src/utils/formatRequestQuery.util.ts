@@ -3,13 +3,14 @@ import {
   IEstablishmentFormattedQuery,
   IEstablishmentRawQuery,
 } from '../interfaces/IEstablishments';
-import { IOrderSearchFormatted, IOrderSearchRaw } from '../interfaces/IOrder';
 import { IProductFormattedQuery, IProductRawQuery } from '../interfaces/IProducts';
 import {
   IOrderRequestRaw,
   IOrderRequestFormattedBody,
   IOrderRequestRawBody,
-} from '../interfaces/IVouchers';
+  IOrderSearchFormatted, 
+  IOrderSearchRaw,
+} from '../interfaces/IOrder';
 
 class FormatRequestQuery {
   private formatTerm = ({ query: { term } }: IProductRawQuery | IEstablishmentRawQuery) =>

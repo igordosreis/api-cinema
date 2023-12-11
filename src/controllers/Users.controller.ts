@@ -2,8 +2,7 @@ import { Request, Response } from 'express';
 import OrdersService from '../services/Orders.service';
 import { IUserInfo } from '../interfaces/IUser';
 import formatRequestQueryUtil from '../utils/formatRequestQuery.util';
-import { IOrderRequestRawBody } from '../interfaces/IVouchers';
-import { IOrderSearchRaw } from '../interfaces/IOrder';
+import { IOrderSearchRaw, IOrderRequestRawBody } from '../interfaces/IOrder';
 
 export default class UsersController {
   public static async createOrder(req: Request, res: Response): Promise<void> {

@@ -9,13 +9,17 @@ import CustomError, {
   cancelUnauthorized,
   voucherServiceUnavailable,
 } from '../utils/customError.util';
-import { IOrderRequestFormatted, IOrderRequestFormattedBody } from '../interfaces/IVouchers';
 import ordersUtil from '../utils/orders.util';
 import OrdersModel from '../database/models/Orders.model';
 import dateUtils from '../utils/date.utils';
 import paymentUtil from '../utils/payment.util';
 import { IPaymentOrderRequest } from '../interfaces/IPayment';
-import { IOrderInfo, IOrderSearchFormatted } from '../interfaces/IOrder';
+import {
+  IOrderInfo,
+  IOrderSearchFormatted,
+  IOrderRequestFormatted,
+  IOrderRequestFormattedBody, 
+} from '../interfaces/IOrder';
 import { STATUS_CANCELLED, STATUS_WAITING } from '../constants';
 
 export default class OrdersService {
