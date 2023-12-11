@@ -9,8 +9,8 @@ type Totals = 'totalPrice' | 'totalUnits' | 'totalConsumables' | 'totalTickets';
 export type PriceUnitAndTypeTotals = Record<Totals, number>;
 
 export interface IOrderSearchRaw extends Express.Request {
-  query: {
-    orderId: string;
+  params: {
+    id: string;
   };
   body: {
     userInfo: IUserInfo;

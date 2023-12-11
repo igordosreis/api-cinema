@@ -103,7 +103,7 @@ class FormatRequestQuery {
 
   formatOrderSearch = (req: IOrderSearchRaw): IOrderSearchFormatted => ({
     userId: this.convertStringToNumber(req.body.userInfo.user.id),
-    orderId: this.convertStringToNumber(req.query.orderId),
+    orderId: this.convertStringToNumber(req.params.id),
   });
 }
 
