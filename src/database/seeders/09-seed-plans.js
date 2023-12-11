@@ -7,10 +7,10 @@ const { faker } = require('@faker-js/faker');
 // }
 
 // Helper function to get a random name
-function getRandomProductName() {
-  const productNames = ['2D', '3D', '2D Semanal', '3D Semanal', 'Pipoca', 'Refrigerante'];
-  return productNames[Math.floor(Math.random() * productNames.length)];
-}
+// function getRandomProductName() {
+//   const productNames = ['2D', '3D', '2D Semanal', '3D Semanal', 'Pipoca', 'Refrigerante'];
+//   return productNames[Math.floor(Math.random() * productNames.length)];
+// }
 
 // Helper function to generate a random price with two decimals between the specified range
 function generateRandomPrice(min, max) {
@@ -34,19 +34,17 @@ module.exports = {
 
     // Generate 10 entries for the 'establishments_addresses' table
     const seedData = Array.from({ length: 3 }, (_, index) => ({
-      name: getRandomProductName(),
+      name: `plano ${index + 1}`,
       description: faker.lorem.paragraph(1),
       rules: faker.lorem.paragraph(2),
       price: generateRandomPrice(5, 100),
-      limitPerType: (index + 1) * 4,
+      limit_per_type: (index + 1) * 4,
     }));
 
-    // Insert seed data into the 'establishments_addresses' table
-    await queryInterface.bulkInsert('establishments_products', seedData, {});
+    await queryInterface.bulkInsert('plans', seedData, {});
   },
 
   down: async (queryInterface) => {
-    // Remove all entries from the 'establishments_addresses' table
-    await queryInterface.bulkDelete('establishments_products', null, {});
+    await queryInterface.bulkDelete('plans', null, {});
   },
 };
