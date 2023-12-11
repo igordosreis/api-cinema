@@ -1,13 +1,12 @@
 /* eslint-disable max-lines-per-function */
 import axios from 'axios';
 import { BEARER_TOKEN, SUPERAPP_URL_BASE_AUTH } from '../constants';
-import CustomError, { userTokenNotFound, unauthorizedRequest } from './customError.util';
+import CustomError, { userTokenNotFound, requestUnauthorized } from './customError.util';
 import { IUserInfo } from '../interfaces/IUser';
 
 class AuthRequests {
-  private formatToken = (userToken: string) => (userToken.split(' ').length === 1
-    ? userToken
-    : userToken.split(' ')[1]);
+  private formatToken = (userToken: string) =>
+    (userToken.split(' ').length === 1 ? userToken : userToken.split(' ')[1]);
 
   validateCinemaTokens = async (userToken: string | undefined) => {
     const isUserTokenNotFound = !userToken;
@@ -27,10 +26,10 @@ class AuthRequests {
           headers: { authorization: `${BEARER_TOKEN}` },
         },
       );
-      
+
       return userInfo;
     } catch {
-      throw new CustomError(unauthorizedRequest);
+      throw new CustomError(requestUnauthorized);
     }
   };
 }

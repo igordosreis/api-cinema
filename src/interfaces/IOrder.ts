@@ -5,6 +5,9 @@ import OrdersModel from '../database/models/Orders.model';
 import VouchersAvailableModel from '../database/models/VouchersAvailable.model';
 import VouchersUserModel from '../database/models/VouchersUser.model';
 
+type Totals = 'totalPrice' | 'totalUnits' | 'totalConsumables' | 'totalTickets';
+export type PriceUnitAndTypeTotals = Record<Totals, number>;
+
 export interface IOrderSearchRaw extends Express.Request {
   query: {
     orderId: string;
@@ -37,6 +40,26 @@ export interface IOrderUpdate {
   orderId: number;
   userId: number;
   status: string;
+}
+
+export interface IOrderValidatePlan {
+  userId: number;
+  planId: number;
+  orderTotals: PriceUnitAndTypeTotals;
+}
+
+export interface IOrdersDetails {
+  id: number;
+  userId: number;
+  status: string;
+  paymentId: string;
+  totalPrice: number;
+  totalUnits: number;
+  totalConsumables: number;
+  totalTickets: number;
+  expireAt: Date;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 // export interface IOrderInfo {

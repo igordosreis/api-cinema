@@ -4,6 +4,8 @@ import {
   addDays,
   startOfWeek,
   endOfWeek,
+  startOfMonth,
+  endOfMonth,
   differenceInCalendarDays,
   addMinutes,
 } from 'date-fns';
@@ -19,6 +21,10 @@ class DateUtils {
 
   getNextSunday = (date: Date) => this.formatDateToISO(endOfWeek(date, { weekStartsOn: 1 }));
 
+  getFirstDayOfMonth = (date: Date) => this.formatDateToISO(startOfMonth(date));
+
+  getLastDayOfMonth = (date: Date) => this.formatDateToISO(endOfMonth(date));
+
   differenceInDays = (beforeDate: Date, afterDate: Date) =>
     differenceInCalendarDays(afterDate, beforeDate);
 
@@ -30,7 +36,7 @@ class DateUtils {
     });
     const dateObjectConvertedFromDateString = new Date(currentDateToBrazilTimezone);
 
-    // Essa função retorna um Date porque todas as funções do date-fns tem Date como argumento
+    // Essa função retorna um Date porque todas as funções do date-fns tem Date como tipo do parametro
     return new Date(formatISO(dateObjectConvertedFromDateString));
   };
 }

@@ -4,9 +4,9 @@ import db from '../database/models';
 import EstablishmentsProductsModel from '../database/models/EstablishmentsProducts.model';
 import VouchersAvailableModel from '../database/models/VouchersAvailable.model';
 import VouchersUserModel from '../database/models/VouchersUser.model';
-import { IProductFromGetById, IProductWithSelectedVouchers } from '../interfaces/IProducts';
+import { IProductFromGetById, IProductWithRequestedVouchers } from '../interfaces/IProducts';
 import CustomError, {
-  unauthorizedCancel,
+  cancelUnauthorized,
   voucherServiceUnavailable,
 } from '../utils/customError.util';
 import { IOrderRequestFormatted, IOrderRequestFormattedBody } from '../interfaces/IVouchers';
@@ -42,37 +42,37 @@ export default class OrdersService {
     return product as IProductFromGetById;
   }
 
-  private static async getProductsWithSelectedVouchers(
+  private static async getProductsWithRequestedVouchers(
     orderInfo: IOrderRequestFormatted[],
     transaction: Transaction,
   ) {
-    const productsWithSelectedVouchersPromise: Promise<IProductWithSelectedVouchers>[] = orderInfo
+    const productsWithRequestedVouchersPromise: Promise<IProductWithRequestedVouchers>[] = orderInfo
       .map(async ({ productId, amountRequested }) => {
         const productPromise = await this.getVouchersByProductId(productId, transaction);
-        ordersUtil.validateRequestAmount(productPromise, amountRequested);
+        ordersUtil.validateOrderAmount(productPromise, amountRequested);
 
         const { vouchersAvailable, ...restOfInfo } = productPromise;
         const productInfo = {
           ...restOfInfo.dataValues,
-          vouchersSelected: vouchersAvailable.slice(0, amountRequested),
+          vouchersRequested: vouchersAvailable.slice(0, amountRequested),
         };
 
         return productInfo;
       });
-    const productsWithSelectedVouchers = await Promise.all(productsWithSelectedVouchersPromise);
+    const productsWithRequestedVouchers = await Promise.all(productsWithRequestedVouchersPromise);
 
-    return productsWithSelectedVouchers;
+    return productsWithRequestedVouchers;
   }
 
   private static async updateVouchersOnCreateOrder(
-    productsWithSelectedVouchers: IProductWithSelectedVouchers[],
+    productsWithRequestedVouchers: IProductWithRequestedVouchers[],
     orderId: number,
     transaction: Transaction,
   ) {
-    const vouchersUpdatedOrderIdPromise = productsWithSelectedVouchers.map(async (productInfo) => {
-      const { vouchersSelected } = productInfo;
+    const vouchersUpdatedOrderIdPromise = productsWithRequestedVouchers.map(async (productInfo) => {
+      const { vouchersRequested } = productInfo;
 
-      const vouchersUpdatedPromise = vouchersSelected.map(async (voucher) => {
+      const vouchersUpdatedPromise = vouchersRequested.map(async (voucher) => {
         const { voucherCode } = voucher;
 
         await VouchersAvailableModel.update(
@@ -92,25 +92,29 @@ export default class OrdersService {
     try {
       const { userId, orderInfo } = orderRequest;
 
-      const productsWithSelectedVouchers = await this.getProductsWithSelectedVouchers(orderInfo, t);
+      const productsWithRequestedVouchers = await this.getProductsWithRequestedVouchers(
+        orderInfo,
+        t,
+      );
 
-      const totals = ordersUtil.calculateTotalPriceAndTotalUnits(productsWithSelectedVouchers);
+      const orderTotals = ordersUtil.calculateOrderTotals(productsWithRequestedVouchers);
 
       // adicionar aqui verificação de se a quantidade de vouchers de cada tipo está dentro do permitido para esse usuário
 
-      const expireAt = dateUtils.addFiveMinutes(new Date());
+      const currentDate = new Date();
+      const expireAt = dateUtils.addFiveMinutes(currentDate);
 
       const { id: orderId } = await OrdersModel.create(
-        { ...totals, expireAt, userId },
+        { ...orderTotals, expireAt, userId },
         { transaction: t },
       );
 
-      await this.updateVouchersOnCreateOrder(productsWithSelectedVouchers, orderId, t);
+      await this.updateVouchersOnCreateOrder(productsWithRequestedVouchers, orderId, t);
 
       const paymentOrderRequest: Omit<IPaymentOrderRequest, 'webhook' | 'name'> = {
         orderId,
         userId,
-        value: totals.totalPrice.toString(),
+        value: orderTotals.totalPrice.toString(),
         expireAt,
       };
       const paymentOrderResponse = await paymentUtil.createPayment(paymentOrderRequest);
@@ -135,7 +139,7 @@ export default class OrdersService {
     const t = await db.transaction();
     try {
       const { status } = await this.getOrderById({ orderId, userId, transaction: t });
-      if (status !== STATUS_WAITING) throw new CustomError(unauthorizedCancel);
+      if (status !== STATUS_WAITING) throw new CustomError(cancelUnauthorized);
 
       await VouchersAvailableModel.update(
         { orderId: null, soldPrice: null },

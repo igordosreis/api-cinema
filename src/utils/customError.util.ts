@@ -27,7 +27,7 @@ export const fetchError: ICustomError = {
   message: 'Servidor indisponível, tente novamente mais tarde.',
 };
 
-export const unauthorizedRequest: ICustomError = {
+export const requestUnauthorized: ICustomError = {
   status: 400,
   title: 'Acesso não autorizado.',
   message: 'Acesso não autorizado. Faça login para acessar esse serviço.',
@@ -63,8 +63,14 @@ export const paymentOrderError: ICustomError = {
   message: 'Erro ao realizar o pagamento. Tente novamente mais tarde.',
 };
 
-export const unauthorizedCancel: ICustomError = {
+export const cancelUnauthorized: ICustomError = {
   status: 400,
   title: 'Cancelamento não autorizado.',
   message: 'Somente pedidos com pagamento pendente podem ser cancelados.',
+};
+
+export const amountUnauthorized: ICustomError = {
+  status: 400,
+  title: 'Quantidade de produtos não autorizada.',
+  message: 'A quantidade de produtos solicitada é maior do que a disponível no seu plano.',
 };

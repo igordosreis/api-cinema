@@ -34,8 +34,8 @@ export interface IProductWithVouchers extends IProduct {
   vouchersAvailable: IVoucherAvailable[];
 }
 
-export interface IProductWithSelectedVouchers extends IProduct {
-  vouchersSelected: IVoucherAvailable[];
+export interface IProductWithRequestedVouchers extends IProduct {
+  vouchersRequested: IVoucherAvailable[];
 }
 
 export type IProductFromGetById = EstablishmentsProductsModel & {
