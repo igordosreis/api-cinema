@@ -27,8 +27,8 @@ class Orders {
     if (areVouchersBelowRequestedQty) throw new CustomError(vouchersNotEnough);
   };
 
-  validatePlanAmount = async ({ userId, planId, orderTotals }: IOrderValidatePlan) => {
-    const planInfo = await PlansModel.findByPk(planId);
+  validatePlanAmount = async ({ userId, cinemaPlan, orderTotals }: IOrderValidatePlan) => {
+    const planInfo = await PlansModel.findOne({ where: { name: cinemaPlan } });
 
     const currentDate = new Date();
     const firstDayOfMonth = dateUtils.getFirstDayOfMonth(currentDate);

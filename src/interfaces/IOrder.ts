@@ -44,7 +44,7 @@ export interface IOrderUpdate {
 
 export interface IOrderValidatePlan {
   userId: number;
-  planId: number;
+  cinemaPlan: string;
   orderTotals: PriceUnitAndTypeTotals;
 }
 

@@ -95,6 +95,7 @@ class FormatRequestQuery {
 
   formatCreateOrder = (req: IOrderRequestRawBody): IOrderRequestFormattedBody => ({
     userId: this.formatUserId(req),
+    cinemaPlan: req.body.userInfo.user.cinemaPlan,
     orderInfo: this.formatOrderInfo(req),
   });
 

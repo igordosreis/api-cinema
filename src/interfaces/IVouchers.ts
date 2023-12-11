@@ -50,6 +50,7 @@ export interface IOrderRequestRawBody extends Request {
 
 export interface IOrderRequestFormattedBody {
   userId: number;
+  cinemaPlan: string;
   orderInfo: IOrderRequestFormatted[];
 }
 

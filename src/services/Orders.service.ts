@@ -90,7 +90,7 @@ export default class OrdersService {
   public static async createOrder(orderRequest: IOrderRequestFormattedBody) {
     const t = await db.transaction();
     try {
-      const { userId, orderInfo } = orderRequest;
+      const { userId, cinemaPlan, orderInfo } = orderRequest;
 
       const productsWithRequestedVouchers = await this.getProductsWithRequestedVouchers(
         orderInfo,
@@ -100,6 +100,7 @@ export default class OrdersService {
       const orderTotals = ordersUtil.calculateOrderTotals(productsWithRequestedVouchers);
 
       // adicionar aqui verificação de se a quantidade de vouchers de cada tipo está dentro do permitido para esse usuário
+      await ordersUtil.validatePlanAmount({ userId, cinemaPlan, orderTotals });
 
       const currentDate = new Date();
       const expireAt = dateUtils.addFiveMinutes(currentDate);

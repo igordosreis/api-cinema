@@ -6,6 +6,7 @@ interface User {
   telephone: string | null;
   active: boolean;
   companiesArray: string;
+  cinemaPlan: string;
 }
 
 interface Company {
