@@ -132,7 +132,7 @@ export default class OrdersService {
 
       return { orderId, paymentId, paymentModules };
     } catch (error: CustomError | unknown) {
-      t.rollback();
+      await t.rollback();
 
       console.log('- -- - -- -- -- - - --  - - -- - -- - ---- -- -- - --- - - - -error: ', error);
       if (error instanceof CustomError) throw error;
