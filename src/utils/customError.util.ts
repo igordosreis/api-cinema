@@ -93,3 +93,9 @@ export const establishmentServiceUnavailable: ICustomError = {
   message:
     'O serviço de estabelecimentos não está disponível no momento. Tente novamente mais tarde.',
 };
+
+export const movieNotFound: ICustomError = {
+  status: 404,
+  title: 'Filme não encontrado.',
+  message: 'O filme procurado não foi encontrado.',
+};

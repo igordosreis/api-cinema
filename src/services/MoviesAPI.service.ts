@@ -2,6 +2,7 @@
 /* eslint-disable operator-linebreak */
 import MoviesAPIModel from '../database/models/MoviesAPI.model';
 import { IGenreList, IMovieDetails, IMoviesResults } from '../interfaces/IMoviesAPI';
+import CustomError, { movieNotFound } from '../utils/customError.util';
 import DateUtils from '../utils/date.utils';
 import formatMoviesUtil from '../utils/formatMovies.util';
 import searchMoviesUtil from '../utils/searchMovies.util';
@@ -67,6 +68,9 @@ export default class MoviesAPIService {
 
   public static async getMovieDetails(movieId: number | string): Promise<IMovieDetails> {
     const movieDetails = await MoviesAPIModel.getMovieDetails(movieId);
+
+    const isMovieNotFound = !movieDetails;
+    if (isMovieNotFound) throw new CustomError(movieNotFound);
 
     const formatedMovieDetails = formatMoviesUtil.formatMovieDetails(movieDetails);
 
