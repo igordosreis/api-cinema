@@ -7,7 +7,9 @@ import VouchersUserModel from '../database/models/VouchersUser.model';
 import { IProductFromGetById, IProductWithRequestedVouchers } from '../interfaces/IProducts';
 import CustomError, {
   cancelUnauthorized,
-  voucherServiceUnavailable,
+  orderNotFound,
+  orderServiceUnavailable,
+  ordersNotFound,
 } from '../utils/customError.util';
 import ordersUtil from '../utils/orders.util';
 import OrdersModel from '../database/models/Orders.model';
@@ -18,7 +20,7 @@ import {
   IOrderInfo,
   IOrderSearchFormatted,
   IOrderRequestFormatted,
-  IOrderRequestFormattedBody, 
+  IOrderRequestFormattedBody,
 } from '../interfaces/IOrder';
 import { STATUS_CANCELLED, STATUS_WAITING } from '../constants';
 
@@ -103,7 +105,6 @@ export default class OrdersService {
 
       const orderTotals = ordersUtil.calculateOrderTotals(productsWithRequestedVouchers);
 
-      // adicionar aqui verificação de se a quantidade de vouchers de cada tipo está dentro do permitido para esse usuário
       await ordersUtil.validatePlanAmount({ userId, cinemaPlan, orderTotals });
 
       const currentDate = new Date();
@@ -136,7 +137,7 @@ export default class OrdersService {
       console.log('- -- - -- -- -- - - --  - - -- - -- - ---- -- -- - --- - - - -error: ', error);
       if (error instanceof CustomError) throw error;
 
-      throw new CustomError(voucherServiceUnavailable);
+      throw new CustomError(orderServiceUnavailable);
     }
   }
 
@@ -163,34 +164,43 @@ export default class OrdersService {
       console.log('- -- - -- -- -- - - --  - - -- - -- - ---- -- -- - --- - - - -error: ', error);
       if (error instanceof CustomError) throw error;
 
-      throw new CustomError(voucherServiceUnavailable);
+      throw new CustomError(orderServiceUnavailable);
     }
   }
 
   public static async getAllOrders(userId: number) {
-    const allUserOrders = await OrdersModel.findAll({
-      include: [
-        {
-          model: VouchersAvailableModel,
-          as: 'vouchersOrderUnpaid',
-          required: false,
-          attributes: {
-            exclude: ['createdAt', 'updatedAt', 'voucherCode'],
+    try {
+      const allUserOrders = await OrdersModel.findAll({
+        include: [
+          {
+            model: VouchersAvailableModel,
+            as: 'vouchersOrderUnpaid',
+            required: false,
+            attributes: {
+              exclude: ['createdAt', 'updatedAt', 'voucherCode'],
+            },
           },
-        },
-        {
-          model: VouchersUserModel,
-          as: 'vouchersOrderPaid',
-          required: false,
-          attributes: {
-            exclude: ['createdAt', 'updatedAt'],
+          {
+            model: VouchersUserModel,
+            as: 'vouchersOrderPaid',
+            required: false,
+            attributes: {
+              exclude: ['createdAt', 'updatedAt'],
+            },
           },
-        },
-      ],
-      where: { userId },
-    });
+        ],
+        where: { userId },
+      });
+  
+      const areOrdersNotFound = !allUserOrders;
+      if (areOrdersNotFound) throw new CustomError(ordersNotFound);
 
-    return allUserOrders;
+      return allUserOrders;
+    } catch (error: CustomError | unknown) {
+      if (error instanceof CustomError) throw error;
+
+      throw new CustomError(orderServiceUnavailable);
+    }
   }
 
   public static async getOrderById({
@@ -199,38 +209,47 @@ export default class OrdersService {
     transaction,
     isAdmin,
   }: IOrderSearchFormatted) {
-    const attributes = isAdmin
-      ? { exclude: ['createdAt', 'updatedAt'] }
-      : { exclude: ['createdAt', 'updatedAt', 'voucherCode'] };
+    try {
+      const attributes = isAdmin
+        ? { exclude: ['createdAt', 'updatedAt'] }
+        : { exclude: ['createdAt', 'updatedAt', 'voucherCode'] };
 
-    const orderInfo = await OrdersModel.findOne({
-      include: [
-        {
-          model: VouchersAvailableModel,
-          as: 'vouchersOrderUnpaid',
-          where: {
-            orderId,
+      const orderInfo = await OrdersModel.findOne({
+        include: [
+          {
+            model: VouchersAvailableModel,
+            as: 'vouchersOrderUnpaid',
+            where: {
+              orderId,
+            },
+            required: false,
+            attributes,
           },
-          required: false,
-          attributes,
-        },
-        {
-          model: VouchersUserModel,
-          as: 'vouchersOrderPaid',
-          where: {
-            orderId,
+          {
+            model: VouchersUserModel,
+            as: 'vouchersOrderPaid',
+            where: {
+              orderId,
+            },
+            required: false,
+            attributes: {
+              exclude: ['createdAt', 'updatedAt'],
+            },
           },
-          required: false,
-          attributes: {
-            exclude: ['createdAt', 'updatedAt'],
-          },
-        },
-      ],
-      where: { id: orderId, userId },
-      order: [['createdAt', 'ASC']],
-      transaction,
-    });
+        ],
+        where: { id: orderId, userId },
+        order: [['createdAt', 'ASC']],
+        transaction,
+      });
 
-    return orderInfo as IOrderInfo;
+      const isOrderNotFound = !orderInfo;
+      if (isOrderNotFound) throw new CustomError(orderNotFound);
+
+      return orderInfo as IOrderInfo;
+    } catch (error: CustomError | unknown) {
+      if (error instanceof CustomError) throw error;
+
+      throw new CustomError(orderServiceUnavailable);
+    }
   }
 }

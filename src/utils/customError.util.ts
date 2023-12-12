@@ -51,10 +51,22 @@ export const vouchersNotEnough: ICustomError = {
   message: 'Não há vouchers suficientes para atender o seu pedido.',
 };
 
-export const voucherServiceUnavailable: ICustomError = {
+export const orderServiceUnavailable: ICustomError = {
   status: 503,
   title: 'Operacão indisponível.',
   message: 'Essa operação está indisponível no momento. Tente novamente mais tarde.',
+};
+
+export const ordersNotFound: ICustomError = {
+  status: 404,
+  title: 'Pedidos não encontrados.',
+  message: 'Nenhum pedido foi encontrado.',
+};
+
+export const orderNotFound: ICustomError = {
+  status: 404,
+  title: 'Pedido não encontrado.',
+  message: 'Esse pedido não foi encontrado.',
 };
 
 export const paymentOrderError: ICustomError = {
