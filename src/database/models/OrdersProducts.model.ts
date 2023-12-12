@@ -7,6 +7,7 @@ class OrdersProductsModel extends Model {
   declare orderId: number;
   declare productId: number;
   declare quantity: number;
+  declare soldPrice: number;
 }
 
 OrdersProductsModel.init(
@@ -29,6 +30,10 @@ OrdersProductsModel.init(
       },
     },
     quantity: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    soldPrice: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
