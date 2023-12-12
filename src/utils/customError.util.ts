@@ -54,7 +54,7 @@ export const vouchersNotEnough: ICustomError = {
 export const orderServiceUnavailable: ICustomError = {
   status: 503,
   title: 'Operacão indisponível.',
-  message: 'Essa operação está indisponível no momento. Tente novamente mais tarde.',
+  message: 'O serviço de pedidos não está disponível no momento. Tente novamente mais tarde.',
 };
 
 export const ordersNotFound: ICustomError = {
@@ -85,4 +85,11 @@ export const amountUnauthorized: ICustomError = {
   status: 400,
   title: 'Quantidade de produtos não autorizada.',
   message: 'A quantidade de produtos solicitada é maior do que a disponível no seu plano.',
+};
+
+export const establishmentServiceUnavailable: ICustomError = {
+  status: 503,
+  title: 'Operacão indisponível.',
+  message:
+    'O serviço de estabelecimentos não está disponível no momento. Tente novamente mais tarde.',
 };

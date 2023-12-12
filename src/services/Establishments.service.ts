@@ -12,29 +12,48 @@ import { IEstablishmentFormattedQuery } from '../interfaces/IEstablishments';
 import createProductSearchSqlizeQueryUtil from '../utils/createProductSearchSqlizeQuery.util';
 import EstablishmentsImagesModel from '../database/models/EstablishmentsImages.model';
 import { MINIMUM_VOUCHER_QUANTITY } from '../constants';
+import CustomError, { establishmentServiceUnavailable } from '../utils/customError.util';
 
 export default class EstablishmentsService {
   public static async getAllEstablishments(): Promise<EstablishmentsModel[]> {
-    const allEstablishments = EstablishmentsModel.findAll({
-      include: [{ model: EstablishmentsImagesModel, as: 'images' }],
-    });
+    try {
+      const allEstablishments = await EstablishmentsModel.findAll({
+        include: [{ model: EstablishmentsImagesModel, as: 'images' }],
+      });
 
-    return allEstablishments;
+      return allEstablishments;
+    } catch (error: CustomError | unknown) {
+      if (error instanceof CustomError) throw error;
+
+      throw new CustomError(establishmentServiceUnavailable);
+    }
   }
 
   public static async getAllCities() {
-    const allCities = CitiesModel.findAll({
-      include: [{ model: StatesModel, as: 'state' }],
-      attributes: { exclude: ['stateId'] },
-    });
+    try {
+      const allCities = await CitiesModel.findAll({
+        include: [{ model: StatesModel, as: 'state' }],
+        attributes: { exclude: ['stateId'] },
+      });
 
-    return allCities;
+      return allCities;
+    } catch (error: CustomError | unknown) {
+      if (error instanceof CustomError) throw error;
+
+      throw new CustomError(establishmentServiceUnavailable);
+    }
   }
 
   public static async getAllStates() {
-    const allStates = StatesModel.findAll();
+    try {
+      const allStates = await StatesModel.findAll();
 
-    return allStates;
+      return allStates;
+    } catch (error: CustomError | unknown) {
+      if (error instanceof CustomError) throw error;
+
+      throw new CustomError(establishmentServiceUnavailable);
+    }
   }
 
   public static async getEstablishmentsByAddress({
@@ -48,58 +67,70 @@ export default class EstablishmentsService {
     brandId,
     term,
   }: IEstablishmentFormattedQuery) {
-    const filteredAddresses = db.query(
-      createGeoSearchSqlQuery({ term, cityId, stateId, brandId }),
-      {
-        type: QueryTypes.SELECT,
-        replacements: {
-          limit: Number(limit),
-          offset: page * limit,
-          latitude,
-          longitude,
-          distance,
-          cityId,
-          stateId,
-          brandId,
+    try {
+      const filteredAddresses = await db.query(
+        createGeoSearchSqlQuery({ term, cityId, stateId, brandId }),
+        {
+          type: QueryTypes.SELECT,
+          replacements: {
+            limit: Number(limit),
+            offset: page * limit,
+            latitude,
+            longitude,
+            distance,
+            cityId,
+            stateId,
+            brandId,
+          },
         },
-      },
-    );
+      );
 
-    return filteredAddresses;
+      return filteredAddresses;
+    } catch (error: CustomError | unknown) {
+      if (error instanceof CustomError) throw error;
+
+      throw new CustomError(establishmentServiceUnavailable);
+    }
   }
 
   public static async getProductsByQuery(formattedQuery: IProductFormattedQuery) {
-    const filteredProducts = await EstablishmentsProductsModel.findAll({
-      attributes: {
-        include: [
-          [sequelize.fn('COUNT', sequelize.col('vouchersAvailable.id')), 'vouchersQuantity'],
-          [
-            sequelize.literal(`COUNT(vouchersAvailable.id) > ${MINIMUM_VOUCHER_QUANTITY}`),
-            'isAvailable',
+    try {
+      const filteredProducts = await EstablishmentsProductsModel.findAll({
+        attributes: {
+          include: [
+            [sequelize.fn('COUNT', sequelize.col('vouchersAvailable.id')), 'vouchersQuantity'],
+            [
+              sequelize.literal(`COUNT(vouchersAvailable.id) > ${MINIMUM_VOUCHER_QUANTITY}`),
+              'isAvailable',
+            ],
           ],
-        ],
-      },
-      include: [
-        {
-          model: VouchersAvailableModel,
-          attributes: [],
-          as: 'vouchersAvailable',
-          where: {
-            orderId: null,
-            expireAt: {
-              [Op.gt]: new Date(),
+        },
+        include: [
+          {
+            model: VouchersAvailableModel,
+            attributes: [],
+            as: 'vouchersAvailable',
+            where: {
+              orderId: null,
+              expireAt: {
+                [Op.gt]: new Date(),
+              },
             },
           },
-        },
-        {
-          model: EstablishmentsImagesModel,
-          as: 'imagesBrand',
-        },
-      ],
-      group: ['establishments_products.id'],
-      where: createProductSearchSqlizeQueryUtil.create(formattedQuery),
-    });
+          {
+            model: EstablishmentsImagesModel,
+            as: 'imagesBrand',
+          },
+        ],
+        group: ['establishments_products.id'],
+        where: createProductSearchSqlizeQueryUtil.create(formattedQuery),
+      });
 
-    return filteredProducts;
+      return filteredProducts;
+    } catch (error: CustomError | unknown) {
+      if (error instanceof CustomError) throw error;
+
+      throw new CustomError(establishmentServiceUnavailable);
+    }
   }
 }
