@@ -11,7 +11,6 @@ import { IProductFormattedQuery } from '../interfaces/IProducts';
 import { IEstablishmentFormattedQuery } from '../interfaces/IEstablishments';
 import createProductSearchSqlizeQueryUtil from '../utils/createProductSearchSqlizeQuery.util';
 import EstablishmentsImagesModel from '../database/models/EstablishmentsImages.model';
-import { MINIMUM_VOUCHER_QUANTITY } from '../constants';
 import CustomError, { establishmentServiceUnavailable } from '../utils/customError.util';
 
 export default class EstablishmentsService {
@@ -100,7 +99,9 @@ export default class EstablishmentsService {
           include: [
             [sequelize.fn('COUNT', sequelize.col('vouchersAvailable.id')), 'vouchersQuantity'],
             [
-              sequelize.literal(`COUNT(vouchersAvailable.id) > ${MINIMUM_VOUCHER_QUANTITY}`),
+              sequelize.literal(
+                'COUNT(vouchersAvailable.id) > establishments_products.sold_out_amount',
+              ),
               'isAvailable',
             ],
           ],
