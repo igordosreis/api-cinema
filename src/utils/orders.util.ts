@@ -3,7 +3,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Op } from 'sequelize';
-import { MINIMUM_VOUCHER_QUANTITY, STATUS_PAID, STATUS_WAITING } from '../constants';
+import { STATUS_PAID, STATUS_WAITING } from '../constants';
 import OrdersModel from '../database/models/Orders.model';
 import PlansModel from '../database/models/Plans.model';
 import { IOrderValidatePlan, PriceUnitAndTypeTotals } from '../interfaces/IOrder';
@@ -16,13 +16,14 @@ import dateUtils from './date.utils';
 
 class Orders {
   validateOrderAmount = (productInfo: IProductFromGetById, amountRequested: number) => {
-    const { vouchersAvailable } = productInfo;
+    const { vouchersAvailable, soldOutAmount } = productInfo;
 
     const totalVouchersAvailable = vouchersAvailable.length;
-    const areVouchersBelowMinimumQty = totalVouchersAvailable < Number(MINIMUM_VOUCHER_QUANTITY);
+    const areVouchersBelowMinimumQty = totalVouchersAvailable < Number(soldOutAmount);
+
     if (areVouchersBelowMinimumQty) throw new CustomError(vouchersUnavailable);
 
-    const areVouchersBelowRequestedQty = Number(MINIMUM_VOUCHER_QUANTITY)
+    const areVouchersBelowRequestedQty = Number(soldOutAmount)
       > totalVouchersAvailable - amountRequested;
     if (areVouchersBelowRequestedQty) throw new CustomError(vouchersNotEnough);
   };
