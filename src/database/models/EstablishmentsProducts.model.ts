@@ -63,6 +63,10 @@ EstablishmentsProductsModel.init(
       type: DataTypes.STRING,
       allowNull: true,
     },
+    soldOutAmount: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
     createdAt: {
       type: DataTypes.DATE,
       // defaultValue: DataTypes.NOW,
