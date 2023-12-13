@@ -228,33 +228,6 @@ export default class OrdersService {
         ],
         where: { userId },
       });
-      
-      // const allUserOrdersWithProducts = allUserOrdersWithVouchers.order
-      // const allUserOrders = await OrdersModel.findAll({
-      //   include: [
-      //     {
-      //       model: VouchersAvailableModel,
-      //       as: 'vouchersOrderUnpaid',
-      //       required: false,
-      //       attributes: {
-      //         exclude: ['createdAt', 'updatedAt', 'voucherCode'],
-      //       },
-      //     },
-      //     {
-      //       model: VouchersUserModel,
-      //       as: 'vouchersOrderPaid',
-      //       required: false,
-      //       attributes: {
-      //         exclude: ['createdAt', 'updatedAt'],
-      //       },
-      //     },
-      //     {
-      //       model: OrdersProductsModel,
-      //       as: 'productsInOrder',
-      //     },
-      //   ],
-      //   where: { userId },
-      // });
 
       const areOrdersNotFound = !allUserOrders;
       if (areOrdersNotFound) throw new CustomError(ordersNotFound);
@@ -300,6 +273,23 @@ export default class OrdersService {
             attributes: {
               exclude: ['createdAt', 'updatedAt'],
             },
+          },
+          {
+            model: OrdersProductsModel,
+            as: 'productsDetails',
+            required: false,
+            attributes: {
+              exclude: ['orderId'],
+            },
+            include: [
+              {
+                model: EstablishmentsProductsModel,
+                as: 'productInfo',
+                attributes: {
+                  exclude: ['id'],
+                },
+              },
+            ],
           },
         ],
         where: { id: orderId, userId },
