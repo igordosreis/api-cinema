@@ -42,6 +42,7 @@ module.exports = {
       price: generateRandomPrice(5, 100),
       rules: faker.lorem.paragraph(2),
       type: getRandomType(),
+      sold_out_amount: 3,
     }));
 
     // Insert seed data into the 'establishments_addresses' table
