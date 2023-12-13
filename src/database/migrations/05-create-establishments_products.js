@@ -53,6 +53,10 @@ module.exports = {
         type: Sequelize.STRING,
         defaultValue: null,
       },
+      sold_out_amount: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
       created_at: {
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
