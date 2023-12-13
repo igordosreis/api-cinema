@@ -91,6 +91,7 @@ export interface IOrderRequestRaw {
 
 export interface IOrderRequestFormatted {
   productId: number;
+  // packId: number;
   amountRequested: number;
 }
 

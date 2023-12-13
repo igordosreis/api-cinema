@@ -37,8 +37,8 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      soldPrice: {
-        type: Sequelize.INTEGER,
+      sold_price: {
+        type: Sequelize.DECIMAL(10, 2),
         allowNull: false,
       },
     }, {

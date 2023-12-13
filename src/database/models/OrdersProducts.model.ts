@@ -46,16 +46,16 @@ OrdersProductsModel.init(
   },
 );
 
-OrdersProductsModel.belongsTo(OrdersModel, { foreignKey: 'orderId', as: 'order' });
-OrdersModel.hasMany(OrdersProductsModel, { foreignKey: 'orderId', as: 'order' });
+OrdersProductsModel.belongsTo(OrdersModel, { foreignKey: 'orderId', as: 'productsDetails' });
+OrdersModel.hasMany(OrdersProductsModel, { foreignKey: 'orderId', as: 'productsDetails' });
 
 OrdersProductsModel.belongsTo(EstablishmentsProductsModel, {
   foreignKey: 'productId',
-  as: 'productsInOrder',
+  as: 'productInfo',
 });
 EstablishmentsProductsModel.hasMany(OrdersProductsModel, {
   foreignKey: 'productId',
-  as: 'productsInOrder',
+  as: 'productInfo',
 });
 
 export default OrdersProductsModel;

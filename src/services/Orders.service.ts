@@ -23,6 +23,7 @@ import {
   IOrderRequestFormattedBody,
 } from '../interfaces/IOrder';
 import { STATUS_CANCELLED, STATUS_WAITING } from '../constants';
+import OrdersProductsModel from '../database/models/OrdersProducts.model';
 
 export default class OrdersService {
   private static async getVouchersByProductId(productId: number, transaction?: Transaction) {
@@ -93,6 +94,24 @@ export default class OrdersService {
     await Promise.all(vouchersUpdatedOrderIdPromise);
   }
 
+  private static async createProductsOrder(
+    productsWithRequestedVouchers: IProductWithRequestedVouchers[],
+    orderId: number,
+    transaction: Transaction,
+  ) {
+    const productsOrderPromise = productsWithRequestedVouchers.map(async (productInfo) => {
+      const { id, price, vouchersRequested } = productInfo;
+      const productOrderPromise = await OrdersProductsModel.create(
+        { orderId, productId: id, soldPrice: price, quantity: vouchersRequested.length },
+        { transaction },
+      );
+
+      return productOrderPromise;
+    });
+
+    await Promise.all(productsOrderPromise);
+  }
+
   public static async createOrder(orderRequest: IOrderRequestFormattedBody) {
     const t = await db.transaction();
     try {
@@ -115,6 +134,7 @@ export default class OrdersService {
         { transaction: t },
       );
 
+      await this.createProductsOrder(productsWithRequestedVouchers, orderId, t);
       await this.updateVouchersOnCreateOrder(productsWithRequestedVouchers, orderId, t);
 
       const paymentOrderRequest: Omit<IPaymentOrderRequest, 'webhook' | 'name'> = {
@@ -134,7 +154,7 @@ export default class OrdersService {
     } catch (error: CustomError | unknown) {
       await t.rollback();
 
-      console.log('- -- - -- -- -- - - --  - - -- - -- - ---- -- -- - --- - - - -error: ', error);
+      console.log('- -- - -- -- -- - - --  - - -- - -- - ---- -- -- - -- - - - -error: ', error);
       if (error instanceof CustomError) throw error;
 
       throw new CustomError(orderServiceUnavailable);
@@ -188,15 +208,60 @@ export default class OrdersService {
               exclude: ['createdAt', 'updatedAt'],
             },
           },
+          {
+            model: OrdersProductsModel,
+            as: 'productsDetails',
+            required: false,
+            attributes: {
+              exclude: ['orderId'],
+            },
+            include: [
+              {
+                model: EstablishmentsProductsModel,
+                as: 'productInfo',
+                attributes: {
+                  exclude: ['id'],
+                },
+              },
+            ],
+          },
         ],
         where: { userId },
       });
-  
+      
+      // const allUserOrdersWithProducts = allUserOrdersWithVouchers.order
+      // const allUserOrders = await OrdersModel.findAll({
+      //   include: [
+      //     {
+      //       model: VouchersAvailableModel,
+      //       as: 'vouchersOrderUnpaid',
+      //       required: false,
+      //       attributes: {
+      //         exclude: ['createdAt', 'updatedAt', 'voucherCode'],
+      //       },
+      //     },
+      //     {
+      //       model: VouchersUserModel,
+      //       as: 'vouchersOrderPaid',
+      //       required: false,
+      //       attributes: {
+      //         exclude: ['createdAt', 'updatedAt'],
+      //       },
+      //     },
+      //     {
+      //       model: OrdersProductsModel,
+      //       as: 'productsInOrder',
+      //     },
+      //   ],
+      //   where: { userId },
+      // });
+
       const areOrdersNotFound = !allUserOrders;
       if (areOrdersNotFound) throw new CustomError(ordersNotFound);
 
       return allUserOrders;
     } catch (error: CustomError | unknown) {
+      console.log('- -- - -- -- -- - - --  - - -- - -- - ---- -- -- - --- - - - -error: ', error);
       if (error instanceof CustomError) throw error;
 
       throw new CustomError(orderServiceUnavailable);
