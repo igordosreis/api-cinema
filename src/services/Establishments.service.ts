@@ -102,7 +102,7 @@ export default class EstablishmentsService {
               sequelize.literal(
                 'COUNT(vouchersAvailable.id) > establishments_products.sold_out_amount',
               ),
-              'isAvailable',
+              'available',
             ],
           ],
         },
@@ -124,11 +124,12 @@ export default class EstablishmentsService {
           },
         ],
         group: ['establishments_products.id'],
-        where: createProductSearchSqlizeQueryUtil.create(formattedQuery),
+        ...createProductSearchSqlizeQueryUtil.create(formattedQuery),
       });
 
       return filteredProducts;
     } catch (error: CustomError | unknown) {
+      console.log('- -- - -- -- -- - - --  - - -- - -- - ---- -- -- - --- - - - -error: ', error);
       if (error instanceof CustomError) throw error;
 
       throw new CustomError(establishmentServiceUnavailable);

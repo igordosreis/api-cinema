@@ -19,6 +19,7 @@ export interface IProduct {
 export interface IProductRawQuery extends Request {
   term: string | undefined;
   available: boolean | undefined;
+  active: boolean | undefined;
   type: string | undefined;
   establishmentId: number | undefined;
 }
@@ -26,6 +27,7 @@ export interface IProductRawQuery extends Request {
 export interface IProductFormattedQuery {
   term: string | undefined;
   available: boolean | undefined;
+  active: boolean | undefined;
   type: string | undefined;
   establishmentId: number | undefined;
 }

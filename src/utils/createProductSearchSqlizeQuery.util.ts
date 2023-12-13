@@ -1,8 +1,17 @@
+/* eslint-disable sonarjs/cognitive-complexity */
+/* eslint-disable max-lines-per-function */
+/* eslint-disable complexity */
 import { Op } from 'sequelize';
 import { IProductFormattedQuery } from '../interfaces/IProducts';
 
 class CreateProductSearchSqlizeQuery {
-  private addParams = ({ term, establishmentId, type, available }: IProductFormattedQuery) => {
+  private addParams = ({
+    term,
+    establishmentId,
+    type,
+    available,
+    active,
+  }: IProductFormattedQuery) => {
     const searchQuery = [];
     if (term) {
       searchQuery.push({
@@ -11,17 +20,20 @@ class CreateProductSearchSqlizeQuery {
     }
     if (type) searchQuery.push({ type: { [Op.like]: type } });
     if (establishmentId) searchQuery.push({ establishmentId });
-    if (available) searchQuery.push({ active: available });
+    if (active) searchQuery.push({ active });
 
-    return {
-      [Op.and]: searchQuery,
+    return { 
+      where: {
+        [Op.and]: searchQuery,
+      },
+      having: available ? { available } : {},
     };
   };
 
   create = (formattedQuery: IProductFormattedQuery) => {
     const areThereAnyParams = Object.values(formattedQuery).some((param) => param);
 
-    return areThereAnyParams ? this.addParams(formattedQuery) : {};
+    return areThereAnyParams ? this.addParams(formattedQuery) : { having: {}, where: {} };
   };
 }
 

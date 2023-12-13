@@ -69,11 +69,15 @@ class FormatRequestQuery {
   private formatAvailable = ({ query: { available } }: IProductRawQuery) =>
     (available === 'true' ? true : undefined);
 
+  private formatActive = ({ query: { active } }: IProductRawQuery) =>
+    (active === 'true' ? true : undefined);
+
   formatProductQuery = (req: IProductRawQuery): IProductFormattedQuery => ({
     term: this.formatTerm(req),
     type: this.formatType(req),
     establishmentId: this.formatEstablishmentId(req),
     available: this.formatAvailable(req),
+    active: this.formatActive(req),
   });
 
   private formatProductId = (productId: number | string) => Number(productId);
