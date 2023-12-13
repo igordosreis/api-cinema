@@ -13,6 +13,7 @@ class EstablishmentsProductsModel extends Model {
   declare price: number;
   declare rules: string;
   declare type: string;
+  declare soldOutAmount: number;
   declare createdAt: Date;
   declare updatedAt: Date;
 }
