@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { faker } = require('@faker-js/faker');
+// const { faker } = require('@faker-js/faker');
 
 // Helper function to get a random establishment_id from the provided list
 // function getRandomEstablishmentId(ids) {
@@ -13,9 +13,9 @@ const { faker } = require('@faker-js/faker');
 // }
 
 // Helper function to generate a random price with two decimals between the specified range
-function generateRandomPrice(min, max) {
-  return (Math.random() * (max - min) + min).toFixed(2);
-}
+// function generateRandomPrice(min, max) {
+//   return (Math.random() * (max - min) + min).toFixed(2);
+// }
 
 // Helper function to get a random type
 // function getRandomType() {
@@ -26,18 +26,16 @@ function generateRandomPrice(min, max) {
 // function getRandomBoolean() {
 //   return Math.random() < 0.5; // Adjust the probability as needed
 // }
+const typesArray = ['ticket', 'consumable'];
 
 module.exports = {
   up: async (queryInterface, _Sequelize) => {
     // Establishments IDs from the provided list
     // const establishmentIds = [488, 753, 1115, 3091, 3092, 3543, 3564, 4243, 4732, 4762, 5049];
 
-    const seedData = Array.from({ length: 3 }, (_, index) => ({
-      name: `plano ${index + 1}`,
-      description: faker.lorem.paragraph(1),
-      rules: faker.lorem.paragraph(2),
-      price: generateRandomPrice(5, 100),
-      // limit_per_type: (index + 1) * 4,
+    // Generate 10 entries for the 'establishments_addresses' table
+    const seedData = Array.from({ length: 2 }, (_, index) => ({
+      name: typesArray[index],
     }));
 
     await queryInterface.bulkInsert('plans', seedData, {});
