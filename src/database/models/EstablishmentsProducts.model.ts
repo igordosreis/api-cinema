@@ -62,8 +62,14 @@ EstablishmentsProductsModel.init(
       allowNull: true,
     },
     type: {
-      type: DataTypes.STRING,
-      allowNull: true,
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'products_types',
+        key: 'id',
+      },
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
     },
     soldOutAmount: {
       type: DataTypes.INTEGER,

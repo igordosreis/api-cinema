@@ -50,8 +50,14 @@ module.exports = {
         collate: 'utf8mb3_unicode_ci',
       },
       type: {
-        type: Sequelize.STRING,
-        defaultValue: null,
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'products_types',
+          key: 'id', 
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
       },
       sold_out_amount: {
         type: Sequelize.INTEGER,
