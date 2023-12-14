@@ -12,7 +12,7 @@ export interface IProduct {
   image: string | null;
   price: number;
   rules: string;
-  type: string;
+  type: number;
   isAvailable?: boolean;
 }
 

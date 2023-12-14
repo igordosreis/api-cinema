@@ -5,8 +5,10 @@ import { IUserInfo } from './IUser';
 import OrdersModel from '../database/models/Orders.model';
 import VouchersAvailableModel from '../database/models/VouchersAvailable.model';
 import VouchersUserModel from '../database/models/VouchersUser.model';
+import OrdersProductsModel from '../database/models/OrdersProducts.model';
+import EstablishmentsProductsModel from '../database/models/EstablishmentsProducts.model';
 
-type Totals = 'totalPrice' | 'totalUnits' | 'totalConsumables' | 'totalTickets';
+type Totals = 'totalPrice' | 'totalUnits' | 1 | 2;
 export type PriceUnitAndTypeTotals = Record<Totals, number>;
 
 export interface IOrderSearchRaw extends Express.Request {
@@ -82,6 +84,12 @@ export interface IOrdersDetails {
 export type IOrderInfo = OrdersModel & {
   vouchersOrderUnpaid: VouchersAvailableModel[];
   vouchersOrderPaid: VouchersUserModel[];
+};
+
+export type IOrderValidateMonth = OrdersModel & {
+  productsDetails: OrdersProductsModel & {
+    productInfo: EstablishmentsProductsModel;
+  }[];
 };
 
 export interface IOrderRequestRaw {

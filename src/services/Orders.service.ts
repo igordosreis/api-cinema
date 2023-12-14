@@ -24,6 +24,7 @@ import {
 } from '../interfaces/IOrder';
 import { STATUS_CANCELLED, STATUS_WAITING } from '../constants';
 import OrdersProductsModel from '../database/models/OrdersProducts.model';
+import ProductsTypesModel from '../database/models/ProductsTypes.model';
 
 export default class OrdersService {
   private static async getVouchersByProductId(productId: number, transaction?: Transaction) {
@@ -39,6 +40,10 @@ export default class OrdersService {
               [Op.gt]: new Date(),
             },
           },
+        },
+        {
+          model: ProductsTypesModel,
+          as: 'typeInfo',
         },
       ],
       transaction: transaction || null,
@@ -115,7 +120,8 @@ export default class OrdersService {
   public static async createOrder(orderRequest: IOrderRequestFormattedBody) {
     const t = await db.transaction();
     try {
-      const { userId, cinemaPlan, orderInfo } = orderRequest;
+      const { userId, orderInfo } = orderRequest;
+      // const { userId, cinemaPlan, orderInfo } = orderRequest;
 
       const productsWithRequestedVouchers = await this.getProductsWithRequestedVouchers(
         orderInfo,
@@ -123,14 +129,15 @@ export default class OrdersService {
       );
 
       const orderTotals = ordersUtil.calculateOrderTotals(productsWithRequestedVouchers);
-
-      await ordersUtil.validatePlanAmount({ userId, cinemaPlan, orderTotals });
+      console.log('- -- - -- -- -- -- -- - -- - -- -- - - - -- - -   orderTotals:   ', orderTotals);
+      // await ordersUtil.validatePlanAmount({ userId, cinemaPlan, orderTotals });
 
       const currentDate = new Date();
       const expireAt = dateUtils.addFiveMinutes(currentDate);
-
+      
+      const { totalPrice, totalUnits } = orderTotals;
       const { id: orderId } = await OrdersModel.create(
-        { ...orderTotals, expireAt, userId },
+        { totalPrice, totalUnits, expireAt, userId },
         { transaction: t },
       );
 
