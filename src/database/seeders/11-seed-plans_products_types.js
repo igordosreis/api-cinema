@@ -33,40 +33,40 @@ module.exports = {
   up: async (queryInterface, _Sequelize) => {
     const seedData = [
       {
-        planId: 0,
-        productTypeId: 0,
+        plan_id: 1,
+        product_type_id: 1,
         quantity: 4,
       },
       {
-        planId: 0,
-        productTypeId: 1,
+        plan_id: 1,
+        product_type_id: 2,
         quantity: 4,
       },
       {
-        planId: 1,
-        productTypeId: 0,
+        plan_id: 2,
+        product_type_id: 1,
         quantity: 8,
       },
       {
-        planId: 1,
-        productTypeId: 1,
+        plan_id: 2,
+        product_type_id: 2,
         quantity: 8,
       },
       {
-        planId: 2,
-        productTypeId: 0,
+        plan_id: 3,
+        product_type_id: 1,
         quantity: 12,
       },
       {
-        planId: 2,
-        productTypeId: 1,
+        plan_id: 3,
+        product_type_id: 2,
         quantity: 12,
       },
     ];
-    await queryInterface.bulkInsert('plans', seedData, {});
+    await queryInterface.bulkInsert('plans_products_types', seedData, {});
   },
 
   down: async (queryInterface) => {
-    await queryInterface.bulkDelete('plans', null, {});
+    await queryInterface.bulkDelete('plans_products_types', null, {});
   },
 };

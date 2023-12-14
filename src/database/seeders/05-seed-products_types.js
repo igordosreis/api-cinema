@@ -34,14 +34,14 @@ module.exports = {
     // const establishmentIds = [488, 753, 1115, 3091, 3092, 3543, 3564, 4243, 4732, 4762, 5049];
 
     // Generate 10 entries for the 'establishments_addresses' table
-    const seedData = Array.from({ length: 2 }, (_, index) => ({
+    const seedData = Array.from({ length: typesArray.length }, (_, index) => ({
       name: typesArray[index],
     }));
 
-    await queryInterface.bulkInsert('plans', seedData, {});
+    await queryInterface.bulkInsert('products_types', seedData, {});
   },
 
   down: async (queryInterface) => {
-    await queryInterface.bulkDelete('plans', null, {});
+    await queryInterface.bulkDelete('products_types', null, {});
   },
 };

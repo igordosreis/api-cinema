@@ -20,7 +20,7 @@ function generateRandomPrice(min, max) {
 // Helper function to get a random type
 function getRandomType() {
   // const types = ['consumable', 'ticket'];
-  const types = [0, 1];
+  const types = [1, 2];
   return types[Math.floor(Math.random() * types.length)];
 }
 
