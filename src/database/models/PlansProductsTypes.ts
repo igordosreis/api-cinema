@@ -1,7 +1,7 @@
 import { DataTypes, Model } from 'sequelize';
 import db from '.';
 import PlansModel from './Plans.model';
-import ProductsTypes from './ProductsTypes.model';
+import ProductsTypesModel from './ProductsTypes.model';
 
 class PlansProductsTypes extends Model {
   declare planId: number;
@@ -44,11 +44,11 @@ PlansProductsTypes.init(
 PlansProductsTypes.belongsTo(PlansModel, { foreignKey: 'planId', as: 'planDetails' });
 PlansModel.hasMany(PlansProductsTypes, { foreignKey: 'planId', as: 'planDetails' });
 
-PlansProductsTypes.belongsTo(ProductsTypes, {
+PlansProductsTypes.belongsTo(ProductsTypesModel, {
   foreignKey: 'productTypeId',
   as: 'type',
 });
-ProductsTypes.hasMany(PlansProductsTypes, {
+ProductsTypesModel.hasMany(PlansProductsTypes, {
   foreignKey: 'productTypeId',
   as: 'type',
 });

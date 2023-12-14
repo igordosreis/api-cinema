@@ -2,14 +2,14 @@ import { DataTypes, Model } from 'sequelize';
 import db from '.';
 import EstablishmentsProductsModel from './EstablishmentsProducts.model';
 
-class ProductsTypes extends Model {
+class ProductsTypesModel extends Model {
   declare id: number;
   declare name: string;
   declare createdAt: Date;
   declare updatedAt: Date;
 }
 
-ProductsTypes.init(
+ProductsTypesModel.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -38,13 +38,13 @@ ProductsTypes.init(
   },
 );
 
-ProductsTypes.hasMany(EstablishmentsProductsModel, {
-  foreignKey: 'productsTypesId',
-  as: 'type',
+ProductsTypesModel.hasMany(EstablishmentsProductsModel, {
+  foreignKey: 'type',
+  as: 'typeInfo',
 });
-EstablishmentsProductsModel.belongsTo(ProductsTypes, {
-  foreignKey: 'productsTypesId',
-  as: 'type',
+EstablishmentsProductsModel.belongsTo(ProductsTypesModel, {
+  foreignKey: 'type',
+  as: 'typeInfo',
 });
 
-export default ProductsTypes;
+export default ProductsTypesModel;

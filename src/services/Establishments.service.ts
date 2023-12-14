@@ -12,6 +12,7 @@ import { IEstablishmentFormattedQuery } from '../interfaces/IEstablishments';
 import createProductSearchSqlizeQueryUtil from '../utils/createProductSearchSqlizeQuery.util';
 import EstablishmentsImagesModel from '../database/models/EstablishmentsImages.model';
 import CustomError, { establishmentServiceUnavailable } from '../utils/customError.util';
+import ProductsTypesModel from '../database/models/ProductsTypes.model';
 
 export default class EstablishmentsService {
   public static async getAllEstablishments(): Promise<EstablishmentsModel[]> {
@@ -105,6 +106,7 @@ export default class EstablishmentsService {
               'available',
             ],
           ],
+          exclude: ['type'],
         },
         include: [
           {
@@ -121,6 +123,10 @@ export default class EstablishmentsService {
           {
             model: EstablishmentsImagesModel,
             as: 'imagesBrand',
+          },
+          {
+            model: ProductsTypesModel,
+            as: 'typeInfo',
           },
         ],
         group: ['establishments_products.id'],
