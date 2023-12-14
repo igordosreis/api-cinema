@@ -16,10 +16,6 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      limit_per_type: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-      },
       price: {
         type: Sequelize.DECIMAL(10, 2),
         allowNull: false,

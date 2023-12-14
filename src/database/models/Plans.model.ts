@@ -4,7 +4,6 @@ import db from '.';
 class PlansModel extends Model {
   declare id: number;
   declare name: string;
-  declare limitPerType: number;
   declare price: number;
   declare description: string;
   declare rules: string;
@@ -22,9 +21,6 @@ PlansModel.init(
     },
     name: {
       type: DataTypes.STRING,
-    },
-    limitPerType: {
-      type: DataTypes.INTEGER,
     },
     price: {
       type: DataTypes.INTEGER,
