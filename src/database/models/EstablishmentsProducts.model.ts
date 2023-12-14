@@ -16,6 +16,7 @@ class EstablishmentsProductsModel extends Model {
   declare soldOutAmount: number;
   declare createdAt: Date;
   declare updatedAt: Date;
+  declare expireAt: Date;
 }
 
 EstablishmentsProductsModel.init(
@@ -73,6 +74,10 @@ EstablishmentsProductsModel.init(
       // defaultValue: DataTypes.NOW,
     },
     updatedAt: {
+      type: DataTypes.DATE,
+      // defaultValue: DataTypes.NOW,
+    },
+    expireAt: {
       type: DataTypes.DATE,
       // defaultValue: DataTypes.NOW,
     },
