@@ -8,5 +8,6 @@ establishmentsRouter.get('/search', EstablishmentsController.getEstablishmentsBy
 establishmentsRouter.get('/cities', EstablishmentsController.getAllCities);
 establishmentsRouter.get('/states', EstablishmentsController.getAllStates);
 establishmentsRouter.get('/products', EstablishmentsController.getProductsByQuery);
+establishmentsRouter.get('/types', EstablishmentsController.getProductsTypes);
 
 export default establishmentsRouter;

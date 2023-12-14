@@ -42,4 +42,10 @@ export default class EstablishmentsController {
 
     res.status(200).json(filteredProducts);
   }
+
+  public static async getProductsTypes(_req: Request, res: Response): Promise<void> {
+    const allProductsTypes = await EstablishmentsService.getProductsTypes();
+
+    res.status(200).json(allProductsTypes);
+  }
 }

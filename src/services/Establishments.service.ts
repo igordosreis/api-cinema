@@ -141,4 +141,17 @@ export default class EstablishmentsService {
       throw new CustomError(establishmentServiceUnavailable);
     }
   }
+
+  public static async getProductsTypes() {
+    try {
+      const allProductsTypes = await ProductsTypesModel.findAll();
+
+      return allProductsTypes;
+    } catch (error: CustomError | unknown) {
+      console.log('- -- - -- -- -- - - --  - - -- - -- - ---- -- -- - --- - - - -error: ', error);
+      if (error instanceof CustomError) throw error;
+
+      throw new CustomError(establishmentServiceUnavailable);
+    }
+  }
 }
