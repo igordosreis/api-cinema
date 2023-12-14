@@ -18,7 +18,7 @@ class CreateProductSearchSqlizeQuery {
         [Op.or]: { name: { [Op.substring]: term }, description: { [Op.substring]: term } },
       });
     }
-    if (type) searchQuery.push({ '$typeInfo.name$': { [Op.like]: type } });
+    if (type) searchQuery.push({ '$typeInfo.id$': { [Op.eq]: type } });
     if (establishmentId) searchQuery.push({ establishmentId });
     if (active) searchQuery.push({ active });
 
