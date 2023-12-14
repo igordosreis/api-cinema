@@ -7,11 +7,12 @@
 // import OrdersModel from '../database/models/Orders.model';
 // import PlansModel from '../database/models/Plans.model';
 import { PriceUnitAndTypeTotals } from '../interfaces/IOrder';
-// import { IOrderValidateMonth, IOrderValidatePlan, PriceUnitAndTypeTotals } from '../interfaces/IOrder';
-import {
-  IProductFromGetById,
-  IProductWithRequestedVouchers,
-} from '../interfaces/IProducts';
+// import {
+//   IOrderProductsInMonth,
+//   IOrderValidatePlan,
+//   PriceUnitAndTypeTotals,
+// } from '../interfaces/IOrder';
+import { IProductFromGetById, IProductWithRequestedVouchers } from '../interfaces/IProducts';
 import CustomError, { vouchersNotEnough, vouchersUnavailable } from './customError.util';
 // import CustomError, { amountUnauthorized, vouchersNotEnough, vouchersUnavailable } from './customError.util';
 // import dateUtils from './date.utils';
@@ -27,7 +28,7 @@ class Orders {
 
     if (areVouchersBelowMinimumQty) throw new CustomError(vouchersUnavailable);
 
-    const areVouchersBelowRequestedQty = Number(soldOutAmount)
+    const areVouchersBelowRequestedQty = Number(soldOutAmount) 
       > totalVouchersAvailable - amountRequested;
     if (areVouchersBelowRequestedQty) throw new CustomError(vouchersNotEnough);
   };
@@ -39,7 +40,7 @@ class Orders {
   //   const firstDayOfMonth = dateUtils.getFirstDayOfMonth(currentDate);
   //   const lastDayOfMonth = dateUtils.getLastDayOfMonth(currentDate);
 
-  //   const userOrdersInCurrentMonth: IOrderValidateMonth = await OrdersModel.findAll({
+  //   const userOrdersInCurrentMonth = await OrdersModel.findAll({
   //     include: [
   //       {
   //         model: OrdersProductsModel,
@@ -63,31 +64,29 @@ class Orders {
   //       userId,
   //       updatedAt: {
   //         [Op.gte]: firstDayOfMonth,
-  //         [Op.lte]: lastDayOfMonth, 
+  //         [Op.lte]: lastDayOfMonth,
   //       },
   //       status: {
   //         [Op.or]: [STATUS_PAID, STATUS_WAITING],
   //       },
   //     },
-  //   });
-    
-  //   const userTotalsInCurrentMonth = userOrdersInCurrentMonth.reduce((accTotal, currOrder) => {
-  //     const orderInfo: OrdersModel = currOrder.dataValues;
-  //     const newAccTotal = {
-  //       totalConsumables: accTotal.totalConsumables + orderInfo.totalConsumables,
-  //       totalTickets: accTotal.totalTickets + orderInfo.totalTickets,
-  //     };
+  //   }) as unknown as IOrderProductsInMonth;
 
-  //     return newAccTotal;
-  //   }, { totalConsumables: 0, totalTickets: 0 } as Pick<PriceUnitAndTypeTotals, 'totalConsumables' | 'totalTickets'>);
-
-  //   const {
-  //     totalConsumables: totalConsumablesInCurrentMonth,
-  //     totalTickets: totalTicketsInCurrentMonth,
-  //   } = userTotalsInCurrentMonth;
-
-  //   const isUserRequestOverPlanLimit = totalConsumablesInCurrentMonth + orderTotals.totalConsumables > planInfo?.dataValues.limitPerType
-  //     || totalTicketsInCurrentMonth + orderTotals.totalTickets > planInfo?.dataValues.limitPerType;
+  //   const userTotalsInCurrentMonth = userOrdersInCurrentMonth.productsDetails.reduce(
+  //     (accTotal, currProduct) => {
+  //       const { type } = currProduct.productInfo;
+        
+  //       const newAccTotal = {
+  //         [type]: accTotal[type] ? accTotal[type] + 1 : 1,
+  //       };
+  //       return newAccTotal;
+  //     },
+  //     {} as Pick<PriceUnitAndTypeTotals, number>,
+  //   );
+  //   // const isUserRequestOverPlanLimit =
+  //   //   totalConsumablesInCurrentMonth + orderTotals.totalConsumables >
+  //   //     planInfo?.dataValues.limitPerType ||
+  //   //   totalTicketsInCurrentMonth + orderTotals.totalTickets > planInfo?.dataValues.limitPerType;
 
   //   if (isUserRequestOverPlanLimit) throw new CustomError(amountUnauthorized);
   // };
@@ -103,13 +102,16 @@ class Orders {
         const isTotalOfTypeAlreadyCalculated = accTotals[currProduct.type as keyof PriceUnitAndTypeTotals];
         const totalOfType = isTotalOfTypeAlreadyCalculated || productsInfo
           .filter(({ type }) => type === currProduct.type)
-          .reduce((accTypeTotal, currType) => (accTypeTotal + currType.vouchersRequested.length), 0);
+          .reduce(
+            (accTypeTotal, currType) => accTypeTotal + currType.vouchersRequested.length,
+            0,
+          );
 
-        const newAccTotals = { 
+        const newAccTotals = {
           ...accTotals,
           totalPrice: Number(totalPrice.toFixed(2)),
           totalUnits,
-          [currProduct.type as keyof PriceUnitAndTypeTotals]: totalOfType, 
+          [currProduct.type as keyof PriceUnitAndTypeTotals]: totalOfType,
         };
 
         return newAccTotals;

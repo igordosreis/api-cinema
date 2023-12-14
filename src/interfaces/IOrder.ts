@@ -8,7 +8,7 @@ import VouchersUserModel from '../database/models/VouchersUser.model';
 import OrdersProductsModel from '../database/models/OrdersProducts.model';
 import EstablishmentsProductsModel from '../database/models/EstablishmentsProducts.model';
 
-type Totals = 'totalPrice' | 'totalUnits' | 1 | 2;
+type Totals = 'totalPrice' | 'totalUnits' | number;
 export type PriceUnitAndTypeTotals = Record<Totals, number>;
 
 export interface IOrderSearchRaw extends Express.Request {
@@ -86,7 +86,7 @@ export type IOrderInfo = OrdersModel & {
   vouchersOrderPaid: VouchersUserModel[];
 };
 
-export type IOrderValidateMonth = OrdersModel & {
+export type IOrderProductsInMonth = OrdersModel & {
   productsDetails: OrdersProductsModel & {
     productInfo: EstablishmentsProductsModel;
   }[];
