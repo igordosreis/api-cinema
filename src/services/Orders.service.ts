@@ -10,6 +10,7 @@ import CustomError, {
   orderNotFound,
   orderServiceUnavailable,
   ordersNotFound,
+  productNotFound,
 } from '../utils/customError.util';
 import ordersUtil from '../utils/orders.util';
 import OrdersModel from '../database/models/Orders.model';
@@ -50,6 +51,9 @@ export default class OrdersService {
       where: { id: productId },
       order: [[{ model: VouchersAvailableModel, as: 'vouchersAvailable' }, 'expireAt', 'ASC']],
     });
+
+    const isProductNotFound = !product;
+    if (isProductNotFound) throw new CustomError(productNotFound);
 
     return product as IProductFromGetById;
   }

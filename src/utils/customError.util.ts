@@ -99,3 +99,9 @@ export const movieNotFound: ICustomError = {
   title: 'Filme não encontrado.',
   message: 'O filme procurado não foi encontrado.',
 };
+
+export const productNotFound: ICustomError = {
+  status: 404,
+  title: 'Produto não encontrado.',
+  message: 'O produto procurado não foi encontrado.',
+};
