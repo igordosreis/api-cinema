@@ -33,4 +33,22 @@ export default class PlansService {
 
     return allPlans;
   }
+
+  public static async getPlanById(planId: number) {
+    const plan = await PlansProductsTypes.findOne({
+      include: [
+        {
+          model: PlansModel,
+          as: 'planDetails',
+        },
+        {
+          model: ProductsTypesModel,
+          as: 'type',
+        },
+      ],
+      where: { planId },
+    });
+
+    return plan;
+  }
 }

@@ -48,4 +48,13 @@ export default class UsersController {
 
     res.status(200).json(allPlans);
   }
+
+  public static async getPlanById(req: Request, res: Response): Promise<void> {
+    const { id: planId } = req.params;
+
+    const parsedPlanId = Number(planId);
+    const plan = await PlansService.getPlanById(parsedPlanId);
+
+    res.status(200).json(plan);
+  }
 }

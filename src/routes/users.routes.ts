@@ -8,5 +8,6 @@ usersRouter.patch('/orders/details/:id', UsersController.cancelOrder);
 usersRouter.get('/orders/all', UsersController.getAllOrders);
 usersRouter.get('/orders/details/:id', UsersController.getOrderById);
 usersRouter.get('/plans/all', UsersController.getAllPlans);
+usersRouter.get('/plans/details/:id', UsersController.getPlanById);
 
 export default usersRouter;
