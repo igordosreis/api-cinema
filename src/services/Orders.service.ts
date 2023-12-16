@@ -124,7 +124,6 @@ export default class OrdersService {
   public static async createOrder(orderRequest: IOrderRequestFormattedBody) {
     const t = await db.transaction();
     try {
-      // const { userId, orderInfo } = orderRequest;
       const { userId, cinemaPlan, orderInfo } = orderRequest;
 
       const productsWithRequestedVouchers = await this.getProductsWithRequestedVouchers(
@@ -133,7 +132,6 @@ export default class OrdersService {
       );
 
       const orderTotals = ordersUtil.calculateOrderTotals(productsWithRequestedVouchers);
-      console.log('- -- - -- -- -- -- -- - -- - -- -- - - - -- - -   orderTotals:   ', orderTotals);
       await ordersUtil.validatePlanAmount({ userId, cinemaPlan, orderTotals });
 
       const currentDate = new Date();
