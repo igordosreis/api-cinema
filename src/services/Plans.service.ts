@@ -2,6 +2,7 @@
 import PlansModel from '../database/models/Plans.model';
 import PlansProductsTypes from '../database/models/PlansProductsTypes';
 import ProductsTypesModel from '../database/models/ProductsTypes.model';
+import { IPlanInfo } from '../interfaces/IPlan';
 import CustomError, { planNotFound } from '../utils/customError.util';
 
 export default class PlansService {
@@ -41,7 +42,7 @@ export default class PlansService {
       ],
     });
 
-    return allPlans;
+    return allPlans as IPlanInfo[];
   }
 
   public static async getPlanById(planId: number) {
@@ -70,6 +71,6 @@ export default class PlansService {
     const isPlanNotFound = !plan;
     if (isPlanNotFound) throw new CustomError(planNotFound);
 
-    return plan;
+    return plan as IPlanInfo;
   }
 }

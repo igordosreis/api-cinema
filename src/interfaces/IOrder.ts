@@ -8,7 +8,8 @@ import VouchersUserModel from '../database/models/VouchersUser.model';
 import OrdersProductsModel from '../database/models/OrdersProducts.model';
 import EstablishmentsProductsModel from '../database/models/EstablishmentsProducts.model';
 
-type Totals = 'totalPrice' | 'totalUnits' | number;
+export type TypeId = number;
+type Totals = 'totalPrice' | 'totalUnits' | TypeId;
 export type PriceUnitAndTypeTotals = Record<Totals, number>;
 
 export interface IOrderSearchRaw extends Express.Request {
@@ -47,7 +48,7 @@ export interface IOrderUpdate {
 
 export interface IOrderValidatePlan {
   userId: number;
-  cinemaPlan: string;
+  cinemaPlan: number;
   orderTotals: PriceUnitAndTypeTotals;
 }
 
@@ -86,11 +87,11 @@ export type IOrderInfo = OrdersModel & {
   vouchersOrderPaid: VouchersUserModel[];
 };
 
-export type IOrderProductsInMonth = OrdersModel & {
-  productsDetails: OrdersProductsModel & {
+export type IOrderProductsInMonth = Array<OrdersModel & {
+  productsDetails: Array<OrdersProductsModel & {
     productInfo: EstablishmentsProductsModel;
-  }[];
-};
+  }>;
+}>;
 
 export interface IOrderRequestRaw {
   productId: string | number;
@@ -112,7 +113,7 @@ export interface IOrderRequestRawBody extends Request {
 
 export interface IOrderRequestFormattedBody {
   userId: number;
-  cinemaPlan: string;
+  cinemaPlan: number;
   orderInfo: IOrderRequestFormatted[];
 }
 

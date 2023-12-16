@@ -2,22 +2,21 @@
 /* eslint-disable max-lines-per-function */
 /* eslint-disable camelcase */
 /* eslint-disable @typescript-eslint/naming-convention */
-// import { Op } from 'sequelize';
-// import { STATUS_PAID, STATUS_WAITING } from '../constants';
-// import OrdersModel from '../database/models/Orders.model';
-// import PlansModel from '../database/models/Plans.model';
-import { PriceUnitAndTypeTotals } from '../interfaces/IOrder';
-// import {
-//   IOrderProductsInMonth,
-//   IOrderValidatePlan,
-//   PriceUnitAndTypeTotals,
-// } from '../interfaces/IOrder';
+import { Op } from 'sequelize';
+import { STATUS_PAID, STATUS_WAITING } from '../constants';
+import OrdersModel from '../database/models/Orders.model';
+import {
+  IOrderProductsInMonth,
+  IOrderValidatePlan,
+  PriceUnitAndTypeTotals,
+  TypeId,
+} from '../interfaces/IOrder';
 import { IProductFromGetById, IProductWithRequestedVouchers } from '../interfaces/IProducts';
-import CustomError, { vouchersNotEnough, vouchersUnavailable } from './customError.util';
-// import CustomError, { amountUnauthorized, vouchersNotEnough, vouchersUnavailable } from './customError.util';
-// import dateUtils from './date.utils';
-// import OrdersProductsModel from '../database/models/OrdersProducts.model';
-// import EstablishmentsProductsModel from '../database/models/EstablishmentsProducts.model';
+import CustomError, { amountUnauthorized, vouchersNotEnough, vouchersUnavailable } from './customError.util';
+import dateUtils from './date.utils';
+import OrdersProductsModel from '../database/models/OrdersProducts.model';
+import EstablishmentsProductsModel from '../database/models/EstablishmentsProducts.model';
+import PlansService from '../services/Plans.service';
 
 class Orders {
   validateOrderAmount = (productInfo: IProductFromGetById, amountRequested: number) => {
@@ -33,63 +32,90 @@ class Orders {
     if (areVouchersBelowRequestedQty) throw new CustomError(vouchersNotEnough);
   };
 
-  // validatePlanAmount = async ({ userId, cinemaPlan, orderTotals }: IOrderValidatePlan) => {
-  //   const planInfo = await PlansModel.findOne({ where: { name: cinemaPlan } });
+  validatePlanAmount = async ({ userId, cinemaPlan, orderTotals }: IOrderValidatePlan) => {
+    const planInfo = await PlansService.getPlanById(cinemaPlan);
 
-  //   const currentDate = new Date();
-  //   const firstDayOfMonth = dateUtils.getFirstDayOfMonth(currentDate);
-  //   const lastDayOfMonth = dateUtils.getLastDayOfMonth(currentDate);
+    const currentDate = new Date();
+    const firstDayOfMonth = dateUtils.getFirstDayOfMonth(currentDate);
+    const lastDayOfMonth = dateUtils.getLastDayOfMonth(currentDate);
 
-  //   const userOrdersInCurrentMonth = await OrdersModel.findAll({
-  //     include: [
-  //       {
-  //         model: OrdersProductsModel,
-  //         as: 'productsDetails',
-  //         required: false,
-  //         attributes: {
-  //           exclude: ['orderId'],
-  //         },
-  //         include: [
-  //           {
-  //             model: EstablishmentsProductsModel,
-  //             as: 'productInfo',
-  //             attributes: {
-  //               exclude: ['id'],
-  //             },
-  //           },
-  //         ],
-  //       },
-  //     ],
-  //     where: {
-  //       userId,
-  //       updatedAt: {
-  //         [Op.gte]: firstDayOfMonth,
-  //         [Op.lte]: lastDayOfMonth,
-  //       },
-  //       status: {
-  //         [Op.or]: [STATUS_PAID, STATUS_WAITING],
-  //       },
-  //     },
-  //   }) as unknown as IOrderProductsInMonth;
+    const userOrdersInCurrentMonth = await OrdersModel.findAll({
+      include: [
+        {
+          model: OrdersProductsModel,
+          as: 'productsDetails',
+          required: false,
+          attributes: {
+            exclude: ['orderId'],
+          },
+          include: [
+            {
+              model: EstablishmentsProductsModel,
+              as: 'productInfo',
+              attributes: {
+                exclude: ['id'],
+              },
+            },
+          ],
+        },
+      ],
+      where: {
+        userId,
+        updatedAt: {
+          [Op.gte]: firstDayOfMonth,
+          [Op.lte]: lastDayOfMonth,
+        },
+        status: {
+          [Op.or]: [STATUS_PAID, STATUS_WAITING],
+        },
+      },
+    }) as IOrderProductsInMonth;
 
-  //   const userTotalsInCurrentMonth = userOrdersInCurrentMonth.productsDetails.reduce(
-  //     (accTotal, currProduct) => {
-  //       const { type } = currProduct.productInfo;
+    const userTypeTotalsInCurrentMonth = userOrdersInCurrentMonth.reduce(
+      (accTotalInMonth, currOrder) => {
+        const { productsDetails } = currOrder;
+
+        const productsTypeTotalsInCurrOrder = productsDetails.reduce(
+          (accTotalInOrder, currProduct) => {
+            const { type } = currProduct.productInfo;
+            
+            const newAccTotalInOrder = {
+              ...accTotalInOrder,
+              [type]: accTotalInOrder[type] ? accTotalInOrder[type] + 1 : 1,
+            };
+
+            return newAccTotalInOrder;
+          },
+          {} as Pick<PriceUnitAndTypeTotals, TypeId>,
+        );
         
-  //       const newAccTotal = {
-  //         [type]: accTotal[type] ? accTotal[type] + 1 : 1,
-  //       };
-  //       return newAccTotal;
-  //     },
-  //     {} as Pick<PriceUnitAndTypeTotals, number>,
-  //   );
-  //   // const isUserRequestOverPlanLimit =
-  //   //   totalConsumablesInCurrentMonth + orderTotals.totalConsumables >
-  //   //     planInfo?.dataValues.limitPerType ||
-  //   //   totalTicketsInCurrentMonth + orderTotals.totalTickets > planInfo?.dataValues.limitPerType;
+        const typesInOrder = Object.keys(productsTypeTotalsInCurrOrder).map((type) => Number(type));
+        const newAccTotalInMonth = typesInOrder.reduce((newAcc, currType) => (
+          newAcc[currType]
+            ? {
+              ...newAcc,
+              [currType]: newAcc[currType] + productsTypeTotalsInCurrOrder[currType],
+            }
+            : {
+              ...newAcc,
+              [currType]: productsTypeTotalsInCurrOrder[currType],
+            }
+        ), accTotalInMonth);
 
-  //   if (isUserRequestOverPlanLimit) throw new CustomError(amountUnauthorized);
-  // };
+        return newAccTotalInMonth;
+      },
+      {} as Pick<PriceUnitAndTypeTotals, TypeId>,
+    );
+
+    planInfo.planDetails.forEach((planDetail) => {
+      const { productTypeId, quantity, type: { name } } = planDetail;
+      
+      const userTypeTotal = userTypeTotalsInCurrentMonth[productTypeId] + orderTotals[productTypeId];
+      const isUserTypeTotalOverPlanLimit = userTypeTotal > quantity;
+
+      if (isUserTypeTotalOverPlanLimit) throw new CustomError(amountUnauthorized(name));
+    });
+  };
 
   calculateOrderTotals = (productsInfo: IProductWithRequestedVouchers[]) => {
     const totals = productsInfo.reduce(

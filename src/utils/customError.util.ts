@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 export type ICustomError = {
   status: number;
   message: string;
@@ -81,10 +82,14 @@ export const cancelUnauthorized: ICustomError = {
   message: 'Somente pedidos com pagamento pendente podem ser cancelados.',
 };
 
-export const amountUnauthorized: ICustomError = {
-  status: 400,
-  title: 'Quantidade de produtos não autorizada.',
-  message: 'A quantidade de produtos solicitada é maior do que a disponível no seu plano.',
+export const amountUnauthorized = (name: string): ICustomError => {
+  const errorObject = {
+    status: 400,
+    title: `Quantidade de ${name} não autorizada.`,
+    message: `A quantidade de ${name} no pedido é maior do que a quantidade disponível no seu plano.`,
+  };
+
+  return errorObject;
 };
 
 export const establishmentServiceUnavailable: ICustomError = {
@@ -108,6 +113,6 @@ export const productNotFound: ICustomError = {
 
 export const planNotFound: ICustomError = {
   status: 404,
-  title: 'plano não encontrado.',
+  title: 'Plano não encontrado.',
   message: 'O plano procurado não foi encontrado.',
 };
