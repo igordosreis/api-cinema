@@ -4,6 +4,8 @@ import db from '../database/models';
 import EstablishmentsProductsModel from '../database/models/EstablishmentsProducts.model';
 import VouchersAvailableModel from '../database/models/VouchersAvailable.model';
 import VouchersUserModel from '../database/models/VouchersUser.model';
+import OrdersProductsModel from '../database/models/OrdersProducts.model';
+import ProductsTypesModel from '../database/models/ProductsTypes.model';
 import { IProductFromGetById, IProductWithRequestedVouchers } from '../interfaces/IProducts';
 import CustomError, {
   cancelUnauthorized,
@@ -24,8 +26,6 @@ import {
   IOrderRequestFormattedBody,
 } from '../interfaces/IOrder';
 import { STATUS_CANCELLED, STATUS_WAITING } from '../constants';
-import OrdersProductsModel from '../database/models/OrdersProducts.model';
-import ProductsTypesModel from '../database/models/ProductsTypes.model';
 
 export default class OrdersService {
   private static async getVouchersByProductId(productId: number, transaction?: Transaction) {
