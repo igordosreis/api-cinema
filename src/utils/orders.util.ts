@@ -19,7 +19,7 @@ import EstablishmentsProductsModel from '../database/models/EstablishmentsProduc
 import PlansService from '../services/Plans.service';
 
 class Orders {
-  validateOrderAmount = (productInfo: IProductFromGetById, amountRequested: number) => {
+  validateRequestedAmount = (productInfo: IProductFromGetById, amountRequested: number) => {
     const { vouchersAvailable, soldOutAmount } = productInfo;
 
     const totalVouchersAvailable = vouchersAvailable.length;

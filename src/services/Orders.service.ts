@@ -65,7 +65,7 @@ export default class OrdersService {
     const productsWithRequestedVouchersPromise: Promise<IProductWithRequestedVouchers>[] = orderInfo
       .map(async ({ productId, amountRequested }) => {
         const productPromise = await this.getVouchersByProductId(productId, transaction);
-        ordersUtil.validateOrderAmount(productPromise, amountRequested);
+        ordersUtil.validateRequestedAmount(productPromise, amountRequested);
 
         const { vouchersAvailable, ...restOfInfo } = productPromise;
         const productInfo = {
@@ -142,7 +142,6 @@ export default class OrdersService {
         { totalPrice, totalUnits, expireAt, userId },
         { transaction: t },
       );
-
       await this.createProductsOrder(productsWithRequestedVouchers, orderId, t);
       await this.updateVouchersOnCreateOrder(productsWithRequestedVouchers, orderId, t);
 
