@@ -20,15 +20,23 @@ export default class PlansService {
     //     },
     //   ],
     // });
-    const allPlans = await PlansProductsTypes.findAll({
+    const allPlans = await PlansModel.findAll({
       include: [
         {
-          model: PlansModel,
+          model: PlansProductsTypes,
           as: 'planDetails',
-        },
-        {
-          model: ProductsTypesModel,
-          as: 'type',
+          attributes: {
+            exclude: ['planId'],
+          },
+          include: [
+            {
+              model: ProductsTypesModel,
+              as: 'type',
+              attributes: {
+                exclude: ['id'],
+              },
+            },
+          ],
         },
       ],
     });
