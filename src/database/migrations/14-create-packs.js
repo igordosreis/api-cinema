@@ -28,6 +28,7 @@ module.exports = {
       },
       image: {
         type: Sequelize.STRING,
+        allowNull: true,
         defaultValue: null,
       },
       price: {
@@ -49,7 +50,7 @@ module.exports = {
       },
       isLimited: {
         type: Sequelize.BOOLEAN,
-        allowNull: false,
+        allowNull: true,
       },
       created_at: {
         type: Sequelize.DATE,
