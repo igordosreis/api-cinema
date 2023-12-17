@@ -1,31 +1,31 @@
 import { DataTypes, Model } from 'sequelize';
 import db from '.';
+import OrdersModel from './Orders.model';
 import EstablishmentsProductsModel from './EstablishmentsProducts.model';
-import PacksModel from './Packs.model';
 
-class PacksProductsModel extends Model {
+class OrdersPacksModel extends Model {
+  declare orderId: number;
   declare packId: number;
-  declare productId: number;
   declare quantity: number;
-  declare price: number;
+  declare soldPrice: number;
 }
 
-PacksProductsModel.init(
+OrdersPacksModel.init(
   {
-    packId: {
+    orderId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       references: {
-        model: 'packs',
+        model: 'orders',
         key: 'id',
       },
     },
-    productId: {
+    packId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       references: {
-        model: 'establishments_products',
+        model: 'packs',
         key: 'id',
       },
     },
@@ -33,7 +33,7 @@ PacksProductsModel.init(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    price: {
+    soldPrice: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
@@ -41,27 +41,21 @@ PacksProductsModel.init(
   {
     underscored: true,
     sequelize: db,
-    modelName: 'orders_products',
+    modelName: 'orders_packs',
     timestamps: false,
   },
 );
 
-PacksProductsModel.belongsTo(EstablishmentsProductsModel, {
+OrdersPacksModel.belongsTo(OrdersModel, { foreignKey: 'orderId', as: 'productsDetails' });
+OrdersModel.hasMany(OrdersPacksModel, { foreignKey: 'orderId', as: 'productsDetails' });
+
+OrdersPacksModel.belongsTo(EstablishmentsProductsModel, {
   foreignKey: 'productId',
   as: 'productInfo',
 });
-EstablishmentsProductsModel.hasMany(PacksProductsModel, {
+EstablishmentsProductsModel.hasMany(OrdersPacksModel, {
   foreignKey: 'productId',
   as: 'productInfo',
 });
 
-PacksProductsModel.belongsTo(PacksModel, {
-  foreignKey: 'packId',
-  as: 'packInfo',
-});
-PacksModel.hasMany(PacksProductsModel, {
-  foreignKey: 'packId',
-  as: 'packInfo',
-});
-
-export default PacksProductsModel;
+export default OrdersPacksModel;
