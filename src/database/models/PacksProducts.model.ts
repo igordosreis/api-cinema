@@ -41,7 +41,7 @@ PacksProductsModel.init(
   {
     underscored: true,
     sequelize: db,
-    modelName: 'orders_products',
+    modelName: 'packs_products',
     timestamps: false,
   },
 );
