@@ -54,10 +54,10 @@ module.exports = {
         price: 9.00,
       },
     ];
-    await queryInterface.bulkInsert('plans_products_types', seedData, {});
+    await queryInterface.bulkInsert('packs_products', seedData, {});
   },
 
   down: async (queryInterface) => {
-    await queryInterface.bulkDelete('plans_products_types', null, {});
+    await queryInterface.bulkDelete('packs_products', null, {});
   },
 };
