@@ -58,7 +58,7 @@ export default class OrdersService {
     return product as IProductFromGetById;
   }
 
-  private static async getProductsWithRequestedVouchers(
+  private static async getRequestedVouchers(
     orderInfo: IOrderRequestFormatted[],
     transaction: Transaction,
   ) {
@@ -126,7 +126,7 @@ export default class OrdersService {
     try {
       const { userId, cinemaPlan, orderInfo } = orderRequest;
 
-      const productsWithRequestedVouchers = await this.getProductsWithRequestedVouchers(
+      const productsWithRequestedVouchers = await this.getRequestedVouchers(
         orderInfo,
         t,
       );

@@ -3,6 +3,7 @@ import { EstablishmentsService } from '../services';
 import { IEstablishmentRawQuery } from '../interfaces/IEstablishments';
 import { IProductRawQuery } from '../interfaces/IProducts';
 import formatRequestQueryUtil from '../utils/formatRequestQuery.util';
+import ProductsService from '../services/Products.service';
 
 export default class EstablishmentsController {
   public static async getAllEstablishments(_req: Request, res: Response): Promise<void> {
@@ -38,13 +39,13 @@ export default class EstablishmentsController {
     const searchQuery = req as IProductRawQuery;
 
     const formattedQuery = formatRequestQueryUtil.formatProductQuery(searchQuery);
-    const filteredProducts = await EstablishmentsService.getProductsByQuery(formattedQuery);
+    const filteredProducts = await ProductsService.getProductsByQuery(formattedQuery);
 
     res.status(200).json(filteredProducts);
   }
 
   public static async getProductsTypes(_req: Request, res: Response): Promise<void> {
-    const allProductsTypes = await EstablishmentsService.getProductsTypes();
+    const allProductsTypes = await ProductsService.getProductsTypes();
 
     res.status(200).json(allProductsTypes);
   }
