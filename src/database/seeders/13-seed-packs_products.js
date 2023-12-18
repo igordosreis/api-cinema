@@ -1,0 +1,63 @@
+/* eslint-disable max-lines-per-function */
+/* eslint-disable @typescript-eslint/no-var-requires */
+// const { faker } = require('@faker-js/faker');
+
+module.exports = {
+  up: async (queryInterface, _Sequelize) => {
+    const seedData = [
+      {
+        pack_id: 1,
+        product_id: 49,
+        quantity: 2,
+        price: 5.00,
+      },
+      {
+        pack_id: 1,
+        product_id: 48,
+        quantity: 2,
+        price: 9.00,
+      },
+      {
+        pack_id: 2,
+        product_id: 47,
+        quantity: 2,
+        price: 15.00,
+      },
+      {
+        pack_id: 2,
+        product_id: 48,
+        quantity: 1,
+        price: 9.00,
+      },
+      {
+        pack_id: 3,
+        product_id: 48,
+        quantity: 2,
+        price: 5.00,
+      },
+      {
+        pack_id: 3,
+        product_id: 47,
+        quantity: 2,
+        price: 9.00,
+      },
+      {
+        pack_id: 4,
+        product_id: 48,
+        quantity: 2,
+        price: 5.00,
+      },
+      {
+        pack_id: 4,
+        product_id: 47,
+        quantity: 2,
+        price: 9.00,
+      },
+    ];
+    await queryInterface.bulkInsert('plans_products_types', seedData, {});
+  },
+
+  down: async (queryInterface) => {
+    await queryInterface.bulkDelete('plans_products_types', null, {});
+  },
+};
