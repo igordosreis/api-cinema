@@ -1,18 +1,16 @@
 /* eslint-disable max-lines-per-function */
-import { Transaction, Op } from 'sequelize';
+import { Transaction } from 'sequelize';
 import db from '../database/models';
 import EstablishmentsProductsModel from '../database/models/EstablishmentsProducts.model';
 import VouchersAvailableModel from '../database/models/VouchersAvailable.model';
 import VouchersUserModel from '../database/models/VouchersUser.model';
 import OrdersProductsModel from '../database/models/OrdersProducts.model';
-import ProductsTypesModel from '../database/models/ProductsTypes.model';
-import { IProductFromGetById, IProductWithRequestedVouchers } from '../interfaces/IProducts';
+import { IProductWithRequestedVouchers } from '../interfaces/IProducts';
 import CustomError, {
   cancelUnauthorized,
   orderNotFound,
   orderServiceUnavailable,
   ordersNotFound,
-  productNotFound,
 } from '../utils/customError.util';
 import ordersUtil from '../utils/orders.util';
 import OrdersModel from '../database/models/Orders.model';
@@ -22,87 +20,12 @@ import { IPaymentOrderRequest } from '../interfaces/IPayment';
 import {
   IOrderInfo,
   IOrderSearchFormatted,
-  IOrderRequestFormatted,
   IOrderRequestFormattedBody,
 } from '../interfaces/IOrder';
 import { STATUS_CANCELLED, STATUS_WAITING } from '../constants';
+import VouchersService from './Vouchers.service';
 
 export default class OrdersService {
-  private static async getVouchersByProductId(productId: number, transaction?: Transaction) {
-    const product = await EstablishmentsProductsModel.findOne({
-      attributes: { exclude: ['createdAt', 'updatedAt'] },
-      include: [
-        {
-          model: VouchersAvailableModel,
-          as: 'vouchersAvailable',
-          where: {
-            orderId: null,
-            expireAt: {
-              [Op.gt]: new Date(),
-            },
-          },
-        },
-        {
-          model: ProductsTypesModel,
-          as: 'typeInfo',
-        },
-      ],
-      transaction: transaction || null,
-      where: { id: productId },
-      order: [[{ model: VouchersAvailableModel, as: 'vouchersAvailable' }, 'expireAt', 'ASC']],
-    });
-
-    const isProductNotFound = !product;
-    if (isProductNotFound) throw new CustomError(productNotFound);
-
-    return product as IProductFromGetById;
-  }
-
-  private static async getRequestedVouchers(
-    orderInfo: IOrderRequestFormatted[],
-    transaction: Transaction,
-  ) {
-    const productsWithRequestedVouchersPromise: Promise<IProductWithRequestedVouchers>[] = orderInfo
-      .map(async ({ productId, amountRequested }) => {
-        const productPromise = await this.getVouchersByProductId(productId, transaction);
-        ordersUtil.validateRequestedAmount(productPromise, amountRequested);
-
-        const { vouchersAvailable, ...restOfInfo } = productPromise;
-        const productInfo = {
-          ...restOfInfo.dataValues,
-          vouchersRequested: vouchersAvailable.slice(0, amountRequested),
-        };
-
-        return productInfo;
-      });
-    const productsWithRequestedVouchers = await Promise.all(productsWithRequestedVouchersPromise);
-
-    return productsWithRequestedVouchers;
-  }
-
-  private static async updateVouchersOnCreateOrder(
-    productsWithRequestedVouchers: IProductWithRequestedVouchers[],
-    orderId: number,
-    transaction: Transaction,
-  ) {
-    const vouchersUpdatedOrderIdPromise = productsWithRequestedVouchers.map(async (productInfo) => {
-      const { vouchersRequested } = productInfo;
-
-      const vouchersUpdatedPromise = vouchersRequested.map(async (voucher) => {
-        const { voucherCode } = voucher;
-
-        await VouchersAvailableModel.update(
-          { orderId, soldPrice: productInfo.price },
-          { where: { voucherCode }, transaction },
-        );
-      });
-
-      await Promise.all(vouchersUpdatedPromise);
-    });
-
-    await Promise.all(vouchersUpdatedOrderIdPromise);
-  }
-
   private static async createProductsOrder(
     productsWithRequestedVouchers: IProductWithRequestedVouchers[],
     orderId: number,
@@ -126,7 +49,7 @@ export default class OrdersService {
     try {
       const { userId, cinemaPlan, orderInfo } = orderRequest;
 
-      const productsWithRequestedVouchers = await this.getRequestedVouchers(
+      const productsWithRequestedVouchers = await VouchersService.getRequestedVouchers(
         orderInfo,
         t,
       );
@@ -136,14 +59,14 @@ export default class OrdersService {
 
       const currentDate = new Date();
       const expireAt = dateUtils.addFiveMinutes(currentDate);
-      
+
       const { totalPrice, totalUnits } = orderTotals;
       const { id: orderId } = await OrdersModel.create(
         { totalPrice, totalUnits, expireAt, userId },
         { transaction: t },
       );
       await this.createProductsOrder(productsWithRequestedVouchers, orderId, t);
-      await this.updateVouchersOnCreateOrder(productsWithRequestedVouchers, orderId, t);
+      await VouchersService.updateVouchersOnCreateOrder(productsWithRequestedVouchers, orderId, t);
 
       const paymentOrderRequest: Omit<IPaymentOrderRequest, 'webhook' | 'name'> = {
         orderId,
