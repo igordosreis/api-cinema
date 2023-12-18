@@ -1,7 +1,7 @@
 import { DataTypes, Model } from 'sequelize';
 import db from '.';
 import OrdersModel from './Orders.model';
-import EstablishmentsProductsModel from './EstablishmentsProducts.model';
+import PacksModel from './Packs.model';
 
 class OrdersPacksModel extends Model {
   declare orderId: number;
@@ -46,16 +46,10 @@ OrdersPacksModel.init(
   },
 );
 
-OrdersPacksModel.belongsTo(OrdersModel, { foreignKey: 'orderId', as: 'productsDetails' });
-OrdersModel.hasMany(OrdersPacksModel, { foreignKey: 'orderId', as: 'productsDetails' });
+OrdersPacksModel.belongsTo(OrdersModel, { foreignKey: 'orderId', as: 'packDetails' });
+OrdersModel.hasMany(OrdersPacksModel, { foreignKey: 'orderId', as: 'packDetails' });
 
-OrdersPacksModel.belongsTo(EstablishmentsProductsModel, {
-  foreignKey: 'productId',
-  as: 'productInfo',
-});
-EstablishmentsProductsModel.hasMany(OrdersPacksModel, {
-  foreignKey: 'productId',
-  as: 'productInfo',
-});
+OrdersPacksModel.belongsTo(PacksModel, { foreignKey: 'packId', as: 'packInfo' });
+PacksModel.hasMany(OrdersPacksModel, { foreignKey: 'packId', as: 'packInfo' });
 
 export default OrdersPacksModel;
