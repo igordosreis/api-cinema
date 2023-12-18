@@ -7,20 +7,6 @@ import CustomError, { planNotFound } from '../utils/customError.util';
 
 export default class PlansService {
   public static async getAllPlans() {
-    // const allPlans = await PlansModel.findAll({
-    //   include: [
-    //     {
-    //       model: PlansProductsTypes,
-    //       as: 'planDetails',
-    //       include: [
-    //         {
-    //           model: ProductsTypesModel,
-    //           as: 'type',
-    //         },
-    //       ],
-    //     },
-    //   ],
-    // });
     const allPlans = await PlansModel.findAll({
       include: [
         {

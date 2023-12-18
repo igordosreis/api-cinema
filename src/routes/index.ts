@@ -4,6 +4,7 @@ import moviesAPIRouter from './moviesAPI.routes';
 import usersRouter from './users.routes';
 import adminRouter from './admin.routes';
 import productsRouter from './products.routes';
+import packsRouter from './packs.routes';
 
 const router = Router();
 
@@ -12,5 +13,6 @@ router.use('/products', productsRouter);
 router.use('/movies', moviesAPIRouter);
 router.use('/user', usersRouter);
 router.use('/admin', adminRouter);
+router.use('/packs', packsRouter);
 
 export default router;
