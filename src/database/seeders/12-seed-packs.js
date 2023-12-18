@@ -39,7 +39,7 @@ module.exports = {
         price: generateRandomPrice(5, 100),
         rules: faker.lorem.paragraph(2),
         counter: null,
-        counterLimit: null,
+        counter_limit: null,
         is_limited: false,
       },
       {
@@ -50,7 +50,7 @@ module.exports = {
         price: generateRandomPrice(5, 100),
         rules: faker.lorem.paragraph(2),
         counter: 0,
-        counterLimit: 10,
+        counter_limit: 10,
         is_limited: true,
       },
       {
@@ -61,7 +61,7 @@ module.exports = {
         price: generateRandomPrice(5, 100),
         rules: faker.lorem.paragraph(2),
         counter: null,
-        counterLimit: null,
+        counter_limit: null,
         is_limited: false,
       },
       {
@@ -72,7 +72,7 @@ module.exports = {
         price: generateRandomPrice(5, 100),
         rules: faker.lorem.paragraph(2),
         counter: 0,
-        counterLimit: 10,
+        counter_limit: 10,
         is_limited: true,
       },
     ], {});
