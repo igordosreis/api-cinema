@@ -4,6 +4,7 @@ import MoviesAPIController from './MoviesAPI.controller';
 import UsersController from './Users.controller';
 import AdminController from './Admin.controller';
 import VouchersController from './Vouchers.controller';
+import PacksController from './Packs.controller';
 
 export {
   EstablishmentsController,
@@ -12,4 +13,5 @@ export {
   UsersController,
   AdminController,
   VouchersController,
+  PacksController,
 };
