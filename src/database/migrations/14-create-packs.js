@@ -44,11 +44,11 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: true,
       },
-      counterLimit: {
+      counter_limit: {
         type: Sequelize.INTEGER,
         allowNull: true,
       },
-      isLimited: {
+      is_limited: {
         type: Sequelize.BOOLEAN,
         allowNull: true,
       },
