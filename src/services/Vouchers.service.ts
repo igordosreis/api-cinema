@@ -65,10 +65,10 @@ export default class VouchersService {
 
       return [];
     });
-    // array with non-pack products and packs' info
+    // Array with non-pack products and packs' info
     const parsedOrder: IParsedOrder[] = (await Promise.all(parsedOrderPromise)).flat();
 
-    // array with all products in order
+    // Array with all products in current order
     const productsInOrder: IProductsInOrder[] = parsedOrder
       .map((orderItem) => {
         const isItemPack = orderItem.pack;
@@ -85,7 +85,7 @@ export default class VouchersService {
         return orderItem;
       })
       .flat()
-      // merges duplicated products and adds the amountRequested
+      // Merges duplicated products and adds the amountRequested
       .reduce((accProduct, currProduct) => {
         const prodIndex = accProduct.findIndex(
           (prodInAcc) => prodInAcc.productId === currProduct.productId,
@@ -102,7 +102,6 @@ export default class VouchersService {
         return [...accProduct, currProduct];
       }, [] as IProductsInOrder[]);
     
-    console.log('- -- - -- -- - -- - -- -- - -- - -- -- productsInOrder:    ', productsInOrder);
     const productsWithRequestedVouchersPromise: Promise<IProductWithRequestedVouchers>[] =
       productsInOrder.map(async (product) => {
         const { productId, amountRequested } = product;
@@ -119,7 +118,7 @@ export default class VouchersService {
       });
     const productsWithRequestedVouchers = await Promise.all(productsWithRequestedVouchersPromise);
 
-    // array with non-pack products' info and packs' info
+    // Array with non-pack products' info and packs' info
     const parsedOrderWithProducts: IParsedOrderWithProducts[] = parsedOrder
       .map((orderItem) => {
         const isPack = orderItem.pack;
