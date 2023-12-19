@@ -50,56 +50,6 @@ export default class VouchersService {
     orderInfo: IOrderRequestFormattedInfo[],
     transaction: Transaction,
   ) {
-    // const parsedOrderPromise = orderInfo
-    //   .reduce(async (prodAccPromise: Promise<IOrderRequestFormattedInfo[]>, currProd) => {
-    //     const { productId, packId, amountRequested } = currProd;
-    //     const prodAcc = await prodAccPromise;
-    //     const isProduct = productId;
-    //     if (isProduct) {
-    //       return [...prodAcc, { productId, amountRequested }];
-    //     }
-
-    //     const isPack = packId;
-    //     if (isPack) {
-    //       const { packInfo } = await PacksService.getPackSummaryById(packId);
-
-    //       const parsedPack: IOrderRequestFormattedInfo[] = packInfo
-    //         .map(({ productId: id, quantity, price }) => ({
-    //           productId: id,
-    //           amountRequested: quantity * amountRequested,
-    //           price,
-    //         }));
-
-    //       return [...prodAcc, ...parsedPack];
-    //     }
-
-    //     return prodAcc;
-    //   }, Promise.resolve([] as IOrderRequestFormattedInfo[]));
-    // const flattenedOrder = (await Promise.resolve(parsedOrderPromise));
-
-    // const parsedOrderPromise = orderInfo.map(async ({ productId, packId, amountRequested }) => {
-    //   const isProduct = productId;
-    //   if (isProduct) {
-    //     return { productId, amountRequested };
-    //   }
-
-    //   const isPack = packId;
-    //   if (isPack) {
-    //     const { packInfo } = await PacksService.getPackSummaryById(packId);
-
-    //     const parsedPack = packInfo.map(({ productId: id, quantity, price }) => ({
-    //       productId: id,
-    //       amountRequested: quantity * amountRequested,
-    //       price,
-    //     }));
-
-    //     return parsedPack;
-    //   }
-
-    //   return [];
-    // });
-    // const flattenedOrder = (await Promise.all(parsedOrderPromise)).flat();
-
     const parsedOrderPromise = orderInfo.map(async ({ productId, packId, amountRequested }) => {
       const isProduct = productId;
       if (isProduct) {

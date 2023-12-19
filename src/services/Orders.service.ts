@@ -21,11 +21,34 @@ import {
   IOrderInfo,
   IOrderSearchFormatted,
   IOrderRequestFormattedBody,
+  IParsedOrderWithProducts,
 } from '../interfaces/IOrder';
 import { STATUS_CANCELLED, STATUS_WAITING } from '../constants';
 import VouchersService from './Vouchers.service';
+import OrdersPacksModel from '../database/models/OrdersPacks.model';
 
 export default class OrdersService {
+  private static async createPacksOrder(
+    parsedOrderWithProducts: IParsedOrderWithProducts[],
+    orderId: number,
+    transaction: Transaction,
+  ) {
+    const packsOrderPromise = parsedOrderWithProducts.map(async (itemInfo) => {
+      const isPack = 'pack' in itemInfo;
+      if (isPack) {
+        const { pack: { id, price }, amountRequested } = itemInfo;
+        const packOrderPromise = await OrdersPacksModel.create(
+          { orderId, packId: id, quantity: amountRequested, soldPrice: price },
+          { transaction },
+        );
+
+        return packOrderPromise;
+      }
+    });
+
+    await Promise.all(packsOrderPromise);
+  }
+
   private static async createProductsOrder(
     productsWithRequestedVouchers: IProductWithRequestedVouchers[],
     orderId: number,
@@ -68,6 +91,7 @@ export default class OrdersService {
         { transaction: t },
       );
       await this.createProductsOrder(productsWithRequestedVouchers, orderId, t);
+      await this.createPacksOrder(parsedOrderWithProducts, orderId, t);
       await VouchersService.updateVouchersOnCreateOrder(productsWithRequestedVouchers, orderId, t);
 
       const paymentOrderRequest: Omit<IPaymentOrderRequest, 'webhook' | 'name'> = {
@@ -76,8 +100,6 @@ export default class OrdersService {
         value: orderTotals.totalPrice.toString(),
         expireAt,
       };
-
-      throw new Error();
       const paymentOrderResponse = await paymentUtil.createPayment(paymentOrderRequest);
       const { id: paymentId, paymentModules } = paymentOrderResponse;
 
