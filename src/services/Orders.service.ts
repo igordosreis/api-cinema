@@ -74,7 +74,8 @@ export default class OrdersService {
 
       const { 
         productsWithRequestedVouchers,
-        parsedOrderWithProducts } = await VouchersService.getRequestedVouchers(orderInfo, t);
+        parsedOrderWithProducts,
+      } = await VouchersService.getRequestedVouchers(orderInfo, t);
 
       const orderTotals = ordersUtil.calculateOrderTotals(
         productsWithRequestedVouchers,
