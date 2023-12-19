@@ -10,6 +10,7 @@ import {
   IOrderValidatePlan,
   PriceUnitAndTypeTotals,
   TypeId,
+  IParsedOrderWithProducts,
 } from '../interfaces/IOrder';
 import { IProductFromGetById, IProductWithRequestedVouchers } from '../interfaces/IProducts';
 import CustomError, { amountUnauthorized, vouchersNotEnough, vouchersUnavailable } from './customError.util';
@@ -33,6 +34,7 @@ class Orders {
   };
 
   validatePlanAmount = async ({ userId, cinemaPlan, orderTotals }: IOrderValidatePlan) => {
+    console.log('- -- - -- -- - -- - -- -- - -- - -- -- orderTotals:    ', orderTotals);
     const planInfo = await PlansService.getPlanById(cinemaPlan);
 
     const currentDate = new Date();
@@ -110,18 +112,24 @@ class Orders {
     planInfo.planDetails.forEach((planDetail) => {
       const { productTypeId, quantity, type: { name } } = planDetail;
       
-      const userTypeTotal = userTypeTotalsInCurrentMonth[productTypeId] + orderTotals[productTypeId];
+      const userTypeTotal = (userTypeTotalsInCurrentMonth[productTypeId] || 0) + orderTotals[productTypeId];
       const isUserTypeTotalOverPlanLimit = userTypeTotal > quantity;
+      console.log('- -- - -- -- -- - - --  - - -- - -- - ---- -- -- - -- - - - -userTypeTotalsInCurrentMonth[productTypeId] || 0: ', (userTypeTotalsInCurrentMonth[productTypeId] || 0));
+      console.log('- -- - -- -- -- - - --  - - -- - -- - ---- -- -- - -- - - - -quantity: ', quantity);
+      console.log('- -- - -- -- -- - - --  - - -- - -- - ---- -- -- - -- - - - -isUserTypeTotalOverPlanLimit: ', isUserTypeTotalOverPlanLimit);
 
       if (isUserTypeTotalOverPlanLimit) throw new CustomError(amountUnauthorized(name));
     });
   };
 
-  calculateOrderTotals = (productsInfo: IProductWithRequestedVouchers[]) => {
-    const totals = productsInfo.reduce(
+  calculateOrderTotals = (
+    productsInfo: IProductWithRequestedVouchers[],
+    parsedOrder: IParsedOrderWithProducts[],
+  ): PriceUnitAndTypeTotals => {
+    const unitAndTypeTotals = productsInfo.reduce(
       (accTotals, currProduct) => {
-        const subTotal = currProduct.price * currProduct.vouchersRequested.length;
-        const totalPrice = accTotals.totalPrice + subTotal;
+        // const subTotal = currProduct.price * currProduct.vouchersRequested.length;
+        // const totalPrice = accTotals.totalPrice + subTotal;
 
         const totalUnits = accTotals.totalUnits + currProduct.vouchersRequested.length;
 
@@ -135,17 +143,42 @@ class Orders {
 
         const newAccTotals = {
           ...accTotals,
-          totalPrice: Number(totalPrice.toFixed(2)),
+          // totalPrice: Number(totalPrice.toFixed(2)),
           totalUnits,
           [currProduct.type as keyof PriceUnitAndTypeTotals]: totalOfType,
         };
 
         return newAccTotals;
       },
-      { totalPrice: 0, totalUnits: 0 } as PriceUnitAndTypeTotals,
+      { totalUnits: 0 } as PriceUnitAndTypeTotals,
     );
+    const priceTotal = parsedOrder.reduce((accPrice, currItem) => {
+      const isPack = 'pack' in currItem;
+      if (isPack) {
+        const { pack: { price }, amountRequested } = currItem;
+        const subTotal = price * amountRequested;
+        const totalPrice = accPrice.totalPrice + subTotal;
 
-    return totals;
+        return { totalPrice: Number(totalPrice.toFixed(2)) };
+      }
+
+      const isProduct = 'id' in currItem;
+      if (isProduct) {
+        const { price, amountRequested } = currItem;
+        console.log('- -- - -- -- - -- - -- -- - -- - -- -- amountRequested:    ', amountRequested);
+        const subTotal = price * (amountRequested || 1);
+        const totalPrice = accPrice.totalPrice + subTotal;
+
+        return { totalPrice };
+      }
+
+      return accPrice;
+    }, { totalPrice: 0 } as Pick<PriceUnitAndTypeTotals, 'totalPrice'>);
+
+    return {
+      ...unitAndTypeTotals,
+      ...priceTotal,
+    };
   };
 }
 

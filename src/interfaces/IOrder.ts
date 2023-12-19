@@ -7,6 +7,8 @@ import VouchersAvailableModel from '../database/models/VouchersAvailable.model';
 import VouchersUserModel from '../database/models/VouchersUser.model';
 import OrdersProductsModel from '../database/models/OrdersProducts.model';
 import EstablishmentsProductsModel from '../database/models/EstablishmentsProducts.model';
+import { IPackSummary } from './IPacks';
+import { IProductWithRequestedVouchers } from './IProducts';
 
 export type TypeId = number;
 type Totals = 'totalPrice' | 'totalUnits' | TypeId;
@@ -93,20 +95,22 @@ export type IOrderProductsInMonth = Array<OrdersModel & {
   }>;
 }>;
 
-export interface IOrderRequestRaw {
-  productId: string | number;
+export interface IOrderRequestRawInfo {
+  productId?: string | number;
+  packId?: string | number;
   amountRequested: string | number;
 }
 
-export interface IOrderRequestFormatted {
-  productId: number;
-  // packId: number;
+export interface IOrderRequestFormattedInfo {
+  productId?: number | undefined;
+  packId?: number | undefined;
   amountRequested: number;
+  price?: number;
 }
 
 export interface IOrderRequestRawBody extends Request {
   body: {
-    orderInfo: IOrderRequestRaw[];
+    orderInfo: IOrderRequestRawInfo[];
     userInfo: IUserInfo;
   };
 }
@@ -114,7 +118,7 @@ export interface IOrderRequestRawBody extends Request {
 export interface IOrderRequestFormattedBody {
   userId: number;
   cinemaPlan: number;
-  orderInfo: IOrderRequestFormatted[];
+  orderInfo: IOrderRequestFormattedInfo[];
 }
 
 export interface ICreateOrderParams {
@@ -122,3 +126,24 @@ export interface ICreateOrderParams {
   userId: number;
   amountRequested: number;
 }
+
+export type IProductsInOrder = {
+  productId: number;
+  amountRequested: number;
+};
+
+export type IParsedOrder = {
+  productId: number;
+  amountRequested: number;
+  pack?: undefined;
+} | {
+  pack: IPackSummary;
+  amountRequested: number;
+  productId?: undefined;
+};
+
+export type IParsedOrderWithProducts = {
+  pack: IPackSummary;
+  amountRequested: number;
+  productId?: undefined;
+} | IProductWithRequestedVouchers;

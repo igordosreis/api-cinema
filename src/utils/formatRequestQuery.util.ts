@@ -5,7 +5,7 @@ import {
 } from '../interfaces/IEstablishments';
 import { IProductFormattedQuery, IProductRawQuery } from '../interfaces/IProducts';
 import {
-  IOrderRequestRaw,
+  IOrderRequestRawInfo,
   IOrderRequestFormattedBody,
   IOrderRequestRawBody,
   IOrderSearchFormatted, 
@@ -80,7 +80,11 @@ class FormatRequestQuery {
     active: this.formatActive(req),
   });
 
-  private formatProductId = (productId: number | string) => Number(productId);
+  private formatProductId = (productId: number | string | undefined) => 
+    Number(productId) || undefined;
+
+  private formatPackId = (packId: number | string | undefined) => 
+    Number(packId) || undefined;
 
   private formatAmount = (amount: number | string) => Number(amount);
 
@@ -93,8 +97,9 @@ class FormatRequestQuery {
   }: IOrderRequestRawBody) => Number(userId);
 
   private formatOrderInfo = ({ body: { orderInfo } }: IOrderRequestRawBody) =>
-    orderInfo.map(({ productId, amountRequested }: IOrderRequestRaw) => ({
+    orderInfo.map(({ productId, packId, amountRequested }: IOrderRequestRawInfo) => ({
       productId: this.formatProductId(productId),
+      packId: this.formatPackId(packId),
       amountRequested: this.formatAmount(amountRequested),
     }));
 

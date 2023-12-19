@@ -1,6 +1,8 @@
 import EstablishmentsProductsModel from '../database/models/EstablishmentsProducts.model';
 import PacksModel from '../database/models/Packs.model';
 import PacksProductsModel from '../database/models/PacksProducts.model';
+import { IPackSummary } from '../interfaces/IPacks';
+import CustomError, { packNotFound } from '../utils/customError.util';
 
 export default class PacksService {
   public static async getAllPacks() {
@@ -12,7 +14,7 @@ export default class PacksService {
           include: [
             {
               model: EstablishmentsProductsModel,
-              as: 'productInPackInfo',
+              as: 'productDetails',
             },
           ],
         },
@@ -20,5 +22,22 @@ export default class PacksService {
     });
 
     return allPacks;
+  }
+
+  public static async getPackSummaryById(packId: number) {
+    const pack = await PacksModel.findOne({
+      include: [
+        {
+          model: PacksProductsModel,
+          as: 'packInfo',
+        },
+      ],
+      where: { id: packId },
+    });
+
+    const isPackNotFound = !pack;
+    if (isPackNotFound) throw new CustomError(packNotFound);
+
+    return pack as IPackSummary;
   }
 }

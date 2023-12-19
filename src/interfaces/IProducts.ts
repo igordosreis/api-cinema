@@ -38,6 +38,7 @@ export interface IProductWithVouchers extends IProduct {
 
 export interface IProductWithRequestedVouchers extends IProduct {
   vouchersRequested: IVoucherAvailable[];
+  amountRequested?: number;
 }
 
 export type IProductFromGetById = EstablishmentsProductsModel & {

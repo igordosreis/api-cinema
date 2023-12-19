@@ -48,11 +48,11 @@ PacksProductsModel.init(
 
 PacksProductsModel.belongsTo(EstablishmentsProductsModel, {
   foreignKey: 'productId',
-  as: 'productInPackInfo',
+  as: 'productDetails',
 });
 EstablishmentsProductsModel.hasMany(PacksProductsModel, {
   foreignKey: 'productId',
-  as: 'productInPackInfo',
+  as: 'productDetails',
 });
 
 PacksProductsModel.belongsTo(PacksModel, {

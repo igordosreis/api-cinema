@@ -49,12 +49,14 @@ export default class OrdersService {
     try {
       const { userId, cinemaPlan, orderInfo } = orderRequest;
 
-      const productsWithRequestedVouchers = await VouchersService.getRequestedVouchers(
-        orderInfo,
-        t,
-      );
+      const { 
+        productsWithRequestedVouchers,
+        parsedOrderWithProducts } = await VouchersService.getRequestedVouchers(orderInfo, t);
 
-      const orderTotals = ordersUtil.calculateOrderTotals(productsWithRequestedVouchers);
+      const orderTotals = ordersUtil.calculateOrderTotals(
+        productsWithRequestedVouchers,
+        parsedOrderWithProducts,
+      );
       await ordersUtil.validatePlanAmount({ userId, cinemaPlan, orderTotals });
 
       const currentDate = new Date();
@@ -74,6 +76,8 @@ export default class OrdersService {
         value: orderTotals.totalPrice.toString(),
         expireAt,
       };
+
+      throw new Error();
       const paymentOrderResponse = await paymentUtil.createPayment(paymentOrderRequest);
       const { id: paymentId, paymentModules } = paymentOrderResponse;
 

@@ -116,3 +116,9 @@ export const planNotFound: ICustomError = {
   title: 'Plano não encontrado.',
   message: 'O plano procurado não foi encontrado.',
 };
+
+export const packNotFound: ICustomError = {
+  status: 404,
+  title: 'Pacote não encontrado.',
+  message: 'O pacote procurado não foi encontrado.',
+};
