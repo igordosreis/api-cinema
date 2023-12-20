@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 /* eslint-disable sonarjs/cognitive-complexity */
 /* eslint-disable operator-linebreak */
 /* eslint-disable max-lines-per-function */
@@ -202,10 +203,13 @@ export default class VouchersService {
 
         const isPack = 'pack' in currItem;
         if (isPack) {
-          const { pack: { packInfo }, amountRequested } = currItem;
+          const {
+            pack: { packInfo },
+            amountRequested,
+          } = currItem;
 
-          packInfo.forEach((productInPack) => {
-            const { productId, price, quantity } = productInPack;
+          for (let index = 0; index < packInfo.length; index += 1) {
+            const { productId, price, quantity } = packInfo[index];
 
             const isSameProduct = productId === productIdWithVouchers;
             if (isSameProduct) {
@@ -218,12 +222,14 @@ export default class VouchersService {
                 transaction,
               });
 
-              // const vouchersRemaining = [...accVouchers].splice(voucherAmountPerPack, accVouchers.length);
+              const vouchersRemaining = [...accVouchers].splice(
+                voucherAmountPerPack,
+                accVouchers.length,
+              );
 
-              // return vouchersRemaining
-              accVouchers.splice(0, voucherAmountPerPack);
+              return vouchersRemaining;
             }
-          });
+          }
         }
 
         return accVouchers;
