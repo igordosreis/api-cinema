@@ -93,7 +93,12 @@ export default class OrdersService {
       );
       await this.createProductsOrder(productsWithRequestedVouchers, orderId, t);
       await this.createPacksOrder(parsedOrderWithProducts, orderId, t);
-      await VouchersService.updateVouchersOnCreateOrder(productsWithRequestedVouchers, orderId, t);
+      await VouchersService.updateVouchersOnCreateOrder({
+        productsWithRequestedVouchers,
+        parsedOrderWithProducts,
+        orderId,
+        transaction: t,
+      });
 
       const paymentOrderRequest: Omit<IPaymentOrderRequest, 'webhook' | 'name'> = {
         orderId,

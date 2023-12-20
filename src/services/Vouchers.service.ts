@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/cognitive-complexity */
 /* eslint-disable operator-linebreak */
 /* eslint-disable max-lines-per-function */
 import { Transaction, Op } from 'sequelize';
@@ -8,12 +9,14 @@ import {
   IOrderRequestFormattedInfo,
   IParsedOrder,
   IParsedOrderWithProducts,
+  IProductWithRequestedVouchersWithAmount,
   IProductsInOrder,
 } from '../interfaces/IOrder';
 import { IProductFromGetById, IProductWithRequestedVouchers } from '../interfaces/IProducts';
 import CustomError, { productNotFound } from '../utils/customError.util';
 import ordersUtil from '../utils/orders.util';
 import PacksService from './Packs.service';
+import { IVoucherAvailable } from '../interfaces/IVouchers';
 
 export default class VouchersService {
   public static async getVouchersByProductId(productId: number, transaction?: Transaction) {
@@ -65,7 +68,7 @@ export default class VouchersService {
 
       return [];
     });
-    // Array with non-pack products and packs' info
+    // Array with non-pack products' id and amount and packs' info
     const parsedOrder: IParsedOrder[] = (await Promise.all(parsedOrderPromise)).flat();
 
     // Array with all products in current order
@@ -101,7 +104,7 @@ export default class VouchersService {
 
         return [...accProduct, currProduct];
       }, [] as IProductsInOrder[]);
-    
+
     const productsWithRequestedVouchersPromise: Promise<IProductWithRequestedVouchers>[] =
       productsInOrder.map(async (product) => {
         const { productId, amountRequested } = product;
@@ -130,8 +133,8 @@ export default class VouchersService {
             (productWithVouchers) => productWithVouchers.id === orderItem.productId,
           );
 
-          const newProduct = product;
-          newProduct[0].amountRequested = orderItem.amountRequested;
+          const newProduct = product[0] as IProductWithRequestedVouchersWithAmount;
+          newProduct.amountRequested = orderItem.amountRequested;
 
           return newProduct;
         }
@@ -143,26 +146,88 @@ export default class VouchersService {
     return { productsWithRequestedVouchers, parsedOrderWithProducts };
   }
 
-  public static async updateVouchersOnCreateOrder(
-    productsWithRequestedVouchers: IProductWithRequestedVouchers[],
-    orderId: number,
-    transaction: Transaction,
-  ) {
-    const vouchersUpdatedOrderIdPromise = productsWithRequestedVouchers.map(async (productInfo) => {
-      const { vouchersRequested } = productInfo;
-
-      const vouchersUpdatedPromise = vouchersRequested.map(async (voucher) => {
-        const { voucherCode } = voucher;
-
-        await VouchersAvailableModel.update(
-          { orderId, soldPrice: productInfo.price },
-          { where: { voucherCode }, transaction },
-        );
-      });
-
-      await Promise.all(vouchersUpdatedPromise);
+  private static updateVouchers({
+    vouchersToUpdate,
+    orderId,
+    price,
+    transaction,
+  }: {
+    vouchersToUpdate: IVoucherAvailable[];
+    orderId: number;
+    price: number;
+    transaction: Transaction;
+  }) {
+    vouchersToUpdate.forEach(async (voucher) => {
+      const { voucherCode } = voucher;
+      await VouchersAvailableModel.update(
+        { orderId, soldPrice: price },
+        { where: { voucherCode }, transaction },
+      );
     });
+  }
 
-    await Promise.all(vouchersUpdatedOrderIdPromise);
+  public static async updateVouchersOnCreateOrder({
+    productsWithRequestedVouchers,
+    parsedOrderWithProducts,
+    orderId,
+    transaction,
+  }: {
+    productsWithRequestedVouchers: IProductWithRequestedVouchers[];
+    parsedOrderWithProducts: IParsedOrderWithProducts[];
+    orderId: number;
+    transaction: Transaction;
+  }) {
+    productsWithRequestedVouchers.forEach((productWithVouchers) => {
+      const { vouchersRequested, id: productIdWithVouchers } = productWithVouchers;
+      parsedOrderWithProducts.reduce((accVouchers: IVoucherAvailable[], currItem) => {
+        const isProduct = 'id' in currItem;
+        if (isProduct) {
+          const { id: productId, price, amountRequested } = currItem;
+
+          const isSameProduct = productId === productIdWithVouchers;
+          if (isSameProduct) {
+            const vouchersToUpdate = accVouchers.slice(0, amountRequested);
+            this.updateVouchers({
+              vouchersToUpdate,
+              orderId,
+              price,
+              transaction,
+            });
+
+            const vouchersRemaining = accVouchers.splice(amountRequested, accVouchers.length);
+
+            return vouchersRemaining;
+          }
+        }
+
+        const isPack = 'pack' in currItem;
+        if (isPack) {
+          const { pack: { packInfo }, amountRequested } = currItem;
+
+          packInfo.forEach((productInPack) => {
+            const { productId, price, quantity } = productInPack;
+
+            const isSameProduct = productId === productIdWithVouchers;
+            if (isSameProduct) {
+              const voucherAmountPerPack = amountRequested * quantity;
+              const vouchersToUpdate = [...accVouchers].slice(0, voucherAmountPerPack);
+              this.updateVouchers({
+                vouchersToUpdate,
+                orderId,
+                price,
+                transaction,
+              });
+
+              // const vouchersRemaining = [...accVouchers].splice(voucherAmountPerPack, accVouchers.length);
+
+              // return vouchersRemaining
+              accVouchers.splice(0, voucherAmountPerPack);
+            }
+          });
+        }
+
+        return accVouchers;
+      }, vouchersRequested);
+    });
   }
 }

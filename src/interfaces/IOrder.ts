@@ -142,8 +142,12 @@ export type IParsedOrder = {
   productId?: undefined;
 };
 
+export interface IProductWithRequestedVouchersWithAmount extends IProductWithRequestedVouchers {
+  amountRequested: number;
+}
+
 export type IParsedOrderWithProducts = {
   pack: IPackSummary;
   amountRequested: number;
   productId?: undefined;
-} | IProductWithRequestedVouchers;
+} | IProductWithRequestedVouchersWithAmount;
