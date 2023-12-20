@@ -34,7 +34,6 @@ class Orders {
   };
 
   validatePlanAmount = async ({ userId, cinemaPlan, orderTotals }: IOrderValidatePlan) => {
-    console.log('- -- - -- -- - -- - -- -- - -- - -- -- orderTotals:    ', orderTotals);
     const planInfo = await PlansService.getPlanById(cinemaPlan);
 
     const currentDate = new Date();
@@ -114,9 +113,6 @@ class Orders {
       
       const userTypeTotal = (userTypeTotalsInCurrentMonth[productTypeId] || 0) + orderTotals[productTypeId];
       const isUserTypeTotalOverPlanLimit = userTypeTotal > quantity;
-      console.log('- -- - -- -- -- - - --  - - -- - -- - ---- -- -- - -- - - - -userTypeTotalsInCurrentMonth[productTypeId] || 0: ', (userTypeTotalsInCurrentMonth[productTypeId] || 0));
-      console.log('- -- - -- -- -- - - --  - - -- - -- - ---- -- -- - -- - - - -quantity: ', quantity);
-      console.log('- -- - -- -- -- - - --  - - -- - -- - ---- -- -- - -- - - - -isUserTypeTotalOverPlanLimit: ', isUserTypeTotalOverPlanLimit);
 
       if (isUserTypeTotalOverPlanLimit) throw new CustomError(amountUnauthorized(name));
     });
