@@ -180,6 +180,7 @@ export default class VouchersService {
   }) {
     productsWithRequestedVouchers.forEach((productWithVouchers) => {
       const { vouchersRequested, id: productIdWithVouchers } = productWithVouchers;
+      
       parsedOrderWithProducts.reduce((accVouchers: IVoucherAvailable[], currItem) => {
         const isProduct = 'id' in currItem;
         if (isProduct) {
