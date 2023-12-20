@@ -194,7 +194,7 @@ export default class VouchersService {
               transaction,
             });
 
-            const vouchersRemaining = accVouchers.splice(amountRequested, accVouchers.length);
+            const vouchersRemaining = [...accVouchers].splice(amountRequested, accVouchers.length);
 
             return vouchersRemaining;
           }
