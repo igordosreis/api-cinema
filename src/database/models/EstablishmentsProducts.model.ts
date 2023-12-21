@@ -98,11 +98,11 @@ EstablishmentsProductsModel.init(
 
 EstablishmentsProductsModel.belongsTo(EstablishmentsModel, {
   foreignKey: 'establishmentId',
-  as: 'products',
+  as: 'brand',
 });
 EstablishmentsModel.hasMany(EstablishmentsProductsModel, {
   foreignKey: 'establishmentId',
-  as: 'products',
+  as: 'brand',
 });
 
 EstablishmentsProductsModel.belongsTo(EstablishmentsImagesModel, {

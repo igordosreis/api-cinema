@@ -15,7 +15,11 @@ class CreateProductSearchSqlizeQuery {
     const searchQuery = [];
     if (term) {
       searchQuery.push({
-        [Op.or]: { name: { [Op.substring]: term }, description: { [Op.substring]: term } },
+        [Op.or]: { 
+          name: { [Op.substring]: term }, 
+          description: { [Op.substring]: term },
+          '$brand.name$': { [Op.substring]: term },
+        },
       });
     }
     if (type) searchQuery.push({ '$typeInfo.id$': { [Op.eq]: type } });

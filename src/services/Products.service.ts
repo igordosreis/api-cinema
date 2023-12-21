@@ -6,6 +6,7 @@ import VouchersAvailableModel from '../database/models/VouchersAvailable.model';
 import { IProductFormattedQuery } from '../interfaces/IProducts';
 import createProductSearchSqlizeQueryUtil from '../utils/createProductSearchSqlizeQuery.util';
 import CustomError, { establishmentServiceUnavailable } from '../utils/customError.util';
+import EstablishmentsModel from '../database/models/Establishments.model';
 
 /* eslint-disable max-lines-per-function */
 export default class ProductsService {
@@ -35,6 +36,10 @@ export default class ProductsService {
                 [Op.gt]: new Date(),
               },
             },
+          },
+          {
+            model: EstablishmentsModel,
+            as: 'brand',
           },
           {
             model: EstablishmentsImagesModel,
