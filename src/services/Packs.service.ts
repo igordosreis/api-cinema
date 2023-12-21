@@ -132,6 +132,18 @@ export default class PacksService {
         },
       ],
       group: ['packs.id', 'packInfo.product_id', 'packInfo.productDetails.id'], // Adjust column names
+      where: {
+        [Op.and]: {
+          [Op.or]: {
+            name: { [Op.substring]: 'term' },
+            description: { [Op.substring]: 'term' },
+            '$packInfo.productDetails.name$': { [Op.substring]: 'term' },
+            '$packInfo.productDetails.description$': { [Op.substring]: 'term' },
+          },
+          '$packInfo.productDetails.type': { [Op.eq]: 'type' },
+          '$packInfo.productDetails.establishmentId': { [Op.eq]: 'establishmentId' },
+        },
+      },
     });
 
     return allPacks;
