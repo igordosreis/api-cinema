@@ -3,7 +3,7 @@ import { ProductsController } from '../controllers';
 
 const productsRouter = Router();
 
-productsRouter.get('/all', ProductsController.getProductsByQuery);
+productsRouter.get('/search', ProductsController.getProductsByQuery);
 productsRouter.get('/types', ProductsController.getProductsTypes);
 
 export default productsRouter;
