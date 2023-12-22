@@ -1,5 +1,7 @@
 import { Request, Response } from 'express';
 import { PacksService } from '../services';
+import { IPackSearchQueryRaw, IPackSearchQuerySchema } from '../interfaces/IPacks';
+import formatRequestQueryUtil from '../utils/formatRequestQuery.util';
 
 export default class PacksController {
   public static async getAllPacks(_req: Request, res: Response): Promise<void> {
@@ -14,5 +16,16 @@ export default class PacksController {
     const allPacks = await PacksService.getPackSummaryById(Number(id));
 
     res.status(200).json(allPacks);
+  }
+
+  public static async getPackByQuery(req: Request, res: Response): Promise<void> {
+    const packSearchQuery = <IPackSearchQueryRaw>req.query;
+
+    const formattedPackSearchQuery = formatRequestQueryUtil.formatPackQuery(packSearchQuery);
+    IPackSearchQuerySchema.parse(formattedPackSearchQuery);
+
+    const filteredPacks = await PacksService.getPacksByQuery(formattedPackSearchQuery);
+
+    res.status(200).json(filteredPacks);
   }
 }
