@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 // import { Request } from 'express';
 import {
   IEstablishmentFormattedQuery,
@@ -11,6 +12,7 @@ import {
   IOrderSearchFormatted, 
   IOrderSearchRaw,
 } from '../interfaces/IOrder';
+import { IPackSearchQuery, IPackSearchQueryRaw } from '../interfaces/IPacks';
 
 class FormatRequestQuery {
   private formatTerm = ({ query: { term } }: IProductRawQuery | IEstablishmentRawQuery) =>
@@ -114,6 +116,20 @@ class FormatRequestQuery {
   formatOrderSearch = (req: IOrderSearchRaw): IOrderSearchFormatted => ({
     userId: this.convertStringToNumber(req.body.userInfo.user.id),
     orderId: this.convertStringToNumber(req.params.id),
+  });
+
+  formatPackQuery = ({
+    term,
+    type,
+    establishmentId,
+    available,
+    active,
+  }: IPackSearchQueryRaw): IPackSearchQuery => ({
+    term: typeof term === 'string' ? term : undefined,
+    type: Number(type) || undefined,
+    establishmentId: Number(establishmentId) || undefined,
+    available: available === 'true' ? true : undefined,
+    active: active === 'true' ? true : undefined,
   });
 }
 

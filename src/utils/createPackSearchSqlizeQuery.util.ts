@@ -2,42 +2,40 @@
 /* eslint-disable max-lines-per-function */
 /* eslint-disable complexity */
 import { Op } from 'sequelize';
-import { IProductFormattedQuery } from '../interfaces/IProducts';
+import { IPackSearchQuery } from '../interfaces/IPacks';
 
 class CreatePackSearchSqlizeQuery {
-  private addParams = ({
-    term,
-    establishmentId,
-    type,
-    available,
-    active,
-  }: IProductFormattedQuery) => {
+  private addParams = ({ term, establishmentId, type, active }: IPackSearchQuery) => {
     const searchQuery = [];
     if (term) {
       searchQuery.push({
-        [Op.or]: { 
-          name: { [Op.substring]: term }, 
+        [Op.or]: {
+          name: { [Op.substring]: term },
           description: { [Op.substring]: term },
-          '$brand.name$': { [Op.substring]: term },
+          '$packInfo.productDetails.name$': { [Op.substring]: term },
+          '$packInfo.productDetails.description$': { [Op.substring]: term },
         },
       });
     }
-    if (type) searchQuery.push({ '$typeInfo.id$': { [Op.eq]: type } });
-    if (establishmentId) searchQuery.push({ establishmentId });
+    if (type) searchQuery.push({ '$packInfo.productDetails.type': { [Op.eq]: type } });
+    if (establishmentId) {
+      searchQuery.push({
+        '$packInfo.productDetails.establishmentId': { [Op.eq]: establishmentId },
+      });
+    }
     if (active) searchQuery.push({ active });
 
     return {
       where: {
         [Op.and]: searchQuery,
       },
-      having: available ? { available } : {},
     };
   };
 
-  create = (formattedQuery: IProductFormattedQuery) => {
-    const areThereAnyParams = Object.values(formattedQuery).some((param) => param);
+  create = (packSearchQuery: IPackSearchQuery) => {
+    const areThereAnyParams = Object.values(packSearchQuery).some((param) => param);
 
-    return areThereAnyParams ? this.addParams(formattedQuery) : { having: {}, where: {} };
+    return areThereAnyParams ? this.addParams(packSearchQuery) : { where: {} };
   };
 }
 
