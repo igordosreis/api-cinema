@@ -268,12 +268,16 @@ export default class PacksService {
 
     const filteredPacks = packs
       .map((pack) => {
-        const { isLimited, counter, counterLmit, packInfo } = pack;
-        const newPack = pack;
+        const { isLimited, counter, counterLimit, packInfo } = pack;
+        const newPack: IPacksByQuery = pack.dataValues;
+        console.log('-- -- - -- - - -- - -- - - -  -- - - - - -pack:     ', pack);
 
         if (isLimited) {
-          const isAvailable = counter < counterLmit;
+          const isAvailable = counter < counterLimit;
           newPack.available = isAvailable;
+          console.log('-- -- - -- - - -- - -- - - -  -- - - - - -counter:     ', counter);
+          console.log('-- -- - -- - - -- - -- - - -  -- - - - - -counterLimit:     ', counterLimit);
+          console.log('-- -- - -- - - -- - -- - - -  -- - - - - -isAvailable:     ', isAvailable);
 
           return newPack;
         }
@@ -298,7 +302,7 @@ export default class PacksService {
       )
       .filter(
         ({ packInfo }) =>
-          !term 
+          !term
           || packInfo.some(
             ({ productDetails: { name, description } }) =>
               name.toLowerCase().includes(term) || description.toLowerCase().includes(term),

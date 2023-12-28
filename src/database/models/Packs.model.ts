@@ -10,7 +10,7 @@ class PacksModel extends Model {
   declare price: number;
   declare rules: string;
   declare counter: number;
-  declare counterLmit: number;
+  declare counterLimit: number;
   declare isLimited: boolean;
   declare soldOutAmount: number;
   declare createdAt: Date;
