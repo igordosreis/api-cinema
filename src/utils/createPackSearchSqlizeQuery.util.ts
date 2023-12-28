@@ -6,18 +6,18 @@ import { Op } from 'sequelize';
 import { IPackSearchQuery } from '../interfaces/IPacks';
 
 class CreatePackSearchSqlizeQuery {
-  private addParams = ({ term, establishmentId, active }: IPackSearchQuery) => {
+  private addParams = ({ establishmentId, active }: IPackSearchQuery) => {
     const searchQuery = [];
-    if (term) {
-      searchQuery.push({
-        [Op.or]: {
-          name: { [Op.substring]: term },
-          description: { [Op.substring]: term },
-          // '$packInfo.productDetails.name$': { [Op.substring]: term },
-          // '$packInfo.productDetails.description$': { [Op.substring]: term },
-        },
-      });
-    }
+    // if (term) {
+    //   searchQuery.push({
+    //     [Op.or]: {
+    //       name: { [Op.substring]: term },
+    //       description: { [Op.substring]: term },
+    //       '$packInfo.productDetails.name$': { [Op.substring]: term },
+    //       '$packInfo.productDetails.description$': { [Op.substring]: term },
+    //     },
+    //   });
+    // }
     // if (type) searchQuery.push({ '$packInfo.productDetails.type$': { [Op.eq]: type } });
     // if (type) {
     //   searchQuery.push(
