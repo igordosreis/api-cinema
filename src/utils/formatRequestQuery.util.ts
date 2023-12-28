@@ -125,7 +125,7 @@ class FormatRequestQuery {
     available,
     active,
   }: IPackSearchQueryRaw): IPackSearchQuery => ({
-    term: typeof term === 'string' ? term : undefined,
+    term: typeof term === 'string' ? term.toLowerCase() : undefined,
     type: Number(type) || undefined,
     establishmentId: Number(establishmentId) || undefined,
     available: available === 'true' ? true : undefined,

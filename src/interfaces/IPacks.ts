@@ -1,6 +1,9 @@
 import { z } from 'zod';
 import PacksModel from '../database/models/Packs.model';
 import PacksProductsModel from '../database/models/PacksProducts.model';
+import EstablishmentsProductsModel from '../database/models/EstablishmentsProducts.model';
+import EstablishmentsImagesModel from '../database/models/EstablishmentsImages.model';
+import ProductsTypesModel from '../database/models/ProductsTypes.model';
 
 export type IPackSummary = PacksModel & {
   packInfo: PacksProductsModel[];
@@ -25,3 +28,14 @@ export const IPackSearchQuerySchema = z.object({
 });
 
 export type IPackSearchQuery = z.infer<typeof IPackSearchQuerySchema>;
+
+export type IPacksByQuery = PacksModel & {
+  available?: boolean;
+  packInfo: Array<PacksProductsModel & {
+    productDetails: EstablishmentsProductsModel & {
+      vouchersQuantity: number;
+      imagesBrand: EstablishmentsImagesModel;
+      typeInfo: ProductsTypesModel;
+    };
+  }>;
+};
