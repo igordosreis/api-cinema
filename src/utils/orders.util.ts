@@ -91,17 +91,23 @@ class Orders {
         );
         
         const typesInOrder = Object.keys(productsTypeTotalsInCurrOrder).map((type) => Number(type));
-        const newAccTotalInMonth = typesInOrder.reduce((newAcc, currType) => (
-          newAcc[currType]
-            ? {
-              ...newAcc,
-              [currType]: newAcc[currType] + productsTypeTotalsInCurrOrder[currType],
-            }
-            : {
-              ...newAcc,
-              [currType]: productsTypeTotalsInCurrOrder[currType],
-            }
-        ), accTotalInMonth);
+        const newAccTotalInMonth = typesInOrder.reduce((newAcc, currType) => ({
+          ...newAcc,
+          [currType]: newAcc[currType] 
+            ? newAcc[currType] + productsTypeTotalsInCurrOrder[currType]
+            : productsTypeTotalsInCurrOrder[currType],
+        }), accTotalInMonth);
+        // const newAccTotalInMonth = typesInOrder.reduce((newAcc, currType) => (
+        //   newAcc[currType]
+        //     ? {
+        //       ...newAcc,
+        //       [currType]: newAcc[currType] + productsTypeTotalsInCurrOrder[currType],
+        //     }
+        //     : {
+        //       ...newAcc,
+        //       [currType]: productsTypeTotalsInCurrOrder[currType],
+        //     }
+        // ), accTotalInMonth);
 
         return newAccTotalInMonth;
       },
@@ -165,7 +171,7 @@ class Orders {
         const subTotal = price * (amountRequested || 1);
         const totalPrice = accPrice.totalPrice + subTotal;
 
-        return { totalPrice };
+        return { totalPrice: Number(totalPrice.toFixed(2)) };
       }
 
       return accPrice;

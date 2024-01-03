@@ -21,6 +21,7 @@ class Payment {
 
       return data;
     } catch (error: CustomError | unknown) {
+      console.log('--- -- - - - -- - -- - - -  -- - --    - pagamento error:   ', error);
       if (error instanceof CustomError) throw error;
 
       throw new CustomError(paymentOrderError);
