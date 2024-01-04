@@ -40,7 +40,7 @@ class Plan {
     const firstDayOfMonth = dateUtils.getFirstDayOfMonth(currentDate);
     const lastDayOfMonth = dateUtils.getLastDayOfMonth(currentDate);
 
-    const userOrdersInCurrentMonth = (await OrdersModel.findAll({
+    const userOrdersInCurrentMonth = await OrdersModel.findAll({
       include: [
         {
           model: OrdersProductsModel,
@@ -70,7 +70,7 @@ class Plan {
           [Op.or]: [STATUS_PAID, STATUS_WAITING],
         },
       },
-    })) as IOrderProductsInMonth;
+    }) as IOrderProductsInMonth;
 
     const userTypeTotalsInCurrentMonth = userOrdersInCurrentMonth.reduce(
       (accTotalInMonth, currOrder) => {
@@ -78,11 +78,11 @@ class Plan {
 
         const productsTypeTotalsInCurrOrder = productsDetails.reduce(
           (accTotalInOrder, currProduct) => {
-            const { type } = currProduct.productInfo;
+            const { productInfo: { type }, quantity } = currProduct;
 
             const newAccTotalInOrder = {
               ...accTotalInOrder,
-              [type]: accTotalInOrder[type] ? accTotalInOrder[type] + 1 : 1,
+              [type]: accTotalInOrder[type] ? accTotalInOrder[type] + quantity : quantity,
             };
 
             return newAccTotalInOrder;
@@ -135,6 +135,7 @@ class Plan {
       return newAcc;
     }, [] as IPlanTypeUsedInfo[]);
 
+    // console.log('--- - -- - -- - --- - - - -- - -    usedTypesInfo:       ', usedTypesInfo);
     return usedTypesInfo;
   };
 }

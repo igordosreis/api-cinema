@@ -62,7 +62,7 @@ export default class PlansService {
   }
 
   public static async getUserTypesPerMonth({ userId, cinemaPlan }: IPlanUsedAmount) {
-    const userTypesPerMonth = planUtil.formatUserTypesPerMonth({ userId, cinemaPlan });
+    const userTypesPerMonth = await planUtil.formatUserTypesPerMonth({ userId, cinemaPlan });
 
     return userTypesPerMonth;
   }

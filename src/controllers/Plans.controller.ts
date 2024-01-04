@@ -10,7 +10,7 @@ export default class PlansController {
       },
     } = <IPlanGetUsedInfoRequest>req.body;
 
-    const userTypesPerMonth = PlansService.getUserTypesPerMonth({
+    const userTypesPerMonth = await PlansService.getUserTypesPerMonth({
       userId: id,
       cinemaPlan: Number(cinemaPlan),
     });
