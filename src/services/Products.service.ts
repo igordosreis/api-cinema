@@ -56,7 +56,7 @@ export default class ProductsService {
 
       return filteredProducts;
     } catch (error: CustomError | unknown) {
-      console.log('- -- - -- -- -- - - --  - - -- - -- - ---- -- -- - --- - - - -error: ', error);
+      console.log('--- - -- -- -- - - --  - - -- - -- - ---- -- -- - --- - - - -error: ', error);
       if (error instanceof CustomError) throw error;
 
       throw new CustomError(establishmentServiceUnavailable);
@@ -69,7 +69,7 @@ export default class ProductsService {
 
       return allProductsTypes;
     } catch (error: CustomError | unknown) {
-      console.log('- -- - -- -- -- - - --  - - -- - -- - ---- -- -- - --- - - - -error: ', error);
+      console.log('--- - -- -- -- - - --  - - -- - -- - ---- -- -- - --- - - - -error: ', error);
       if (error instanceof CustomError) throw error;
 
       throw new CustomError(establishmentServiceUnavailable);

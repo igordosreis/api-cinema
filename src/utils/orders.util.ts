@@ -80,7 +80,6 @@ class Orders {
       const isProduct = 'id' in currItem;
       if (isProduct) {
         const { price, amountRequested } = currItem;
-        console.log('- -- - -- -- - -- - -- -- - -- - -- -- amountRequested:    ', amountRequested);
         const subTotal = price * (amountRequested || 1);
         const totalPrice = accPrice.totalPrice + subTotal;
 

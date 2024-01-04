@@ -135,7 +135,6 @@ class Plan {
       return newAcc;
     }, [] as IPlanTypeUsedInfo[]);
 
-    // console.log('--- - -- - -- - --- - - - -- - -    usedTypesInfo:       ', usedTypesInfo);
     return usedTypesInfo;
   };
 }

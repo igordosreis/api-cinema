@@ -117,7 +117,7 @@ export default class OrdersService {
     } catch (error: CustomError | unknown) {
       await t.rollback();
 
-      console.log('- -- - -- -- -- - - --  - - -- - -- - ---- -- -- - -- - - - -error: ', error);
+      console.log('--- - -- -- -- - - --  - - -- - -- - ---- -- -- - -- - - - -error: ', error);
       if (error instanceof CustomError) throw error;
 
       throw new CustomError(orderServiceUnavailable);
@@ -144,7 +144,7 @@ export default class OrdersService {
     } catch (error: CustomError | unknown) {
       await t.rollback();
 
-      console.log('- -- - -- -- -- - - --  - - -- - -- - ---- -- -- - --- - - - -error: ', error);
+      console.log('--- - -- -- -- - - --  - - -- - -- - ---- -- -- - --- - - - -error: ', error);
       if (error instanceof CustomError) throw error;
 
       throw new CustomError(orderServiceUnavailable);
@@ -197,7 +197,7 @@ export default class OrdersService {
 
       return allUserOrders;
     } catch (error: CustomError | unknown) {
-      console.log('- -- - -- -- -- - - --  - - -- - -- - ---- -- -- - --- - - - -error: ', error);
+      console.log('--- - -- -- -- - - --  - - -- - -- - ---- -- -- - --- - - - -error: ', error);
       if (error instanceof CustomError) throw error;
 
       throw new CustomError(orderServiceUnavailable);

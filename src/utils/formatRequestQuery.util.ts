@@ -20,7 +20,6 @@ class FormatRequestQuery {
 
   private formatLimit = ({ query: { limit } }: IEstablishmentRawQuery) => {
     const numberLimit = Number(limit);
-    console.log('numberLimit: ', numberLimit);
     if (!Number.isNaN(numberLimit) && numberLimit >= 0) return numberLimit;
     return 20;
   };

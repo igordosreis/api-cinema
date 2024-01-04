@@ -69,7 +69,7 @@ export default class VouchersService {
 
       return [];
     });
-    // Array with non-pack products' id and amount and packs' info
+    // Array with non-pack products' id and amount and packs' info and amount
     const parsedOrder: IParsedOrder[] = (await Promise.all(parsedOrderPromise)).flat();
 
     // Array with all products in current order

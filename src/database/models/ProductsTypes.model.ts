@@ -21,6 +21,9 @@ ProductsTypesModel.init(
     name: {
       type: DataTypes.STRING,
     },
+    icon: {
+      type: DataTypes.STRING,
+    },
     createdAt: {
       type: DataTypes.DATE,
       // defaultValue: DataTypes.NOW,
