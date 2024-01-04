@@ -17,6 +17,10 @@ module.exports = {
         allowNull: false,
         collate: 'utf8mb3_unicode_ci',
       },
+      icon: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       created_at: {
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),

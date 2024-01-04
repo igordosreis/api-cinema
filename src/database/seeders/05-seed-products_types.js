@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-// const { faker } = require('@faker-js/faker');
+const { faker } = require('@faker-js/faker');
 
 // Helper function to get a random establishment_id from the provided list
 // function getRandomEstablishmentId(ids) {
@@ -36,6 +36,7 @@ module.exports = {
     // Generate 10 entries for the 'establishments_addresses' table
     const seedData = Array.from({ length: typesArray.length }, (_, index) => ({
       name: typesArray[index],
+      icon: `https://${faker.lorem.word()}.jpg`,
     }));
 
     await queryInterface.bulkInsert('products_types', seedData, {});

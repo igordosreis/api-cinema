@@ -5,6 +5,7 @@ import EstablishmentsProductsModel from './EstablishmentsProducts.model';
 class ProductsTypesModel extends Model {
   declare id: number;
   declare name: string;
+  declare icon: string;
   declare createdAt: Date;
   declare updatedAt: Date;
 }
