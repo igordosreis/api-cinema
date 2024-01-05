@@ -18,4 +18,16 @@ export default class FavoritesController {
 
     res.status(200).end();
   }
+
+  public static async getAllUserFavoriteAddresses(req: Request, res: Response): Promise<void> {
+    const {
+      userInfo: {
+        user: { id: userId },
+      },
+    } = <IUserInfoInBody>req.body;
+
+    const allFavorites = await FavoritesService.getAllUserFavoriteAddresses(userId);
+
+    res.status(200).json(allFavorites);
+  }
 }

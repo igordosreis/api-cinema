@@ -4,6 +4,7 @@ import { Op } from 'sequelize';
 import FavoriteEstablishmentAddresses from '../database/models/FavoriteEstablishmentAddresses.model';
 import { IFavoriteToggleRequest } from '../interfaces/IFavorites';
 import CustomError, { favoriteError } from '../utils/customError.util';
+import EstablishmentsAddressesModel from '../database/models/EstablishmentsAddresses.model';
 
 export default class FavoritesService {
   public static async toggleFavoriteEstablishment({
@@ -29,6 +30,21 @@ export default class FavoritesService {
           },
         });
       }
+    } catch (error) {
+      console.log('--- - -- -- -- - - --  - - -- - -- - ---- -- -- - -- - - - -error: ', error);
+
+      throw new CustomError(favoriteError);
+    }
+  }
+
+  public static async getAllUserFavoriteAddresses(userId: number) {
+    try {
+      const allFavorites = await FavoriteEstablishmentAddresses.findAll({
+        where: { userId },
+        include: [{ model: EstablishmentsAddressesModel, as: 'favoriteEstablishmentAddress' }],
+      });
+
+      return allFavorites;
     } catch (error) {
       console.log('--- - -- -- -- - - --  - - -- - -- - ---- -- -- - -- - - - -error: ', error);
 

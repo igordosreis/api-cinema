@@ -44,11 +44,11 @@ FavoriteEstablishmentAddresses.init(
 
 FavoriteEstablishmentAddresses.belongsTo(EstablishmentsAddressesModel, {
   foreignKey: 'establishmentAddressId',
-  as: 'favoriteEstablishmentAddresses',
+  as: 'favoriteEstablishmentAddress',
 });
 EstablishmentsAddressesModel.hasMany(FavoriteEstablishmentAddresses, {
   foreignKey: 'establishmentAddressId',
-  as: 'favoriteEstablishmentAddresses',
+  as: 'favoriteEstablishmentAddress',
 });
 
 export default FavoriteEstablishmentAddresses;
