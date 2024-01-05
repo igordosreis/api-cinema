@@ -7,6 +7,7 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('favorite_establishment_addresses', {
       user_id: {
+        field: 'user_id',
         type: Sequelize.INTEGER,
         allowNull: false,
         primaryKey: true,
@@ -15,6 +16,7 @@ module.exports = {
       establishment_address_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        primaryKey: true,
         references: {
           model: 'establishments_addresses',
           key: 'id', 
