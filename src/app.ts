@@ -4,6 +4,7 @@ import cors from 'cors';
 import router from './routes';
 import errorMiddleware from './middlewares/error.middleware';
 import authMiddleware from './middlewares/auth.middleware';
+import geolocationMiddleware from './middlewares/geolocation.middleware';
 
 class App {
   constructor() {
@@ -12,6 +13,7 @@ class App {
     this.app.use(cors());
     // this.app.use('/images', express.static(`${__dirname}/images`));
     this.app.use(authMiddleware);
+    this.app.use(geolocationMiddleware);
     this.app.use(router);
     this.app.use(errorMiddleware);
   }
