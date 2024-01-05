@@ -6,6 +6,7 @@ import AdminService from './Admin.service';
 import VouchersService from './Vouchers.service';
 import PacksService from './Packs.service';
 import PlansService from './Plans.service';
+import FavoritesService from './Favorites.service';
 
 export {
   EstablishmentsService,
@@ -16,4 +17,5 @@ export {
   VouchersService,
   PacksService,
   PlansService,
+  FavoritesService,
 };
