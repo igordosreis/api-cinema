@@ -107,6 +107,12 @@ export const totalError: ICustomError = {
   message: 'Não foi possível realizar essa operação nesse. Tente novamente mais tarde.',
 };
 
+export const favoriteError: ICustomError = {
+  status: 503,
+  title: OPERATION_UNAVAILABLE,
+  message: 'O serviço de favoritos não está disponível no momento. Tente novamente mais tarde.',
+};
+
 export const movieNotFound: ICustomError = {
   status: 404,
   title: 'Filme não encontrado.',
