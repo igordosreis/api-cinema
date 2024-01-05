@@ -1,7 +1,7 @@
 import EstablishmentsController from './Establishments.controller';
 import ProductsController from './Products.controller';
 import MoviesAPIController from './MoviesAPI.controller';
-import OrdersController from './Users.controller';
+import OrdersController from './Orders.controller';
 import AdminController from './Admin.controller';
 import VouchersController from './Vouchers.controller';
 import PacksController from './Packs.controller';
@@ -12,7 +12,7 @@ export {
   EstablishmentsController,
   ProductsController,
   MoviesAPIController,
-  OrdersController as UsersController,
+  OrdersController,
   AdminController,
   VouchersController,
   PacksController,
