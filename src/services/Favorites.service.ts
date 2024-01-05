@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 /* eslint-disable max-lines-per-function */
 /* eslint-disable max-len */
 import sequelize, { Op } from 'sequelize';
@@ -54,12 +55,14 @@ export default class FavoritesService {
           {
             model: EstablishmentsAddressesModel,
             as: 'favoriteEstablishmentAddress',
-            attributes: {
-              include: [[distanceLiteral, 'distance']],
-            },
+            attributes: (latitude && longitude)
+              ? {
+                include: [[distanceLiteral, 'distance']],
+              }
+              : undefined,
           },
         ],
-        order: [[distanceLiteral, 'ASC']],
+        order: (latitude && longitude) ? [[distanceLiteral, 'ASC']] : [],
       });
       return allFavorites;
     } catch (error) {
