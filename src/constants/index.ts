@@ -6,10 +6,14 @@ import 'dotenv/config';
 export const { MINIMUM_VOUCHER_QUANTITY } = process.env;
 
 // STRINGS
+// ORDER STATUS
 export const STATUS_WAITING = 'waiting';
 export const STATUS_PAID = 'paid';
 export const STATUS_CANCELLED = 'cancelled';
 export const STATUS_EXPIRED = 'expired';
+
+// ERROR MSGS
+export const OPERATION_UNAVAILABLE = 'Operacão indisponível.';
 
 // TMDB API
 

@@ -1,3 +1,5 @@
+import { OPERATION_UNAVAILABLE } from '../constants';
+
 /* eslint-disable max-len */
 export type ICustomError = {
   status: number;
@@ -54,7 +56,7 @@ export const vouchersNotEnough: ICustomError = {
 
 export const orderServiceUnavailable: ICustomError = {
   status: 503,
-  title: 'Operacão indisponível.',
+  title: OPERATION_UNAVAILABLE,
   message: 'O serviço de pedidos não está disponível no momento. Tente novamente mais tarde.',
 };
 
@@ -94,9 +96,15 @@ export const amountUnauthorized = (name: string): ICustomError => {
 
 export const establishmentServiceUnavailable: ICustomError = {
   status: 503,
-  title: 'Operacão indisponível.',
+  title: OPERATION_UNAVAILABLE,
   message:
     'O serviço de estabelecimentos não está disponível no momento. Tente novamente mais tarde.',
+};
+
+export const totalError: ICustomError = {
+  status: 503,
+  title: OPERATION_UNAVAILABLE,
+  message: 'Não foi possível realizar essa operação nesse. Tente novamente mais tarde.',
 };
 
 export const movieNotFound: ICustomError = {
