@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { IPlanGetUsedInfoRequest } from '../interfaces/IPlan';
+import { IUserInfoInBody } from '../interfaces/IUser';
 import { PlansService } from '../services';
 
 export default class PlansController {
@@ -8,7 +8,7 @@ export default class PlansController {
       userInfo: {
         user: { id, cinemaPlan },
       },
-    } = <IPlanGetUsedInfoRequest>req.body;
+    } = <IUserInfoInBody>req.body;
 
     const userTypesPerMonth = await PlansService.getUserTypesPerMonth({
       userId: id,

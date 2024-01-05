@@ -4,7 +4,7 @@ import { IUserInfo } from '../interfaces/IUser';
 import formatRequestQueryUtil from '../utils/formatRequestQuery.util';
 import { IOrderSearchRaw, IOrderRequestRawBody } from '../interfaces/IOrder';
 
-export default class UsersController {
+export default class OrdersController {
   public static async createOrder(req: Request, res: Response): Promise<void> {
     const orderRequest = req as IOrderRequestRawBody;
     const formattedRequest = formatRequestQueryUtil.formatCreateOrder(orderRequest);

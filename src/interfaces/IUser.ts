@@ -43,3 +43,7 @@ export interface IUserInfo {
   company: Company;
   location: Location;
 }
+
+export interface IUserInfoInBody {
+  userInfo: IUserInfo;
+}
