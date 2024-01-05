@@ -20,13 +20,9 @@ export default class FavoritesController {
   }
 
   public static async getAllUserFavoriteAddresses(req: Request, res: Response): Promise<void> {
-    const {
-      userInfo: {
-        user: { id: userId },
-      },
-    } = <IUserInfoInBody>req.body;
-
-    const allFavorites = await FavoritesService.getAllUserFavoriteAddresses(userId);
+    const { userInfo } = <IUserInfoInBody>req.body;
+    
+    const allFavorites = await FavoritesService.getAllUserFavoriteAddresses(userInfo);
 
     res.status(200).json(allFavorites);
   }
