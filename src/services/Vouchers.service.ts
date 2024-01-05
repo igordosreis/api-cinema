@@ -237,4 +237,8 @@ export default class VouchersService {
       }, vouchersRequested);
     });
   }
+
+  public static async getVouchersUserByDate(userId: number) {
+    console.log(userId);
+  }
 }

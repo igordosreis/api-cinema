@@ -170,6 +170,15 @@ export default class OrdersService {
             attributes: {
               exclude: ['createdAt', 'updatedAt'],
             },
+            include: [
+              {
+                model: EstablishmentsProductsModel,
+                as: 'productVoucherInfo',
+                attributes: {
+                  exclude: ['id'],
+                },
+              },
+            ],
           },
           {
             model: OrdersProductsModel,
