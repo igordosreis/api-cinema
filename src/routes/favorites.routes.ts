@@ -3,6 +3,6 @@ import { FavoritesController } from '../controllers';
 
 const favoritesRouter = Router();
 
-favoritesRouter.put('/toggle', FavoritesController.toggleFavoriteEstablishment);
+favoritesRouter.put('/toggle/:id', FavoritesController.toggleFavoriteEstablishment);
 
 export default favoritesRouter;

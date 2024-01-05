@@ -16,11 +16,11 @@ FavoriteEstablishmentAddresses.init(
       allowNull: false,
       primaryKey: true,
     },
-    establishmentAddressesId: {
+    establishmentAddressId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'establishment_addresses',
+        model: 'establishments_addresses',
         key: 'id',
       },
     },
@@ -38,15 +38,16 @@ FavoriteEstablishmentAddresses.init(
     sequelize: db,
     underscored: true,
     timestamps: false,
+    freezeTableName: true,
   },
 );
 
 FavoriteEstablishmentAddresses.belongsTo(EstablishmentsAddressesModel, {
-  foreignKey: 'establishmentAddressesId',
+  foreignKey: 'establishmentAddressId',
   as: 'favoriteEstablishmentAddresses',
 });
 EstablishmentsAddressesModel.hasMany(FavoriteEstablishmentAddresses, {
-  foreignKey: 'establishmentAddressesId',
+  foreignKey: 'establishmentAddressId',
   as: 'favoriteEstablishmentAddresses',
 });
 

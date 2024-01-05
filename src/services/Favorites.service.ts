@@ -15,6 +15,10 @@ export default class FavoritesService {
         where: {
           [Op.and]: [{ establishmentAddressId }, { userId }],
         },
+        defaults: {
+          establishmentAddressId,
+          userId,
+        },
       });
 
       const isEstablishmentAlreadyFavorite = !created;
@@ -26,6 +30,8 @@ export default class FavoritesService {
         });
       }
     } catch (error) {
+      console.log('--- - -- -- -- - - --  - - -- - -- - ---- -- -- - -- - - - -error: ', error);
+
       throw new CustomError(favoriteError);
     }
   }
