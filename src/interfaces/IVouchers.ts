@@ -1,3 +1,7 @@
+import EstablishmentsProductsModel from '../database/models/EstablishmentsProducts.model';
+import OrdersModel from '../database/models/Orders.model';
+import VouchersUserModel from '../database/models/VouchersUser.model';
+
 export interface IVoucherAvailable {
   id: number;
   voucherCode: string;
@@ -27,3 +31,24 @@ export interface IVoucherCode {
   voucherCode: string;
   reservedStatus: boolean;
 }
+
+export type IVouchersByDate = OrdersModel & {
+  date: Date;
+  vouchersOrderPaid: Array<VouchersUserModel & {
+    productVoucherInfo: EstablishmentsProductsModel;
+  }>
+};
+// export type IVouchersByDate = Omit<OrdersModel, 'id' |
+// 'userId' |
+// 'status' |
+// 'paymentId' |
+// 'totalPrice' |
+// 'totalUnits' |
+// 'expireAt' |
+// 'createdAt' |
+// 'updatedAt'> & {
+//   date: Date;
+//   vouchersOrderPaid: Array<VouchersUserModel & {
+//     productVoucherInfo: EstablishmentsProductsModel;
+//   }>
+// };

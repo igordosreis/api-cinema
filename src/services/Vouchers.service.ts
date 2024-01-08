@@ -2,7 +2,7 @@
 /* eslint-disable sonarjs/cognitive-complexity */
 /* eslint-disable operator-linebreak */
 /* eslint-disable max-lines-per-function */
-import { Transaction, Op } from 'sequelize';
+import sequelize, { Transaction, Op } from 'sequelize';
 import EstablishmentsProductsModel from '../database/models/EstablishmentsProducts.model';
 import ProductsTypesModel from '../database/models/ProductsTypes.model';
 import VouchersAvailableModel from '../database/models/VouchersAvailable.model';
@@ -21,7 +21,7 @@ import CustomError, {
 } from '../utils/customError.util';
 import ordersUtil from '../utils/orders.util';
 import PacksService from './Packs.service';
-import { IVoucherAvailable } from '../interfaces/IVouchers';
+import { IVoucherAvailable, IVouchersByDate } from '../interfaces/IVouchers';
 import OrdersModel from '../database/models/Orders.model';
 import VouchersUserModel from '../database/models/VouchersUser.model';
 
@@ -248,13 +248,26 @@ export default class VouchersService {
     try {
       const allUserVouchers = await OrdersModel.findAll({
         attributes: {
-          include: ['updatedAt'],
+          exclude: [
+            'id',
+            'userId',
+            'status',
+            'paymentId',
+            'totalPrice',
+            'totalUnits',
+            'expireAt',
+            'createdAt',
+            'updatedAt',
+          ],
+          include: [
+            [sequelize.fn('DATE_FORMAT', sequelize.col('orders.updated_at'), '%Y-%m-%d'), 'date'],
+          ],
         },
         include: [
           {
             model: VouchersUserModel,
             as: 'vouchersOrderPaid',
-            required: false,
+            required: true,
             attributes: {
               exclude: ['createdAt', 'updatedAt'],
             },
@@ -270,12 +283,38 @@ export default class VouchersService {
           },
         ],
         where: { userId },
-      });
+      }) as IVouchersByDate[];
+      
+      const allUserVouchersGroupedByDate = allUserVouchers.reduce((accOrders, currOrder) => {
+        const { date: currDate, vouchersOrderPaid } = currOrder.dataValues;
+
+        const indexOrderDate = accOrders.findIndex((accOrder) => accOrder.date === currDate);
+        const isDateAlreadyInAcc = indexOrderDate > -1;
+
+        if (isDateAlreadyInAcc) {
+          const addedVouchers = accOrders[indexOrderDate].vouchersOrderPaid
+            .concat(vouchersOrderPaid);
+          const newAcc = accOrders;
+          newAcc[indexOrderDate].vouchersOrderPaid = addedVouchers;
+
+          return newAcc;
+        }
+
+        const newOrderDate: IVouchersByDate = {
+          ...currOrder.dataValues,
+          date: currDate,
+          vouchersOrderPaid,
+        };
+        const newAcc = accOrders;
+        newAcc.push(newOrderDate);
+
+        return newAcc;
+      }, [] as Array<IVouchersByDate>);
 
       const areVouchersNotFound = !allUserVouchers;
       if (areVouchersNotFound) throw new CustomError(vouchersNotFound);
 
-      return allUserVouchers;
+      return allUserVouchersGroupedByDate;
     } catch (error: CustomError | unknown) {
       console.log('--- - -- -- -- - - --  - - -- - -- - ---- -- -- - --- - - - -error: ', error);
       if (error instanceof CustomError) throw error;

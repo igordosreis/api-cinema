@@ -208,7 +208,7 @@ export default class PacksService {
     //   ],
     // });
 
-    const packs = (await PacksModel.findAll({
+    const packs = await PacksModel.findAll({
       include: [
         {
           model: PacksProductsModel,
@@ -262,7 +262,7 @@ export default class PacksService {
       ],
       group: ['packs.id', 'packInfo.product_id', 'packInfo.productDetails.id'],
       ...createPackSearchSqlizeQueryUtil.create(packSearchQuery),
-    })) as IPacksByQuery[];
+    }) as IPacksByQuery[];
 
     const { available, type, term } = packSearchQuery;
 
