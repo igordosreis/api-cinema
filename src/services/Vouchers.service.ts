@@ -14,10 +14,16 @@ import {
   IProductsInOrder,
 } from '../interfaces/IOrder';
 import { IProductFromGetById, IProductWithRequestedVouchers } from '../interfaces/IProducts';
-import CustomError, { productNotFound } from '../utils/customError.util';
+import CustomError, {
+  productNotFound,
+  voucherServiceUnavailable,
+  vouchersNotFound,
+} from '../utils/customError.util';
 import ordersUtil from '../utils/orders.util';
 import PacksService from './Packs.service';
 import { IVoucherAvailable } from '../interfaces/IVouchers';
+import OrdersModel from '../database/models/Orders.model';
+import VouchersUserModel from '../database/models/VouchersUser.model';
 
 export default class VouchersService {
   public static async getVouchersByProductId(productId: number, transaction?: Transaction) {
@@ -180,7 +186,7 @@ export default class VouchersService {
   }) {
     productsWithRequestedVouchers.forEach((productWithVouchers) => {
       const { vouchersRequested, id: productIdWithVouchers } = productWithVouchers;
-      
+
       parsedOrderWithProducts.reduce((accVouchers: IVoucherAvailable[], currItem) => {
         const isProduct = 'id' in currItem;
         if (isProduct) {
@@ -238,7 +244,43 @@ export default class VouchersService {
     });
   }
 
-  public static async getVouchersUserByDate(userId: number) {
-    console.log(userId);
+  public static async getAllVouchersUserByDate(userId: number) {
+    try {
+      const allUserVouchers = await OrdersModel.findAll({
+        attributes: {
+          include: ['updatedAt'],
+        },
+        include: [
+          {
+            model: VouchersUserModel,
+            as: 'vouchersOrderPaid',
+            required: false,
+            attributes: {
+              exclude: ['createdAt', 'updatedAt'],
+            },
+            include: [
+              {
+                model: EstablishmentsProductsModel,
+                as: 'productVoucherInfo',
+                attributes: {
+                  exclude: ['id'],
+                },
+              },
+            ],
+          },
+        ],
+        where: { userId },
+      });
+
+      const areVouchersNotFound = !allUserVouchers;
+      if (areVouchersNotFound) throw new CustomError(vouchersNotFound);
+
+      return allUserVouchers;
+    } catch (error: CustomError | unknown) {
+      console.log('--- - -- -- -- - - --  - - -- - -- - ---- -- -- - --- - - - -error: ', error);
+      if (error instanceof CustomError) throw error;
+
+      throw new CustomError(voucherServiceUnavailable);
+    }
   }
 }
