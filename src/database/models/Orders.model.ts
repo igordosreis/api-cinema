@@ -8,8 +8,6 @@ class OrdersModel extends Model {
   declare paymentId: string;
   declare totalPrice: number;
   declare totalUnits: number;
-  declare totalConsumables: number;
-  declare totalTickets: number;
   declare expireAt: Date;
   declare createdAt: Date;
   declare updatedAt: Date;
@@ -36,12 +34,6 @@ OrdersModel.init(
       type: DataTypes.INTEGER,
     },
     totalUnits: {
-      type: DataTypes.INTEGER,
-    },
-    totalConsumables: {
-      type: DataTypes.INTEGER,
-    },
-    totalTickets: {
       type: DataTypes.INTEGER,
     },
     expireAt: {

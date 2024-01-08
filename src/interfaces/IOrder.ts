@@ -61,8 +61,6 @@ export interface IOrdersDetails {
   paymentId: string;
   totalPrice: number;
   totalUnits: number;
-  totalConsumables: number;
-  totalTickets: number;
   expireAt: Date;
   createdAt: Date;
   updatedAt: Date;
