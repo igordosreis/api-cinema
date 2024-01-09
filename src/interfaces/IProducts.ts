@@ -16,14 +16,6 @@ export interface IProduct {
   isAvailable?: boolean;
 }
 
-// export interface IProductRawQuery extends Request {
-//   term: string | undefined;
-//   available: boolean | undefined;
-//   active: boolean | undefined;
-//   type: string | undefined;
-//   establishmentId: number | undefined;
-// }
-
 export const IProductRawQuerySchema = z.object({
   establishmentId: z.string().optional(),
   type: z.string().optional(),
@@ -33,14 +25,6 @@ export const IProductRawQuerySchema = z.object({
 });
 
 export type IProductRawQuery = z.infer<typeof IProductRawQuerySchema>;
-
-// export interface IProductFormattedQuery {
-//   term: string | undefined;
-//   available: boolean | undefined;
-//   active: boolean | undefined;
-//   type: string | undefined;
-//   establishmentId: number | undefined;
-// }
 
 export const IProductQuerySchema = z.object({
   limit: z.number(),
