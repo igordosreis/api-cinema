@@ -6,7 +6,7 @@ import {
 import { IProductQuery, IProductRawQuery } from '../interfaces/IProducts';
 import {
   IOrderRequestRawInfo,
-  IOrderRequestFormattedBody,
+  IOrderRequestBody,
   IOrderRequestRawBody,
   IOrderSearchFormatted,
   IOrderSearchRaw,
@@ -106,24 +106,22 @@ class FormatRequestQuery {
   private formatAmount = (amount: number | string) => Number(amount);
 
   private formatUserId = ({
-    body: {
-      userInfo: {
-        user: { id: userId },
-      },
+    userInfo: {
+      user: { id: userId },
     },
   }: IOrderRequestRawBody) => Number(userId);
 
-  private formatOrderInfo = ({ body: { orderInfo } }: IOrderRequestRawBody) =>
+  private formatOrderInfo = ({ orderInfo }: IOrderRequestRawBody) =>
     orderInfo.map(({ productId, packId, amountRequested }: IOrderRequestRawInfo) => ({
       productId: this.formatProductId(productId),
       packId: this.formatPackId(packId),
       amountRequested: this.formatAmount(amountRequested),
     }));
 
-  formatCreateOrder = (req: IOrderRequestRawBody): IOrderRequestFormattedBody => ({
-    userId: this.formatUserId(req),
-    cinemaPlan: Number(req.body.userInfo.user.cinemaPlan),
-    orderInfo: this.formatOrderInfo(req),
+  formatCreateOrder = (orderRequest: IOrderRequestRawBody): IOrderRequestBody => ({
+    userId: this.formatUserId(orderRequest),
+    cinemaPlan: Number(orderRequest.userInfo.user.cinemaPlan),
+    orderInfo: this.formatOrderInfo(orderRequest),
   });
 
   private convertStringToNumber = (string: string | number): number => Number(string);

@@ -20,7 +20,7 @@ import { IPaymentOrderRequest } from '../interfaces/IPayment';
 import {
   IOrderInfo,
   IOrderSearchFormatted,
-  IOrderRequestFormattedBody,
+  IOrderRequestBody,
   IParsedOrderWithProducts,
 } from '../interfaces/IOrder';
 import { STATUS_CANCELLED, STATUS_WAITING } from '../constants';
@@ -36,7 +36,10 @@ export default class OrdersService {
     const packsOrderPromise = parsedOrderWithProducts.map(async (itemInfo) => {
       const isPack = 'pack' in itemInfo;
       if (isPack) {
-        const { pack: { id, price }, amountRequested } = itemInfo;
+        const {
+          pack: { id, price },
+          amountRequested,
+        } = itemInfo;
         const packOrderPromise = await OrdersPacksModel.create(
           { orderId, packId: id, quantity: amountRequested, soldPrice: price },
           { transaction },
@@ -67,12 +70,12 @@ export default class OrdersService {
     await Promise.all(productsOrderPromise);
   }
 
-  public static async createOrder(orderRequest: IOrderRequestFormattedBody) {
+  public static async createOrder(orderRequest: IOrderRequestBody) {
     const t = await db.transaction();
     try {
       const { userId, cinemaPlan, orderInfo } = orderRequest;
 
-      const { 
+      const {
         productsWithRequestedVouchers,
         parsedOrderWithProducts,
       } = await VouchersService.getRequestedVouchers(orderInfo, t);

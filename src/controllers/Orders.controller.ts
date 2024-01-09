@@ -6,9 +6,9 @@ import { IOrderSearchRaw, IOrderRequestRawBody } from '../interfaces/IOrder';
 
 export default class OrdersController {
   public static async createOrder(req: Request, res: Response): Promise<void> {
-    const orderRequest = req as IOrderRequestRawBody;
+    const orderRequest = <IOrderRequestRawBody>req.body;
     const formattedRequest = formatRequestQueryUtil.formatCreateOrder(orderRequest);
-
+    
     const createOrderResponse = await OrdersService.createOrder(formattedRequest);
 
     res.status(200).json(createOrderResponse);
