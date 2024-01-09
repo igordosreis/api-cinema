@@ -68,7 +68,7 @@ export default class EstablishmentsService {
         {
           type: QueryTypes.SELECT,
           replacements: {
-            limit: Number(limit),
+            limit,
             offset: page * limit,
             latitude,
             longitude,

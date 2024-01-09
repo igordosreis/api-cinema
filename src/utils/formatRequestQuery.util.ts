@@ -133,7 +133,10 @@ class FormatRequestQuery {
     orderId: this.convertStringToNumber(orderId),
   });
 
+  // eslint-disable-next-line sonarjs/no-identical-functions
   formatPackQuery = (searchQuery: IPackSearchQueryRaw): IPackSearchQuery => ({
+    limit: this.formatLimit(searchQuery),
+    page: this.formatPage(searchQuery),
     term: this.formatTerm(searchQuery),
     type: this.formatType(searchQuery),
     establishmentId: this.formatEstablishmentId(searchQuery),

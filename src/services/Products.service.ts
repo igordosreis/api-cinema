@@ -52,6 +52,8 @@ export default class ProductsService {
         ],
         group: ['establishments_products.id'],
         ...createProductSearchSqlizeQueryUtil.create(formattedQuery),
+        limit: formattedQuery.limit,
+        offset: formattedQuery.limit * formattedQuery.page,
       });
 
       return filteredProducts;

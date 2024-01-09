@@ -17,6 +17,8 @@ export interface IProduct {
 }
 
 export const IProductRawQuerySchema = z.object({
+  limit: z.string().optional(),
+  page: z.string().optional(),
   establishmentId: z.string().optional(),
   type: z.string().optional(),
   active: z.string().optional(),
