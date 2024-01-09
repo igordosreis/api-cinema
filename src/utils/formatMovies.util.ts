@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable camelcase */
 /* eslint-disable max-lines-per-function */
+import { MAX_DAYS_REMAINING } from '../constants';
 import {
   CastMember,
   CrewMember,
@@ -70,7 +71,8 @@ class FormatMovies {
     return isReleased
       ? {
         isReleased,
-        daysRemainingAsNowPlaying: 45 - dateUtils.differenceInDays(movieReleaseDate, currentDate),
+        daysRemainingAsNowPlaying: MAX_DAYS_REMAINING 
+          - dateUtils.differenceInDays(movieReleaseDate, currentDate),
       }
       : {
         isReleased,

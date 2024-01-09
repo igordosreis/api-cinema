@@ -46,7 +46,7 @@ class FormatRequestQuery {
   }: {
     searchQuery: IEstablishmentAddressRawQuery;
     userInfo: IUserInfo;
-  }) => searchQuery.latitude || userInfo.location.latitude || '-19.919052';
+  }) => searchQuery.latitude || userInfo.location.latitude || undefined;
 
   private formatLongitude = ({
     searchQuery,
@@ -54,7 +54,7 @@ class FormatRequestQuery {
   }: {
     searchQuery: IEstablishmentAddressRawQuery;
     userInfo: IUserInfo;
-  }) => searchQuery.longitude || userInfo.location.longitude || '-43.9386685';
+  }) => searchQuery.longitude || userInfo.location.longitude || undefined;
 
   private formatBrandId = ({ brandId }: IEstablishmentAddressRawQuery) =>
     Number(brandId) || undefined;

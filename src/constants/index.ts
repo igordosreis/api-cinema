@@ -6,6 +6,7 @@ import 'dotenv/config';
 export const { MINIMUM_VOUCHER_QUANTITY } = process.env;
 export const PAGE_NUMBER_DEFAULT = 20;
 export const LIMIT_NUMBER_DEFAULT = 0;
+export const MAX_DAYS_REMAINING = 30;
 
 // STRINGS
 
