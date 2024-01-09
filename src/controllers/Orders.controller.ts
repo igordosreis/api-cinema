@@ -28,7 +28,7 @@ export default class OrdersController {
   public static async getAllOrders(req: Request, res: Response): Promise<void> {
     const {
       user: { id: userId },
-    }: IUserInfo = req.body.userInfo;
+    } = <IUserInfo>req.body;
 
     const allUserOrders = await OrdersService.getAllOrders(userId);
 
