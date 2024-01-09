@@ -133,18 +133,12 @@ class FormatRequestQuery {
     orderId: this.convertStringToNumber(req.params.id),
   });
 
-  formatPackQuery = ({
-    term,
-    type,
-    establishmentId,
-    available,
-    active,
-  }: IPackSearchQueryRaw): IPackSearchQuery => ({
-    term: typeof term === 'string' ? term.toLowerCase() : undefined,
-    type: Number(type) || undefined,
-    establishmentId: Number(establishmentId) || undefined,
-    available: available === 'true' ? true : undefined,
-    active: active === 'true' ? true : undefined,
+  formatPackQuery = (searchQuery: IPackSearchQueryRaw): IPackSearchQuery => ({
+    term: this.formatTerm(searchQuery),
+    type: this.formatType(searchQuery),
+    establishmentId: this.formatEstablishmentId(searchQuery),
+    available: this.formatAvailable(searchQuery),
+    active: this.formatActive(searchQuery),
   });
 }
 
