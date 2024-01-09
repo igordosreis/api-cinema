@@ -5,7 +5,7 @@ import CitiesModel from '../database/models/Cities.model';
 import EstablishmentsModel from '../database/models/Establishments.model';
 import StatesModel from '../database/models/States.model';
 import createGeoSearchSqlQuery from '../utils/createGeoSearchSqlQuery.util';
-import { IEstablishmentFormattedQuery } from '../interfaces/IEstablishments';
+import { IEstablishmentAddressQuery } from '../interfaces/IEstablishments';
 import EstablishmentsImagesModel from '../database/models/EstablishmentsImages.model';
 import CustomError, { establishmentServiceUnavailable } from '../utils/customError.util';
 
@@ -61,7 +61,7 @@ export default class EstablishmentsService {
     stateId,
     brandId,
     term,
-  }: IEstablishmentFormattedQuery) {
+  }: IEstablishmentAddressQuery) {
     try {
       const filteredAddresses = await db.query(
         createGeoSearchSqlQuery({ term, cityId, stateId, brandId }),

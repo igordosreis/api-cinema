@@ -1,16 +1,16 @@
+/* eslint-disable max-lines-per-function */
 import sequelize, { Op } from 'sequelize';
 import EstablishmentsImagesModel from '../database/models/EstablishmentsImages.model';
 import EstablishmentsProductsModel from '../database/models/EstablishmentsProducts.model';
 import ProductsTypesModel from '../database/models/ProductsTypes.model';
 import VouchersAvailableModel from '../database/models/VouchersAvailable.model';
-import { IProductFormattedQuery } from '../interfaces/IProducts';
+import { IProductQuery } from '../interfaces/IProducts';
 import createProductSearchSqlizeQueryUtil from '../utils/createProductSearchSqlizeQuery.util';
 import CustomError, { establishmentServiceUnavailable } from '../utils/customError.util';
 import EstablishmentsModel from '../database/models/Establishments.model';
 
-/* eslint-disable max-lines-per-function */
 export default class ProductsService {
-  public static async getProductsByQuery(formattedQuery: IProductFormattedQuery) {
+  public static async getProductsByQuery(formattedQuery: IProductQuery) {
     try {
       const filteredProducts = await EstablishmentsProductsModel.findAll({
         attributes: {

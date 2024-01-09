@@ -5,7 +5,7 @@ import { IProductRawQuery } from '../interfaces/IProducts';
 
 export default class ProductsController {
   public static async getProductsByQuery(req: Request, res: Response): Promise<void> {
-    const searchQuery = req as IProductRawQuery;
+    const searchQuery = <IProductRawQuery>req.params;
 
     const formattedQuery = formatRequestQueryUtil.formatProductQuery(searchQuery);
     const filteredProducts = await ProductsService.getProductsByQuery(formattedQuery);

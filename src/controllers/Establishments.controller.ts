@@ -1,7 +1,11 @@
 import { Request, Response } from 'express';
 import { EstablishmentsService } from '../services';
-import { IEstablishmentRawQuery } from '../interfaces/IEstablishments';
+import { 
+  IEstablishmentAddressQuerySchema,
+  IEstablishmentAddressRawQuery,
+} from '../interfaces/IEstablishments';
 import formatRequestQueryUtil from '../utils/formatRequestQuery.util';
+import { IUserInfo } from '../interfaces/IUser';
 
 export default class EstablishmentsController {
   public static async getAllEstablishments(_req: Request, res: Response): Promise<void> {
@@ -11,9 +15,14 @@ export default class EstablishmentsController {
   }
 
   public static async getEstablishmentsByAddress(req: Request, res: Response): Promise<void> {
-    const searchQuery = req as IEstablishmentRawQuery;
+    const searchQuery = <IEstablishmentAddressRawQuery>req.params;
+    const userInfo = <IUserInfo>req.body;
 
-    const formattedQuery = formatRequestQueryUtil.formatEstablishmentQuery(searchQuery);
+    const formattedQuery = formatRequestQueryUtil.formatEstablishmentQuery({
+      searchQuery,
+      userInfo,
+    });
+    IEstablishmentAddressQuerySchema.parse(formattedQuery);
     const establishmentsByAddress = await EstablishmentsService.getEstablishmentsByAddress(
       formattedQuery,
     );
