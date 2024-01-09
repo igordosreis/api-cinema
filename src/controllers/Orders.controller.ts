@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import OrdersService from '../services/Orders.service';
 import { IUserInfo } from '../interfaces/IUser';
 import formatRequestQueryUtil from '../utils/formatRequestQuery.util';
-import { IOrderSearchRaw, IOrderRequestRawBody } from '../interfaces/IOrder';
+import { IOrderRequestRawBody } from '../interfaces/IOrder';
 
 export default class OrdersController {
   public static async createOrder(req: Request, res: Response): Promise<void> {
@@ -15,8 +15,10 @@ export default class OrdersController {
   }
 
   public static async cancelOrder(req: Request, res: Response): Promise<void> {
-    const orderSearchRaw = req as unknown as IOrderSearchRaw;
-    const orderSearchFormatted = formatRequestQueryUtil.formatOrderSearch(orderSearchRaw);
+    const { id: orderId } = req.params;
+    const userInfo = <IUserInfo>req.body;
+
+    const orderSearchFormatted = formatRequestQueryUtil.formatOrderSearch({ orderId, userInfo });
 
     await OrdersService.cancelOrder(orderSearchFormatted);
 
@@ -34,8 +36,10 @@ export default class OrdersController {
   }
 
   public static async getOrderById(req: Request, res: Response): Promise<void> {
-    const orderSearchRaw = req as unknown as IOrderSearchRaw;
-    const orderSearchFormatted = formatRequestQueryUtil.formatOrderSearch(orderSearchRaw);
+    const { id: orderId } = req.params;
+    const userInfo = <IUserInfo>req.body;
+
+    const orderSearchFormatted = formatRequestQueryUtil.formatOrderSearch({ orderId, userInfo });
 
     const orderById = await OrdersService.getOrderById(orderSearchFormatted);
 

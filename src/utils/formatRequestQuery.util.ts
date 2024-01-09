@@ -9,7 +9,6 @@ import {
   IOrderRequestBody,
   IOrderRequestRawBody,
   IOrderSearchFormatted,
-  IOrderSearchRaw,
 } from '../interfaces/IOrder';
 import { IPackSearchQuery, IPackSearchQueryRaw } from '../interfaces/IPacks';
 import { IUserInfo } from '../interfaces/IUser';
@@ -126,9 +125,12 @@ class FormatRequestQuery {
 
   private convertStringToNumber = (string: string | number): number => Number(string);
 
-  formatOrderSearch = (req: IOrderSearchRaw): IOrderSearchFormatted => ({
-    userId: this.convertStringToNumber(req.body.userInfo.user.id),
-    orderId: this.convertStringToNumber(req.params.id),
+  formatOrderSearch = (
+    { orderId, userInfo }:
+    { orderId: string, userInfo: IUserInfo },
+  ): IOrderSearchFormatted => ({
+    userId: this.convertStringToNumber(userInfo.user.id),
+    orderId: this.convertStringToNumber(orderId),
   });
 
   formatPackQuery = (searchQuery: IPackSearchQueryRaw): IPackSearchQuery => ({
