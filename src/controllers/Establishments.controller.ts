@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { EstablishmentsService } from '../services';
 import { 
+  IEstablishmentAddressQueryRawSchema,
   IEstablishmentAddressQuerySchema,
   IEstablishmentAddressRawQuery,
 } from '../interfaces/IEstablishments';
@@ -18,6 +19,8 @@ export default class EstablishmentsController {
     const searchQuery = <IEstablishmentAddressRawQuery>req.params;
     const userInfo = <IUserInfo>req.body;
 
+    IEstablishmentAddressQueryRawSchema.parse(searchQuery);
+    
     const formattedQuery = formatRequestQueryUtil.formatEstablishmentQuery({
       searchQuery,
       userInfo,

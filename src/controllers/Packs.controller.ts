@@ -1,6 +1,10 @@
 import { Request, Response } from 'express';
 import { PacksService } from '../services';
-import { IPackSearchQueryRaw, IPackSearchQuerySchema } from '../interfaces/IPacks';
+import {
+  IPackSearchQueryRaw,
+  IPackSearchQueryRawSchema,
+  IPackSearchQuerySchema,
+} from '../interfaces/IPacks';
 import formatRequestQueryUtil from '../utils/formatRequestQuery.util';
 
 export default class PacksController {
@@ -20,6 +24,7 @@ export default class PacksController {
 
   public static async getPackByQuery(req: Request, res: Response): Promise<void> {
     const packSearchQuery = <IPackSearchQueryRaw>req.query;
+    IPackSearchQueryRawSchema.parse(packSearchQuery);
 
     const formattedPackSearchQuery = formatRequestQueryUtil.formatPackQuery(packSearchQuery);
     IPackSearchQuerySchema.parse(formattedPackSearchQuery);
