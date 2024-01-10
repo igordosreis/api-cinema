@@ -82,6 +82,7 @@ export default class EstablishmentsService {
 
       return filteredAddresses;
     } catch (error: CustomError | unknown) {
+      console.log('--- - -- -- -- - - --  - - -- - -- - ---- -- -- - --- - - - -error: ', error);
       if (error instanceof CustomError) throw error;
 
       throw new CustomError(establishmentServiceUnavailable);

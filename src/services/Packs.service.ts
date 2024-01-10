@@ -262,8 +262,8 @@ export default class PacksService {
       ],
       group: ['packs.id', 'packInfo.product_id', 'packInfo.productDetails.id'],
       ...createPackSearchSqlizeQueryUtil.create(packSearchQuery),
-      limit: packSearchQuery.limit,
-      offset: packSearchQuery.limit * packSearchQuery.page,
+      // limit: packSearchQuery.limit,
+      // offset: packSearchQuery.limit * packSearchQuery.page,
     }) as IPacksByQuery[];
 
     const { available, type, term } = packSearchQuery;

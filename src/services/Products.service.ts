@@ -52,9 +52,10 @@ export default class ProductsService {
         ],
         group: ['establishments_products.id'],
         ...createProductSearchSqlizeQueryUtil.create(formattedQuery),
-        limit: formattedQuery.limit,
-        offset: formattedQuery.limit * formattedQuery.page,
+        // limit: formattedQuery.limit,
+        // offset: formattedQuery.limit * formattedQuery.page,
       });
+      console.log('--- - -- - -      -     -      -    formattedQuery:        ', formattedQuery);
 
       return filteredProducts;
     } catch (error: CustomError | unknown) {
