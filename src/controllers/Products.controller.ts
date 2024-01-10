@@ -12,11 +12,11 @@ export default class ProductsController {
     const searchQuery = <IProductRawQuery>req.query;
     IProductRawQuerySchema.parse(searchQuery);
 
-    const formattedQuery = formatRequestQueryUtil.formatProductQuery(searchQuery);
-    IProductQuerySchema.parse(formattedQuery);
-    const filteredProducts = await ProductsService.getProductsByQuery(formattedQuery);
+    const formattedSearchQuery = formatRequestQueryUtil.formatProductQuery(searchQuery);
+    IProductQuerySchema.parse(formattedSearchQuery);
+    const products = await ProductsService.getProductsByQuery(formattedSearchQuery);
 
-    res.status(200).json(filteredProducts);
+    res.status(200).json(products);
   }
 
   public static async getProductsTypes(_req: Request, res: Response): Promise<void> {

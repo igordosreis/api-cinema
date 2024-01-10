@@ -23,14 +23,14 @@ export default class PacksController {
   }
 
   public static async getPackByQuery(req: Request, res: Response): Promise<void> {
-    const packSearchQuery = <IPackSearchQueryRaw>req.query;
-    IPackSearchQueryRawSchema.parse(packSearchQuery);
+    const searchQuery = <IPackSearchQueryRaw>req.query;
+    IPackSearchQueryRawSchema.parse(searchQuery);
 
-    const formattedPackSearchQuery = formatRequestQueryUtil.formatPackQuery(packSearchQuery);
-    IPackSearchQuerySchema.parse(formattedPackSearchQuery);
+    const formattedSearchQuery = formatRequestQueryUtil.formatPackQuery(searchQuery);
+    IPackSearchQuerySchema.parse(formattedSearchQuery);
 
-    const filteredPacks = await PacksService.getPacksByQuery(formattedPackSearchQuery);
+    const packs = await PacksService.getPacksByQuery(formattedSearchQuery);
 
-    res.status(200).json(filteredPacks);
+    res.status(200).json(packs);
   }
 }

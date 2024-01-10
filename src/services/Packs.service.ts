@@ -9,9 +9,10 @@ import VouchersAvailableModel from '../database/models/VouchersAvailable.model';
 import EstablishmentsImagesModel from '../database/models/EstablishmentsImages.model';
 import ProductsTypesModel from '../database/models/ProductsTypes.model';
 import createPackSearchSqlizeQueryUtil from '../utils/createPackSearchSqlizeQuery.util';
+import Pagination from '../utils/pagination.util';
 
 export default class PacksService {
-  public static async getPacksByQuery(packSearchQuery: IPackSearchQuery) {
+  public static async getPacksByQuery(formattedSearchQuery: IPackSearchQuery) {
     // const filteredPacks = await db.query(
     //   `SELECT
     //   packs.id,
@@ -261,12 +262,12 @@ export default class PacksService {
         },
       ],
       group: ['packs.id', 'packInfo.product_id', 'packInfo.productDetails.id'],
-      ...createPackSearchSqlizeQueryUtil.create(packSearchQuery),
+      ...createPackSearchSqlizeQueryUtil.create(formattedSearchQuery),
       // limit: packSearchQuery.limit,
       // offset: packSearchQuery.limit * packSearchQuery.page,
     }) as IPacksByQuery[];
 
-    const { available, type, term } = packSearchQuery;
+    const { available, type, term } = formattedSearchQuery;
 
     const filteredPacks = packs
       .map((pack) => {
@@ -309,7 +310,10 @@ export default class PacksService {
           ),
       );
 
-    return filteredPacks;
+    const { page, limit } = formattedSearchQuery;
+    const pagedPacks = Pagination.getPageContent({ page, limit, array: filteredPacks });
+
+    return pagedPacks;
   }
 
   public static async getAllPacks() {

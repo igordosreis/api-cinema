@@ -11,9 +11,9 @@ import EstablishmentsModel from '../database/models/Establishments.model';
 import Pagination from '../utils/pagination.util';
 
 export default class ProductsService {
-  public static async getProductsByQuery(formattedQuery: IProductQuery) {
+  public static async getProductsByQuery(formattedSearchQuery: IProductQuery) {
     try {
-      const filteredProducts = await EstablishmentsProductsModel.findAll({
+      const products = await EstablishmentsProductsModel.findAll({
         attributes: {
           include: [
             [sequelize.fn('COUNT', sequelize.col('vouchersAvailable.id')), 'vouchersQuantity'],
@@ -52,13 +52,13 @@ export default class ProductsService {
           },
         ],
         group: ['establishments_products.id'],
-        ...createProductSearchSqlizeQueryUtil.create(formattedQuery),
+        ...createProductSearchSqlizeQueryUtil.create(formattedSearchQuery),
         // limit: formattedQuery.limit,
         // offset: formattedQuery.limit * formattedQuery.page,
       });
 
-      const { page, limit } = formattedQuery;
-      const pagedProducts = Pagination.getPageContent({ page, limit, array: filteredProducts });
+      const { page, limit } = formattedSearchQuery;
+      const pagedProducts = Pagination.getPageContent({ page, limit, array: products });
 
       return pagedProducts;
     } catch (error: CustomError | unknown) {
