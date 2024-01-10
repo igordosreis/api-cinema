@@ -20,12 +20,13 @@ import { IPaymentOrderRequest } from '../interfaces/IPayment';
 import {
   IOrderInfo,
   IOrderSearchFormatted,
-  IOrderRequestFormattedBody,
+  IOrderRequestBody,
   IParsedOrderWithProducts,
 } from '../interfaces/IOrder';
 import { STATUS_CANCELLED, STATUS_WAITING } from '../constants';
 import VouchersService from './Vouchers.service';
 import OrdersPacksModel from '../database/models/OrdersPacks.model';
+import { IPagination } from '../interfaces/IPagination';
 
 export default class OrdersService {
   private static async createPacksOrder(
@@ -36,7 +37,10 @@ export default class OrdersService {
     const packsOrderPromise = parsedOrderWithProducts.map(async (itemInfo) => {
       const isPack = 'pack' in itemInfo;
       if (isPack) {
-        const { pack: { id, price }, amountRequested } = itemInfo;
+        const {
+          pack: { id, price },
+          amountRequested,
+        } = itemInfo;
         const packOrderPromise = await OrdersPacksModel.create(
           { orderId, packId: id, quantity: amountRequested, soldPrice: price },
           { transaction },
@@ -67,12 +71,12 @@ export default class OrdersService {
     await Promise.all(productsOrderPromise);
   }
 
-  public static async createOrder(orderRequest: IOrderRequestFormattedBody) {
+  public static async createOrder(orderRequest: IOrderRequestBody) {
     const t = await db.transaction();
     try {
       const { userId, cinemaPlan, orderInfo } = orderRequest;
 
-      const { 
+      const {
         productsWithRequestedVouchers,
         parsedOrderWithProducts,
       } = await VouchersService.getRequestedVouchers(orderInfo, t);
@@ -151,7 +155,13 @@ export default class OrdersService {
     }
   }
 
-  public static async getAllOrders(userId: number) {
+  public static async getAllOrders({ 
+    userId,
+    pagination: { page, limit },
+  }: { 
+    userId: number;
+    pagination: IPagination;
+  }) {
     try {
       const allUserOrders = await OrdersModel.findAll({
         include: [
@@ -199,6 +209,8 @@ export default class OrdersService {
           },
         ],
         where: { userId },
+        limit,
+        offset: page * limit,
       });
 
       const areOrdersNotFound = !allUserOrders;

@@ -1,7 +1,6 @@
 /* eslint-disable sonarjs/cognitive-complexity */
 /* eslint-disable max-lines-per-function */
 /* eslint-disable complexity */
-// import { Op } from 'sequelize';
 import { Op } from 'sequelize';
 import { IPackSearchQuery } from '../interfaces/IPacks';
 

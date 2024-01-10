@@ -2,21 +2,15 @@
 /* eslint-disable max-lines-per-function */
 /* eslint-disable complexity */
 import { Op } from 'sequelize';
-import { IProductFormattedQuery } from '../interfaces/IProducts';
+import { IProductQuery } from '../interfaces/IProducts';
 
 class CreateProductSearchSqlizeQuery {
-  private addParams = ({
-    term,
-    establishmentId,
-    type,
-    available,
-    active,
-  }: IProductFormattedQuery) => {
+  private addParams = ({ term, establishmentId, type, available, active }: IProductQuery) => {
     const searchQuery = [];
     if (term) {
       searchQuery.push({
-        [Op.or]: { 
-          name: { [Op.substring]: term }, 
+        [Op.or]: {
+          name: { [Op.substring]: term },
           description: { [Op.substring]: term },
           '$brand.name$': { [Op.substring]: term },
         },
@@ -34,7 +28,7 @@ class CreateProductSearchSqlizeQuery {
     };
   };
 
-  create = (formattedQuery: IProductFormattedQuery) => {
+  create = (formattedQuery: IProductQuery) => {
     const areThereAnyParams = Object.values(formattedQuery).some((param) => param);
 
     return areThereAnyParams ? this.addParams(formattedQuery) : { having: {}, where: {} };

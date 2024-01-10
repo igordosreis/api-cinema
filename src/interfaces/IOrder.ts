@@ -1,7 +1,5 @@
-import { Request } from 'express';
 import { Transaction } from 'sequelize';
 import { IUserInfo } from './IUser';
-// import { IVoucherAvailable, IVoucherUser } from './IVouchers';
 import OrdersModel from '../database/models/Orders.model';
 import VouchersAvailableModel from '../database/models/VouchersAvailable.model';
 import VouchersUserModel from '../database/models/VouchersUser.model';
@@ -99,24 +97,22 @@ export interface IOrderRequestRawInfo {
   amountRequested: string | number;
 }
 
-export interface IOrderRequestFormattedInfo {
+export interface IOrderRequestInfo {
   productId?: number | undefined;
   packId?: number | undefined;
   amountRequested: number;
   price?: number;
 }
 
-export interface IOrderRequestRawBody extends Request {
-  body: {
-    orderInfo: IOrderRequestRawInfo[];
-    userInfo: IUserInfo;
-  };
+export interface IOrderRequestRawBody {
+  orderInfo: IOrderRequestRawInfo[];
+  userInfo: IUserInfo;
 }
 
-export interface IOrderRequestFormattedBody {
+export interface IOrderRequestBody {
   userId: number;
   cinemaPlan: number;
-  orderInfo: IOrderRequestFormattedInfo[];
+  orderInfo: IOrderRequestInfo[];
 }
 
 export interface ICreateOrderParams {
@@ -130,22 +126,26 @@ export type IProductsInOrder = {
   amountRequested: number;
 };
 
-export type IParsedOrder = {
-  productId: number;
-  amountRequested: number;
-  pack?: undefined;
-} | {
-  pack: IPackSummary;
-  amountRequested: number;
-  productId?: undefined;
-};
+export type IParsedOrder =
+  | {
+    productId: number;
+    amountRequested: number;
+    pack?: undefined;
+  }
+  | {
+    pack: IPackSummary;
+    amountRequested: number;
+    productId?: undefined;
+  };
 
 export interface IProductWithRequestedVouchersWithAmount extends IProductWithRequestedVouchers {
   amountRequested: number;
 }
 
-export type IParsedOrderWithProducts = {
-  pack: IPackSummary;
-  amountRequested: number;
-  productId?: undefined;
-} | IProductWithRequestedVouchersWithAmount;
+export type IParsedOrderWithProducts =
+  | {
+    pack: IPackSummary;
+    amountRequested: number;
+    productId?: undefined;
+  }
+  | IProductWithRequestedVouchersWithAmount;

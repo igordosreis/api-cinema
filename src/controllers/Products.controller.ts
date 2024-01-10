@@ -1,16 +1,22 @@
 import { Request, Response } from 'express';
 import { ProductsService } from '../services';
 import formatRequestQueryUtil from '../utils/formatRequestQuery.util';
-import { IProductRawQuery } from '../interfaces/IProducts';
+import {
+  IProductQuerySchema,
+  IProductRawQuery,
+  IProductRawQuerySchema,
+} from '../interfaces/IProducts';
 
 export default class ProductsController {
   public static async getProductsByQuery(req: Request, res: Response): Promise<void> {
-    const searchQuery = req as IProductRawQuery;
+    const searchQuery = <IProductRawQuery>req.query;
+    IProductRawQuerySchema.parse(searchQuery);
 
-    const formattedQuery = formatRequestQueryUtil.formatProductQuery(searchQuery);
-    const filteredProducts = await ProductsService.getProductsByQuery(formattedQuery);
+    const formattedSearchQuery = formatRequestQueryUtil.formatProductQuery(searchQuery);
+    IProductQuerySchema.parse(formattedSearchQuery);
+    const products = await ProductsService.getProductsByQuery(formattedSearchQuery);
 
-    res.status(200).json(filteredProducts);
+    res.status(200).json(products);
   }
 
   public static async getProductsTypes(_req: Request, res: Response): Promise<void> {

@@ -7,7 +7,7 @@ import EstablishmentsProductsModel from '../database/models/EstablishmentsProduc
 import ProductsTypesModel from '../database/models/ProductsTypes.model';
 import VouchersAvailableModel from '../database/models/VouchersAvailable.model';
 import {
-  IOrderRequestFormattedInfo,
+  IOrderRequestInfo,
   IParsedOrder,
   IParsedOrderWithProducts,
   IProductWithRequestedVouchersWithAmount,
@@ -24,6 +24,7 @@ import PacksService from './Packs.service';
 import { IVoucherAvailable, IVouchersByDate } from '../interfaces/IVouchers';
 import OrdersModel from '../database/models/Orders.model';
 import VouchersUserModel from '../database/models/VouchersUser.model';
+import { IPagination } from '../interfaces/IPagination';
 
 export default class VouchersService {
   public static async getVouchersByProductId(productId: number, transaction?: Transaction) {
@@ -57,7 +58,7 @@ export default class VouchersService {
   }
 
   public static async getRequestedVouchers(
-    orderInfo: IOrderRequestFormattedInfo[],
+    orderInfo: IOrderRequestInfo[],
     transaction: Transaction,
   ) {
     const parsedOrderPromise = orderInfo.map(async ({ productId, packId, amountRequested }) => {
@@ -244,9 +245,15 @@ export default class VouchersService {
     });
   }
 
-  public static async getAllVouchersUserByDate(userId: number) {
+  public static async getAllVouchersUserByDate({
+    userId,
+    pagination: { page, limit },
+  }: {
+    userId: number;
+    pagination: IPagination;
+  }) {
     try {
-      const allUserVouchers = await OrdersModel.findAll({
+      const allUserVouchers = (await OrdersModel.findAll({
         attributes: {
           exclude: [
             'id',
@@ -283,8 +290,10 @@ export default class VouchersService {
           },
         ],
         where: { userId },
-      }) as IVouchersByDate[];
-      
+        limit,
+        offset: page * limit,
+      })) as IVouchersByDate[];
+
       const allUserVouchersGroupedByDate = allUserVouchers.reduce((accOrders, currOrder) => {
         const { date: currDate, vouchersOrderPaid } = currOrder.dataValues;
 
@@ -292,8 +301,8 @@ export default class VouchersService {
         const isDateAlreadyInAcc = indexOrderDate > -1;
 
         if (isDateAlreadyInAcc) {
-          const addedVouchers = accOrders[indexOrderDate].vouchersOrderPaid
-            .concat(vouchersOrderPaid);
+          const addedVouchers =
+            accOrders[indexOrderDate].vouchersOrderPaid.concat(vouchersOrderPaid);
           const newAcc = accOrders;
           newAcc[indexOrderDate].vouchersOrderPaid = addedVouchers;
 

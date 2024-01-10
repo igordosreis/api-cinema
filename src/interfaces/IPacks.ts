@@ -10,6 +10,8 @@ export type IPackSummary = PacksModel & {
 };
 
 export const IPackSearchQueryRawSchema = z.object({
+  limit: z.string().optional(),
+  page: z.string().optional(),
   term: z.string().optional(),
   type: z.string().optional(),
   establishmentId: z.string().optional(),
@@ -20,6 +22,8 @@ export const IPackSearchQueryRawSchema = z.object({
 export type IPackSearchQueryRaw = z.infer<typeof IPackSearchQueryRawSchema>;
 
 export const IPackSearchQuerySchema = z.object({
+  limit: z.number(),
+  page: z.number(),
   term: z.string().optional(),
   type: z.number().optional(),
   establishmentId: z.number().optional(),
