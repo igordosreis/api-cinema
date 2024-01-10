@@ -7,6 +7,7 @@ import { IFavoriteToggleRequest } from '../interfaces/IFavorites';
 import CustomError, { favoriteError } from '../utils/customError.util';
 import EstablishmentsAddressesModel from '../database/models/EstablishmentsAddresses.model';
 import { IUserInfo } from '../interfaces/IUser';
+import { IPagination } from '../interfaces/IPagination';
 
 export default class FavoritesService {
   public static async toggleFavoriteEstablishment({
@@ -39,7 +40,13 @@ export default class FavoritesService {
     }
   }
 
-  public static async getAllUserFavoriteAddresses(userInfo: IUserInfo) {
+  public static async getAllUserFavoriteAddresses({
+    userInfo,
+    pagination: { page, limit },
+  }: {
+    userInfo: IUserInfo;
+    pagination: IPagination;
+  }) {
     const {
       user: { id: userId },
       location: { latitude, longitude },
@@ -55,14 +62,13 @@ export default class FavoritesService {
           {
             model: EstablishmentsAddressesModel,
             as: 'favoriteEstablishmentAddress',
-            attributes: (latitude && longitude)
-              ? {
-                include: [[distanceLiteral, 'distance']],
-              }
-              : undefined,
+            attributes:
+              latitude && longitude ? { include: [[distanceLiteral, 'distance']] } : undefined,
           },
         ],
-        order: (latitude && longitude) ? [[distanceLiteral, 'ASC']] : [],
+        order: latitude && longitude ? [[distanceLiteral, 'ASC']] : [],
+        limit,
+        offset: page * limit,
       });
       return allFavorites;
     } catch (error) {

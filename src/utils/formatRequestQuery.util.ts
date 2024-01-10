@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable complexity */
 import {
   IEstablishmentAddressQuery,
@@ -13,19 +14,20 @@ import {
 import { IPackSearchQuery, IPackSearchQueryRaw } from '../interfaces/IPacks';
 import { IUserInfo } from '../interfaces/IUser';
 import { LIMIT_NUMBER_DEFAULT, PAGE_NUMBER_DEFAULT } from '../constants';
+import { IPagination, IPaginationRequest } from '../interfaces/IPagination';
 
 class FormatRequestQuery {
   private formatTerm = ({ term }: IProductRawQuery | IEstablishmentAddressRawQuery) =>
     (typeof term === 'string' ? term : undefined);
 
-  private formatLimit = ({ limit }: IEstablishmentAddressRawQuery) => {
+  private formatLimit = ({ limit }: IEstablishmentAddressRawQuery | IPaginationRequest | IProductRawQuery | IPackSearchQueryRaw) => {
     const numberLimit = Number(limit);
 
     if (!Number.isNaN(numberLimit) && numberLimit >= 0) return numberLimit;
     return LIMIT_NUMBER_DEFAULT;
   };
 
-  private formatPage = ({ page }: IEstablishmentAddressRawQuery) => {
+  private formatPage = ({ page }: IEstablishmentAddressRawQuery | IPaginationRequest | IProductRawQuery | IPackSearchQueryRaw) => {
     const numberPage = Number(page);
 
     if (!Number.isNaN(numberPage) && numberPage >= 0) return numberPage;
@@ -46,7 +48,7 @@ class FormatRequestQuery {
   }: {
     searchQuery: IEstablishmentAddressRawQuery;
     userInfo: IUserInfo;
-  }) => searchQuery.latitude || userInfo.location.latitude || undefined;
+  }) => searchQuery.latitude || userInfo.location?.latitude || '-19.919052';
 
   private formatLongitude = ({
     searchQuery,
@@ -54,7 +56,7 @@ class FormatRequestQuery {
   }: {
     searchQuery: IEstablishmentAddressRawQuery;
     userInfo: IUserInfo;
-  }) => searchQuery.longitude || userInfo.location.longitude || undefined;
+  }) => searchQuery.longitude || userInfo.location?.longitude || '-43.9386685';
 
   private formatBrandId = ({ brandId }: IEstablishmentAddressRawQuery) =>
     Number(brandId) || undefined;
@@ -142,6 +144,11 @@ class FormatRequestQuery {
     establishmentId: this.formatEstablishmentId(searchQuery),
     available: this.formatAvailable(searchQuery),
     active: this.formatActive(searchQuery),
+  });
+
+  formatPagination = (paginationRequest: IPaginationRequest): IPagination => ({
+    page: this.formatPage(paginationRequest),
+    limit: this.formatLimit(paginationRequest),
   });
 }
 
