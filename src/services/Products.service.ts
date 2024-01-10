@@ -8,6 +8,7 @@ import { IProductQuery } from '../interfaces/IProducts';
 import createProductSearchSqlizeQueryUtil from '../utils/createProductSearchSqlizeQuery.util';
 import CustomError, { establishmentServiceUnavailable } from '../utils/customError.util';
 import EstablishmentsModel from '../database/models/Establishments.model';
+import Pagination from '../utils/pagination.util';
 
 export default class ProductsService {
   public static async getProductsByQuery(formattedQuery: IProductQuery) {
@@ -55,9 +56,11 @@ export default class ProductsService {
         // limit: formattedQuery.limit,
         // offset: formattedQuery.limit * formattedQuery.page,
       });
-      console.log('--- - -- - -      -     -      -    formattedQuery:        ', formattedQuery);
 
-      return filteredProducts;
+      const { page, limit } = formattedQuery;
+      const pagedProducts = Pagination.getPageContent({ page, limit, array: filteredProducts });
+
+      return pagedProducts;
     } catch (error: CustomError | unknown) {
       console.log('--- - -- -- -- - - --  - - -- - -- - ---- -- -- - --- - - - -error: ', error);
       if (error instanceof CustomError) throw error;
