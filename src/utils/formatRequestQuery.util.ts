@@ -15,6 +15,7 @@ import { IPackSearchQuery, IPackSearchQueryRaw } from '../interfaces/IPacks';
 import { IUserInfo } from '../interfaces/IUser';
 import { LIMIT_NUMBER_DEFAULT, PAGE_NUMBER_DEFAULT } from '../constants';
 import { IPagination, IPaginationRequest } from '../interfaces/IPagination';
+import { IMoviesSearchQuery, IMoviesSearchRawQuery } from '../interfaces/IMoviesAPI';
 
 class FormatRequestQuery {
   private formatTerm = ({ term }: IProductRawQuery | IEstablishmentAddressRawQuery) =>
@@ -125,7 +126,7 @@ class FormatRequestQuery {
     orderInfo: this.formatOrderInfo(orderRequest),
   });
 
-  private convertStringToNumber = (string: string | number): number => Number(string);
+  private convertStringToNumber = (string: string | number | undefined): number => Number(string);
 
   formatOrderSearch = (
     { orderId, userInfo }:
@@ -149,6 +150,13 @@ class FormatRequestQuery {
   formatPagination = (paginationRequest: IPaginationRequest): IPagination => ({
     page: this.formatPage(paginationRequest),
     limit: this.formatLimit(paginationRequest),
+  });
+
+  formathMoviesSearcQuery = (searchQuery: IMoviesSearchRawQuery): IMoviesSearchQuery => ({
+    page: this.formatPage(searchQuery),
+    limit: this.formatLimit(searchQuery),
+    title: searchQuery.title,
+    genreId: Number(searchQuery.genreId) || undefined,
   });
 }
 

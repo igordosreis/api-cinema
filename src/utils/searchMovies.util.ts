@@ -7,7 +7,7 @@ interface SearchMoviesParams {
   moviesNowPlaying: IMoviesResults;
   moviesPremieres: IMoviesResults;
   moviesUpcoming: IMoviesResults;
-  genreId: string | undefined;
+  genreId: number | undefined;
   titleQuery: string | undefined;
 }
 

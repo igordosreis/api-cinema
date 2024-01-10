@@ -1,3 +1,5 @@
+import { z } from 'zod';
+
 /* eslint-disable camelcase */
 export type IMoviesResults = {
   page?: number;
@@ -193,3 +195,21 @@ export interface IGenreInfo {
 export interface IGenreList {
   genres: IGenreInfo[];
 }
+
+export const IMoviesSearchRawQuerySchema = z.object({
+  page: z.string().optional(),
+  limit: z.string().optional(),
+  title: z.string().optional(),
+  genreId: z.string().optional(),
+});
+
+export type IMoviesSearchRawQuery = z.infer<typeof IMoviesSearchRawQuerySchema>;
+
+export const IMoviesSearchQuerySchema = z.object({
+  page: z.number(),
+  limit: z.number(),
+  title: z.string().optional(),
+  genreId: z.number().optional(),
+});
+
+export type IMoviesSearchQuery = z.infer<typeof IMoviesSearchQuerySchema>;
