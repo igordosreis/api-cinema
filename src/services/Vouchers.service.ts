@@ -24,6 +24,7 @@ import PacksService from './Packs.service';
 import { IVoucherAvailable, IVouchersByDate } from '../interfaces/IVouchers';
 import OrdersModel from '../database/models/Orders.model';
 import VouchersUserModel from '../database/models/VouchersUser.model';
+import { IPagination } from '../interfaces/IPagination';
 
 export default class VouchersService {
   public static async getVouchersByProductId(productId: number, transaction?: Transaction) {
@@ -244,7 +245,13 @@ export default class VouchersService {
     });
   }
 
-  public static async getAllVouchersUserByDate(userId: number) {
+  public static async getAllVouchersUserByDate({
+    userId,
+    pagination: { page, limit },
+  }: {
+    userId: number;
+    pagination: IPagination;
+  }) {
     try {
       const allUserVouchers = (await OrdersModel.findAll({
         attributes: {
@@ -283,6 +290,8 @@ export default class VouchersService {
           },
         ],
         where: { userId },
+        limit,
+        offset: page * limit,
       })) as IVouchersByDate[];
 
       const allUserVouchersGroupedByDate = allUserVouchers.reduce((accOrders, currOrder) => {
