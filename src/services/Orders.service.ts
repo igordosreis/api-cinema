@@ -26,6 +26,7 @@ import {
 import { STATUS_CANCELLED, STATUS_WAITING } from '../constants';
 import VouchersService from './Vouchers.service';
 import OrdersPacksModel from '../database/models/OrdersPacks.model';
+import { IPagination } from '../interfaces/IPagination';
 
 export default class OrdersService {
   private static async createPacksOrder(
@@ -154,7 +155,13 @@ export default class OrdersService {
     }
   }
 
-  public static async getAllOrders(userId: number) {
+  public static async getAllOrders({ 
+    userId,
+    pagination: { page, limit },
+  }: { 
+    userId: number;
+    pagination: IPagination;
+  }) {
     try {
       const allUserOrders = await OrdersModel.findAll({
         include: [
@@ -202,6 +209,8 @@ export default class OrdersService {
           },
         ],
         where: { userId },
+        limit,
+        offset: page * limit,
       });
 
       const areOrdersNotFound = !allUserOrders;

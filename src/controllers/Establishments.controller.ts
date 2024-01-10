@@ -6,7 +6,7 @@ import {
   IEstablishmentAddressRawQuery,
 } from '../interfaces/IEstablishments';
 import formatRequestQueryUtil from '../utils/formatRequestQuery.util';
-import { IUserInfo } from '../interfaces/IUser';
+import { IUserInfoInBody } from '../interfaces/IUser';
 
 export default class EstablishmentsController {
   public static async getAllEstablishments(_req: Request, res: Response): Promise<void> {
@@ -17,7 +17,7 @@ export default class EstablishmentsController {
 
   public static async getEstablishmentsByAddress(req: Request, res: Response): Promise<void> {
     const searchQuery = <IEstablishmentAddressRawQuery>req.query;
-    const userInfo = <IUserInfo>req.body;
+    const { userInfo } = <IUserInfoInBody>req.body;
 
     IEstablishmentAddressQueryRawSchema.parse(searchQuery);
     
