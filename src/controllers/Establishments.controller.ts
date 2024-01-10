@@ -16,7 +16,7 @@ export default class EstablishmentsController {
   }
 
   public static async getEstablishmentsByAddress(req: Request, res: Response): Promise<void> {
-    const searchQuery = <IEstablishmentAddressRawQuery>req.params;
+    const searchQuery = <IEstablishmentAddressRawQuery>req.query;
     const userInfo = <IUserInfo>req.body;
 
     IEstablishmentAddressQueryRawSchema.parse(searchQuery);

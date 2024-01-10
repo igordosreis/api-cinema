@@ -9,7 +9,7 @@ import {
 
 export default class ProductsController {
   public static async getProductsByQuery(req: Request, res: Response): Promise<void> {
-    const searchQuery = <IProductRawQuery>req.params;
+    const searchQuery = <IProductRawQuery>req.query;
     IProductRawQuerySchema.parse(searchQuery);
 
     const formattedQuery = formatRequestQueryUtil.formatProductQuery(searchQuery);
