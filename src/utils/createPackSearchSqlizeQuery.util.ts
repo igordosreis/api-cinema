@@ -5,8 +5,9 @@ import { Op } from 'sequelize';
 import { IPackSearchQuery } from '../interfaces/IPacks';
 
 class CreatePackSearchSqlizeQuery {
-  private addParams = ({ establishmentId, active }: IPackSearchQuery) => {
+  private addParams = ({ establishmentId }: IPackSearchQuery) => {
     const searchQuery = [];
+    searchQuery.push({ active: true });
     // if (term) {
     //   searchQuery.push({
     //     [Op.or]: {
@@ -38,7 +39,7 @@ class CreatePackSearchSqlizeQuery {
         '$packInfo.productDetails.establishment_id$': { [Op.eq]: establishmentId },
       });
     }
-    if (active) searchQuery.push({ active });
+    // if (active) searchQuery.push({ active });
 
     return {
       where: {

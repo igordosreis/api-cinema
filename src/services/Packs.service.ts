@@ -270,6 +270,9 @@ export default class PacksService {
     const { available, type, term } = formattedSearchQuery;
 
     const filteredPacks = packs
+      .filter(
+        ({ packInfo }) => packInfo.every(({ productDetails: { active } }) => active),
+      )
       .map((pack) => {
         const { isLimited, counter, counterLimit, packInfo } = pack;
         const newPack: IPacksByQuery = pack.dataValues;

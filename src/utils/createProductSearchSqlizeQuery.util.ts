@@ -5,8 +5,10 @@ import { Op } from 'sequelize';
 import { IProductQuery } from '../interfaces/IProducts';
 
 class CreateProductSearchSqlizeQuery {
-  private addParams = ({ term, establishmentId, type, available, active }: IProductQuery) => {
+  private addParams = ({ term, establishmentId, type, available }: IProductQuery) => {
     const searchQuery = [];
+    searchQuery.push({ purchasable: true });
+    searchQuery.push({ active: true });
     if (term) {
       searchQuery.push({
         [Op.or]: {
@@ -18,7 +20,7 @@ class CreateProductSearchSqlizeQuery {
     }
     if (type) searchQuery.push({ '$typeInfo.id$': { [Op.eq]: type } });
     if (establishmentId) searchQuery.push({ establishmentId });
-    if (active) searchQuery.push({ active });
+    // if (active) searchQuery.push({ active });
 
     return {
       where: {
