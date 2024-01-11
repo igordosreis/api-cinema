@@ -46,8 +46,8 @@ class CreatePackSearchSqlizeQuery {
         [Op.and]: searchQuery,
       },
       // having: available
-      //   ? sequelize.literal('(packs.is_limited = true AND packs.counter < packs.counter_limit) OR (packs.is_limited = false AND COUNT(packInfo.productDetails.vouchersAvailable.id) > packInfo.productDetails.sold_out_amount)')
-      //   // ? sequelize.literal('(packs.is_limited = true AND packs.counter < packs.counter_limit) ')
+      //   ? sequelize.literal('(packs.limited = true AND packs.counter < packs.counter_limit) OR (packs.limited = false AND COUNT(packInfo.productDetails.vouchersAvailable.id) > packInfo.productDetails.sold_out_amount)')
+      //   // ? sequelize.literal('(packs.limited = true AND packs.counter < packs.counter_limit) ')
       //   : {},
 
       // having: type

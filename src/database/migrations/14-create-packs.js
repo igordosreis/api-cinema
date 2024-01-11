@@ -48,7 +48,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: true,
       },
-      is_limited: {
+      limited: {
         type: Sequelize.BOOLEAN,
         allowNull: true,
       },

@@ -40,7 +40,7 @@ module.exports = {
         rules: faker.lorem.paragraph(2),
         counter: null,
         counter_limit: null,
-        is_limited: false,
+        limited: false,
       },
       {
         active: true,
@@ -51,7 +51,7 @@ module.exports = {
         rules: faker.lorem.paragraph(2),
         counter: 0,
         counter_limit: 10,
-        is_limited: true,
+        limited: true,
       },
       {
         active: false,
@@ -62,7 +62,7 @@ module.exports = {
         rules: faker.lorem.paragraph(2),
         counter: null,
         counter_limit: null,
-        is_limited: false,
+        limited: false,
       },
       {
         active: false,
@@ -73,7 +73,7 @@ module.exports = {
         rules: faker.lorem.paragraph(2),
         counter: 0,
         counter_limit: 10,
-        is_limited: true,
+        limited: true,
       },
     ], {});
   },

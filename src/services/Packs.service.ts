@@ -24,7 +24,7 @@ export default class PacksService {
     //   packs.rules,
     //   packs.counter,
     //   packs.counter_limit AS counterLimit,
-    //   packs.is_limited AS isLimited,
+    //   packs.limited AS limited,
     //   packs.created_at AS createdAt,
     //   packs.updated_at AS updatedAt,
     //   packs.expire_at AS expireAt,
@@ -97,7 +97,7 @@ export default class PacksService {
     //   packs.rules,
     //   packs.counter,
     //   packs.counter_limit AS counterLimit,
-    //   packs.is_limited AS isLimited,
+    //   packs.limited AS limited,
     //   packs.created_at AS createdAt,
     //   packs.updated_at AS updatedAt,
     //   packs.expire_at AS expireAt,
@@ -209,7 +209,7 @@ export default class PacksService {
     //   ],
     // });
 
-    const packs = await PacksModel.findAll({
+    const packs = (await PacksModel.findAll({
       include: [
         {
           model: PacksProductsModel,
@@ -265,19 +265,17 @@ export default class PacksService {
       ...createPackSearchSqlizeQueryUtil.create(formattedSearchQuery),
       // limit: packSearchQuery.limit,
       // offset: packSearchQuery.limit * packSearchQuery.page,
-    }) as IPacksByQuery[];
+    })) as IPacksByQuery[];
 
     const { available, type, term } = formattedSearchQuery;
 
     const filteredPacks = packs
-      .filter(
-        ({ packInfo }) => packInfo.every(({ productDetails: { active } }) => active),
-      )
+      .filter(({ packInfo }) => packInfo.every(({ productDetails: { active } }) => active))
       .map((pack) => {
-        const { isLimited, counter, counterLimit, packInfo } = pack;
+        const { limited, counter, counterLimit, packInfo } = pack;
         const newPack: IPacksByQuery = pack.dataValues;
 
-        if (isLimited) {
+        if (limited) {
           const isAvailable = counter < counterLimit;
           newPack.available = isAvailable;
 
@@ -303,7 +301,7 @@ export default class PacksService {
           || packInfo.some(({ productDetails: { type: productType } }) => productType === type),
       )
       .filter(
-        (pack) => 
+        (pack) =>
           !term
           || pack.name.toLowerCase().includes(term)
           || pack.description.toLowerCase().includes(term)

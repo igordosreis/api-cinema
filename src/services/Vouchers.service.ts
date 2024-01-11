@@ -50,7 +50,7 @@ export default class VouchersService {
       where: { id: productId },
       order: [[{ model: VouchersAvailableModel, as: 'vouchersAvailable' }, 'expireAt', 'ASC']],
     });
-
+    
     const isProductNotFound = !product;
     if (isProductNotFound) throw new CustomError(productNotFound);
 

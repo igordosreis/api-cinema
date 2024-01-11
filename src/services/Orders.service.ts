@@ -27,6 +27,7 @@ import { STATUS_CANCELLED, STATUS_WAITING } from '../constants';
 import VouchersService from './Vouchers.service';
 import OrdersPacksModel from '../database/models/OrdersPacks.model';
 import { IPagination } from '../interfaces/IPagination';
+import PacksModel from '../database/models/Packs.model';
 
 export default class OrdersService {
   private static async createPacksOrder(
@@ -38,13 +39,23 @@ export default class OrdersService {
       const isPack = 'pack' in itemInfo;
       if (isPack) {
         const {
-          pack: { id, price },
+          pack: { id, price, limited, counter },
           amountRequested,
         } = itemInfo;
+
         const packOrderPromise = await OrdersPacksModel.create(
           { orderId, packId: id, quantity: amountRequested, soldPrice: price },
           { transaction },
         );
+
+        if (limited) {
+          const newCounter = counter + amountRequested;
+
+          PacksModel.update(
+            { counter: newCounter },
+            { where: { id }, transaction },
+          );
+        }
 
         return packOrderPromise;
       }
@@ -272,6 +283,20 @@ export default class OrdersService {
                 attributes: {
                   exclude: ['id'],
                 },
+              },
+            ],
+          },
+          {
+            model: OrdersPacksModel,
+            as: 'packDetails',
+            required: false,
+            attributes: {
+              exclude: ['orderId'],
+            },
+            include: [
+              {
+                model: PacksModel,
+                as: 'packOrder',
               },
             ],
           },

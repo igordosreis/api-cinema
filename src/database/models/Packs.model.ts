@@ -11,7 +11,7 @@ class PacksModel extends Model {
   declare rules: string;
   declare counter: number;
   declare counterLimit: number;
-  declare isLimited: boolean;
+  declare limited: boolean;
   declare soldOutAmount: number;
   declare createdAt: Date;
   declare updatedAt: Date;
@@ -58,7 +58,7 @@ PacksModel.init(
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-    isLimited: {
+    limited: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
     },
