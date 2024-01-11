@@ -7,6 +7,7 @@ import VouchersController from './Vouchers.controller';
 import PacksController from './Packs.controller';
 import PlansController from './Plans.controller';
 import FavoritesController from './Favorite.controller';
+import SearchController from './Search.controller';
 
 export {
   EstablishmentsController,
@@ -18,4 +19,5 @@ export {
   PacksController,
   PlansController,
   FavoritesController,
+  SearchController,
 };

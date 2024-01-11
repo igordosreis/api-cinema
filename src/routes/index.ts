@@ -8,6 +8,7 @@ import packsRouter from './packs.routes';
 import plansRouter from './plans.routes';
 import favoritesRouter from './favorites.routes';
 import vouchersRouter from './vouchers.routes';
+import searchRouter from './search.routes';
 
 const router = Router();
 
@@ -20,5 +21,6 @@ router.use('/packs', packsRouter);
 router.use('/plans', plansRouter);
 router.use('/favorites', favoritesRouter);
 router.use('/vouchers', vouchersRouter);
+router.use('/search', searchRouter);
 
 export default router;
