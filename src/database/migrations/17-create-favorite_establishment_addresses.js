@@ -13,7 +13,7 @@ module.exports = {
         primaryKey: true,
         unique: false,
       },
-      establishment_address_id: {
+      address_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         primaryKey: true,

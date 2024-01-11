@@ -11,11 +11,11 @@ export default class FavoritesController {
         user: { id: userId },
       },
     } = <IUserInfoInBody>req.body;
-    const { id: establishmentAddressId } = req.params;
+    const { id: addressId } = req.params;
 
     await FavoritesService.toggleFavoriteEstablishment({
       userId,
-      establishmentAddressId: Number(establishmentAddressId),
+      addressId: Number(addressId),
     });
 
     res.status(200).end();

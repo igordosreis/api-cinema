@@ -16,7 +16,7 @@ FavoriteEstablishmentAddresses.init(
       allowNull: false,
       primaryKey: true,
     },
-    establishmentAddressId: {
+    addressId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
@@ -43,11 +43,11 @@ FavoriteEstablishmentAddresses.init(
 );
 
 FavoriteEstablishmentAddresses.belongsTo(EstablishmentsAddressesModel, {
-  foreignKey: 'establishmentAddressId',
+  foreignKey: 'addressId',
   as: 'favoriteEstablishmentAddress',
 });
 EstablishmentsAddressesModel.hasMany(FavoriteEstablishmentAddresses, {
-  foreignKey: 'establishmentAddressId',
+  foreignKey: 'addressId',
   as: 'favoriteEstablishmentAddress',
 });
 

@@ -1,4 +1,4 @@
 export interface IFavoriteToggleRequest {
-  establishmentAddressId: number;
+  addressId: number;
   userId: number;
 }

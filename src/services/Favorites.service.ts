@@ -10,17 +10,14 @@ import { IUserInfo } from '../interfaces/IUser';
 import { IPagination } from '../interfaces/IPagination';
 
 export default class FavoritesService {
-  public static async toggleFavoriteEstablishment({
-    establishmentAddressId,
-    userId,
-  }: IFavoriteToggleRequest) {
+  public static async toggleFavoriteEstablishment({ addressId, userId }: IFavoriteToggleRequest) {
     try {
       const [, created] = await FavoriteEstablishmentAddresses.findOrCreate({
         where: {
-          [Op.and]: [{ establishmentAddressId }, { userId }],
+          [Op.and]: [{ addressId }, { userId }],
         },
         defaults: {
-          establishmentAddressId,
+          addressId,
           userId,
         },
       });
@@ -29,7 +26,7 @@ export default class FavoritesService {
       if (isEstablishmentAlreadyFavorite) {
         FavoriteEstablishmentAddresses.destroy({
           where: {
-            [Op.and]: [{ establishmentAddressId }, { userId }],
+            [Op.and]: [{ addressId }, { userId }],
           },
         });
       }
