@@ -24,6 +24,12 @@ module.exports = {
       },
       active: {
         type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: true,
+      },
+      purchasable: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
         defaultValue: true,
       },
       name: {

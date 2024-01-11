@@ -7,6 +7,7 @@ class EstablishmentsProductsModel extends Model {
   declare id: number;
   declare establishmentId: number;
   declare active: boolean;
+  declare purchasable: boolean;
   declare name: string;
   declare description: string;
   declare image: string;
@@ -38,6 +39,10 @@ EstablishmentsProductsModel.init(
       onUpdate: 'CASCADE',
     },
     active: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+    },
+    purchasable: {
       type: DataTypes.BOOLEAN,
       defaultValue: true,
     },
