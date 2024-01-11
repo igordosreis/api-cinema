@@ -33,6 +33,7 @@ export const IEstablishmentAddressQueryRawSchema = z.object({
   cityId: z.string().optional(),
   stateId: z.string().optional(),
   brandId: z.string().optional(),
+  addressId: z.string().optional(),
   term: z.string().optional(),
 });
 
@@ -47,6 +48,7 @@ export const IEstablishmentAddressQuerySchema = z.object({
   cityId: z.number().optional(),
   stateId: z.number().optional(),
   brandId: z.number().optional(),
+  addressId: z.array(z.number()).optional(),
   term: z.string().optional(),
 });
 

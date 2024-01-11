@@ -62,6 +62,10 @@ class FormatRequestQuery {
   private formatBrandId = ({ brandId }: IEstablishmentAddressRawQuery) =>
     Number(brandId) || undefined;
 
+  private formatAddressId = ({ addressId }: IEstablishmentAddressRawQuery) => (addressId
+    ? addressId.split(',').map((id) => Number(id))
+    : undefined);
+
   formatEstablishmentQuery = ({
     searchQuery,
     userInfo,
@@ -74,6 +78,7 @@ class FormatRequestQuery {
     cityId: this.formatCityId(searchQuery),
     stateId: this.formatStateId(searchQuery),
     brandId: this.formatBrandId(searchQuery),
+    addressId: this.formatAddressId(searchQuery),
     term: this.formatTerm(searchQuery),
     distance: this.formatDistance(searchQuery),
     latitude: this.formatLatitude({ searchQuery, userInfo }),

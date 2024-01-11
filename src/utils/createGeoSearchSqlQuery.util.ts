@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 /* eslint-disable max-lines-per-function */
 const geoQueryWithAddress = (term: string) => `SELECT *
 FROM (
@@ -58,21 +59,26 @@ const formatTerm = (term: string) =>
     term,
   )}))`;
 
+const formatAddressId = (addressId: number[]) => addressId.map((id) => `a.id = ${id}`).join(' or ');
+
 const createGeoSearchSqlQuery = ({
   term,
   cityId,
   stateId,
   brandId,
+  addressId,
 }: {
   term?: string;
   cityId?: number;
   stateId?: number;
   brandId?: number;
+  addressId?: number[];
 }) => {
   // let query = ' and e.id not in (:blackIds)';
   let query = '';
   if (term) query += `and ${formatTerm(term)}`;
   if (brandId) query += ' and e.id = :brandId';
+  if (addressId) query += ` and ${formatAddressId(addressId)}`;
   if (cityId) query += ' and c.id = :cityId';
   else if (stateId) query += ' and s.id = :stateId';
 
