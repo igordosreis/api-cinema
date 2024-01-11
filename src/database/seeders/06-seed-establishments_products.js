@@ -37,6 +37,7 @@ module.exports = {
     const seedData = Array.from({ length: 50 }, (_, _index) => ({
       establishment_id: getRandomEstablishmentId(establishmentIds),
       active: getRandomBoolean(),
+      purchasable: getRandomBoolean(),
       name: getRandomProductName(),
       description: faker.lorem.paragraph(1),
       image: `https://${faker.lorem.word()}.jpg`,
