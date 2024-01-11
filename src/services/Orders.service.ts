@@ -1,3 +1,5 @@
+/* eslint-disable complexity */
+/* eslint-disable sonarjs/cognitive-complexity */
 /* eslint-disable max-lines-per-function */
 import { Transaction } from 'sequelize';
 import db from '../database/models';
@@ -22,6 +24,7 @@ import {
   IOrderSearchFormatted,
   IOrderRequestBody,
   IParsedOrderWithProducts,
+  IOrderUpdate,
 } from '../interfaces/IOrder';
 import { STATUS_CANCELLED, STATUS_WAITING } from '../constants';
 import VouchersService from './Vouchers.service';
@@ -139,11 +142,15 @@ export default class OrdersService {
     }
   }
 
-  public static async cancelOrder({ orderId, userId }: IOrderSearchFormatted) {
+  public static async cancelOrder({ orderId, userId, status }: IOrderUpdate) {
     const t = await db.transaction();
     try {
-      const { status } = await this.getOrderById({ orderId, userId, transaction: t });
-      if (status !== STATUS_WAITING) throw new CustomError(cancelUnauthorized);
+      const { status: statusFromOrder, packDetails } = await this.getOrderById({
+        orderId,
+        userId,
+        transaction: t,
+      });
+      if (statusFromOrder !== STATUS_WAITING) throw new CustomError(cancelUnauthorized);
 
       await VouchersAvailableModel.update(
         { orderId: null, soldPrice: null },
@@ -151,9 +158,34 @@ export default class OrdersService {
       );
 
       await OrdersModel.update(
-        { status: STATUS_CANCELLED },
+        { status: status || STATUS_CANCELLED },
         { where: { id: orderId, userId }, transaction: t },
       );
+
+      const isPackInOrder = packDetails.length > 0;
+      if (isPackInOrder) {
+        const packsToUpdatePromise = packDetails.map(async (pack) => {
+          const { packOrder: { limited }, packId, quantity } = pack;
+
+          if (limited) {
+            const packToUpdate = await PacksModel.findOne({ where: { id: packId } });
+
+            if (packToUpdate) {
+              const { counter } = packToUpdate;
+              const newCounter = counter - quantity;
+
+              const packUpdated = await PacksModel.update(
+                { counter: newCounter },
+                { where: { id: packId }, transaction: t },
+              );
+
+              return packUpdated;
+            }
+          }
+        });
+
+        await Promise.all(packsToUpdatePromise);
+      }
 
       await t.commit();
     } catch (error: CustomError | unknown) {
@@ -297,6 +329,9 @@ export default class OrdersService {
               {
                 model: PacksModel,
                 as: 'packOrder',
+                attributes: {
+                  exclude: ['counter', 'counterLimit'],
+                },
               },
             ],
           },

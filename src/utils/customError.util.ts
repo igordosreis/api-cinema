@@ -125,6 +125,12 @@ export const favoriteError: ICustomError = {
   message: 'O serviço de favoritos não está disponível no momento. Tente novamente mais tarde.',
 };
 
+export const cancelError: ICustomError = {
+  status: 503,
+  title: OPERATION_UNAVAILABLE,
+  message: 'Não foi possível cancelar seu pedido. Tente novamente mais tarde.',
+};
+
 export const movieNotFound: ICustomError = {
   status: 404,
   title: 'Filme não encontrado.',

@@ -68,20 +68,21 @@ export default class AdminService {
   }
 
   private static async orderFail({ orderId, userId, status }: IOrderUpdate) {
-    const t = await db.transaction();
-    try {
-      await VouchersAvailableModel.update(
-        { orderId: null, soldPrice: null },
-        { where: { orderId }, transaction: t },
-      );
-      await OrdersModel.update({ status }, { where: { id: orderId, userId } });
+    // const t = await db.transaction();
+    // try {
+    //   await VouchersAvailableModel.update(
+    //     { orderId: null, soldPrice: null },
+    //     { where: { orderId }, transaction: t },
+    //   );
+    //   await OrdersModel.update({ status }, { where: { id: orderId, userId }, transaction: t });
 
-      await t.commit();
-    } catch (error) {
-      await t.rollback();
+    //   await t.commit();
+    // } catch (error) {
+    //   await t.rollback();
 
-      console.log(error);
-      throw new Error();
-    }
+    //   console.log(error);
+    //   throw new Error();
+    // }
+    await OrdersService.cancelOrder({ orderId, userId, status });
   }
 }

@@ -7,6 +7,8 @@ import OrdersProductsModel from '../database/models/OrdersProducts.model';
 import EstablishmentsProductsModel from '../database/models/EstablishmentsProducts.model';
 import { IPackSummary } from './IPacks';
 import { IProductWithRequestedVouchers } from './IProducts';
+import OrdersPacksModel from '../database/models/OrdersPacks.model';
+import PacksModel from '../database/models/Packs.model';
 
 export type TypeId = number;
 type Totals = 'totalPrice' | 'totalUnits' | TypeId;
@@ -43,7 +45,7 @@ export interface IOrderFailedUpdate {
 export interface IOrderUpdate {
   orderId: number;
   userId: number;
-  status: string;
+  status?: string;
 }
 
 export interface IOrderValidatePlan {
@@ -79,11 +81,6 @@ export interface IOrdersDetails {
 //   vouchersOrderUnpaid: IVoucherAvailable[];
 //   vouchersOrderPaid: IVoucherUser[];
 // }
-
-export type IOrderInfo = OrdersModel & {
-  vouchersOrderUnpaid: VouchersAvailableModel[];
-  vouchersOrderPaid: VouchersUserModel[];
-};
 
 export type IOrderProductsInMonth = Array<OrdersModel & {
   productsDetails: Array<OrdersProductsModel & {
@@ -149,3 +146,25 @@ export type IParsedOrderWithProducts =
     productId?: undefined;
   }
   | IProductWithRequestedVouchersWithAmount;
+  
+export type IOrderInfo = OrdersModel & {
+  vouchersOrderUnpaid: VouchersAvailableModel[];
+  vouchersOrderPaid: VouchersUserModel[];
+  productsDetails: Array<OrdersProductsModel & {
+    productInfo: EstablishmentsProductsModel;
+  }>
+  packDetails: Array<OrdersPacksModel & {
+    packOrder: PacksModel;
+  }>
+};
+
+export type IOrderDetailsById = OrdersModel & {
+  vouchersOrderUnpaid: VouchersAvailableModel[];
+  vouchersOrderPaid: VouchersUserModel[];
+  productsDetails: Array<OrdersProductsModel & {
+    productInfo: EstablishmentsProductsModel;
+  }>
+  packDetails: Array<OrdersPacksModel & {
+    packOrder: PacksModel;
+  }>
+};
