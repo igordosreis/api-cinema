@@ -1,16 +1,16 @@
 import { DataTypes, Model } from 'sequelize';
 import db from '.';
-import EstablishmentsAddressesModel from './EstablishmentsAddresses.model';
 
-class FavoriteEstablishmentAddresses extends Model {
+class Cart extends Model {
   declare userId: number;
   declare productId: number;
   declare packId: number;
+  declare quantity: number;
   declare createdAt: Date;
   declare updatedAt: Date;
 }
 
-FavoriteEstablishmentAddresses.init(
+Cart.init(
   {
     userId: {
       type: DataTypes.INTEGER,
@@ -21,19 +21,19 @@ FavoriteEstablishmentAddresses.init(
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
-      references: {
-        model: 'establishments_products',
-        key: 'id',
-      },
+      // references: {
+      //   model: 'establishments_products',
+      //   key: 'id',
+      // },
     },
     packId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
-      references: {
-        model: 'packs',
-        key: 'id',
-      },
+      // references: {
+      //   model: 'packs',
+      //   key: 'id',
+      // },
     },
     quantity: {
       type: DataTypes.INTEGER,
@@ -49,7 +49,7 @@ FavoriteEstablishmentAddresses.init(
     },
   },
   {
-    modelName: 'favorite_establishment_addresses',
+    modelName: 'cart',
     sequelize: db,
     underscored: true,
     timestamps: false,
@@ -57,13 +57,4 @@ FavoriteEstablishmentAddresses.init(
   },
 );
 
-FavoriteEstablishmentAddresses.belongsTo(EstablishmentsAddressesModel, {
-  foreignKey: 'addressId',
-  as: 'favoriteEstablishmentAddress',
-});
-EstablishmentsAddressesModel.hasMany(FavoriteEstablishmentAddresses, {
-  foreignKey: 'addressId',
-  as: 'favoriteEstablishmentAddress',
-});
-
-export default FavoriteEstablishmentAddresses;
+export default Cart;
