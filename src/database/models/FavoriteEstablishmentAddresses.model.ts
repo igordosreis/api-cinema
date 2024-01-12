@@ -19,6 +19,7 @@ FavoriteEstablishmentAddresses.init(
     addressId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      primaryKey: true,
       references: {
         model: 'establishments_addresses',
         key: 'id',

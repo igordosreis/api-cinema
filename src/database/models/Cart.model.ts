@@ -4,7 +4,8 @@ import EstablishmentsAddressesModel from './EstablishmentsAddresses.model';
 
 class FavoriteEstablishmentAddresses extends Model {
   declare userId: number;
-  declare establishmentAddressesId: string;
+  declare productId: number;
+  declare packId: number;
   declare createdAt: Date;
   declare updatedAt: Date;
 }
@@ -16,13 +17,27 @@ FavoriteEstablishmentAddresses.init(
       allowNull: false,
       primaryKey: true,
     },
-    addressId: {
+    productId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      primaryKey: true,
       references: {
-        model: 'establishments_addresses',
+        model: 'establishments_products',
         key: 'id',
       },
+    },
+    packId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      references: {
+        model: 'packs',
+        key: 'id',
+      },
+    },
+    quantity: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
     },
     createdAt: {
       type: DataTypes.DATE,
