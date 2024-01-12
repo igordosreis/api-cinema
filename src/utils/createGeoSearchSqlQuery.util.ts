@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/cognitive-complexity */
 /* eslint-disable complexity */
 /* eslint-disable max-lines-per-function */
 const geoQueryWithAddress = (term: string) => `SELECT *
@@ -34,6 +35,56 @@ WHERE distance <= :distance
 ORDER BY distance
 limit :offset, :limit`;
 
+const geoQueryWithAddressUnique = (term: string) => `
+SELECT *
+FROM (
+  SELECT
+    id,
+    brandId,
+    latitude,
+    longitude,
+    brand,
+    image,
+    title,
+    address,
+    city,
+    state,
+    distance,
+    ROW_NUMBER() OVER (PARTITION BY brandId ORDER BY distance) as row_num
+  FROM (
+    SELECT
+      a.id,
+      a.establishment_id as brandId,
+      a.latitude,
+      a.longitude,
+      e.name as brand,
+      i.image,
+      a.name as title,
+      a.address as address,
+      c.name as city,
+      s.name as state,
+      ( 3959 * acos( cos( radians(u.lat) )
+                * cos( radians( a.latitude ) )
+                * cos( radians( a.longitude ) - radians( u.lng ) )
+                + sin( radians( u.lat ) )
+                * sin( radians( a.latitude ) ) ) ) AS distance
+    FROM establishments_addresses AS a
+    JOIN establishments AS e ON a.establishment_id = e.id
+    JOIN establishments_images AS i ON e.id = i.establishment_id
+    JOIN cities as c on c.id = a.city_id
+    JOIN states as s on s.id = c.state_id
+    JOIN (
+      SELECT
+        :latitude AS lat,
+        :longitude AS lng
+      ) AS u
+    WHERE e.active = 1 ${term}
+  ) subquery
+) sub
+WHERE row_num = 1 AND distance <= :distance
+ORDER BY distance
+LIMIT :offset, :limit`;
+
 const formatAddress = (term: string) =>
   term
     .split(' ')
@@ -67,12 +118,14 @@ const createGeoSearchSqlQuery = ({
   stateId,
   brandId,
   addressId,
+  unique,
 }: {
   term?: string;
   cityId?: number;
   stateId?: number;
   brandId?: number;
   addressId?: number[];
+  unique?: boolean;
 }) => {
   // let query = ' and e.id not in (:blackIds)';
   let query = '';
@@ -82,7 +135,9 @@ const createGeoSearchSqlQuery = ({
   if (cityId) query += ' and c.id = :cityId';
   else if (stateId) query += ' and s.id = :stateId';
 
-  return geoQueryWithAddress(query);
+  return unique 
+    ? geoQueryWithAddressUnique(query)
+    : geoQueryWithAddress(query);
 };
 
 export default createGeoSearchSqlQuery;

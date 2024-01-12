@@ -109,6 +109,8 @@ export default class OrdersService {
         { totalPrice, totalUnits, expireAt, userId },
         { transaction: t },
       );
+
+      // Promise.all
       await this.createProductsOrder(productsWithRequestedVouchers, orderId, t);
       await this.createPacksOrder(parsedOrderWithProducts, orderId, t);
       await VouchersService.updateVouchersOnCreateOrder({

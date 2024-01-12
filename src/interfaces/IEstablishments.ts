@@ -35,6 +35,7 @@ export const IEstablishmentAddressQueryRawSchema = z.object({
   brandId: z.string().optional(),
   addressId: z.string().optional(),
   term: z.string().optional(),
+  unique: z.string().optional(),
 });
 
 export type IEstablishmentAddressRawQuery = z.infer<typeof IEstablishmentAddressQueryRawSchema>;
@@ -50,6 +51,7 @@ export const IEstablishmentAddressQuerySchema = z.object({
   brandId: z.number().optional(),
   addressId: z.array(z.number()).optional(),
   term: z.string().optional(),
+  unique: z.boolean().optional(),
 });
 
 export type IEstablishmentAddressQuery = z.infer<typeof IEstablishmentAddressQuerySchema>;
