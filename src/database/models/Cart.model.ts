@@ -62,21 +62,21 @@ CartModel.init(
 export default CartModel;
 
 CartModel.hasMany(EstablishmentsProductsModel, {
-  foreignKey: 'productId',
+  foreignKey: 'id',
   as: 'productCart',
 });
 
 EstablishmentsProductsModel.belongsTo(CartModel, {
-  foreignKey: 'productId',
+  foreignKey: 'id',
   as: 'productCart',
 });
 
 CartModel.hasMany(PacksModel, {
-  foreignKey: 'productId',
+  foreignKey: 'id',
   as: 'packCart',
 });
 
 PacksModel.belongsTo(CartModel, {
-  foreignKey: 'productId',
+  foreignKey: 'id',
   as: 'packCart',
 });

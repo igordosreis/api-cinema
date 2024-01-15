@@ -3,6 +3,6 @@ import { CartController } from '../controllers';
 
 const cartRouter = Router();
 
-cartRouter.patch('/', CartController.getCart);
+cartRouter.get('/', CartController.getCart);
 
 export default cartRouter;
