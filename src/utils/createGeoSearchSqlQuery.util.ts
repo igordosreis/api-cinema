@@ -5,7 +5,7 @@ const geoQueryWithAddress = (term: string) => `SELECT *
 FROM (
   SELECT
     a.id,
-    a.establishment_id as brandId,
+    a.establishment_id as establishmentId,
     a.latitude,
     a.longitude,
     e.name as brand,
@@ -40,7 +40,7 @@ SELECT *
 FROM (
   SELECT
     id,
-    brandId,
+    establishmentId,
     latitude,
     longitude,
     brand,
@@ -50,11 +50,11 @@ FROM (
     city,
     state,
     distance,
-    ROW_NUMBER() OVER (PARTITION BY brandId ORDER BY distance) as row_num
+    ROW_NUMBER() OVER (PARTITION BY establishmentId ORDER BY distance) as row_num
   FROM (
     SELECT
       a.id,
-      a.establishment_id as brandId,
+      a.establishment_id as establishmentId,
       a.latitude,
       a.longitude,
       e.name as brand,
@@ -116,28 +116,26 @@ const createGeoSearchSqlQuery = ({
   term,
   cityId,
   stateId,
-  brandId,
+  establishmentId,
   addressId,
   unique,
 }: {
   term?: string;
   cityId?: number;
   stateId?: number;
-  brandId?: number;
+  establishmentId?: number;
   addressId?: number[];
   unique?: boolean;
 }) => {
   // let query = ' and e.id not in (:blackIds)';
   let query = '';
   if (term) query += `and ${formatTerm(term)}`;
-  if (brandId) query += ' and e.id = :brandId';
+  if (establishmentId) query += ' and e.id = :establishmentId';
   if (addressId) query += ` and ${formatAddressId(addressId)}`;
   if (cityId) query += ' and c.id = :cityId';
   else if (stateId) query += ' and s.id = :stateId';
 
-  return unique 
-    ? geoQueryWithAddressUnique(query)
-    : geoQueryWithAddress(query);
+  return unique ? geoQueryWithAddressUnique(query) : geoQueryWithAddress(query);
 };
 
 export default createGeoSearchSqlQuery;

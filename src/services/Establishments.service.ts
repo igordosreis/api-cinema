@@ -59,14 +59,14 @@ export default class EstablishmentsService {
     longitude,
     cityId,
     stateId,
-    brandId,
+    establishmentId,
     addressId,
     term,
     unique,
   }: IEstablishmentAddressQuery) {
     try {
       const filteredAddresses = await db.query(
-        createGeoSearchSqlQuery({ term, cityId, stateId, brandId, addressId, unique }),
+        createGeoSearchSqlQuery({ term, cityId, stateId, establishmentId, addressId, unique }),
         {
           type: QueryTypes.SELECT,
           replacements: {
@@ -77,7 +77,7 @@ export default class EstablishmentsService {
             distance,
             cityId,
             stateId,
-            brandId,
+            establishmentId,
           },
         },
       );

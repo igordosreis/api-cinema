@@ -59,8 +59,8 @@ class FormatRequestQuery {
     userInfo: IUserInfo;
   }) => searchQuery.longitude || userInfo.location?.longitude || '-43.9386685';
 
-  private formatBrandId = ({ brandId }: IEstablishmentAddressRawQuery) =>
-    Number(brandId) || undefined;
+  private formatBrandId = ({ establishmentId }: IEstablishmentAddressRawQuery) =>
+    Number(establishmentId) || undefined;
 
   private formatAddressId = ({ addressId }: IEstablishmentAddressRawQuery) => (addressId
     ? addressId.split(',').map((id) => Number(id))
@@ -80,7 +80,7 @@ class FormatRequestQuery {
     page: this.formatPage(searchQuery),
     cityId: this.formatCityId(searchQuery),
     stateId: this.formatStateId(searchQuery),
-    brandId: this.formatBrandId(searchQuery),
+    establishmentId: this.formatBrandId(searchQuery),
     addressId: this.formatAddressId(searchQuery),
     term: this.formatTerm(searchQuery),
     unique: this.formatUnique(searchQuery),

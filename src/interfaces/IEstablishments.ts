@@ -8,7 +8,7 @@ import { z } from 'zod';
 //   longitude: string | undefined;
 //   cityId: string;
 //   stateId: string;
-//   brandId: number | string;
+//   establishmentId: number | string;
 //   term: string;
 // }
 
@@ -20,7 +20,7 @@ import { z } from 'zod';
 //   longitude: string | undefined;
 //   cityId: number | undefined;
 //   stateId: number | undefined;
-//   brandId: number | undefined;
+//   establishmentId: number | undefined;
 //   term: string | undefined;
 // }
 
@@ -32,7 +32,7 @@ export const IEstablishmentAddressQueryRawSchema = z.object({
   longitude: z.string().optional(),
   cityId: z.string().optional(),
   stateId: z.string().optional(),
-  brandId: z.string().optional(),
+  establishmentId: z.string().optional(),
   addressId: z.string().optional(),
   term: z.string().optional(),
   unique: z.string().optional(),
@@ -48,7 +48,7 @@ export const IEstablishmentAddressQuerySchema = z.object({
   longitude: z.string().optional(),
   cityId: z.number().optional(),
   stateId: z.number().optional(),
-  brandId: z.number().optional(),
+  establishmentId: z.number().optional(),
   addressId: z.array(z.number()).optional(),
   term: z.string().optional(),
   unique: z.boolean().optional(),
