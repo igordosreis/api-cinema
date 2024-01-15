@@ -125,6 +125,25 @@ export const favoriteError: ICustomError = {
   message: 'O serviço de favoritos não está disponível no momento. Tente novamente mais tarde.',
 };
 
+export const cartAddError: ICustomError = {
+  status: 503,
+  title: OPERATION_UNAVAILABLE,
+  message:
+    'Não foi possível adicionar o produto no carrinho no momento. Tente novamente mais tarde.',
+};
+
+export const cartRemoveError: ICustomError = {
+  status: 503,
+  title: OPERATION_UNAVAILABLE,
+  message: 'Não foi possível remover o produto do carrinho no momento. Tente novamente mais tarde.',
+};
+
+export const cartAccessError: ICustomError = {
+  status: 503,
+  title: OPERATION_UNAVAILABLE,
+  message: 'Não foi possível acessar o carrinho no momento. Tente novamente mais tarde.',
+};
+
 export const cancelError: ICustomError = {
   status: 503,
   title: OPERATION_UNAVAILABLE,

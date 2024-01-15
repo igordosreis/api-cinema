@@ -1,7 +1,9 @@
 import { DataTypes, Model } from 'sequelize';
 import db from '.';
+import EstablishmentsProductsModel from './EstablishmentsProducts.model';
+import PacksModel from './Packs.model';
 
-class Cart extends Model {
+class CartModel extends Model {
   declare userId: number;
   declare productId: number;
   declare packId: number;
@@ -10,7 +12,7 @@ class Cart extends Model {
   declare updatedAt: Date;
 }
 
-Cart.init(
+CartModel.init(
   {
     userId: {
       type: DataTypes.INTEGER,
@@ -19,7 +21,7 @@ Cart.init(
     },
     productId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       primaryKey: true,
       references: {
         model: 'establishments_products',
@@ -28,7 +30,7 @@ Cart.init(
     },
     packId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       primaryKey: true,
       references: {
         model: 'packs',
@@ -57,4 +59,24 @@ Cart.init(
   },
 );
 
-export default Cart;
+export default CartModel;
+
+CartModel.hasMany(EstablishmentsProductsModel, {
+  foreignKey: 'productId',
+  as: 'productCart',
+});
+
+EstablishmentsProductsModel.belongsTo(CartModel, {
+  foreignKey: 'productId',
+  as: 'productCart',
+});
+
+CartModel.hasMany(PacksModel, {
+  foreignKey: 'productId',
+  as: 'packCart',
+});
+
+PacksModel.belongsTo(CartModel, {
+  foreignKey: 'productId',
+  as: 'packCart',
+});
