@@ -17,23 +17,23 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: true,
         primaryKey: true,
-        // references: {
-        //   model: 'establishments_products',
-        //   key: 'id', 
-        // },
-        // onDelete: 'CASCADE',
-        // onUpdate: 'CASCADE',
+        references: {
+          model: 'establishments_products',
+          key: 'id', 
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
       },
       pack_id: {
         type: Sequelize.INTEGER,
         allowNull: true,
         primaryKey: true,
-        // references: {
-        //   model: 'packs',
-        //   key: 'id', 
-        // },
-        // onDelete: 'CASCADE',
-        // onUpdate: 'CASCADE',
+        references: {
+          model: 'packs',
+          key: 'id', 
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
       },
       quantity: {
         type: Sequelize.INTEGER,

@@ -21,19 +21,19 @@ Cart.init(
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
-      // references: {
-      //   model: 'establishments_products',
-      //   key: 'id',
-      // },
+      references: {
+        model: 'establishments_products',
+        key: 'id',
+      },
     },
     packId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
-      // references: {
-      //   model: 'packs',
-      //   key: 'id',
-      // },
+      references: {
+        model: 'packs',
+        key: 'id',
+      },
     },
     quantity: {
       type: DataTypes.INTEGER,
