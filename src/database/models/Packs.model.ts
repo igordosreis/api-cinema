@@ -9,6 +9,7 @@ class PacksModel extends Model {
   declare image: string;
   declare price: number;
   declare rules: string;
+  declare category: string;
   declare counter: number;
   declare counterLimit: number;
   declare limited: boolean;
@@ -49,6 +50,9 @@ PacksModel.init(
     rules: {
       type: DataTypes.STRING,
       allowNull: true,
+    },
+    category: {
+      type: DataTypes.STRING,
     },
     counter: {
       type: DataTypes.INTEGER,

@@ -52,6 +52,11 @@ module.exports = {
         type: Sequelize.BOOLEAN,
         allowNull: true,
       },
+      category: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: 'pack',
+      },
       created_at: {
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),

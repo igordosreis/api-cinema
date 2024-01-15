@@ -14,6 +14,7 @@ class EstablishmentsProductsModel extends Model {
   declare price: number;
   declare rules: string;
   declare type: number;
+  declare category: string;
   declare soldOutAmount: number;
   declare createdAt: Date;
   declare updatedAt: Date;
@@ -75,6 +76,9 @@ EstablishmentsProductsModel.init(
       },
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',
+    },
+    category: {
+      type: DataTypes.STRING,
     },
     soldOutAmount: {
       type: DataTypes.INTEGER,
