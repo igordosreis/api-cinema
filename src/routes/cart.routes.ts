@@ -4,6 +4,6 @@ import { CartController } from '../controllers';
 const cartRouter = Router();
 
 cartRouter.get('/', CartController.getCart);
-// cartRouter.post('/addsingle', CartController.cartAdd);
+cartRouter.post('/add', CartController.addToCart);
 
 export default cartRouter;
