@@ -16,6 +16,7 @@ import { IUserInfo } from '../interfaces/IUser';
 import { LIMIT_NUMBER_DEFAULT, PAGE_NUMBER_DEFAULT } from '../constants';
 import { IPagination, IPaginationRequest } from '../interfaces/IPagination';
 import { IMoviesSearchQuery, IMoviesSearchRawQuery } from '../interfaces/IMoviesAPI';
+import { ICartAdd, ICartAddRequest } from '../interfaces/ICart';
 
 class FormatRequestQuery {
   private formatTerm = ({ term }: IProductRawQuery | IEstablishmentAddressRawQuery) =>
@@ -166,6 +167,12 @@ class FormatRequestQuery {
     limit: this.formatLimit(searchQuery),
     title: searchQuery.title,
     genreId: Number(searchQuery.genreId) || undefined,
+  });
+
+  formatCartAddRequest = (addRequest: ICartAddRequest, userInfo: IUserInfo): ICartAdd => ({
+    userId: Number(userInfo.user.id),
+    id: Number(addRequest.id),
+    category: addRequest.category,
   });
 }
 

@@ -4,6 +4,7 @@ import EstablishmentsProductsModel from './EstablishmentsProducts.model';
 import PacksModel from './Packs.model';
 
 class CartModel extends Model {
+  declare id: number;
   declare userId: number;
   declare productId: number;
   declare packId: number;
@@ -14,15 +15,21 @@ class CartModel extends Model {
 
 CartModel.init(
   {
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+    },
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      primaryKey: true,
+      // primaryKey: true,
     },
     productId: {
       type: DataTypes.INTEGER,
       allowNull: true,
-      primaryKey: true,
+      // primaryKey: true,
       references: {
         model: 'establishments_products',
         key: 'id',
@@ -31,7 +38,7 @@ CartModel.init(
     packId: {
       type: DataTypes.INTEGER,
       allowNull: true,
-      primaryKey: true,
+      // primaryKey: true,
       references: {
         model: 'packs',
         key: 'id',
@@ -61,22 +68,22 @@ CartModel.init(
 
 export default CartModel;
 
-CartModel.hasMany(EstablishmentsProductsModel, {
-  foreignKey: 'id',
+CartModel.belongsTo(EstablishmentsProductsModel, {
+  foreignKey: 'productId',
   as: 'productCart',
 });
 
-EstablishmentsProductsModel.belongsTo(CartModel, {
-  foreignKey: 'id',
+EstablishmentsProductsModel.hasMany(CartModel, {
+  foreignKey: 'productId',
   as: 'productCart',
 });
 
-CartModel.hasMany(PacksModel, {
-  foreignKey: 'id',
+CartModel.belongsTo(PacksModel, {
+  foreignKey: 'packId',
   as: 'packCart',
 });
 
-PacksModel.belongsTo(CartModel, {
-  foreignKey: 'id',
+PacksModel.hasMany(CartModel, {
+  foreignKey: 'packId',
   as: 'packCart',
 });

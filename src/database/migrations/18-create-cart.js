@@ -6,17 +6,24 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('cart', {
+      id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+      },
       user_id: {
         field: 'user_id',
         type: Sequelize.INTEGER,
         allowNull: false,
-        primaryKey: true,
-        unique: false,
+        // primaryKey: true,
+        // unique: false,
       },
       product_id: {
         type: Sequelize.INTEGER,
         allowNull: true,
-        primaryKey: true,
+        // primaryKey: true,
+        defaultValue: false,
         references: {
           model: 'establishments_products',
           key: 'id', 
@@ -27,7 +34,8 @@ module.exports = {
       pack_id: {
         type: Sequelize.INTEGER,
         allowNull: true,
-        primaryKey: true,
+        // primaryKey: true,
+        defaultValue: false,
         references: {
           model: 'packs',
           key: 'id', 

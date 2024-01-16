@@ -33,7 +33,7 @@ export default class CartService {
     }
   }
 
-  public static async addProduct({ id, category, userId }: ICartAdd) {
+  public static async cartAddSingle({ id, category, userId }: ICartAdd) {
     try {
       const isProduct = category === 'product';
       if (isProduct) {
@@ -45,6 +45,7 @@ export default class CartService {
             userId,
             productId: id,
             quantity: 1,
+            packId: undefined,
           },
         });
 
