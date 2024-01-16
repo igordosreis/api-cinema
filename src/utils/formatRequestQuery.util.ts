@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 /* eslint-disable max-len */
 /* eslint-disable complexity */
 import {
@@ -169,10 +170,35 @@ class FormatRequestQuery {
     genreId: Number(searchQuery.genreId) || undefined,
   });
 
-  formatCartAddRequest = ({ cartInfo, userInfo }: ICartAddRequest): ICartAdd => ({
-    userId: Number(userInfo.user.id),
-    cartInfo,
-  });
+  formatCartAddRequest = (cartAddRequest: ICartAddRequest, userInfo: IUserInfo): ICartAdd | undefined => {
+    const userId = Number(userInfo.user.id);
+    
+    const isProduct = 'productId' in cartAddRequest;
+    if (isProduct) {
+      const addInfo = {
+        productId: Number(cartAddRequest.productId),
+        establishmentId: Number(cartAddRequest.establishmentId),
+        userId,
+      };
+
+      return addInfo;
+    }
+
+    const isPack = 'packId' in cartAddRequest;
+    if (isPack) {
+      const addInfo = {
+        productId: Number(cartAddRequest.packId),
+        establishmentId: Number(cartAddRequest.establishmentId),
+        userId,
+      };
+
+      return addInfo;
+    }
+  };
+  // formatCartAddRequest = ({ cartInfo, userInfo }: ICartAddRequest): ICartAdd => ({
+  //   userId: Number(userInfo.user.id),
+  //   cartInfo,
+  // });
 }
 
 export default new FormatRequestQuery();

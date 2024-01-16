@@ -1,32 +1,64 @@
 import { z } from 'zod';
-import { IUserInfo } from './IUser';
+// import { IUserInfo } from './IUser';
 
-export const ICartInfoSchema = z.array(
-  z.union([
-    z.object({
-      productId: z.number(),
-      quantity: z.number(),
-    }),
-    z.object({
-      packId: z.number(),
-      quantity: z.number(),
-    }),
-  ]),
-);
+export const ICartAddRequestSchema = z.union([
+  z.object({
+    productId: z.number().optional(),
+    establishmentId: z.number().optional(),
+  }),
+  z.object({
+    packId: z.number().optional(),
+    establishmentId: z.number().optional(),
+  }),
+]);
 
-export type ICartInfo = z.infer<typeof ICartInfoSchema>;
+export type ICartAddRequest = z.infer<typeof ICartAddRequestSchema>;
 
-export interface ICartAddRequest {
-  userInfo: IUserInfo;
-  cartInfo: ICartInfo;
-}
-
-export const ICartAddSchema = z.object({
-  userId: z.number(),
-  cartInfo: ICartInfoSchema,
-});
+export const ICartAddSchema = z.union([
+  z.object({
+    productId: z.number(),
+    establishmentId: z.number(),
+    userId: z.number(),
+  }),
+  z.object({
+    packId: z.number(),
+    establishmentId: z.number(),
+    userId: z.number(),
+  }),
+]);
 
 export type ICartAdd = z.infer<typeof ICartAddSchema>;
+
+//
+
+// export const ICartInfoSchema = z.array(
+//   z.union([
+//     z.object({
+//       productId: z.number(),
+//       quantity: z.number(),
+//     }),
+//     z.object({
+//       packId: z.number(),
+//       quantity: z.number(),
+//     }),
+//   ]),
+// );
+
+// export type ICartInfo = z.infer<typeof ICartInfoSchema>;
+
+// export interface ICartAddRequest {
+//   userInfo: IUserInfo;
+//   cartInfo: ICartInfo;
+// }
+
+// export const ICartAddSchema = z.object({
+//   userId: z.number(),
+//   cartInfo: ICartInfoSchema,
+// });
+
+// export type ICartAdd = z.infer<typeof ICartAddSchema>;
+
+//
 
 // export const CategorySchema = z.enum(['product', 'pack']);
 

@@ -21,9 +21,8 @@ module.exports = {
       },
       product_id: {
         type: Sequelize.INTEGER,
-        allowNull: true,
+        allowNull: false,
         // primaryKey: true,
-        defaultValue: false,
         references: {
           model: 'establishments_products',
           key: 'product_id', 
@@ -33,15 +32,25 @@ module.exports = {
       },
       pack_id: {
         type: Sequelize.INTEGER,
-        allowNull: true,
+        allowNull: false,
         // primaryKey: true,
-        defaultValue: false,
         references: {
           model: 'packs',
           key: 'pack_id', 
         },
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
+      },
+      establishment_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        // primaryKey: true,
+        // references: {
+        //   model: 'establishments',
+        //   key: 'id', 
+        // },
+        // onDelete: 'CASCADE',
+        // onUpdate: 'CASCADE',
       },
       quantity: {
         type: Sequelize.INTEGER,

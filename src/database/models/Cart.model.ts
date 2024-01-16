@@ -8,6 +8,7 @@ class CartModel extends Model {
   declare userId: number;
   declare productId: number;
   declare packId: number;
+  declare establishmentId: number;
   declare quantity: number;
   declare createdAt: Date;
   declare updatedAt: Date;
@@ -28,7 +29,7 @@ CartModel.init(
     },
     productId: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
       // primaryKey: true,
       references: {
         model: 'establishments_products',
@@ -37,12 +38,21 @@ CartModel.init(
     },
     packId: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
       // primaryKey: true,
       references: {
         model: 'packs',
         key: 'pack_id',
       },
+    },
+    establishmentId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      // primaryKey: true,
+      // references: {
+      //   model: 'packs',
+      //   key: 'pack_id',
+      // },
     },
     quantity: {
       type: DataTypes.INTEGER,

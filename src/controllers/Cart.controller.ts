@@ -19,26 +19,27 @@ export default class CartController {
     res.status(200).json(currentCart);
   }
 
-  // public static async cartAdd(req: Request, res: Response): Promise<void> {
-  //   const cartAddRequest = <ICartAddRequest>req.query;
-  //   const { userInfo } = <IUserInfoInBody>req.body;
-
-  //   const formattedRequest = formatRequestQueryUtil.formatCartAddRequest(cartAddRequest, userInfo);
-  //   ICartAddSchema.parse(formattedRequest);
-
-  //   const currentCart = await CartService.cartAddSingle(formattedRequest);
-
-  //   res.status(200).json(currentCart);
-  // }
-
   public static async addToCart(req: Request, res: Response): Promise<void> {
-    const cartInfoRequest = <ICartAddRequest>req.body;
+    const cartAddRequest = <ICartAddRequest>req.query;
+    console.log('--- - - - -       -------        ------ cartAddRequest:       ', cartAddRequest);
+    const { userInfo } = <IUserInfoInBody>req.body;
 
-    const cartAddInfo = formatRequestQueryUtil.formatCartAddRequest(cartInfoRequest);
+    const cartAddInfo = formatRequestQueryUtil.formatCartAddRequest(cartAddRequest, userInfo);
     ICartAddSchema.parse(cartAddInfo);
 
-    CartService.addToCart(cartAddInfo);
+    const currentCart = await CartService.addToCart(cartAddInfo);
 
-    res.status(200).end();
+    res.status(200).json(currentCart);
   }
+
+  // public static async addToCart(req: Request, res: Response): Promise<void> {
+  //   const cartInfoRequest = <ICartAddRequest>req.body;
+
+  //   const cartAddInfo = formatRequestQueryUtil.formatCartAddRequest(cartInfoRequest);
+  //   ICartAddSchema.parse(cartAddInfo);
+
+  //   CartService.addToCart(cartAddInfo);
+
+  //   res.status(200).end();
+  // }
 }

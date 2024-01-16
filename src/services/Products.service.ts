@@ -51,7 +51,7 @@ export default class ProductsService {
             as: 'typeInfo',
           },
         ],
-        group: ['establishments_products.id'],
+        group: ['establishments_products.product_id'],
         ...createProductSearchSqlizeQueryUtil.create(formattedSearchQuery),
         // limit: formattedQuery.limit,
         // offset: formattedQuery.limit * formattedQuery.page,
