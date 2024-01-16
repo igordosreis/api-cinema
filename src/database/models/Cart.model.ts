@@ -29,7 +29,7 @@ CartModel.init(
     },
     productId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       // primaryKey: true,
       references: {
         model: 'establishments_products',
@@ -38,7 +38,7 @@ CartModel.init(
     },
     packId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       // primaryKey: true,
       references: {
         model: 'packs',

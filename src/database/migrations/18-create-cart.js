@@ -21,7 +21,7 @@ module.exports = {
       },
       product_id: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
         // primaryKey: true,
         references: {
           model: 'establishments_products',
@@ -32,7 +32,7 @@ module.exports = {
       },
       pack_id: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
         // primaryKey: true,
         references: {
           model: 'packs',
