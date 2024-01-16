@@ -17,7 +17,7 @@ PacksProductsModel.init(
       primaryKey: true,
       references: {
         model: 'packs',
-        key: 'id',
+        key: 'pack_id',
       },
     },
     productId: {
@@ -26,7 +26,7 @@ PacksProductsModel.init(
       primaryKey: true,
       references: {
         model: 'establishments_products',
-        key: 'id',
+        key: 'product_id',
       },
     },
     quantity: {

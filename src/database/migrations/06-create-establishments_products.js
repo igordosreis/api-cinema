@@ -6,7 +6,7 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('establishments_products', {
-      id: {
+      product_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
@@ -69,11 +69,11 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      category: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        defaultValue: 'product',
-      },
+      // category: {
+      //   type: Sequelize.STRING,
+      //   allowNull: false,
+      //   defaultValue: 'product',
+      // },
       created_at: {
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),

@@ -26,7 +26,7 @@ module.exports = {
         defaultValue: false,
         references: {
           model: 'establishments_products',
-          key: 'id', 
+          key: 'product_id', 
         },
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
@@ -38,7 +38,7 @@ module.exports = {
         defaultValue: false,
         references: {
           model: 'packs',
-          key: 'id', 
+          key: 'pack_id', 
         },
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',

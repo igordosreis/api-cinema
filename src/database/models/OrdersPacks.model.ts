@@ -26,7 +26,7 @@ OrdersPacksModel.init(
       primaryKey: true,
       references: {
         model: 'packs',
-        key: 'id',
+        key: 'pack_id',
       },
     },
     quantity: {

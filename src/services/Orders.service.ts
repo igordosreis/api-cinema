@@ -42,12 +42,12 @@ export default class OrdersService {
       const isPack = 'pack' in itemInfo;
       if (isPack) {
         const {
-          pack: { id, price, limited, counter },
+          pack: { packId, price, limited, counter },
           amountRequested,
         } = itemInfo;
 
         const packOrderPromise = await OrdersPacksModel.create(
-          { orderId, packId: id, quantity: amountRequested, soldPrice: price },
+          { orderId, packId, quantity: amountRequested, soldPrice: price },
           { transaction },
         );
 
@@ -56,7 +56,7 @@ export default class OrdersService {
 
           PacksModel.update(
             { counter: newCounter },
-            { where: { id }, transaction },
+            { where: { packId }, transaction },
           );
         }
 

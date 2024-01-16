@@ -2,14 +2,14 @@ import { DataTypes, Model } from 'sequelize';
 import db from '.';
 
 class PacksModel extends Model {
-  declare id: number;
+  declare packId: number;
   declare active: boolean;
   declare name: string;
   declare description: string;
   declare image: string;
   declare price: number;
   declare rules: string;
-  declare category: string;
+  // declare category: string;
   declare counter: number;
   declare counterLimit: number;
   declare limited: boolean;
@@ -21,7 +21,7 @@ class PacksModel extends Model {
 
 PacksModel.init(
   {
-    id: {
+    packId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       autoIncrement: true,
@@ -51,9 +51,9 @@ PacksModel.init(
       type: DataTypes.STRING,
       allowNull: true,
     },
-    category: {
-      type: DataTypes.STRING,
-    },
+    // category: {
+    //   type: DataTypes.STRING,
+    // },
     counter: {
       type: DataTypes.INTEGER,
       allowNull: true,

@@ -4,7 +4,7 @@ import EstablishmentsModel from './Establishments.model';
 import EstablishmentsImagesModel from './EstablishmentsImages.model';
 
 class EstablishmentsProductsModel extends Model {
-  declare id: number;
+  declare productId: number;
   declare establishmentId: number;
   declare active: boolean;
   declare purchasable: boolean;
@@ -14,7 +14,7 @@ class EstablishmentsProductsModel extends Model {
   declare price: number;
   declare rules: string;
   declare type: number;
-  declare category: string;
+  // declare category: string;
   declare soldOutAmount: number;
   declare createdAt: Date;
   declare updatedAt: Date;
@@ -23,7 +23,7 @@ class EstablishmentsProductsModel extends Model {
 
 EstablishmentsProductsModel.init(
   {
-    id: {
+    productId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       autoIncrement: true,
@@ -77,9 +77,9 @@ EstablishmentsProductsModel.init(
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',
     },
-    category: {
-      type: DataTypes.STRING,
-    },
+    // category: {
+    //   type: DataTypes.STRING,
+    // },
     soldOutAmount: {
       type: DataTypes.INTEGER,
       allowNull: false,

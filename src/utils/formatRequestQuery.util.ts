@@ -169,10 +169,9 @@ class FormatRequestQuery {
     genreId: Number(searchQuery.genreId) || undefined,
   });
 
-  formatCartAddRequest = (addRequest: ICartAddRequest, userInfo: IUserInfo): ICartAdd => ({
+  formatCartAddRequest = ({ cartInfo, userInfo }: ICartAddRequest): ICartAdd => ({
     userId: Number(userInfo.user.id),
-    id: Number(addRequest.id),
-    category: addRequest.category,
+    cartInfo,
   });
 }
 

@@ -6,7 +6,7 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('packs', {
-      id: {
+      pack_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
@@ -52,11 +52,11 @@ module.exports = {
         type: Sequelize.BOOLEAN,
         allowNull: true,
       },
-      category: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        defaultValue: 'pack',
-      },
+      // category: {
+      //   type: Sequelize.STRING,
+      //   allowNull: false,
+      //   defaultValue: 'pack',
+      // },
       created_at: {
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
