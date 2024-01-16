@@ -32,7 +32,7 @@ CartModel.init(
       // primaryKey: true,
       references: {
         model: 'establishments_products',
-        key: 'id',
+        key: 'product_id',
       },
     },
     packId: {
@@ -41,7 +41,7 @@ CartModel.init(
       // primaryKey: true,
       references: {
         model: 'packs',
-        key: 'id',
+        key: 'pack_id',
       },
     },
     quantity: {

@@ -13,6 +13,7 @@ import PlansModel from '../database/models/Plans.model';
 import PlansProductsTypes from '../database/models/PlansProductsTypes';
 import ProductsTypesModel from '../database/models/ProductsTypes.model';
 import CustomError, { totalError } from './customError.util';
+import ImageFormatter from './formatImages.util';
 
 class Plan {
   calculateUserTypesPerMonth = async ({ userId, cinemaPlan }: IPlanUsedAmount) => {
@@ -132,7 +133,7 @@ class Plan {
       const currTypeUseInfo: IPlanTypeUsedInfo = {
         typeId: productTypeId,
         typeName: name,
-        typeIcon: icon,
+        typeIcon: ImageFormatter.formatUrl({ imageName: icon }),
         planMaxAmount: quantity,
         usedAmount: userTypeTotalsInCurrentMonth[productTypeId] || 0,
       };
