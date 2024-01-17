@@ -19,7 +19,7 @@ export const STATUS_EXPIRED = 'expired';
 export const OPERATION_UNAVAILABLE = 'Operacão indisponível.';
 export const CONSOLE_LOG_ERROR_TITLE = `
 
-v   -----------         ----------       ERROR       -----------         ----------   v
+    v   -----------         ----------       ERROR       -----------         ----------   v
 
 `;
 
