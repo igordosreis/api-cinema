@@ -144,6 +144,13 @@ export const cartAccessError: ICustomError = {
   message: 'Não foi possível acessar o carrinho no momento. Tente novamente mais tarde.',
 };
 
+export const cartRemoveAllError: ICustomError = {
+  status: 503,
+  title: OPERATION_UNAVAILABLE,
+  message:
+    'Não foi possível remover os produtos do carrinho no momento. Tente novamente mais tarde.',
+};
+
 export const cancelError: ICustomError = {
   status: 503,
   title: OPERATION_UNAVAILABLE,

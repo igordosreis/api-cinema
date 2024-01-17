@@ -4,7 +4,12 @@
 import { Op } from 'sequelize';
 import CartModel from '../database/models/Cart.model';
 import { ICartOperation } from '../interfaces/ICart';
-import CustomError, { cartAccessError, cartAddError } from '../utils/customError.util';
+import CustomError, {
+  cartAccessError,
+  cartAddError,
+  cartRemoveAllError,
+  cartRemoveError,
+} from '../utils/customError.util';
 import EstablishmentsProductsModel from '../database/models/EstablishmentsProducts.model';
 import PacksModel from '../database/models/Packs.model';
 import { CONSOLE_LOG_ERROR_TITLE } from '../constants';
@@ -178,7 +183,7 @@ export default class CartService {
     } catch (error) {
       console.log(CONSOLE_LOG_ERROR_TITLE, error);
 
-      throw new CustomError(cartAddError);
+      throw new CustomError(cartRemoveError);
     }
   }
 
@@ -212,7 +217,7 @@ export default class CartService {
     } catch (error) {
       console.log(CONSOLE_LOG_ERROR_TITLE, error);
 
-      throw new CustomError(cartAddError);
+      throw new CustomError(cartRemoveError);
     }
   }
 
@@ -224,7 +229,7 @@ export default class CartService {
     } catch (error) {
       console.log(CONSOLE_LOG_ERROR_TITLE, error);
 
-      throw new CustomError(cartAddError);
+      throw new CustomError(cartRemoveAllError);
     }
   }
 }
