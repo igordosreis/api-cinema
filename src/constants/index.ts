@@ -19,7 +19,8 @@ export const STATUS_EXPIRED = 'expired';
 export const OPERATION_UNAVAILABLE = 'Operacão indisponível.';
 export const CONSOLE_LOG_ERROR_TITLE = `
 
-v-----------         ----------       ERROR       -----------         ----------v
+v   -----------         ----------       ERROR       -----------         ----------   v
+
 `;
 
 // TMDB API
@@ -28,6 +29,7 @@ v-----------         ----------       ERROR       -----------         ----------
 export const { API_KEY } = process.env;
 
 // -- TMDB URLs & ENDPOINTS
+
 // -- -- TMDB DISCOVER
 export const TMDB_URL_BASE_DISCOVER = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&include_adult=false&include_video=false&language=pt-BR&region=BR&page=1&with_release_type=2|3&include_video=true`;
 export const RELEASE_DATE_START = '&release_date.gte=';

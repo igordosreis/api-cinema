@@ -17,7 +17,7 @@ import { CONSOLE_LOG_ERROR_TITLE } from '../constants';
 export default class CartService {
   public static async getCart(userId: number, isCount?: boolean) {
     try {
-      const findParams = isCount
+      const searchParams = isCount
         ? { where: { userId } }
         : {
           include: [
@@ -35,7 +35,7 @@ export default class CartService {
           where: { userId },
         };
 
-      const currentCart = await CartModel.findAll(findParams);
+      const currentCart = await CartModel.findAll(searchParams);
 
       return currentCart;
     } catch (error) {
