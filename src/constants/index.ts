@@ -19,7 +19,8 @@ export const STATUS_EXPIRED = 'expired';
 export const OPERATION_UNAVAILABLE = 'Operacão indisponível.';
 export const CONSOLE_LOG_ERROR_TITLE = `
 
---- - -- -- -- - - --  - - -- - -- - ---- -- -- - --- - - - -error: `;
+v-----------         ----------       ERROR       -----------         ----------v
+`;
 
 // TMDB API
 

@@ -63,18 +63,6 @@ export default class CartService {
     }
   }
 
-  // public static async addToCart({ userId, cartInfo }: ICartAdd) {
-  //   try {
-  //     const parsedCartInfo = cartInfo.map((info) => ({ ...info, userId }));
-
-  //     await CartModel.bulkCreate(parsedCartInfo);
-  //   } catch (error) {
-  //     console.log(CONSOLE_LOG_ERROR_TITLE, error);
-
-  //     throw new CustomError(cartAddError);
-  //   }
-  // }
-
   public static async addToCart(cartOperationInfo: ICartOperation | undefined) {
     try {
       const isProduct = cartOperationInfo && 'productId' in cartOperationInfo;
