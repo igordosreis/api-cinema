@@ -26,7 +26,7 @@ import {
   IParsedOrderWithProducts,
   IOrderUpdate,
 } from '../interfaces/IOrder';
-import { STATUS_CANCELLED, STATUS_WAITING } from '../constants';
+import { CONSOLE_LOG_ERROR_TITLE, STATUS_CANCELLED, STATUS_WAITING } from '../constants';
 import VouchersService from './Vouchers.service';
 import OrdersPacksModel from '../database/models/OrdersPacks.model';
 import { IPagination } from '../interfaces/IPagination';
@@ -54,10 +54,7 @@ export default class OrdersService {
         if (limited) {
           const newCounter = counter + amountRequested;
 
-          PacksModel.update(
-            { counter: newCounter },
-            { where: { packId }, transaction },
-          );
+          PacksModel.update({ counter: newCounter }, { where: { packId }, transaction });
         }
 
         return packOrderPromise;
@@ -167,7 +164,11 @@ export default class OrdersService {
       const isPackInOrder = packDetails.length > 0;
       if (isPackInOrder) {
         const packsToUpdatePromise = packDetails.map(async (pack) => {
-          const { packOrder: { limited }, packId, quantity } = pack;
+          const {
+            packOrder: { limited },
+            packId,
+            quantity,
+          } = pack;
 
           if (limited) {
             const packToUpdate = await PacksModel.findOne({ where: { id: packId } });
@@ -193,17 +194,17 @@ export default class OrdersService {
     } catch (error: CustomError | unknown) {
       await t.rollback();
 
-      console.log('--- - -- -- -- - - --  - - -- - -- - ---- -- -- - --- - - - -error: ', error);
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
       if (error instanceof CustomError) throw error;
 
       throw new CustomError(orderServiceUnavailable);
     }
   }
 
-  public static async getAllOrders({ 
+  public static async getAllOrders({
     userId,
     pagination: { page, limit },
-  }: { 
+  }: {
     userId: number;
     pagination: IPagination;
   }) {
@@ -263,7 +264,7 @@ export default class OrdersService {
 
       return allUserOrders;
     } catch (error: CustomError | unknown) {
-      console.log('--- - -- -- -- - - --  - - -- - -- - ---- -- -- - --- - - - -error: ', error);
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
       if (error instanceof CustomError) throw error;
 
       throw new CustomError(orderServiceUnavailable);

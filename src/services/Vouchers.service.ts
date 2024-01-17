@@ -25,6 +25,7 @@ import { IVoucherAvailable, IVouchersByDate } from '../interfaces/IVouchers';
 import OrdersModel from '../database/models/Orders.model';
 import VouchersUserModel from '../database/models/VouchersUser.model';
 import { IPagination } from '../interfaces/IPagination';
+import { CONSOLE_LOG_ERROR_TITLE } from '../constants';
 
 export default class VouchersService {
   public static async getVouchersByProductId(productId: number, transaction?: Transaction) {
@@ -50,7 +51,7 @@ export default class VouchersService {
       where: { id: productId },
       order: [[{ model: VouchersAvailableModel, as: 'vouchersAvailable' }, 'expireAt', 'ASC']],
     });
-    
+
     const isProductNotFound = !product;
     if (isProductNotFound) throw new CustomError(productNotFound);
 
@@ -325,7 +326,7 @@ export default class VouchersService {
 
       return allUserVouchersGroupedByDate;
     } catch (error: CustomError | unknown) {
-      console.log('--- - -- -- -- - - --  - - -- - -- - ---- -- -- - --- - - - -error: ', error);
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
       if (error instanceof CustomError) throw error;
 
       throw new CustomError(voucherServiceUnavailable);

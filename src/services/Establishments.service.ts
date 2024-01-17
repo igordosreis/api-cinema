@@ -8,6 +8,7 @@ import createGeoSearchSqlQuery from '../utils/createGeoSearchSqlQuery.util';
 import { IEstablishmentAddressQuery } from '../interfaces/IEstablishments';
 import EstablishmentsImagesModel from '../database/models/EstablishmentsImages.model';
 import CustomError, { establishmentServiceUnavailable } from '../utils/customError.util';
+import { CONSOLE_LOG_ERROR_TITLE } from '../constants';
 
 export default class EstablishmentsService {
   public static async getAllEstablishments(): Promise<EstablishmentsModel[]> {
@@ -84,7 +85,7 @@ export default class EstablishmentsService {
 
       return filteredAddresses;
     } catch (error: CustomError | unknown) {
-      console.log('--- - -- -- -- - - --  - - -- - -- - ---- -- -- - --- - - - -error: ', error);
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
       if (error instanceof CustomError) throw error;
 
       throw new CustomError(establishmentServiceUnavailable);

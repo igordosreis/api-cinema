@@ -3,10 +3,11 @@
 /* eslint-disable max-lines-per-function */
 import { Op } from 'sequelize';
 import CartModel from '../database/models/Cart.model';
-import { ICartAdd } from '../interfaces/ICart';
+import { ICartOperation } from '../interfaces/ICart';
 import CustomError, { cartAccessError, cartAddError } from '../utils/customError.util';
 import EstablishmentsProductsModel from '../database/models/EstablishmentsProducts.model';
 import PacksModel from '../database/models/Packs.model';
+import { CONSOLE_LOG_ERROR_TITLE } from '../constants';
 
 export default class CartService {
   public static async getCart(userId: number) {
@@ -29,7 +30,7 @@ export default class CartService {
 
       return currentCart;
     } catch (error) {
-      console.log('--- - -- -- -- - - --  - - -- - -- - ---- -- -- - --- - - - -error: ', error);
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
 
       throw new CustomError(cartAccessError);
     }
@@ -41,17 +42,17 @@ export default class CartService {
 
   //     await CartModel.bulkCreate(parsedCartInfo);
   //   } catch (error) {
-  //     console.log('--- - -- -- -- - - --  - - -- - -- - ---- -- -- - --- - - - -error: ', error);
+  //     console.log(CONSOLE_LOG_ERROR_TITLE, error);
 
   //     throw new CustomError(cartAddError);
   //   }
   // }
 
-  public static async addToCart(cartAddInfo: ICartAdd | undefined) {
+  public static async addToCart(cartOperationInfo: ICartOperation | undefined) {
     try {
-      const isProduct = cartAddInfo && 'productId' in cartAddInfo;
+      const isProduct = cartOperationInfo && 'productId' in cartOperationInfo;
       if (isProduct) {
-        const { productId, establishmentId, userId } = cartAddInfo;
+        const { productId, establishmentId, userId } = cartOperationInfo;
         const [product, created] = await CartModel.findOrCreate({
           where: {
             [Op.and]: [{ userId }, { productId }, { establishmentId }],
@@ -77,9 +78,9 @@ export default class CartService {
         return currentCart;
       }
 
-      const isPack = cartAddInfo && 'isPack' in cartAddInfo;
+      const isPack = cartOperationInfo && 'isPack' in cartOperationInfo;
       if (isPack) {
-        const { packId, establishmentId, userId } = cartAddInfo;
+        const { packId, establishmentId, userId } = cartOperationInfo;
         const [pack, created] = await CartModel.findOrCreate({
           where: {
             [Op.and]: [{ userId }, { packId }, { establishmentId }],
@@ -105,7 +106,55 @@ export default class CartService {
         return currentCart;
       }
     } catch (error) {
-      console.log('--- - -- -- -- - - --  - - -- - -- - ---- -- -- - --- - - - -error: ', error);
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
+
+      throw new CustomError(cartAddError);
+    }
+  }
+
+  public static async removeOneFromCart(cartOperationInfo: ICartOperation | undefined) {
+    try {
+      const isProduct = cartOperationInfo && 'productId' in cartOperationInfo;
+      if (isProduct) {
+        const { productId, establishmentId, userId } = cartOperationInfo;
+        const product = await CartModel.findOne({
+          where: {
+            [Op.and]: [{ userId }, { productId }, { establishmentId }],
+          },
+        });
+
+        const isProductFound = product;
+        if (isProductFound) {
+          const isProductQuantityZero = product.quantity === 0;
+          if (isProductQuantityZero) return;
+
+          const newQuantity = product.quantity - 1;
+
+          await product.update({ quantity: newQuantity });
+        }
+      }
+
+      const isPack = cartOperationInfo && 'packId' in cartOperationInfo;
+      if (isPack) {
+        const { packId, establishmentId, userId } = cartOperationInfo;
+        const pack = await CartModel.findOne({
+          where: {
+            [Op.and]: [{ userId }, { packId }, { establishmentId }],
+          },
+        });
+
+        const isPackFound = pack;
+        if (isPackFound) {
+          const isPackQuantityZero = pack.quantity === 0;
+          if (isPackQuantityZero) return;
+
+          const newQuantity = pack.quantity - 1;
+
+          await pack.update({ quantity: newQuantity });
+        }
+      }
+    } catch (error) {
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
 
       throw new CustomError(cartAddError);
     }

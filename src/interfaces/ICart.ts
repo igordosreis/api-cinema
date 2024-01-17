@@ -1,7 +1,7 @@
 import { z } from 'zod';
 // import { IUserInfo } from './IUser';
 
-export const ICartAddRequestSchema = z.union([
+export const ICartOperationRequestSchema = z.union([
   z.object({
     productId: z.number().optional(),
     establishmentId: z.number().optional(),
@@ -12,9 +12,9 @@ export const ICartAddRequestSchema = z.union([
   }),
 ]);
 
-export type ICartAddRequest = z.infer<typeof ICartAddRequestSchema>;
+export type ICartOperationRequest = z.infer<typeof ICartOperationRequestSchema>;
 
-export const ICartAddSchema = z.union([
+export const ICartOperationSchema = z.union([
   z.object({
     productId: z.number(),
     establishmentId: z.number(),
@@ -27,7 +27,7 @@ export const ICartAddSchema = z.union([
   }),
 ]);
 
-export type ICartAdd = z.infer<typeof ICartAddSchema>;
+export type ICartOperation = z.infer<typeof ICartOperationSchema>;
 
 //
 

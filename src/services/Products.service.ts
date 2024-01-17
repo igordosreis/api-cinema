@@ -9,6 +9,7 @@ import createProductSearchSqlizeQueryUtil from '../utils/createProductSearchSqli
 import CustomError, { establishmentServiceUnavailable } from '../utils/customError.util';
 import EstablishmentsModel from '../database/models/Establishments.model';
 import Pagination from '../utils/pagination.util';
+import { CONSOLE_LOG_ERROR_TITLE } from '../constants';
 
 export default class ProductsService {
   public static async getProductsByQuery(formattedSearchQuery: IProductQuery) {
@@ -62,7 +63,7 @@ export default class ProductsService {
 
       return pagedProducts;
     } catch (error: CustomError | unknown) {
-      console.log('--- - -- -- -- - - --  - - -- - -- - ---- -- -- - --- - - - -error: ', error);
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
       if (error instanceof CustomError) throw error;
 
       throw new CustomError(establishmentServiceUnavailable);
@@ -75,7 +76,7 @@ export default class ProductsService {
 
       return allProductsTypes;
     } catch (error: CustomError | unknown) {
-      console.log('--- - -- -- -- - - --  - - -- - -- - ---- -- -- - --- - - - -error: ', error);
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
       if (error instanceof CustomError) throw error;
 
       throw new CustomError(establishmentServiceUnavailable);
