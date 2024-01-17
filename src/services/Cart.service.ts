@@ -10,25 +10,47 @@ import PacksModel from '../database/models/Packs.model';
 import { CONSOLE_LOG_ERROR_TITLE } from '../constants';
 
 export default class CartService {
-  public static async getCart(userId: number) {
+  public static async getCart(userId: number, isCount?: boolean) {
     try {
-      const currentCart = await CartModel.findAll({
-        include: [
-          {
-            model: EstablishmentsProductsModel,
-            as: 'productCart',
-            required: false,
-          },
-          {
-            model: PacksModel,
-            as: 'packCart',
-            required: false,
-          },
-        ],
-        where: { userId },
-      });
+      const findParams = isCount
+        ? { where: { userId } }
+        : {
+          include: [
+            {
+              model: EstablishmentsProductsModel,
+              as: 'productCart',
+              required: false,
+            },
+            {
+              model: PacksModel,
+              as: 'packCart',
+              required: false,
+            },
+          ],
+          where: { userId },
+        };
+
+      const currentCart = await CartModel.findAll(findParams);
 
       return currentCart;
+    } catch (error) {
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
+
+      throw new CustomError(cartAccessError);
+    }
+  }
+
+  public static async getCartCount(userId: number) {
+    try {
+      const currentCart = await this.getCart(userId, true);
+
+      const allCartUnits = currentCart.reduce((accCount, currItem) => {
+        const newAccCount = accCount + currItem.quantity;
+
+        return newAccCount;
+      }, 0);
+
+      return allCartUnits;
     } catch (error) {
       console.log(CONSOLE_LOG_ERROR_TITLE, error);
 

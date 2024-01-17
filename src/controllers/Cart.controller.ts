@@ -22,6 +22,19 @@ export default class CartController {
     res.status(200).json(currentCart);
   }
 
+  public static async getCartCount(req: Request, res: Response): Promise<void> {
+    const {
+      userInfo: {
+        user: { id },
+      },
+    } = <IUserInfoInBody>req.body;
+
+    const userId = Number(id);
+    const currentCartCount = await CartService.getCartCount(userId);
+
+    res.status(200).json(currentCartCount);
+  }
+
   public static async addToCart(req: Request, res: Response): Promise<void> {
     const cartOperationRequest = <ICartOperationRequest>req.query;
     const { userInfo } = <IUserInfoInBody>req.body;
