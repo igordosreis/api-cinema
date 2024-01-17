@@ -17,7 +17,6 @@ export default class CartController {
     } = <IUserInfoInBody>req.body;
 
     const userId = Number(id);
-
     const currentCart = await CartService.getCart(userId);
 
     res.status(200).json(currentCart);
@@ -40,10 +39,10 @@ export default class CartController {
     res.status(200).json(currentCart);
   }
 
-  public static async removeOneFromCart(req: Request, res: Response): Promise<void> {
+  public static async removeFromCart(req: Request, res: Response): Promise<void> {
     const cartOperationRequest = <ICartOperationRequest>req.query;
     const { userInfo } = <IUserInfoInBody>req.body;
-    
+
     ICartOperationRequestSchema.parse(cartOperationRequest);
 
     const cartOperationInfo = formatRequestQueryUtil.formatOperationRequest(
@@ -51,10 +50,40 @@ export default class CartController {
       userInfo,
     );
     ICartOperationSchema.parse(cartOperationInfo);
-    
-    const currentCart = await CartService.removeOneFromCart(cartOperationInfo);
+
+    const currentCart = await CartService.removeFromCart(cartOperationInfo);
 
     res.status(200).json(currentCart);
+  }
+
+  public static async deleteFromCart(req: Request, res: Response): Promise<void> {
+    const cartOperationRequest = <ICartOperationRequest>req.query;
+    const { userInfo } = <IUserInfoInBody>req.body;
+
+    ICartOperationRequestSchema.parse(cartOperationRequest);
+
+    const cartOperationInfo = formatRequestQueryUtil.formatOperationRequest(
+      cartOperationRequest,
+      userInfo,
+    );
+    ICartOperationSchema.parse(cartOperationInfo);
+
+    const currentCart = await CartService.deleteFromCart(cartOperationInfo);
+
+    res.status(200).json(currentCart);
+  }
+
+  public static async deleteAllCart(req: Request, res: Response): Promise<void> {
+    const {
+      userInfo: {
+        user: { id },
+      },
+    } = <IUserInfoInBody>req.body;
+
+    const userId = Number(id);
+    await CartService.deleteAllCart(userId);
+
+    res.status(200).end();
   }
 
   // public static async addToCart(req: Request, res: Response): Promise<void> {

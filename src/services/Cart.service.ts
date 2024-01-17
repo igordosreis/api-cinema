@@ -106,7 +106,7 @@ export default class CartService {
     }
   }
 
-  public static async removeOneFromCart(cartOperationInfo: ICartOperation | undefined) {
+  public static async removeFromCart(cartOperationInfo: ICartOperation | undefined) {
     try {
       const isProduct = cartOperationInfo && 'productId' in cartOperationInfo;
       if (isProduct) {
@@ -119,7 +119,7 @@ export default class CartService {
 
         const isProductFound = product;
         if (isProductFound) {
-          const isProductStillInCart = (product.quantity - 1) > 0;
+          const isProductStillInCart = product.quantity - 1 > 0;
           if (isProductStillInCart) {
             await product.decrement('quantity');
             // await product.update({ quantity: newQuantity });
@@ -143,7 +143,7 @@ export default class CartService {
 
         const isPackFound = pack;
         if (isPackFound) {
-          const isPackStillInCart = (pack.quantity - 1) > 0;
+          const isPackStillInCart = pack.quantity - 1 > 0;
           if (isPackStillInCart) {
             await pack.decrement('quantity');
             // await pack.update({ quantity: newQuantity });
@@ -155,6 +155,52 @@ export default class CartService {
 
         return currentCart;
       }
+    } catch (error) {
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
+
+      throw new CustomError(cartAddError);
+    }
+  }
+
+  public static async deleteFromCart(cartOperationInfo: ICartOperation | undefined) {
+    try {
+      const isProduct = cartOperationInfo && 'productId' in cartOperationInfo;
+      if (isProduct) {
+        const { productId, establishmentId, userId } = cartOperationInfo;
+        await CartModel.destroy({
+          where: {
+            [Op.and]: [{ userId }, { productId }, { establishmentId }],
+          },
+        });
+        const currentCart = await this.getCart(userId);
+
+        return currentCart;
+      }
+
+      const isPack = cartOperationInfo && 'packId' in cartOperationInfo;
+      if (isPack) {
+        const { packId, establishmentId, userId } = cartOperationInfo;
+        await CartModel.destroy({
+          where: {
+            [Op.and]: [{ userId }, { packId }, { establishmentId }],
+          },
+        });
+        const currentCart = await this.getCart(userId);
+
+        return currentCart;
+      }
+    } catch (error) {
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
+
+      throw new CustomError(cartAddError);
+    }
+  }
+
+  public static async deleteAllCart(userId: number) {
+    try {
+      await CartModel.destroy({
+        where: { userId },
+      });
     } catch (error) {
       console.log(CONSOLE_LOG_ERROR_TITLE, error);
 

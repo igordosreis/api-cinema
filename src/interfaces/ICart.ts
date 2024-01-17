@@ -3,12 +3,12 @@ import { z } from 'zod';
 
 export const ICartOperationRequestSchema = z.union([
   z.object({
-    productId: z.number().optional(),
-    establishmentId: z.number().optional(),
+    productId: z.string().optional(),
+    establishmentId: z.string().optional(),
   }),
   z.object({
-    packId: z.number().optional(),
-    establishmentId: z.number().optional(),
+    packId: z.string().optional(),
+    establishmentId: z.string().optional(),
   }),
 ]);
 
