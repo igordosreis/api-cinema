@@ -1,7 +1,11 @@
 import { Request, Response } from 'express';
 import { IUserInfoInBody } from '../interfaces/IUser';
 import { CartService } from '../services';
-import { ICartOperationSchema, ICartOperationRequest } from '../interfaces/ICart';
+import {
+  ICartOperationSchema,
+  ICartOperationRequest,
+  ICartOperationRequestSchema,
+} from '../interfaces/ICart';
 import formatRequestQueryUtil from '../utils/formatRequestQuery.util';
 
 export default class CartController {
@@ -23,6 +27,8 @@ export default class CartController {
     const cartOperationRequest = <ICartOperationRequest>req.query;
     const { userInfo } = <IUserInfoInBody>req.body;
 
+    ICartOperationRequestSchema.parse(cartOperationRequest);
+
     const cartOperationInfo = formatRequestQueryUtil.formatOperationRequest(
       cartOperationRequest,
       userInfo,
@@ -37,13 +43,15 @@ export default class CartController {
   public static async removeOneFromCart(req: Request, res: Response): Promise<void> {
     const cartOperationRequest = <ICartOperationRequest>req.query;
     const { userInfo } = <IUserInfoInBody>req.body;
+    
+    ICartOperationRequestSchema.parse(cartOperationRequest);
 
     const cartOperationInfo = formatRequestQueryUtil.formatOperationRequest(
       cartOperationRequest,
       userInfo,
     );
     ICartOperationSchema.parse(cartOperationInfo);
-
+    
     const currentCart = await CartService.removeOneFromCart(cartOperationInfo);
 
     res.status(200).json(currentCart);

@@ -68,17 +68,14 @@ export default class CartService {
 
         const isProductAlreadyInCart = !created;
         if (isProductAlreadyInCart) {
-          const newQuantity = product.quantity + 1;
-
-          await product.update({ quantity: newQuantity });
+          await product.increment('quantity');
         }
-
         const currentCart = await this.getCart(userId);
 
         return currentCart;
       }
 
-      const isPack = cartOperationInfo && 'isPack' in cartOperationInfo;
+      const isPack = cartOperationInfo && 'packId' in cartOperationInfo;
       if (isPack) {
         const { packId, establishmentId, userId } = cartOperationInfo;
         const [pack, created] = await CartModel.findOrCreate({
@@ -96,11 +93,8 @@ export default class CartService {
 
         const isPackAlreadyInCart = !created;
         if (isPackAlreadyInCart) {
-          const newQuantity = pack.quantity + 1;
-
-          await pack.update({ quantity: newQuantity });
+          await pack.increment('quantity');
         }
-
         const currentCart = await this.getCart(userId);
 
         return currentCart;
@@ -125,13 +119,17 @@ export default class CartService {
 
         const isProductFound = product;
         if (isProductFound) {
-          const isProductQuantityZero = product.quantity === 0;
-          if (isProductQuantityZero) return;
-
-          const newQuantity = product.quantity - 1;
-
-          await product.update({ quantity: newQuantity });
+          const isProductStillInCart = (product.quantity - 1) > 0;
+          if (isProductStillInCart) {
+            await product.decrement('quantity');
+            // await product.update({ quantity: newQuantity });
+          } else {
+            await product.destroy();
+          }
         }
+        const currentCart = await this.getCart(userId);
+
+        return currentCart;
       }
 
       const isPack = cartOperationInfo && 'packId' in cartOperationInfo;
@@ -145,13 +143,17 @@ export default class CartService {
 
         const isPackFound = pack;
         if (isPackFound) {
-          const isPackQuantityZero = pack.quantity === 0;
-          if (isPackQuantityZero) return;
-
-          const newQuantity = pack.quantity - 1;
-
-          await pack.update({ quantity: newQuantity });
+          const isPackStillInCart = (pack.quantity - 1) > 0;
+          if (isPackStillInCart) {
+            await pack.decrement('quantity');
+            // await pack.update({ quantity: newQuantity });
+          } else {
+            pack.destroy();
+          }
         }
+        const currentCart = await this.getCart(userId);
+
+        return currentCart;
       }
     } catch (error) {
       console.log(CONSOLE_LOG_ERROR_TITLE, error);

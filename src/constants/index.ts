@@ -17,8 +17,9 @@ export const STATUS_EXPIRED = 'expired';
 
 // -- ERROR MSGS
 export const OPERATION_UNAVAILABLE = 'Operacão indisponível.';
-export const CONSOLE_LOG_ERROR_TITLE =
-  '--- - -- -- -- - - --  - - -- - -- - ---- -- -- - --- - - - -error: ';
+export const CONSOLE_LOG_ERROR_TITLE = `
+
+--- - -- -- -- - - --  - - -- - -- - ---- -- -- - --- - - - -error: `;
 
 // TMDB API
 

@@ -190,7 +190,7 @@ class FormatRequestQuery {
     const isPack = 'packId' in cartAddRequest;
     if (isPack) {
       const addInfo = {
-        productId: Number(cartAddRequest.packId),
+        packId: Number(cartAddRequest.packId),
         establishmentId: Number(cartAddRequest.establishmentId),
         userId,
       };
