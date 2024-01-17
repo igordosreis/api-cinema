@@ -122,7 +122,6 @@ export default class CartService {
           const isProductStillInCart = product.quantity - 1 > 0;
           if (isProductStillInCart) {
             await product.decrement('quantity');
-            // await product.update({ quantity: newQuantity });
           } else {
             await product.destroy();
           }
@@ -146,7 +145,6 @@ export default class CartService {
           const isPackStillInCart = pack.quantity - 1 > 0;
           if (isPackStillInCart) {
             await pack.decrement('quantity');
-            // await pack.update({ quantity: newQuantity });
           } else {
             pack.destroy();
           }
