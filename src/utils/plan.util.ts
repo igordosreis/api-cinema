@@ -58,7 +58,7 @@ class Plan {
                 model: EstablishmentsProductsModel,
                 as: 'productInfo',
                 attributes: {
-                  exclude: ['id'],
+                  exclude: ['productId'],
                 },
               },
             ],

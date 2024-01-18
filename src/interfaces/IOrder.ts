@@ -94,12 +94,21 @@ export interface IOrderRequestRawInfo {
   amountRequested: string | number;
 }
 
-export interface IOrderRequestInfo {
-  productId?: number | undefined;
-  packId?: number | undefined;
+export type IOrderRequestInfo = {
+  productId: number;
   amountRequested: number;
   price?: number;
-}
+} | {
+  packId: number;
+  amountRequested: number;
+  price?: number;
+};
+// export interface IOrderRequestInfo {
+//   productId?: number | undefined;
+//   packId?: number | undefined;
+//   amountRequested: number;
+//   price?: number;
+// }
 
 export interface IOrderRequestRawBody {
   orderInfo: IOrderRequestRawInfo[];
@@ -143,7 +152,7 @@ export type IParsedOrderWithProducts =
   | {
     pack: IPackSummary;
     amountRequested: number;
-    productId?: undefined;
+    // productId?: undefined;
   }
   | IProductWithRequestedVouchersWithAmount;
   

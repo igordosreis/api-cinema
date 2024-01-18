@@ -63,9 +63,9 @@ export default class CartService {
     }
   }
 
-  public static async addToCart(cartOperationInfo: ICartOperation | undefined) {
+  public static async addToCart(cartOperationInfo: ICartOperation) {
     try {
-      const isProduct = cartOperationInfo && 'productId' in cartOperationInfo;
+      const isProduct = 'productId' in cartOperationInfo;
       if (isProduct) {
         const { productId, establishmentId, userId } = cartOperationInfo;
         const [product, created] = await CartModel.findOrCreate({
@@ -90,7 +90,7 @@ export default class CartService {
         return currentCart;
       }
 
-      const isPack = cartOperationInfo && 'packId' in cartOperationInfo;
+      const isPack = 'packId' in cartOperationInfo;
       if (isPack) {
         const { packId, establishmentId, userId } = cartOperationInfo;
         const [pack, created] = await CartModel.findOrCreate({
@@ -121,9 +121,9 @@ export default class CartService {
     }
   }
 
-  public static async removeFromCart(cartOperationInfo: ICartOperation | undefined) {
+  public static async removeFromCart(cartOperationInfo: ICartOperation) {
     try {
-      const isProduct = cartOperationInfo && 'productId' in cartOperationInfo;
+      const isProduct = 'productId' in cartOperationInfo;
       if (isProduct) {
         const { productId, establishmentId, userId } = cartOperationInfo;
         const product = await CartModel.findOne({
@@ -146,7 +146,7 @@ export default class CartService {
         return currentCart;
       }
 
-      const isPack = cartOperationInfo && 'packId' in cartOperationInfo;
+      const isPack = 'packId' in cartOperationInfo;
       if (isPack) {
         const { packId, establishmentId, userId } = cartOperationInfo;
         const pack = await CartModel.findOne({
@@ -175,9 +175,9 @@ export default class CartService {
     }
   }
 
-  public static async deleteFromCart(cartOperationInfo: ICartOperation | undefined) {
+  public static async deleteFromCart(cartOperationInfo: ICartOperation) {
     try {
-      const isProduct = cartOperationInfo && 'productId' in cartOperationInfo;
+      const isProduct = 'productId' in cartOperationInfo;
       if (isProduct) {
         const { productId, establishmentId, userId } = cartOperationInfo;
         await CartModel.destroy({
@@ -190,7 +190,7 @@ export default class CartService {
         return currentCart;
       }
 
-      const isPack = cartOperationInfo && 'packId' in cartOperationInfo;
+      const isPack = 'packId' in cartOperationInfo;
       if (isPack) {
         const { packId, establishmentId, userId } = cartOperationInfo;
         await CartModel.destroy({

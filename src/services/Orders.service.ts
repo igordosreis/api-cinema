@@ -70,9 +70,9 @@ export default class OrdersService {
     transaction: Transaction,
   ) {
     const productsOrderPromise = productsWithRequestedVouchers.map(async (productInfo) => {
-      const { id, price, vouchersRequested } = productInfo;
+      const { productId, price, vouchersRequested } = productInfo;
       const productOrderPromise = await OrdersProductsModel.create(
-        { orderId, productId: id, soldPrice: price, quantity: vouchersRequested.length },
+        { orderId, productId, soldPrice: price, quantity: vouchersRequested.length },
         { transaction },
       );
 
@@ -171,7 +171,7 @@ export default class OrdersService {
           } = pack;
 
           if (limited) {
-            const packToUpdate = await PacksModel.findOne({ where: { id: packId } });
+            const packToUpdate = await PacksModel.findOne({ where: { packId } });
 
             if (packToUpdate) {
               const { counter } = packToUpdate;
@@ -179,7 +179,7 @@ export default class OrdersService {
 
               const packUpdated = await PacksModel.update(
                 { counter: newCounter },
-                { where: { id: packId }, transaction: t },
+                { where: { packId }, transaction: t },
               );
 
               return packUpdated;

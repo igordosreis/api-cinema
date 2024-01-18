@@ -344,7 +344,7 @@ export default class PacksService {
           as: 'packInfo',
         },
       ],
-      where: { id: packId },
+      where: { packId },
     });
 
     const isPackNotFound = !pack;

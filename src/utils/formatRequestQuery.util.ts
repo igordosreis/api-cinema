@@ -112,9 +112,9 @@ class FormatRequestQuery {
   });
 
   private formatProductId = (productId: number | string | undefined) =>
-    Number(productId) || undefined;
+    Number(productId);
 
-  private formatPackId = (packId: number | string | undefined) => Number(packId) || undefined;
+  private formatPackId = (packId: number | string | undefined) => Number(packId);
 
   private formatAmount = (amount: number | string) => Number(amount);
 
@@ -125,11 +125,27 @@ class FormatRequestQuery {
   }: IOrderRequestRawBody) => Number(userId);
 
   private formatOrderInfo = ({ orderInfo }: IOrderRequestRawBody) =>
-    orderInfo.map(({ productId, packId, amountRequested }: IOrderRequestRawInfo) => ({
-      productId: this.formatProductId(productId),
-      packId: this.formatPackId(packId),
-      amountRequested: this.formatAmount(amountRequested),
-    }));
+    orderInfo.map(({ productId, packId, amountRequested }: IOrderRequestRawInfo) => {
+      if (productId) {
+        const parsedProduct = {
+          productId: this.formatProductId(productId),
+          amountRequested: this.formatAmount(amountRequested),
+        };
+
+        return parsedProduct;
+      } 
+
+      if (packId) {
+        const parsedPack = {
+          packId: this.formatPackId(packId),
+          amountRequested: this.formatAmount(amountRequested),
+        };
+  
+        return parsedPack;
+      } 
+
+      throw new Error('Precisa ser product ou pack.');
+    });
 
   formatCreateOrder = (orderRequest: IOrderRequestRawBody): IOrderRequestBody => ({
     userId: this.formatUserId(orderRequest),
@@ -173,7 +189,7 @@ class FormatRequestQuery {
   formatOperationRequest = (
     cartAddRequest: ICartOperationRequest,
     userInfo: IUserInfo,
-  ): ICartOperation | undefined => {
+  ): ICartOperation => {
     const userId = Number(userInfo.user.id);
     
     const isProduct = 'productId' in cartAddRequest;
@@ -197,6 +213,8 @@ class FormatRequestQuery {
 
       return addInfo;
     }
+
+    throw new Error('Precisa ser product ou pack.');
   };
   // formatCartAddRequest = ({ cartInfo, userInfo }: ICartAddRequest): ICartAdd => ({
   //   userId: Number(userInfo.user.id),

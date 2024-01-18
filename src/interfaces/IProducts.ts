@@ -4,7 +4,7 @@ import EstablishmentsProductsModel from '../database/models/EstablishmentsProduc
 import VouchersAvailableModel from '../database/models/VouchersAvailable.model';
 
 export interface IProduct {
-  id: number;
+  productId: number;
   establishmentId: number;
   active: boolean;
   name: string;

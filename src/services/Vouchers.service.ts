@@ -48,7 +48,7 @@ export default class VouchersService {
         },
       ],
       transaction: transaction || null,
-      where: { id: productId },
+      where: { productId },
       order: [[{ model: VouchersAvailableModel, as: 'vouchersAvailable' }, 'expireAt', 'ASC']],
     });
 
@@ -62,14 +62,17 @@ export default class VouchersService {
     orderInfo: IOrderRequestInfo[],
     transaction: Transaction,
   ) {
-    const parsedOrderPromise = orderInfo.map(async ({ productId, packId, amountRequested }) => {
-      const isProduct = productId;
+    const parsedOrderPromise = orderInfo.map(async (unitInfo) => {
+      const isProduct = 'productId' in unitInfo;
       if (isProduct) {
+        const { productId, amountRequested } = unitInfo;
+
         return { productId, amountRequested };
       }
 
-      const isPack = packId;
+      const isPack = 'packId' in unitInfo;
       if (isPack) {
+        const { packId, amountRequested } = unitInfo;
         const pack = await PacksService.getPackSummaryById(packId);
 
         return { pack, amountRequested };
@@ -139,7 +142,7 @@ export default class VouchersService {
         const isProduct = orderItem.productId;
         if (isProduct) {
           const product = productsWithRequestedVouchers.filter(
-            (productWithVouchers) => productWithVouchers.id === orderItem.productId,
+            (productWithVouchers) => productWithVouchers.productId === orderItem.productId,
           );
 
           const newProduct = product[0] as IProductWithRequestedVouchersWithAmount;
@@ -187,12 +190,13 @@ export default class VouchersService {
     transaction: Transaction;
   }) {
     productsWithRequestedVouchers.forEach((productWithVouchers) => {
-      const { vouchersRequested, id: productIdWithVouchers } = productWithVouchers;
+      const { vouchersRequested, productId: productIdWithVouchers } = productWithVouchers;
 
       parsedOrderWithProducts.reduce((accVouchers: IVoucherAvailable[], currItem) => {
-        const isProduct = 'id' in currItem;
+        // const isProduct = currItem.productId;
+        const isProduct = 'productId' in currItem && currItem.productId;
         if (isProduct) {
-          const { id: productId, price, amountRequested } = currItem;
+          const { productId, price, amountRequested } = currItem;
 
           const isSameProduct = productId === productIdWithVouchers;
           if (isSameProduct) {
