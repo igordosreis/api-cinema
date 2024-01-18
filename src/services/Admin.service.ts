@@ -1,5 +1,6 @@
 /* eslint-disable max-lines-per-function */
 import db from '../database/models';
+import CartModel from '../database/models/Cart.model';
 import OrdersModel from '../database/models/Orders.model';
 import VouchersAvailableModel from '../database/models/VouchersAvailable.model';
 import VouchersUserModel from '../database/models/VouchersUser.model';
@@ -57,6 +58,8 @@ export default class AdminService {
           transaction: t,
         },
       );
+
+      await CartModel.destroy({ where: { userId, waiting: true } });
 
       await t.commit();
     } catch (error) {

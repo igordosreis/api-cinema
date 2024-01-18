@@ -31,6 +31,7 @@ import VouchersService from './Vouchers.service';
 import OrdersPacksModel from '../database/models/OrdersPacks.model';
 import { IPagination } from '../interfaces/IPagination';
 import PacksModel from '../database/models/Packs.model';
+import CartModel from '../database/models/Cart.model';
 
 export default class OrdersService {
   private static async createPacksOrder(
@@ -129,6 +130,8 @@ export default class OrdersService {
 
       await OrdersModel.update({ paymentId }, { where: { id: orderId }, transaction: t });
 
+      await CartModel.update({ waiting: true }, { where: { userId }, transaction: t });
+
       await t.commit();
 
       return { orderId, paymentId, paymentModules };
@@ -189,6 +192,11 @@ export default class OrdersService {
         });
 
         await Promise.all(packsToUpdatePromise);
+        
+        await CartModel.update(
+          { waiting: false },
+          { where: { userId, waiting: true }, transaction: t },
+        );
       }
 
       await t.commit();

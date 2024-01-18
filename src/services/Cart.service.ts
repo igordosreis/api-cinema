@@ -32,7 +32,7 @@ export default class CartService {
               required: false,
             },
           ],
-          where: { userId },
+          where: { userId, waiting: false },
         };
 
       const currentCart = await CartModel.findAll(searchParams);

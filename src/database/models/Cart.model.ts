@@ -10,6 +10,7 @@ class CartModel extends Model {
   declare packId: number;
   declare establishmentId: number;
   declare quantity: number;
+  declare waiting: boolean;
   declare createdAt: Date;
   declare updatedAt: Date;
 }
@@ -57,6 +58,11 @@ CartModel.init(
     quantity: {
       type: DataTypes.INTEGER,
       allowNull: false,
+    },
+    waiting: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
     },
     createdAt: {
       type: DataTypes.DATE,
