@@ -11,7 +11,7 @@ import {
 } from '../interfaces/IOrder';
 import { IProductFromGetById, IProductWithRequestedVouchers } from '../interfaces/IProducts';
 import CartService from '../services/Cart.service';
-import CustomError, { amountUnauthorized, openOrder, vouchersNotEnough, vouchersUnavailable } from './customError.util';
+import CustomError, { amountUnauthorized, badCartObject, openOrder, vouchersNotEnough, vouchersUnavailable } from './customError.util';
 import planUtil from './plan.util';
 import OrdersModel from '../database/models/Orders.model';
 import { STATUS_WAITING } from '../constants';
@@ -122,7 +122,7 @@ class Orders {
         return parsedPack;
       } 
 
-      throw new Error('Precisa ser product ou pack.');
+      throw new CustomError(badCartObject);
     });
 
     return formattedCart;

@@ -157,6 +157,12 @@ export const cartRemoveAllError: ICustomError = {
     'Não foi possível remover os produtos do carrinho no momento. Tente novamente mais tarde.',
 };
 
+export const badCartObject: ICustomError = {
+  status: 400,
+  title: OPERATION_UNAVAILABLE,
+  message: 'O carrinho precisa contar ou um produto ou um pacote.',
+};
+
 export const cancelError: ICustomError = {
   status: 503,
   title: OPERATION_UNAVAILABLE,

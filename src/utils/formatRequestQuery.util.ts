@@ -18,6 +18,7 @@ import { LIMIT_NUMBER_DEFAULT, PAGE_NUMBER_DEFAULT } from '../constants';
 import { IPagination, IPaginationRequest } from '../interfaces/IPagination';
 import { IMoviesSearchQuery, IMoviesSearchRawQuery } from '../interfaces/IMoviesAPI';
 import { ICartOperation, ICartOperationRequest } from '../interfaces/ICart';
+import CustomError, { badCartObject } from './customError.util';
 
 class FormatRequestQuery {
   private formatTerm = ({ term }: IProductRawQuery | IEstablishmentAddressRawQuery) =>
@@ -144,7 +145,7 @@ class FormatRequestQuery {
   //       return parsedPack;
   //     } 
 
-  //     throw new Error('Precisa ser product ou pack.');
+  //     throw new CustomError(badCartObject);
   //   });
 
   formatCreateOrder = (orderRequest: IOrderRequestRawBody): IOrderRequestBody => ({
@@ -214,7 +215,7 @@ class FormatRequestQuery {
       return addInfo;
     }
 
-    throw new Error('Precisa ser product ou pack.');
+    throw new CustomError(badCartObject);
   };
   // formatCartAddRequest = ({ cartInfo, userInfo }: ICartAddRequest): ICartAdd => ({
   //   userId: Number(userInfo.user.id),
