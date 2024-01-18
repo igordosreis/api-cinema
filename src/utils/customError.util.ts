@@ -31,13 +31,13 @@ export const fetchError: ICustomError = {
 };
 
 export const requestUnauthorized: ICustomError = {
-  status: 400,
+  status: 401,
   title: 'Acesso não autorizado.',
   message: 'Acesso não autorizado. Faça login para acessar esse serviço.',
 };
 
 export const userTokenNotFound: ICustomError = {
-  status: 400,
+  status: 404,
   title: 'Usuário não encontrado.',
   message: 'Usuário não encontrado. Faça login para acessar esse serviço.',
 };
@@ -85,7 +85,7 @@ export const orderNotFound: ICustomError = {
 };
 
 export const openOrder: ICustomError = {
-  status: 400,
+  status: 401,
   title: 'Pedido não autorizado.',
   message: 'Existe um pedido em aberto. Conclua o pagamento ou cancele o pedido para realizar novos pedidos.',
 };
@@ -97,14 +97,14 @@ export const paymentOrderError: ICustomError = {
 };
 
 export const cancelUnauthorized: ICustomError = {
-  status: 400,
+  status: 401,
   title: 'Cancelamento não autorizado.',
   message: 'Somente pedidos com pagamento pendente podem ser cancelados.',
 };
 
 export const amountUnauthorized = (name: string): ICustomError => {
   const errorObject = {
-    status: 400,
+    status: 401,
     title: `Quantidade de ${name} não autorizada.`,
     message: `A quantidade de ${name} no pedido é maior do que a quantidade disponível no seu plano.`,
   };
