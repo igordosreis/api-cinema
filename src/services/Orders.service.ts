@@ -87,6 +87,9 @@ export default class OrdersService {
     const t = await db.transaction();
     try {
       const { userId, cinemaPlan } = orderRequest;
+
+      await ordersUtil.verifyIfAllOrdersAreFinalized({ userId, transaction: t });
+
       const orderInfo = await ordersUtil.getCartFormatted(userId);
 
       const {
@@ -192,7 +195,7 @@ export default class OrdersService {
         });
 
         await Promise.all(packsToUpdatePromise);
-        
+
         await CartModel.update(
           { waiting: false },
           { where: { userId, waiting: true }, transaction: t },

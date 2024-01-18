@@ -71,7 +71,7 @@ export default class CartService {
         const { productId, establishmentId, userId } = cartOperationInfo;
         const [product, created] = await CartModel.findOrCreate({
           where: {
-            [Op.and]: [{ userId }, { productId }, { establishmentId }],
+            [Op.and]: [{ userId }, { productId }, { establishmentId }, { waiting: false }],
           },
           defaults: {
             userId,
@@ -96,7 +96,7 @@ export default class CartService {
         const { packId, establishmentId, userId } = cartOperationInfo;
         const [pack, created] = await CartModel.findOrCreate({
           where: {
-            [Op.and]: [{ userId }, { packId }, { establishmentId }],
+            [Op.and]: [{ userId }, { packId }, { establishmentId }, { waiting: false }],
           },
           defaults: {
             userId,
@@ -129,7 +129,7 @@ export default class CartService {
         const { productId, establishmentId, userId } = cartOperationInfo;
         const product = await CartModel.findOne({
           where: {
-            [Op.and]: [{ userId }, { productId }, { establishmentId }],
+            [Op.and]: [{ userId }, { productId }, { establishmentId }, { waiting: false }],
           },
         });
 
@@ -152,7 +152,7 @@ export default class CartService {
         const { packId, establishmentId, userId } = cartOperationInfo;
         const pack = await CartModel.findOne({
           where: {
-            [Op.and]: [{ userId }, { packId }, { establishmentId }],
+            [Op.and]: [{ userId }, { packId }, { establishmentId }, { waiting: false }],
           },
         });
 
@@ -183,7 +183,7 @@ export default class CartService {
         const { productId, establishmentId, userId } = cartOperationInfo;
         await CartModel.destroy({
           where: {
-            [Op.and]: [{ userId }, { productId }, { establishmentId }],
+            [Op.and]: [{ userId }, { productId }, { establishmentId }, { waiting: false }],
           },
         });
         const currentCart = await this.getCart({ userId });
@@ -196,7 +196,7 @@ export default class CartService {
         const { packId, establishmentId, userId } = cartOperationInfo;
         await CartModel.destroy({
           where: {
-            [Op.and]: [{ userId }, { packId }, { establishmentId }],
+            [Op.and]: [{ userId }, { packId }, { establishmentId }, { waiting: false }],
           },
         });
         const currentCart = await this.getCart({ userId });

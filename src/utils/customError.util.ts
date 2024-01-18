@@ -84,6 +84,12 @@ export const orderNotFound: ICustomError = {
   message: 'Esse pedido não foi encontrado.',
 };
 
+export const openOrder: ICustomError = {
+  status: 400,
+  title: 'Pedido não autorizado.',
+  message: 'Existe um pedido em aberto. Conclua o pagamento ou cancele o pedido para realizar novos pedidos.',
+};
+
 export const paymentOrderError: ICustomError = {
   status: 503,
   title: 'Pagamento não realizado.',

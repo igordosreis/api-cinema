@@ -2,6 +2,7 @@
 /* eslint-disable max-lines-per-function */
 /* eslint-disable camelcase */
 /* eslint-disable @typescript-eslint/naming-convention */
+import { Transaction } from 'sequelize';
 import {
   IOrderValidatePlan,
   PriceUnitAndTypeTotals,
@@ -10,8 +11,10 @@ import {
 } from '../interfaces/IOrder';
 import { IProductFromGetById, IProductWithRequestedVouchers } from '../interfaces/IProducts';
 import CartService from '../services/Cart.service';
-import CustomError, { amountUnauthorized, vouchersNotEnough, vouchersUnavailable } from './customError.util';
+import CustomError, { amountUnauthorized, openOrder, vouchersNotEnough, vouchersUnavailable } from './customError.util';
 import planUtil from './plan.util';
+import OrdersModel from '../database/models/Orders.model';
+import { STATUS_WAITING } from '../constants';
 
 class Orders {
   validateRequestedAmount = (productInfo: IProductFromGetById, amountRequested: number) => {
@@ -123,6 +126,18 @@ class Orders {
     });
 
     return formattedCart;
+  };
+
+  verifyIfAllOrdersAreFinalized = async (
+    { userId, transaction }:
+    { userId: number, transaction: Transaction },
+  ) => {
+    const allUserOrders = await OrdersModel.findAll({ where: { userId }, transaction });
+
+    const isAnyOrderOpen = allUserOrders.some(({ status }) => status === STATUS_WAITING);
+    if (isAnyOrderOpen) {
+      throw new CustomError(openOrder);
+    }
   };
 }
 
