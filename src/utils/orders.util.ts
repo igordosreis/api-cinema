@@ -6,8 +6,10 @@ import {
   IOrderValidatePlan,
   PriceUnitAndTypeTotals,
   IParsedOrderWithProducts,
+  IOrderRequestInfo,
 } from '../interfaces/IOrder';
 import { IProductFromGetById, IProductWithRequestedVouchers } from '../interfaces/IProducts';
+import CartService from '../services/Cart.service';
 import CustomError, { amountUnauthorized, vouchersNotEnough, vouchersUnavailable } from './customError.util';
 import planUtil from './plan.util';
 
@@ -93,6 +95,34 @@ class Orders {
       ...unitAndTypeTotals,
       ...priceTotal,
     };
+  };
+
+  getCartFormatted = async (userId: number): Promise<IOrderRequestInfo[]> => {
+    const currentCart = await CartService.getCart({ userId });
+
+    const formattedCart = currentCart.map(({ productId, packId, quantity }) => {
+      if (productId) {
+        const parsedProduct = {
+          productId,
+          amountRequested: quantity,
+        };
+
+        return parsedProduct;
+      } 
+
+      if (packId) {
+        const parsedPack = {
+          packId,
+          amountRequested: quantity,
+        };
+  
+        return parsedPack;
+      } 
+
+      throw new Error('Precisa ser product ou pack.');
+    });
+
+    return formattedCart;
   };
 }
 

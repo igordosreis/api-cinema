@@ -7,7 +7,7 @@ import {
 } from '../interfaces/IEstablishments';
 import { IProductQuery, IProductRawQuery } from '../interfaces/IProducts';
 import {
-  IOrderRequestRawInfo,
+  // IOrderRequestRawInfo,
   IOrderRequestBody,
   IOrderRequestRawBody,
   IOrderSearchFormatted,
@@ -124,33 +124,33 @@ class FormatRequestQuery {
     },
   }: IOrderRequestRawBody) => Number(userId);
 
-  private formatOrderInfo = ({ orderInfo }: IOrderRequestRawBody) =>
-    orderInfo.map(({ productId, packId, amountRequested }: IOrderRequestRawInfo) => {
-      if (productId) {
-        const parsedProduct = {
-          productId: this.formatProductId(productId),
-          amountRequested: this.formatAmount(amountRequested),
-        };
+  // private formatOrderInfo = ({ orderInfo }: IOrderRequestRawBody) =>
+  //   orderInfo.map(({ productId, packId, amountRequested }: IOrderRequestRawInfo) => {
+  //     if (productId) {
+  //       const parsedProduct = {
+  //         productId: this.formatProductId(productId),
+  //         amountRequested: this.formatAmount(amountRequested),
+  //       };
 
-        return parsedProduct;
-      } 
+  //       return parsedProduct;
+  //     } 
 
-      if (packId) {
-        const parsedPack = {
-          packId: this.formatPackId(packId),
-          amountRequested: this.formatAmount(amountRequested),
-        };
+  //     if (packId) {
+  //       const parsedPack = {
+  //         packId: this.formatPackId(packId),
+  //         amountRequested: this.formatAmount(amountRequested),
+  //       };
   
-        return parsedPack;
-      } 
+  //       return parsedPack;
+  //     } 
 
-      throw new Error('Precisa ser product ou pack.');
-    });
+  //     throw new Error('Precisa ser product ou pack.');
+  //   });
 
   formatCreateOrder = (orderRequest: IOrderRequestRawBody): IOrderRequestBody => ({
     userId: this.formatUserId(orderRequest),
     cinemaPlan: Number(orderRequest.userInfo.user.cinemaPlan),
-    orderInfo: this.formatOrderInfo(orderRequest),
+    // orderInfo: this.formatOrderInfo(orderRequest),
   });
 
   private convertStringToNumber = (string: string | number | undefined): number => Number(string);

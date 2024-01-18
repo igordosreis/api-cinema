@@ -111,14 +111,14 @@ export type IOrderRequestInfo = {
 // }
 
 export interface IOrderRequestRawBody {
-  orderInfo: IOrderRequestRawInfo[];
+  // orderInfo: IOrderRequestRawInfo[];
   userInfo: IUserInfo;
 }
 
 export interface IOrderRequestBody {
   userId: number;
   cinemaPlan: number;
-  orderInfo: IOrderRequestInfo[];
+  // orderInfo: IOrderRequestInfo[];
 }
 
 export interface ICreateOrderParams {

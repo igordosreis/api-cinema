@@ -85,7 +85,8 @@ export default class OrdersService {
   public static async createOrder(orderRequest: IOrderRequestBody) {
     const t = await db.transaction();
     try {
-      const { userId, cinemaPlan, orderInfo } = orderRequest;
+      const { userId, cinemaPlan } = orderRequest;
+      const orderInfo = await ordersUtil.getCartFormatted(userId);
 
       const {
         productsWithRequestedVouchers,

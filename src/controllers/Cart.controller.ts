@@ -17,7 +17,7 @@ export default class CartController {
     } = <IUserInfoInBody>req.body;
 
     const userId = Number(id);
-    const currentCart = await CartService.getCart(userId);
+    const currentCart = await CartService.getCart({ userId });
 
     res.status(200).json(currentCart);
   }

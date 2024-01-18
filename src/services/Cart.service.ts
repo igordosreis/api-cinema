@@ -15,7 +15,7 @@ import PacksModel from '../database/models/Packs.model';
 import { CONSOLE_LOG_ERROR_TITLE } from '../constants';
 
 export default class CartService {
-  public static async getCart(userId: number, isCount?: boolean) {
+  public static async getCart({ userId, isCount }: { userId: number, isCount?: boolean }) {
     try {
       const searchParams = isCount
         ? { where: { userId } }
@@ -47,7 +47,8 @@ export default class CartService {
 
   public static async getCartCount(userId: number) {
     try {
-      const currentCart = await this.getCart(userId, true);
+      const isCount = true;
+      const currentCart = await this.getCart({ userId, isCount });
 
       const allCartUnits = currentCart.reduce((accCount, currItem) => {
         const newAccCount = accCount + currItem.quantity;
@@ -85,7 +86,7 @@ export default class CartService {
         if (isProductAlreadyInCart) {
           await product.increment('quantity');
         }
-        const currentCart = await this.getCart(userId);
+        const currentCart = await this.getCart({ userId });
 
         return currentCart;
       }
@@ -110,7 +111,7 @@ export default class CartService {
         if (isPackAlreadyInCart) {
           await pack.increment('quantity');
         }
-        const currentCart = await this.getCart(userId);
+        const currentCart = await this.getCart({ userId });
 
         return currentCart;
       }
@@ -141,7 +142,7 @@ export default class CartService {
             await product.destroy();
           }
         }
-        const currentCart = await this.getCart(userId);
+        const currentCart = await this.getCart({ userId });
 
         return currentCart;
       }
@@ -164,7 +165,7 @@ export default class CartService {
             pack.destroy();
           }
         }
-        const currentCart = await this.getCart(userId);
+        const currentCart = await this.getCart({ userId });
 
         return currentCart;
       }
@@ -185,7 +186,7 @@ export default class CartService {
             [Op.and]: [{ userId }, { productId }, { establishmentId }],
           },
         });
-        const currentCart = await this.getCart(userId);
+        const currentCart = await this.getCart({ userId });
 
         return currentCart;
       }
@@ -198,7 +199,7 @@ export default class CartService {
             [Op.and]: [{ userId }, { packId }, { establishmentId }],
           },
         });
-        const currentCart = await this.getCart(userId);
+        const currentCart = await this.getCart({ userId });
 
         return currentCart;
       }
