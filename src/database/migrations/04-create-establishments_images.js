@@ -17,7 +17,7 @@ module.exports = {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
       },
-      logo: {
+      image: {
         type: Sequelize.STRING,
         defaultValue: null,
       },

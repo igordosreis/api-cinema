@@ -55,3 +55,18 @@ export const IEstablishmentAddressQuerySchema = z.object({
 });
 
 export type IEstablishmentAddressQuery = z.infer<typeof IEstablishmentAddressQuerySchema>;
+
+export interface IAddress {
+  id: number;
+  establishmentId: number;
+  latitude: string;
+  longitude: string;
+  brand: string;
+  image: string;
+  cover: string;
+  title: string;
+  address: string;
+  city: string;
+  state: string;
+  distance: number;
+}

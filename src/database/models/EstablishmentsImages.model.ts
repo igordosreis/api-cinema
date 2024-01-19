@@ -4,7 +4,7 @@ import EstablishmentsModel from './Establishments.model';
 
 class EstablishmentsImagesModel extends Model {
   declare establishmentId: number;
-  declare logo: string;
+  declare image: string;
   declare imageCarousel: string;
   declare cover: string;
   declare resizeColor: string;
@@ -25,7 +25,7 @@ EstablishmentsImagesModel.init(
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',
     },
-    logo: {
+    image: {
       type: DataTypes.STRING,
       defaultValue: null,
     },

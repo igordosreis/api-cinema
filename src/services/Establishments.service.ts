@@ -5,10 +5,11 @@ import CitiesModel from '../database/models/Cities.model';
 import EstablishmentsModel from '../database/models/Establishments.model';
 import StatesModel from '../database/models/States.model';
 import createGeoSearchSqlQuery from '../utils/createGeoSearchSqlQuery.util';
-import { IEstablishmentAddressQuery } from '../interfaces/IEstablishments';
+import { IAddress, IEstablishmentAddressQuery } from '../interfaces/IEstablishments';
 import EstablishmentsImagesModel from '../database/models/EstablishmentsImages.model';
 import CustomError, { establishmentServiceUnavailable } from '../utils/customError.util';
 import { CONSOLE_LOG_ERROR_TITLE } from '../constants';
+import ImageFormatter from '../utils/formatImages.util';
 
 export default class EstablishmentsService {
   public static async getAllEstablishments(): Promise<EstablishmentsModel[]> {
@@ -66,7 +67,7 @@ export default class EstablishmentsService {
     unique,
   }: IEstablishmentAddressQuery) {
     try {
-      const filteredAddresses = await db.query(
+      const addresses = await db.query(
         createGeoSearchSqlQuery({ term, cityId, stateId, establishmentId, addressId, unique }),
         {
           type: QueryTypes.SELECT,
@@ -81,9 +82,20 @@ export default class EstablishmentsService {
             establishmentId,
           },
         },
-      );
+      ) as IAddress[];
 
-      return filteredAddresses;
+      const parsedAddresses = addresses.map((address) => {
+        const { image, cover } = address;
+        const addressWithImages = {
+          ...address,
+          image: ImageFormatter.formatUrl({ imageName: image, folderPath: '/logo' }),
+          cover: ImageFormatter.formatUrl({ imageName: cover, folderPath: '/cover' }),
+        };
+
+        return addressWithImages;
+      });
+      
+      return parsedAddresses;
     } catch (error: CustomError | unknown) {
       console.log(CONSOLE_LOG_ERROR_TITLE, error);
       if (error instanceof CustomError) throw error;
