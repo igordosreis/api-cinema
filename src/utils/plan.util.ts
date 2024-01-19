@@ -133,7 +133,7 @@ class Plan {
       const currTypeUseInfo: IPlanTypeUsedInfo = {
         typeId: productTypeId,
         typeName: name,
-        typeIcon: ImageFormatter.formatUrl({ imageName: icon }),
+        typeIcon: ImageFormatter.formatUrl({ imageName: icon, folderPath: '/product-types' }),
         planMaxAmount: quantity,
         usedAmount: userTypeTotalsInCurrentMonth[productTypeId] || 0,
       };
