@@ -50,4 +50,17 @@ export default class OrdersController {
 
     res.status(200).json(orderById);
   }
+
+  public static async verifyOrders(req: Request, res: Response): Promise<void> {
+    const {
+      userInfo: {
+        user: { id },
+      },
+    } = <IUserInfoInBody>req.body;
+
+    const userId = Number(id);
+    await OrdersService.verifyOrders(userId);
+
+    res.status(200).end();
+  }
 }

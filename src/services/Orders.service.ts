@@ -366,4 +366,8 @@ export default class OrdersService {
       throw new CustomError(orderServiceUnavailable);
     }
   }
+
+  public static async verifyOrders(userId: number) {
+    ordersUtil.verifyIfAllOrdersAreFinalized({ userId });
+  }
 }

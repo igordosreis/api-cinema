@@ -130,7 +130,7 @@ class Orders {
 
   verifyIfAllOrdersAreFinalized = async (
     { userId, transaction }:
-    { userId: number, transaction: Transaction },
+    { userId: number, transaction?: Transaction },
   ) => {
     const allUserOrders = await OrdersModel.findAll({ where: { userId }, transaction });
 
