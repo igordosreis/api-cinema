@@ -45,7 +45,7 @@ FROM (
     latitude,
     longitude,
     brand,
-    logo,
+    image,
     cover,
     title,
     address,
