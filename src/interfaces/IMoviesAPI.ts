@@ -148,6 +148,24 @@ interface BelongsToCollection {
   backdrop_path: string;
 }
 
+type ReleaseDate = {
+  certification: string;
+  descriptors: string[];
+  iso_639_1: string;
+  note: string;
+  release_date: string;
+  type: number;
+};
+
+type ReleaseCountry = {
+  iso_3166_1: string;
+  release_dates: ReleaseDate[];
+};
+
+type ReleaseDatesResponse = {
+  results: ReleaseCountry[];
+};
+
 export interface IMovieDetails {
   adult: boolean;
   backdrop_path: string;
@@ -169,6 +187,7 @@ export interface IMovieDetails {
   runtime: number;
   spoken_languages: SpokenLanguage[];
   status: string;
+  release_dates?: ReleaseDatesResponse;
   tagline: string;
   title: string;
   video: boolean;
@@ -180,6 +199,7 @@ export interface IMovieDetails {
   isReleased?: boolean;
   daysRemainingAsNowPlaying?: number;
   daysToRelease?: number;
+  certification?: string | null;
 }
 
 export interface IMovieDetailsWithImgLinks extends Omit<IMovieDetails, 'Images'> {

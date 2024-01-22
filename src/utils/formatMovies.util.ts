@@ -171,11 +171,22 @@ class FormatMovies {
     return { results };
   };
 
+  private getAgeCertification = (movieDetails: IMovieDetails) => {
+    const ageCertification = movieDetails.release_dates?.results.find((movie) => (
+      movie.iso_3166_1 === 'BR'
+    ))?.release_dates[0].certification;
+
+    return ageCertification || null;
+  };
+
   formatMovieDetails = (movieDetails: IMovieDetails): IMovieDetails => {
+    const { release_dates, ...restOfDetails } = movieDetails;
     const movieWithImgYoutubeAndReleaseInfo = {
-      ...movieDetails,
+      ...restOfDetails,
       ...this.addImgLinksToMovieDetails(movieDetails),
       videos: this.addYoutubeLinksToMovieDetails(movieDetails),
+      poster_path: this.parseImgPathToImgLink(movieDetails.poster_path),
+      certification: this.getAgeCertification(movieDetails),
       ...this.addReleaseInfoToMovie(movieDetails),
     };
 
