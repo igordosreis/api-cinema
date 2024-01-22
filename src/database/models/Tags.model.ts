@@ -1,6 +1,5 @@
 import { DataTypes, Model } from 'sequelize';
 import db from '.';
-import EstablishmentsProductsModel from './EstablishmentsProducts.model';
 
 class TagsModel extends Model {
   declare id: number;
@@ -37,14 +36,5 @@ TagsModel.init(
     freezeTableName: true,
   },
 );
-
-TagsModel.hasMany(EstablishmentsProductsModel, {
-  foreignKey: 'type',
-  as: 'typeInfo',
-});
-EstablishmentsProductsModel.belongsTo(TagsModel, {
-  foreignKey: 'type',
-  as: 'typeInfo',
-});
 
 export default TagsModel;
