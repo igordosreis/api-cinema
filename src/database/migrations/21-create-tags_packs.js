@@ -20,15 +20,15 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
-      packs_id: {
-        field: 'packs_id',
+      pack_id: {
+        field: 'pack_id',
         type: Sequelize.INTEGER,
         primaryKey: true,
         unique: false,
         allowNull: false,
         references: {
-          model: 'establishments_products',
-          key: 'packs_id',
+          model: 'packs',
+          key: 'pack_id',
         },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
