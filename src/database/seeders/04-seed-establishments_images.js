@@ -13,25 +13,25 @@ module.exports = {
       },
       {
         establishment_id: 753,
-        image: 'logo_cinemark.jpg',
+        image: 'logo_cinemark.png',
         cover: 'cover_cinemark.png',
         resize_color: '#ffffff',
       },
       {
         establishment_id: 1115,
-        image: 'logo_cinesystem.jpg',
-        cover: 'cover_cinesystem.jpg',
+        image: 'logo_cinesystem.png',
+        cover: 'cover_cinesystem.png',
         resize_color: '#ffffff',
       },
       {
         establishment_id: 3091,
-        image: 'logo_uci.jpg',
+        image: 'logo_uci.png',
         cover: 'cover_uci.png',
         resize_color: '#ffffff',
       },
       {
         establishment_id: 3092,
-        image: 'logo_kinoplex.jpg',
+        image: 'logo_kinoplex.png',
         cover: 'cover_kinoplex.png',
         resize_color: '#ffffff',
       },
@@ -68,7 +68,7 @@ module.exports = {
       {
         establishment_id: 5049,
         image: 'logo_cinea.png',
-        cover: 'cover_cinea.jpg',
+        cover: 'cover_cinea.png',
         resize_color: '#ffffff',
       },
     ], {});
