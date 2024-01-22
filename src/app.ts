@@ -5,12 +5,14 @@ import router from './routes';
 import errorMiddleware from './middlewares/error.middleware';
 import authMiddleware from './middlewares/auth.middleware';
 import geolocationMiddleware from './middlewares/geolocation.middleware';
+import imagesRouter from './routes/images.routes';
 
 class App {
   constructor() {
     this.app = express();
     this.app.use(express.json());
     this.app.use(cors());
+    this.app.use('/images', imagesRouter);
     // this.app.use('/images', express.static(`${__dirname}/images`));
     this.app.use(authMiddleware);
     this.app.use(geolocationMiddleware);

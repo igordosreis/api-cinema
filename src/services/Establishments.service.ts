@@ -88,13 +88,16 @@ export default class EstablishmentsService {
         const { image, cover } = address;
         const addressWithImages = {
           ...address,
-          image: ImageFormatter.formatUrl({ imageName: image, folderPath: '/logo' }),
-          cover: ImageFormatter.formatUrl({ imageName: cover, folderPath: '/cover' }),
+          image: ImageFormatter.formatUrl({ imageName: image, folderPath: '/establishments/logo' }),
+          cover: ImageFormatter.formatUrl({
+            imageName: cover,
+            folderPath: '/establishments/cover',
+          }),
         };
 
         return addressWithImages;
       });
-      
+
       return parsedAddresses;
     } catch (error: CustomError | unknown) {
       console.log(CONSOLE_LOG_ERROR_TITLE, error);

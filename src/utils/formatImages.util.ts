@@ -10,10 +10,10 @@ export default class ImageFormatter {
     const isImageNameNotFound = !imageName;
     if (isImageNameNotFound) {
       if (folderPath.includes('logo')) {
-        return `${SUPERAPP_CINEMA_BASE_URL}/images/logo/logo_default.png`;
+        return `${SUPERAPP_CINEMA_BASE_URL}/images/establishments/logo/logo_default.png`;
       }
       if (folderPath.includes('cover')) {
-        return `${SUPERAPP_CINEMA_BASE_URL}/images/cover/cover_default.png`;
+        return `${SUPERAPP_CINEMA_BASE_URL}/images/establishments/cover/cover_default.png`;
       }
     }
 
