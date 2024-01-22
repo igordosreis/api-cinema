@@ -184,7 +184,7 @@ class FormatMovies {
     const movieWithImgYoutubeAndReleaseInfo = {
       ...restOfDetails,
       ...this.addImgLinksToMovieDetails(movieDetails),
-      videos: this.addYoutubeLinksToMovieDetails(movieDetails),
+      // videos: this.addYoutubeLinksToMovieDetails(movieDetails),
       poster_path: this.parseImgPathToImgLink(movieDetails.poster_path),
       certification: this.getAgeCertification(movieDetails),
       ...this.addReleaseInfoToMovie(movieDetails),
