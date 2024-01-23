@@ -4,6 +4,8 @@ import PacksProductsModel from '../database/models/PacksProducts.model';
 import EstablishmentsProductsModel from '../database/models/EstablishmentsProducts.model';
 import EstablishmentsImagesModel from '../database/models/EstablishmentsImages.model';
 import ProductsTypesModel from '../database/models/ProductsTypes.model';
+import TagsProductsModel from '../database/models/TagsProducts.model';
+import TagsPacksModel from '../database/models/TagsPacks.model';
 
 export type IPackSummary = PacksModel & {
   packInfo: PacksProductsModel[];
@@ -17,6 +19,7 @@ export const IPackSearchQueryRawSchema = z.object({
   establishmentId: z.string().optional(),
   available: z.string().optional(),
   active: z.string().optional(),
+  tags: z.string().optional(),
 });
 
 export type IPackSearchQueryRaw = z.infer<typeof IPackSearchQueryRawSchema>;
@@ -29,17 +32,20 @@ export const IPackSearchQuerySchema = z.object({
   establishmentId: z.number().optional(),
   available: z.boolean().optional(),
   active: z.boolean().optional(),
+  tags: z.array(z.number()).optional(),
 });
 
 export type IPackSearchQuery = z.infer<typeof IPackSearchQuerySchema>;
 
 export type IPacksByQuery = PacksModel & {
   available?: boolean;
+  packTags: Array<TagsPacksModel>,
   packInfo: Array<PacksProductsModel & {
     productDetails: EstablishmentsProductsModel & {
       vouchersQuantity: number;
       imagesBrand: EstablishmentsImagesModel;
       typeInfo: ProductsTypesModel;
+      productTags: Array<TagsProductsModel>,
     };
   }>;
 };

@@ -59,7 +59,11 @@ export default class ProductsService {
             as: 'productTags',
           },
         ],
-        group: ['establishments_products.product_id', 'productTags.tag_id', 'productTags.product_id'],
+        group: [
+          'establishments_products.product_id',
+          'productTags.tag_id',
+          'productTags.product_id',
+        ],
         ...createProductSearchSqlizeQueryUtil.create(formattedSearchQuery),
         // limit: formattedQuery.limit,
         // offset: formattedQuery.limit * formattedQuery.page,

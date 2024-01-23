@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable max-lines-per-function */
 import sequelize, { Op } from 'sequelize';
 import EstablishmentsProductsModel from '../database/models/EstablishmentsProducts.model';
@@ -10,6 +11,8 @@ import EstablishmentsImagesModel from '../database/models/EstablishmentsImages.m
 import ProductsTypesModel from '../database/models/ProductsTypes.model';
 import createPackSearchSqlizeQueryUtil from '../utils/createPackSearchSqlizeQuery.util';
 import Pagination from '../utils/pagination.util';
+import TagsProductsModel from '../database/models/TagsProducts.model';
+import TagsPacksModel from '../database/models/TagsPacks.model';
 
 export default class PacksService {
   public static async getPacksByQuery(formattedSearchQuery: IPackSearchQuery) {
@@ -209,8 +212,12 @@ export default class PacksService {
     //   ],
     // });
 
-    const packs = (await PacksModel.findAll({
+    const packs = await PacksModel.findAll({
       include: [
+        {
+          model: TagsPacksModel,
+          as: 'packTags',
+        },
         {
           model: PacksProductsModel,
           as: 'packInfo',
@@ -256,18 +263,28 @@ export default class PacksService {
                   model: ProductsTypesModel,
                   as: 'typeInfo',
                 },
+                {
+                  model: TagsProductsModel,
+                  as: 'productTags',
+                },
               ],
             },
           ],
         },
       ],
-      group: ['packs.id', 'packInfo.product_id', 'packInfo.productDetails.id'],
+      group: [
+        'packs.pack_id',
+        'packInfo.product_id',
+        'packInfo.productDetails.product_id',
+        'packTags.tag_id',
+        'packInfo.productDetails.productTags.tag_id',
+      ],
       ...createPackSearchSqlizeQueryUtil.create(formattedSearchQuery),
       // limit: packSearchQuery.limit,
       // offset: packSearchQuery.limit * packSearchQuery.page,
-    })) as IPacksByQuery[];
+    }) as IPacksByQuery[];
 
-    const { available, type, term } = formattedSearchQuery;
+    const { available, type, term, tags } = formattedSearchQuery;
 
     const filteredPacks = packs
       .filter(({ packInfo }) => packInfo.every(({ productDetails: { active } }) => active))
@@ -308,6 +325,15 @@ export default class PacksService {
           || pack.packInfo.some(
             ({ productDetails: { name, description } }) =>
               name.toLowerCase().includes(term) || description.toLowerCase().includes(term),
+          ),
+      )
+      .filter(
+        (pack) => 
+          !tags
+          || tags.every((tag) => pack.packTags.some(({ tagId }) => tagId === tag))
+          || pack.packInfo.some(
+            ({ productDetails: { productTags } }) =>
+              tags.every((tag) => productTags.some(({ tagId }) => tagId === tag)),
           ),
       );
 

@@ -178,6 +178,7 @@ class FormatRequestQuery {
     establishmentId: this.formatEstablishmentId(searchQuery),
     available: this.formatAvailable(searchQuery),
     active: this.formatActive(searchQuery),
+    tags: this.formatTags(searchQuery),
   });
 
   formatPagination = (paginationRequest: IPaginationRequest): IPagination => ({
