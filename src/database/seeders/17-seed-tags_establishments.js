@@ -6,10 +6,6 @@ module.exports = {
   up: async (QueryInterface) => {
     await QueryInterface.bulkInsert('tags_establishments', [
       {
-        tag_id: 0,
-        establishment_id: 753,
-      },
-      {
         tag_id: 1,
         establishment_id: 753,
       },
@@ -38,8 +34,8 @@ module.exports = {
         establishment_id: 753,
       },
       {
-        tag_id: 0,
-        establishment_id: 488,
+        tag_id: 8,
+        establishment_id: 753,
       },
       {
         tag_id: 1,
@@ -62,11 +58,11 @@ module.exports = {
         establishment_id: 488,
       },
       {
-        tag_id: 0,
-        establishment_id: 3543,
+        tag_id: 6,
+        establishment_id: 488,
       },
       {
-        tag_id: 2,
+        tag_id: 1,
         establishment_id: 3543,
       },
       {
@@ -75,6 +71,10 @@ module.exports = {
       },
       {
         tag_id: 4,
+        establishment_id: 3543,
+      },
+      {
+        tag_id: 5,
         establishment_id: 3543,
       },
     ], {});

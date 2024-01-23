@@ -6,40 +6,40 @@ module.exports = {
   up: async (QueryInterface) => {
     await QueryInterface.bulkInsert('tags_packs', [
       {
-        tag_id: 0,
-        product_id: 1,
+        tag_id: 1,
+        pack_id: 1,
+      },
+      {
+        tag_id: 3,
+        pack_id: 1,
       },
       {
         tag_id: 2,
-        product_id: 1,
+        pack_id: 3,
       },
       {
-        tag_id: 1,
-        product_id: 3,
+        tag_id: 4,
+        pack_id: 3,
       },
       {
-        tag_id: 3,
-        product_id: 3,
+        tag_id: 6,
+        pack_id: 4,
       },
       {
-        tag_id: 5,
-        product_id: 4,
+        tag_id: 4,
+        pack_id: 4,
       },
       {
-        tag_id: 3,
-        product_id: 4,
+        tag_id: 2,
+        pack_id: 2,
       },
       {
-        tag_id: 1,
-        product_id: 2,
+        tag_id: 4,
+        pack_id: 2,
       },
       {
-        tag_id: 3,
-        product_id: 2,
-      },
-      {
-        tag_id: 7,
-        product_id: 2,
+        tag_id: 8,
+        pack_id: 2,
       },
     ], {});
   },
