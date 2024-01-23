@@ -102,6 +102,10 @@ class FormatRequestQuery {
 
   private formatActive = ({ active }: IProductRawQuery) => (active === 'true' ? true : undefined);
 
+  private formatTags = ({ tags }: IProductRawQuery) => (tags
+    ? tags.split(',').map((id) => Number(id))
+    : undefined);
+
   formatProductQuery = (searchQuery: IProductRawQuery): IProductQuery => ({
     limit: this.formatLimit(searchQuery),
     page: this.formatPage(searchQuery),
@@ -110,6 +114,7 @@ class FormatRequestQuery {
     establishmentId: this.formatEstablishmentId(searchQuery),
     available: this.formatAvailable(searchQuery),
     active: this.formatActive(searchQuery),
+    tags: this.formatTags(searchQuery),
   });
 
   private formatProductId = (productId: number | string | undefined) =>

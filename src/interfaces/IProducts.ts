@@ -2,6 +2,10 @@ import { z } from 'zod';
 import { IVoucherAvailable } from './IVouchers';
 import EstablishmentsProductsModel from '../database/models/EstablishmentsProducts.model';
 import VouchersAvailableModel from '../database/models/VouchersAvailable.model';
+import EstablishmentsModel from '../database/models/Establishments.model';
+import EstablishmentsImagesModel from '../database/models/EstablishmentsImages.model';
+import ProductsTypesModel from '../database/models/ProductsTypes.model';
+import TagsProductsModel from '../database/models/TagsProducts.model';
 
 export interface IProduct {
   productId: number;
@@ -16,6 +20,13 @@ export interface IProduct {
   isAvailable?: boolean;
 }
 
+export type IProductResult = EstablishmentsProductsModel & {
+  brand: EstablishmentsModel,
+  imagesBrand: EstablishmentsImagesModel,
+  typeInfo: ProductsTypesModel,
+  productTags: Array<TagsProductsModel>,
+};
+
 export const IProductRawQuerySchema = z.object({
   limit: z.string().optional(),
   page: z.string().optional(),
@@ -24,6 +35,7 @@ export const IProductRawQuerySchema = z.object({
   active: z.string().optional(),
   available: z.string().optional(),
   term: z.string().optional(),
+  tags: z.string().optional(),
 });
 
 export type IProductRawQuery = z.infer<typeof IProductRawQuerySchema>;
@@ -36,6 +48,7 @@ export const IProductQuerySchema = z.object({
   active: z.boolean().optional(),
   available: z.boolean().optional(),
   term: z.string().optional(),
+  tags: z.array(z.number()).optional(),
 });
 
 export type IProductQuery = z.infer<typeof IProductQuerySchema>;

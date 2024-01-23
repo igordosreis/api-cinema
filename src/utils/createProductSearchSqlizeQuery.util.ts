@@ -20,6 +20,7 @@ class CreateProductSearchSqlizeQuery {
     }
     if (type) searchQuery.push({ '$typeInfo.id$': { [Op.eq]: type } });
     if (establishmentId) searchQuery.push({ establishmentId });
+    // if (tags) searchQuery.push({ '$productTags.tag_id$': { [Op.and]: tags } });
     // if (active) searchQuery.push({ active });
 
     return {
@@ -27,6 +28,7 @@ class CreateProductSearchSqlizeQuery {
         [Op.and]: searchQuery,
       },
       having: available ? { available } : {},
+      // having: available ? { available } : { '$productTags.tag_id$': { [Op.overlap]: tags } },
     };
   };
 
