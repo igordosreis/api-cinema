@@ -9,6 +9,7 @@ import PlansController from './Plans.controller';
 import FavoritesController from './Favorite.controller';
 import SearchController from './Search.controller';
 import CartController from './Cart.controller';
+import TagsController from './Tags.controller';
 
 export {
   EstablishmentsController,
@@ -22,4 +23,5 @@ export {
   FavoritesController,
   SearchController,
   CartController,
+  TagsController,
 };

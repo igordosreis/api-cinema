@@ -1,5 +1,9 @@
+import TagsModel from '../database/models/Tags.model';
+
 export default class TagsService {
   public static async getAllTags() {
-    console.log();
+    const allTags = TagsModel.findAll();
+
+    return allTags;
   }
 }

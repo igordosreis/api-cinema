@@ -8,6 +8,6 @@ export default class AdminController {
 
     await AdminService.resolvePaymentStatus(paymentOrderResponse);
 
-    res.status(200).json();
+    res.status(200).end();
   }
 }
