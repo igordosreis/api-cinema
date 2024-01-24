@@ -29,6 +29,27 @@ module.exports = {
       {
         name: 'Cadeira Especial',
       },
+      {
+        name: 'Pipoca',
+      },
+      {
+        name: 'Refrigerante',
+      },
+      {
+        name: 'Suco',
+      },
+      {
+        name: 'Pipoca e refri',
+      },
+      {
+        name: 'Doces',
+      },
+      {
+        name: 'Comida',
+      },
+      {
+        name: 'Bebida',
+      },
     ], {});
   },
 
