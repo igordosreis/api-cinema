@@ -12,6 +12,7 @@ import EstablishmentsModel from '../database/models/Establishments.model';
 import Pagination from '../utils/pagination.util';
 import { CONSOLE_LOG_ERROR_TITLE } from '../constants';
 import TagsProductsModel from '../database/models/TagsProducts.model';
+import ImageFormatter from '../utils/formatImages.util';
 
 export default class ProductsService {
   public static async getProductsByQuery(formattedSearchQuery: IProductQuery) {
@@ -88,9 +89,14 @@ export default class ProductsService {
 
   public static async getProductsTypes() {
     try {
-      const allProductsTypes = await ProductsTypesModel.findAll();
+      const productTypes = await ProductsTypesModel.findAll();
 
-      return allProductsTypes;
+      const productTypesWithImgLinks = productTypes.map((type) => ({
+        ...type.dataValues,
+        icon: ImageFormatter.formatUrl({ imageName: type.icon, folderPath: '/product-types' }),
+      }));
+
+      return productTypesWithImgLinks;
     } catch (error: CustomError | unknown) {
       console.log(CONSOLE_LOG_ERROR_TITLE, error);
       if (error instanceof CustomError) throw error;
