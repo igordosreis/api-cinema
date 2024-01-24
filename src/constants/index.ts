@@ -59,6 +59,7 @@ export const SUPERAPP_CINEMA_BASE_URL = 'https://node.clubecerto.com.br/superapp
 // -- -- SUPERAPP AUTH
 export const SUPERAPP_URL_BASE_AUTH =
   'https://node.clubecerto.com.br/superapp/microservices/validations/cinema';
+export const SUPERAPP_URL_ADMIN_AUTH = 'placeholder';
 
 // -- -- SUPERAPP PAYMENT MICROSERVICE
 export const CREATE_PAYMENT_URL = 'https://node.clubecerto.com.br/superapp/microservices/payment/';
