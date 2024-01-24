@@ -35,7 +35,7 @@ class FormatMovies {
   };
 
   private parseImgPathToImgLink = (imagePath: string | null): string => {
-    const imageLink = `https://image.tmdb.org/t/p/original${imagePath}`;
+    const imageLink = `https://image.tmdb.org/t/p/w300${imagePath}`;
 
     return imageLink;
   };
@@ -91,7 +91,7 @@ class FormatMovies {
     const formatedMovies = this.getTopEightPopularMovies(moviesArray).map((movie): IMovieInfo => {
       const formatedMovie = {
         ...movie,
-        backdrop_path: this.parseImgPathToImgLink(movie.backdrop_path),
+        // backdrop_path: this.parseImgPathToImgLink(movie.backdrop_path),
         poster_path: this.parseImgPathToImgLink(movie.poster_path),
         genre_ids: this.parseGenresNames(movie.genre_ids, genresList),
         ...this.addReleaseInfoToMovie(movie),
