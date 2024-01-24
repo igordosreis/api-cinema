@@ -39,31 +39,31 @@ module.exports = {
       },
       {
         tag_id: 9,
-        type_id: 1,
+        type_id: 2,
       },
       {
         tag_id: 10,
-        type_id: 1,
+        type_id: 2,
       },
       {
         tag_id: 11,
-        type_id: 1,
+        type_id: 2,
       },
       {
         tag_id: 12,
-        type_id: 1,
+        type_id: 2,
       },
       {
         tag_id: 13,
-        type_id: 1,
+        type_id: 2,
       },
       {
         tag_id: 14,
-        type_id: 1,
+        type_id: 2,
       },
       {
         tag_id: 15,
-        type_id: 1,
+        type_id: 2,
       },
     ], {});
   },
