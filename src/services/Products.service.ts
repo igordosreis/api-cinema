@@ -116,6 +116,8 @@ export default class ProductsService {
 
       return productId;
     } catch (error) {
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
+
       throw new CustomError(createProductError);
     }
   }

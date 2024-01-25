@@ -50,7 +50,7 @@ export const IProductCreateInfoSchema = z
     rules: z.string(),
     type: z.number(),
     soldOutAmount: z.number(),
-    expireAt: z.date(),
+    expireAt: z.string().pipe(z.coerce.date()),
     tags: z.array(z.number()),
   })
   .strict();

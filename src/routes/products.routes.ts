@@ -5,6 +5,6 @@ const productsRouter = Router();
 
 productsRouter.get('/search', ProductsController.getProductsByQuery);
 productsRouter.get('/types', ProductsController.getProductsTypes);
-productsRouter.get('/create', ProductsController.createProduct);
+productsRouter.post('/create', ProductsController.createProduct);
 
 export default productsRouter;
