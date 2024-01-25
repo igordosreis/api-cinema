@@ -5,9 +5,9 @@ import EstablishmentsImagesModel from '../database/models/EstablishmentsImages.m
 import EstablishmentsProductsModel from '../database/models/EstablishmentsProducts.model';
 import ProductsTypesModel from '../database/models/ProductsTypes.model';
 import VouchersAvailableModel from '../database/models/VouchersAvailable.model';
-import { IProductQuery, IProductResult } from '../interfaces/IProducts';
+import { IProductCreateInfo, IProductQuery, IProductResult } from '../interfaces/IProducts';
 import createProductSearchSqlizeQueryUtil from '../utils/createProductSearchSqlizeQuery.util';
-import CustomError, { establishmentServiceUnavailable } from '../utils/customError.util';
+import CustomError, { createProductError, establishmentServiceUnavailable } from '../utils/customError.util';
 import EstablishmentsModel from '../database/models/Establishments.model';
 import Pagination from '../utils/pagination.util';
 import { CONSOLE_LOG_ERROR_TITLE } from '../constants';
@@ -102,6 +102,21 @@ export default class ProductsService {
       if (error instanceof CustomError) throw error;
 
       throw new CustomError(establishmentServiceUnavailable);
+    }
+  }
+
+  public static async createProduct(newProductInfo: IProductCreateInfo) {
+    try {
+      const { tags, type, ...restOfInfo } = newProductInfo;
+      
+      const { productId } = await EstablishmentsProductsModel.create({ ...restOfInfo, type });
+
+      // If new tags, create in Tags
+      // Create in TagsProducts
+
+      return productId;
+    } catch (error) {
+      throw new CustomError(createProductError);
     }
   }
 }

@@ -11,20 +11,61 @@ export interface IProduct {
   productId: number;
   establishmentId: number;
   active: boolean;
+  purchasable: boolean;
   name: string;
   description: string;
   image: string | null;
   price: number;
   rules: string;
   type: number;
-  isAvailable?: boolean;
+  available?: boolean;
+  soldOutAmount: number;
+  expireAt: Date;
+}
+
+// export interface IProductCreateInfo {
+//   establishmentId: number;
+//   active: boolean;
+//   purchasable: boolean;
+//   name: string;
+//   description: string;
+//   image: string;
+//   price: number;
+//   rules: string;
+//   type: number;
+//   soldOutAmount: number;
+//   expireAt: Date;
+//   tags: number[];
+// }
+
+export const IProductCreateInfoSchema = z
+  .object({
+    establishmentId: z.number(),
+    active: z.boolean(),
+    purchasable: z.boolean(),
+    name: z.string(),
+    description: z.string(),
+    image: z.string(),
+    price: z.number(),
+    rules: z.string(),
+    type: z.number(),
+    soldOutAmount: z.number(),
+    expireAt: z.date(),
+    tags: z.array(z.number()),
+  })
+  .strict();
+
+export type IProductCreateInfo = z.infer<typeof IProductCreateInfoSchema>;
+
+export interface IProductCreateInfoBody {
+  newProductInfo: IProductCreateInfo;
 }
 
 export type IProductResult = EstablishmentsProductsModel & {
-  brand: EstablishmentsModel,
-  imagesBrand: EstablishmentsImagesModel,
-  typeInfo: ProductsTypesModel,
-  productTags: Array<TagsProductsModel>,
+  brand: EstablishmentsModel;
+  imagesBrand: EstablishmentsImagesModel;
+  typeInfo: ProductsTypesModel;
+  productTags: Array<TagsProductsModel>;
 };
 
 export const IProductRawQuerySchema = z.object({

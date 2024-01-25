@@ -87,7 +87,8 @@ export const orderNotFound: ICustomError = {
 export const openOrder: ICustomError = {
   status: 401,
   title: 'Pedido não autorizado.',
-  message: 'Existe um pedido em aberto. Conclua o pagamento ou cancele o pedido para realizar novos pedidos.',
+  message:
+    'Existe um pedido em aberto. Conclua o pagamento ou cancele o pedido para realizar novos pedidos.',
 };
 
 export const paymentOrderError: ICustomError = {
@@ -179,6 +180,12 @@ export const productNotFound: ICustomError = {
   status: 404,
   title: 'Produto não encontrado.',
   message: 'O produto procurado não foi encontrado.',
+};
+
+export const createProductError: ICustomError = {
+  status: 500,
+  title: 'Produto não registrado.',
+  message: 'Não foi possível registrar o produto no momento. Tente noavmente mais tarde.',
 };
 
 export const planNotFound: ICustomError = {

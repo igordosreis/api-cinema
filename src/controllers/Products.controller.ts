@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { ProductsService } from '../services';
 import formatRequestQueryUtil from '../utils/formatRequestQuery.util';
 import {
+  IProductCreateInfoBody,
   IProductQuerySchema,
   IProductRawQuery,
   IProductRawQuerySchema,
@@ -23,5 +24,13 @@ export default class ProductsController {
     const allProductsTypes = await ProductsService.getProductsTypes();
 
     res.status(200).json(allProductsTypes);
+  }
+
+  public static async createProduct(req: Request, res: Response): Promise<void> {
+    const { newProductInfo } = <IProductCreateInfoBody>req.body;
+
+    const productId = ProductsService.createProduct(newProductInfo);
+
+    res.status(200).json(productId);
   }
 }
