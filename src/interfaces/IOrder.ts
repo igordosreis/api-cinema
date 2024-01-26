@@ -95,10 +95,12 @@ export interface IOrderRequestRawInfo {
 }
 
 export type IOrderRequestInfo = {
+  establishmentId: number;
   productId: number;
   amountRequested: number;
   price?: number;
 } | {
+  establishmentId: number;
   packId: number;
   amountRequested: number;
   price?: number;

@@ -108,9 +108,10 @@ export default class OrdersService {
       const currentDate = new Date();
       const expireAt = dateUtils.addFiveMinutes(currentDate);
 
+      const { establishmentId } = orderInfo[0];
       const { totalPrice, totalUnits } = orderTotals;
       const { id: orderId } = await OrdersModel.create(
-        { totalPrice, totalUnits, expireAt, userId },
+        { totalPrice, totalUnits, expireAt, userId, establishmentId },
         { transaction: t },
       );
 
@@ -125,6 +126,7 @@ export default class OrdersService {
       });
 
       const paymentOrderRequest: Omit<IPaymentOrderRequest, 'webhook' | 'name'> = {
+        establishmentId,
         orderId,
         userId,
         value: orderTotals.totalPrice.toString(),

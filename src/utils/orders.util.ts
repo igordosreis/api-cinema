@@ -103,9 +103,10 @@ class Orders {
   getCartFormatted = async (userId: number): Promise<IOrderRequestInfo[]> => {
     const currentCart = await CartService.getCart({ userId });
 
-    const formattedCart = currentCart.map(({ productId, packId, quantity }) => {
+    const formattedCart = currentCart.map(({ productId, packId, quantity, establishmentId }) => {
       if (productId) {
         const parsedProduct = {
+          establishmentId,
           productId,
           amountRequested: quantity,
         };
@@ -115,6 +116,7 @@ class Orders {
 
       if (packId) {
         const parsedPack = {
+          establishmentId,
           packId,
           amountRequested: quantity,
         };
