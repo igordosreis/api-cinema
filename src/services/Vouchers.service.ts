@@ -82,9 +82,10 @@ export default class VouchersService {
     });
     // Array with non-pack products' id and amount and packs' info and amount
     const parsedOrder: IParsedOrder[] = (await Promise.all(parsedOrderPromise)).flat();
+    const parsedOrderCopy = parsedOrder.map((obj) => ({ ...obj }));
 
     // Array with all products in current order
-    const productsInOrder: IProductsInOrder[] = parsedOrder
+    const productsInOrder: IProductsInOrder[] = parsedOrderCopy
       .map((orderItem) => {
         const isItemPack = orderItem.pack;
         if (isItemPack) {
@@ -147,7 +148,7 @@ export default class VouchersService {
 
           const newProduct = product[0] as IProductWithRequestedVouchersWithAmount;
           newProduct.amountRequested = orderItem.amountRequested;
-
+  
           return newProduct;
         }
 

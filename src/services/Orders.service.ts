@@ -225,6 +225,7 @@ export default class OrdersService {
     pagination: IPagination;
   }) {
     try {
+      console.log('---                 -                     -         userId:        ', userId);
       const allUserOrders = await OrdersModel.findAll({
         include: [
           {

@@ -82,14 +82,18 @@ class Orders {
         return { totalPrice: Number(totalPrice.toFixed(2)) };
       }
 
-      const isProduct = 'id' in currItem;
+      const isProduct = 'productId' in currItem;
       if (isProduct) {
         const { price, amountRequested } = currItem;
         const subTotal = price * (amountRequested || 1);
         const totalPrice = accPrice.totalPrice + subTotal;
+        console.log('---                     -                   -           price, amountRequested:           ', price, amountRequested);
+        console.log('---                     -                   -           subTotal:           ', subTotal);
+        console.log('---                     -                   -           totalPrice:           ', totalPrice);
 
         return { totalPrice: Number(totalPrice.toFixed(2)) };
       }
+      console.log('---                     -                   -           accPrice:           ', priceTotal);
 
       return accPrice;
     }, { totalPrice: 0 } as Pick<PriceUnitAndTypeTotals, 'totalPrice'>);
