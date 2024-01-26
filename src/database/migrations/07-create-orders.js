@@ -37,6 +37,16 @@ module.exports = {
         type: Sequelize.INTEGER,
         defaultValue: null,
       },
+      establishment_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'establishments',
+          key: 'id', 
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+      },
       created_at: {
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),

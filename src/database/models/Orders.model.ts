@@ -1,5 +1,6 @@
 import { DataTypes, Model } from 'sequelize';
 import db from '.';
+import EstablishmentsModel from './Establishments.model';
 
 class OrdersModel extends Model {
   declare id: number;
@@ -8,6 +9,7 @@ class OrdersModel extends Model {
   declare paymentId: string;
   declare totalPrice: number;
   declare totalUnits: number;
+  declare establishmentId: number;
   declare expireAt: Date;
   declare createdAt: Date;
   declare updatedAt: Date;
@@ -36,6 +38,16 @@ OrdersModel.init(
     totalUnits: {
       type: DataTypes.INTEGER,
     },
+    establishmentId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'establishments',
+        key: 'id',
+      },
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    },
     expireAt: {
       type: DataTypes.DATE,
     },
@@ -56,5 +68,14 @@ OrdersModel.init(
     freezeTableName: true,
   },
 );
+
+OrdersModel.belongsTo(EstablishmentsModel, {
+  foreignKey: 'establishmentId',
+  as: 'establishmentInfo',
+});
+EstablishmentsModel.hasMany(OrdersModel, {
+  foreignKey: 'establishmentId',
+  as: 'establishmentInfo',
+});
 
 export default OrdersModel;

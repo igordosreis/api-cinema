@@ -32,6 +32,8 @@ import OrdersPacksModel from '../database/models/OrdersPacks.model';
 import { IPagination } from '../interfaces/IPagination';
 import PacksModel from '../database/models/Packs.model';
 import CartModel from '../database/models/Cart.model';
+import EstablishmentsModel from '../database/models/Establishments.model';
+import EstablishmentsImagesModel from '../database/models/EstablishmentsImages.model';
 
 export default class OrdersService {
   private static async createPacksOrder(
@@ -224,6 +226,16 @@ export default class OrdersService {
       const allUserOrders = await OrdersModel.findAll({
         include: [
           {
+            model: EstablishmentsModel,
+            as: 'establishmentInfo',
+            include: [
+              {
+                model: EstablishmentsImagesModel,
+                as: 'images',
+              },
+            ],
+          },
+          {
             model: VouchersAvailableModel,
             as: 'vouchersOrderUnpaid',
             required: false,
@@ -296,6 +308,16 @@ export default class OrdersService {
 
       const orderInfo = await OrdersModel.findOne({
         include: [
+          {
+            model: EstablishmentsModel,
+            as: 'establishmentInfo',
+            include: [
+              {
+                model: EstablishmentsImagesModel,
+                as: 'images',
+              },
+            ],
+          },
           {
             model: VouchersAvailableModel,
             as: 'vouchersOrderUnpaid',
