@@ -225,7 +225,6 @@ export default class OrdersService {
     pagination: IPagination;
   }) {
     try {
-      console.log('---                 -                     -         userId:        ', userId);
       const allUserOrders = await OrdersModel.findAll({
         include: [
           {
@@ -235,52 +234,106 @@ export default class OrdersService {
               {
                 model: EstablishmentsImagesModel,
                 as: 'images',
+                attributes: {
+                  exclude: [
+                    'establishmentId',
+                    'imageCarousel',
+                    'resizeColor',
+                    'createdAt',
+                    'updatedAt',
+                  ],
+                },
               },
             ],
-          },
-          {
-            model: VouchersAvailableModel,
-            as: 'vouchersOrderUnpaid',
-            required: false,
             attributes: {
-              exclude: ['createdAt', 'updatedAt', 'voucherCode'],
+              exclude: [
+                'about',
+                'link',
+                'linkDescription',
+                'telephone',
+                'telephoneTwo',
+                'whatsapp',
+                'instagram',
+                'site',
+                'rules',
+                'keyWords',
+                'active',
+                'createdAt',
+                'updatedAt',
+                'views',
+                'underHighlight',
+              ],
             },
           },
+          // {
+          //   model: VouchersAvailableModel,
+          //   as: 'vouchersOrderUnpaid',
+          //   required: false,
+          //   attributes: {
+          //     exclude: ['createdAt', 'updatedAt', 'voucherCode'],
+          //   },
+          // },
           {
             model: VouchersUserModel,
             as: 'vouchersOrderPaid',
             required: false,
             attributes: {
-              exclude: ['createdAt', 'updatedAt'],
+              exclude: [
+                'createdAt',
+                'updatedAt',
+                'soldAt',
+                'productId',
+                'orderId',
+              ],
             },
             include: [
               {
                 model: EstablishmentsProductsModel,
                 as: 'productVoucherInfo',
                 attributes: {
-                  exclude: ['id'],
+                  exclude: [
+                    'establishmentId',
+                    'active',
+                    'purchasable', 
+                    'description',
+                    'rules',
+                    'image',
+                    'createdAt',
+                    'updatedAt',
+                    'expireAt',
+                    'soldOutAmount',
+                  ],
                 },
               },
             ],
           },
-          {
-            model: OrdersProductsModel,
-            as: 'productsDetails',
-            required: false,
-            attributes: {
-              exclude: ['orderId'],
-            },
-            include: [
-              {
-                model: EstablishmentsProductsModel,
-                as: 'productInfo',
-                attributes: {
-                  exclude: ['id'],
-                },
-              },
-            ],
-          },
+          // {
+          //   model: OrdersProductsModel,
+          //   as: 'productsDetails',
+          //   required: false,
+          //   attributes: {
+          //     exclude: ['orderId'],
+          //   },
+          //   include: [
+          //     {
+          //       model: EstablishmentsProductsModel,
+          //       as: 'productInfo',
+          //       attributes: {
+          //         exclude: ['id'],
+          //       },
+          //     },
+          //   ],
+          // },
         ],
+        attributes: {
+          exclude: [
+            'userId',
+            'totalUnits',
+            'establishmentId',
+            'expireAt',
+            'establishmentId',
+          ],
+        },
         where: { userId },
         limit,
         offset: page * limit,
