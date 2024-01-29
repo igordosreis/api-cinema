@@ -6,7 +6,7 @@ export default class Excel {
     const sheetName = workbook.SheetNames[0];
     const worksheet = workbook.Sheets[sheetName];
 
-    const data = xlsx.utils.sheet_to_json(worksheet) as Array<T>;
+    const data = xlsx.utils.sheet_to_json<T>(worksheet);
 
     return data;
   }
