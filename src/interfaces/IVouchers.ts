@@ -1,3 +1,4 @@
+import { z } from 'zod';
 import EstablishmentsProductsModel from '../database/models/EstablishmentsProducts.model';
 import OrdersModel from '../database/models/Orders.model';
 import VouchersUserModel from '../database/models/VouchersUser.model';
@@ -52,3 +53,37 @@ export type IVouchersByDate = OrdersModel & {
 //     productVoucherInfo: EstablishmentsProductsModel;
 //   }>
 // };
+
+export const IVouchersNewSchema = z.array(z.string());
+
+export type IVouchersNew = z.infer<typeof IVouchersNewSchema>;
+
+export interface IVouchersNewInBody {
+  vouchers: IVouchersNew;
+}
+
+export const IVoucherNewParamsRawSchema = z.object({
+  date: z.string(),
+  productId: z.string(),
+});
+
+export type IVoucherNewParamsRaw = z.infer<typeof IVoucherNewParamsRawSchema>;
+
+export const IVoucherNewParamsSchema = z.object({
+  date: z.string().pipe(z.coerce.date()),
+  productId: z.number(),
+});
+
+export type IVoucherNewParams = z.infer<typeof IVoucherNewParamsSchema>;
+
+export interface IVouchersCreateInfo {
+  date: Date,
+  productId: number,
+  vouchers: IVouchersNew,
+}
+
+export type IVouchersCodeArray = Array<{
+  expireAt: Date,
+  productId: number,
+  voucherCode: string,
+}>;

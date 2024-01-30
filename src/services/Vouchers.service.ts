@@ -15,13 +15,14 @@ import {
 } from '../interfaces/IOrder';
 import { IProductFromGetById, IProductWithRequestedVouchers } from '../interfaces/IProducts';
 import CustomError, {
+  cannotCreateVouchers,
   productNotFound,
   voucherServiceUnavailable,
   vouchersNotFound,
 } from '../utils/customError.util';
 import ordersUtil from '../utils/orders.util';
 import PacksService from './Packs.service';
-import { IVoucherAvailable, IVouchersByDate } from '../interfaces/IVouchers';
+import { IVoucherAvailable, IVouchersByDate, IVouchersCodeArray } from '../interfaces/IVouchers';
 import OrdersModel from '../database/models/Orders.model';
 import VouchersUserModel from '../database/models/VouchersUser.model';
 import { IPagination } from '../interfaces/IPagination';
@@ -335,6 +336,16 @@ export default class VouchersService {
       if (error instanceof CustomError) throw error;
 
       throw new CustomError(voucherServiceUnavailable);
+    }
+  }
+
+  public static async createVouchers(vouchersCodeArray: IVouchersCodeArray) {
+    try {
+      await VouchersAvailableModel.bulkCreate(vouchersCodeArray);
+    } catch (error) {
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
+
+      throw new CustomError(cannotCreateVouchers);
     }
   }
 }
