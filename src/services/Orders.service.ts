@@ -195,7 +195,7 @@ export default class OrdersService {
           } = pack;
 
           if (limited) {
-            const packToUpdate = await PacksModel.findOne({ where: { packId } });
+            const packToUpdate = await PacksModel.findOne({ where: { packId }, transaction: t });
 
             if (packToUpdate) {
               const { counter } = packToUpdate;
@@ -378,8 +378,7 @@ export default class OrdersService {
             const isTypeInAcc = typeObjInAccIndex > -1;
             if (isTypeInAcc) {
               const newTypeObj = accByType[typeObjInAccIndex];
-              console.log(`---               -                    -              newTypeObj:
-                      `, newTypeObj);
+
               const newVoucher = {
                 ...restOfVoucherInfo,
                 productVoucherInfo: {

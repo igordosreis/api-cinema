@@ -11,7 +11,7 @@ import {
 } from '../interfaces/IOrder';
 import { IProductFromGetById, IProductWithRequestedVouchers } from '../interfaces/IProducts';
 import CartService from '../services/Cart.service';
-import CustomError, { amountUnauthorized, badCartObject, openOrder, vouchersNotEnough, vouchersUnavailable } from './customError.util';
+import CustomError, { amountUnauthorized, badCartObject, cartIsEmpty, openOrder, vouchersNotEnough, vouchersUnavailable } from './customError.util';
 import planUtil from './plan.util';
 import OrdersModel from '../database/models/Orders.model';
 import { STATUS_WAITING } from '../constants';
@@ -87,13 +87,9 @@ class Orders {
         const { price, amountRequested } = currItem;
         const subTotal = price * (amountRequested || 1);
         const totalPrice = accPrice.totalPrice + subTotal;
-        console.log('---                     -                   -           price, amountRequested:           ', price, amountRequested);
-        console.log('---                     -                   -           subTotal:           ', subTotal);
-        console.log('---                     -                   -           totalPrice:           ', totalPrice);
-
+ 
         return { totalPrice: Number(totalPrice.toFixed(2)) };
       }
-      console.log('---                     -                   -           accPrice:           ', priceTotal);
 
       return accPrice;
     }, { totalPrice: 0 } as Pick<PriceUnitAndTypeTotals, 'totalPrice'>);
@@ -106,6 +102,13 @@ class Orders {
 
   getCartFormatted = async (userId: number): Promise<IOrderRequestInfo[]> => {
     const currentCart = await CartService.getCart({ userId });
+
+    const isCartEmpty = currentCart.length === 0;
+    console.log(`---                       currentCart:            
+    `, currentCart);
+    console.log(`---                       isCartEmpty:            
+    `, isCartEmpty);
+    if (isCartEmpty) throw new CustomError(cartIsEmpty);
 
     const formattedCart = currentCart.map(({ productId, packId, quantity, establishmentId }) => {
       if (productId) {

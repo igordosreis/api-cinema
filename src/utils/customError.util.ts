@@ -158,10 +158,16 @@ export const cartRemoveAllError: ICustomError = {
     'Não foi possível remover os produtos do carrinho no momento. Tente novamente mais tarde.',
 };
 
+export const cartIsEmpty: ICustomError = {
+  status: 400,
+  title: 'Carrinho vazio.',
+  message: 'O carrinho está vazio. Adicione um produto para poder fazer um pedido.',
+};
+
 export const badCartObject: ICustomError = {
   status: 400,
   title: OPERATION_UNAVAILABLE,
-  message: 'O carrinho precisa contar ou um produto ou um pacote.',
+  message: 'O carrinho precisa conter ou um produto ou um pacote.',
 };
 
 export const cancelError: ICustomError = {
