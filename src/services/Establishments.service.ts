@@ -85,10 +85,10 @@ export default class EstablishmentsService {
       ) as IAddress[];
 
       const parsedAddresses = addresses.map((address) => {
-        const { image, cover } = address;
+        const { logo, cover } = address;
         const addressWithImages = {
           ...address,
-          image: ImageFormatter.formatUrl({ imageName: image, folderPath: '/establishments/logo' }),
+          logo: ImageFormatter.formatUrl({ imageName: logo, folderPath: '/establishments/logo' }),
           cover: ImageFormatter.formatUrl({
             imageName: cover,
             folderPath: '/establishments/cover',

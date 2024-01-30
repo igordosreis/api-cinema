@@ -62,7 +62,7 @@ export interface IAddress {
   latitude: string;
   longitude: string;
   brand: string;
-  image: string;
+  logo: string;
   cover: string;
   title: string;
   address: string;
