@@ -26,10 +26,11 @@ import {
   IParsedOrderWithProducts,
   IOrderUpdate,
   IOrderAll,
-  // IOrderParsed,
-  VoucherInfo,
-  IProductTypes,
+  // VoucherInfo,
+  // IProductTypes,
   ICurrVoucher,
+  IVouchersByType,
+  IVoucherInfo,
 } from '../interfaces/IOrder';
 import { CONSOLE_LOG_ERROR_TITLE, STATUS_CANCELLED, STATUS_WAITING } from '../constants';
 import VouchersService from './Vouchers.service';
@@ -40,6 +41,7 @@ import CartModel from '../database/models/Cart.model';
 import EstablishmentsModel from '../database/models/Establishments.model';
 import EstablishmentsImagesModel from '../database/models/EstablishmentsImages.model';
 import ProductsTypesModel from '../database/models/ProductsTypes.model';
+import ImageFormatter from '../utils/formatImages.util';
 
 export default class OrdersService {
   private static async createPacksOrder(
@@ -364,30 +366,88 @@ export default class OrdersService {
         delete restOfOrderInfo.include;
         delete restOfOrderInfo.parent;
         
-        const vouchersInfo = vouchersOrderPaid.reduce(
-          (accType: VoucherInfo<IProductTypes>, currVoucher: ICurrVoucher) => {
-            const {
+        const vouchersByType = vouchersOrderPaid
+          .reduce((accByType: IVouchersByType[], currVoucher: ICurrVoucher) => {
+            const { productVoucherInfo, ...restOfVoucherInfo } = currVoucher;
+            const { typeInfo, ...restOfProductInfo } = productVoucherInfo;
+            const { name, icon } = typeInfo;
+
+            const typeObjInAccIndex = accByType
+              .findIndex(({ typeInfo: { name: typeName } }) => typeName === name);
+
+            const isTypeInAcc = typeObjInAccIndex > -1;
+            if (isTypeInAcc) {
+              const newTypeObj = accByType[typeObjInAccIndex];
+              console.log(`---               -                    -              newTypeObj:
+                      `, newTypeObj);
+              const newVoucher = {
+                ...restOfVoucherInfo,
+                productVoucherInfo: {
+                  ...restOfProductInfo,
+                },
+              } as IVoucherInfo;
+              newTypeObj.vouchersInfo.push(newVoucher);
+
+              const newAccByType = [...accByType];
+              newAccByType[typeObjInAccIndex] = {
+                ...newTypeObj,
+              };
+
+              return newAccByType;
+            }
+
+            const newVoucher = {
+              ...restOfVoucherInfo,
               productVoucherInfo: {
-                typeInfo: { name },
+                ...restOfProductInfo,
               },
-            } = currVoucher;
-
-            const typedName = name as IProductTypes;
-
-            const newAccType = {
-              ...accType,
-              [typedName]: accType[typedName]
-                ? [...accType[typedName], currVoucher]
-                : [currVoucher],
             };
 
-            return newAccType;
-          },
-          {} as VoucherInfo<IProductTypes>,
-        );
+            const newTypeObj = {
+              vouchersInfo: [newVoucher],
+              typeInfo: {
+                ...typeInfo,
+                icon: ImageFormatter.formatUrl({ imageName: icon, folderPath: '/product-types' }),
+              },
+            };
+
+            const newAccByType = [...accByType, newTypeObj];
+
+            return newAccByType;
+          }, [] as IVouchersByType[]);
     
-        return { ...restOfOrderInfo, vouchersInfo };
+        return { ...restOfOrderInfo, vouchersByType };
       });
+      // const allUserOrdersParsed = allUserOrders.map((currOrder) => {
+      //   const { vouchersOrderPaid, ...restOfOrderInfo } = currOrder.toJSON();
+      //   // Remove Sequelize-specific properties
+      //   delete restOfOrderInfo.include;
+      //   delete restOfOrderInfo.parent;
+        
+      //   const vouchersInfo = vouchersOrderPaid.reduce(
+      //     (accType: VoucherInfo<IProductTypes>, currVoucher: ICurrVoucher) => {
+      //       const {
+      //         productVoucherInfo: {
+      //           typeInfo: { name },
+      //         },
+      //       } = currVoucher;
+
+      //       const typedName = name as IProductTypes;
+
+      //       const newAccType = {
+      //         ...accType,
+      //         [typedName]: accType[typedName]
+      //           ? [...accType[typedName], currVoucher]
+      //           : [currVoucher],
+      //       };
+
+      //       return newAccType;
+      //     },
+      //     {} as VoucherInfo<IProductTypes>,
+      //   );
+    
+      //   return { ...restOfOrderInfo, vouchersInfo };
+      // });
 
       const areOrdersNotFound = !allUserOrders;
       if (areOrdersNotFound) throw new CustomError(ordersNotFound);

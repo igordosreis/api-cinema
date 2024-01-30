@@ -197,47 +197,45 @@ export type IOrderAll = OrdersModel & {
   }>
 };
 
-// export type IOrderAllParsed = OrdersModel[] & {
-//   establishmentInfo: EstablishmentsModel & {
-//     images: EstablishmentsImagesModel;
-//   }
-//   productsInfo: {
-//     tickets?: VouchersUserModel & {
-//       productVoucherInfo: EstablishmentsProductsModel & {
-//         typeInfo: ProductsTypesModel;
-//       },
-//     },
-//     consumables?: VouchersUserModel & {
-//       productVoucherInfo: EstablishmentsProductsModel & {
-//         typeInfo: ProductsTypesModel;
-//       },
-//     },
-//   },
-// };
-
-export type IProductTypes = 'tickets' | 'consumables';
-
-export type IOrderParsed = IOrderAllParsedGeneric<IProductTypes>;
-
-export type VoucherInfo<T extends string> = {
-  [key in T]: Array<VouchersUserModel & {
-    productVoucherInfo: EstablishmentsProductsModel & {
-      typeInfo: ProductsTypesModel;
-    },
-  }>;
-};
-
-type IOrderAllParsedGeneric<T extends IProductTypes> = OrdersModel & {
+export type IOrderParsed = OrdersModel & {
   establishmentInfo: EstablishmentsModel & {
     images: EstablishmentsImagesModel;
-  };
-  vouchersInfo: {
-    [key in T]: VoucherInfo<key>;
-  };
+  }
+  vouchersByType: Array<IVouchersByType>,
 };
+
+export type IVouchersByType = {
+  vouchersInfo: Array<IVoucherInfo>,
+  typeInfo: ProductsTypesModel;
+};
+
+export type IVoucherInfo = VouchersUserModel & {
+  productVoucherInfo: EstablishmentsProductsModel,
+};
+
+// export type IProductTypes = 'tickets' | 'consumables';
+
+// export type IOrderParsed = IOrderAllParsedGeneric<IProductTypes>;
+
+// export type VoucherInfo<T extends string> = {
+//   [key in T]: Array<VouchersUserModel & {
+//     productVoucherInfo: EstablishmentsProductsModel & {
+//       typeInfo: ProductsTypesModel;
+//     },
+//   }>;
+// };
+
+// type IOrderAllParsedGeneric<T extends IProductTypes> = OrdersModel & {
+//   establishmentInfo: EstablishmentsModel & {
+//     images: EstablishmentsImagesModel;
+//   };
+//   vouchersInfo: {
+//     [key in T]: VoucherInfo<key>;
+//   };
+// };
 
 export type ICurrVoucher = VouchersUserModel & {
   productVoucherInfo: EstablishmentsProductsModel & {
-    typeInfo: ProductsTypesModel,
-  },
+    typeInfo: ProductsTypesModel;
+  };
 };
