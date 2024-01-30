@@ -9,6 +9,12 @@ import { IPackSummary } from './IPacks';
 import { IProductWithRequestedVouchers } from './IProducts';
 import OrdersPacksModel from '../database/models/OrdersPacks.model';
 import PacksModel from '../database/models/Packs.model';
+import EstablishmentsModel from '../database/models/Establishments.model';
+import EstablishmentsImagesModel from '../database/models/EstablishmentsImages.model';
+import ProductsTypesModel from '../database/models/ProductsTypes.model';
+
+// type TypesStrings = 'ticket' | 'consumable';
+// export type ProductsTypesStrings = Record<TypesStrings, string>;
 
 export type TypeId = number;
 type Totals = 'totalPrice' | 'totalUnits' | TypeId;
@@ -178,4 +184,60 @@ export type IOrderDetailsById = OrdersModel & {
   packDetails: Array<OrdersPacksModel & {
     packOrder: PacksModel;
   }>
+};
+
+export type IOrderAll = OrdersModel & {
+  establishmentInfo: EstablishmentsModel & {
+    images: EstablishmentsImagesModel;
+  }
+  vouchersOrderPaid: Array<VouchersUserModel & {
+    productVoucherInfo: EstablishmentsProductsModel & {
+      typeInfo: ProductsTypesModel;
+    };
+  }>
+};
+
+// export type IOrderAllParsed = OrdersModel[] & {
+//   establishmentInfo: EstablishmentsModel & {
+//     images: EstablishmentsImagesModel;
+//   }
+//   productsInfo: {
+//     tickets?: VouchersUserModel & {
+//       productVoucherInfo: EstablishmentsProductsModel & {
+//         typeInfo: ProductsTypesModel;
+//       },
+//     },
+//     consumables?: VouchersUserModel & {
+//       productVoucherInfo: EstablishmentsProductsModel & {
+//         typeInfo: ProductsTypesModel;
+//       },
+//     },
+//   },
+// };
+
+export type IProductTypes = 'tickets' | 'consumables';
+
+export type IOrderParsed = IOrderAllParsedGeneric<IProductTypes>;
+
+export type VoucherInfo<T extends string> = {
+  [key in T]: Array<VouchersUserModel & {
+    productVoucherInfo: EstablishmentsProductsModel & {
+      typeInfo: ProductsTypesModel;
+    },
+  }>;
+};
+
+type IOrderAllParsedGeneric<T extends IProductTypes> = OrdersModel & {
+  establishmentInfo: EstablishmentsModel & {
+    images: EstablishmentsImagesModel;
+  };
+  vouchersInfo: {
+    [key in T]: VoucherInfo<key>;
+  };
+};
+
+export type ICurrVoucher = VouchersUserModel & {
+  productVoucherInfo: EstablishmentsProductsModel & {
+    typeInfo: ProductsTypesModel,
+  },
 };

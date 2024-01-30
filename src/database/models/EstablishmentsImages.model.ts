@@ -62,7 +62,7 @@ EstablishmentsImagesModel.belongsTo(EstablishmentsModel, {
   foreignKey: 'establishmentId',
   as: 'images',
 });
-EstablishmentsModel.hasMany(EstablishmentsImagesModel, {
+EstablishmentsModel.hasOne(EstablishmentsImagesModel, {
   foreignKey: 'establishmentId',
   as: 'images',
 });

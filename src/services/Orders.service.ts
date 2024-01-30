@@ -25,6 +25,11 @@ import {
   IOrderRequestBody,
   IParsedOrderWithProducts,
   IOrderUpdate,
+  IOrderAll,
+  // IOrderParsed,
+  VoucherInfo,
+  IProductTypes,
+  ICurrVoucher,
 } from '../interfaces/IOrder';
 import { CONSOLE_LOG_ERROR_TITLE, STATUS_CANCELLED, STATUS_WAITING } from '../constants';
 import VouchersService from './Vouchers.service';
@@ -34,6 +39,7 @@ import PacksModel from '../database/models/Packs.model';
 import CartModel from '../database/models/Cart.model';
 import EstablishmentsModel from '../database/models/Establishments.model';
 import EstablishmentsImagesModel from '../database/models/EstablishmentsImages.model';
+import ProductsTypesModel from '../database/models/ProductsTypes.model';
 
 export default class OrdersService {
   private static async createPacksOrder(
@@ -302,8 +308,21 @@ export default class OrdersService {
                     'updatedAt',
                     'expireAt',
                     'soldOutAmount',
+                    'type',
                   ],
                 },
+                include: [
+                  {
+                    model: ProductsTypesModel,
+                    as: 'typeInfo',
+                    attributes: {
+                      exclude: [
+                        'createdAt',
+                        'updatedAt',
+                      ],
+                    },
+                  },
+                ],
               },
             ],
           },
@@ -337,12 +356,43 @@ export default class OrdersService {
         where: { userId },
         limit,
         offset: page * limit,
+      }) as IOrderAll[];
+
+      const allUserOrdersParsed = allUserOrders.map((currOrder) => {
+        const { vouchersOrderPaid, ...restOfOrderInfo } = currOrder.toJSON();
+        // Remove Sequelize-specific properties
+        delete restOfOrderInfo.include;
+        delete restOfOrderInfo.parent;
+        
+        const vouchersInfo = vouchersOrderPaid.reduce(
+          (accType: VoucherInfo<IProductTypes>, currVoucher: ICurrVoucher) => {
+            const {
+              productVoucherInfo: {
+                typeInfo: { name },
+              },
+            } = currVoucher;
+
+            const typedName = name as IProductTypes;
+
+            const newAccType = {
+              ...accType,
+              [typedName]: accType[typedName]
+                ? [...accType[typedName], currVoucher]
+                : [currVoucher],
+            };
+
+            return newAccType;
+          },
+          {} as VoucherInfo<IProductTypes>,
+        );
+    
+        return { ...restOfOrderInfo, vouchersInfo };
       });
 
       const areOrdersNotFound = !allUserOrders;
       if (areOrdersNotFound) throw new CustomError(ordersNotFound);
 
-      return allUserOrders;
+      return allUserOrdersParsed;
     } catch (error: CustomError | unknown) {
       console.log(CONSOLE_LOG_ERROR_TITLE, error);
       if (error instanceof CustomError) throw error;
