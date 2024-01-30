@@ -5,6 +5,6 @@ const tagsRouter = Router();
 
 tagsRouter.get('/all', TagsController.getAllTags);
 tagsRouter.get('/type/:id', TagsController.getTagsByType);
-tagsRouter.post('/create', TagsController.createNewTags);
+tagsRouter.post('/create', TagsController.createTags);
 
 export default tagsRouter;
