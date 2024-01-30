@@ -1,5 +1,6 @@
 import TagsModel from '../database/models/Tags.model';
 import TagsTypesModel from '../database/models/TagsTypes.model';
+import { ITagsNew } from '../interfaces/ITags';
 
 export default class TagsService {
   public static async getAllTags() {
@@ -20,5 +21,9 @@ export default class TagsService {
     });
 
     return tagsByType;
+  }
+
+  public static async createTags(tagsArray: ITagsNew) {
+    console.log(tagsArray);
   }
 }

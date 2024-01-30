@@ -15,4 +15,8 @@ export default class TagsController {
 
     res.status(200).json(tagsByType);
   }
+
+  public static async createNewTags(req: Request, res: Response): Promise<void> {
+    console.log(req, res);
+  }
 }
