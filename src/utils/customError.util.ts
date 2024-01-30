@@ -66,6 +66,18 @@ export const voucherServiceUnavailable: ICustomError = {
   message: 'O serviço de vouchers não está disponível no momento. Tente novamente mais tarde.',
 };
 
+export const vouchersObjectNotFound: ICustomError = {
+  status: 404,
+  title: 'Vouchers não econtrados.',
+  message: 'Os vouchers devem ser enviados por um array de strings no body ou por um arquivo de Excel.',
+};
+
+export const cannotCreateVouchers: ICustomError = {
+  status: 500,
+  title: OPERATION_UNAVAILABLE,
+  message: 'Não foi possível adicionar os vouchers agora. Tente novamente mais tarde.',
+};
+
 export const orderServiceUnavailable: ICustomError = {
   status: 503,
   title: OPERATION_UNAVAILABLE,
