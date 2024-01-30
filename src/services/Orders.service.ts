@@ -361,7 +361,7 @@ export default class OrdersService {
       }) as IOrderAll[];
 
       const allUserOrdersParsed = allUserOrders.map((currOrder) => {
-        const { vouchersOrderPaid, ...restOfOrderInfo } = currOrder.toJSON();
+        const { vouchersOrderPaid, establishmentInfo, ...restOfOrderInfo } = currOrder.toJSON();
         // Remove Sequelize-specific properties
         delete restOfOrderInfo.include;
         delete restOfOrderInfo.parent;
@@ -414,8 +414,26 @@ export default class OrdersService {
 
             return newAccByType;
           }, [] as IVouchersByType[]);
+
+        const { images: { logo, cover } } = establishmentInfo;
     
-        return { ...restOfOrderInfo, vouchersByType };
+        return {
+          ...restOfOrderInfo,
+          vouchersByType,
+          establishmentInfo: {
+            ...establishmentInfo,
+            images: {
+              logo: ImageFormatter.formatUrl({
+                imageName: logo,
+                folderPath: '/establishments/logo',
+              }),
+              cover: ImageFormatter.formatUrl({
+                imageName: cover,
+                folderPath: '/establishments/cover',
+              }),
+            },
+          },
+        };
       });
       // const allUserOrdersParsed = allUserOrders.map((currOrder) => {
       //   const { vouchersOrderPaid, ...restOfOrderInfo } = currOrder.toJSON();
