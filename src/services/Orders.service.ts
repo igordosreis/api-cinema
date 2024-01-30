@@ -179,6 +179,11 @@ export default class OrdersService {
         { status: status || STATUS_CANCELLED },
         { where: { id: orderId, userId }, transaction: t },
       );
+      
+      await CartModel.update(
+        { waiting: false },
+        { where: { userId, waiting: true }, transaction: t },
+      );
 
       const isPackInOrder = packDetails.length > 0;
       if (isPackInOrder) {
@@ -207,11 +212,6 @@ export default class OrdersService {
         });
 
         await Promise.all(packsToUpdatePromise);
-
-        await CartModel.update(
-          { waiting: false },
-          { where: { userId, waiting: true }, transaction: t },
-        );
       }
 
       await t.commit();
