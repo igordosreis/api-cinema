@@ -11,6 +11,7 @@ import vouchersRouter from './vouchers.routes';
 import searchRouter from './search.routes';
 import cartRouter from './cart.routes';
 import tagsRouter from './tags.routes';
+import dashboardRouter from './dashboard.routes';
 
 const router = Router();
 
@@ -26,5 +27,6 @@ router.use('/vouchers', vouchersRouter);
 router.use('/search', searchRouter);
 router.use('/cart', cartRouter);
 router.use('/tags', tagsRouter);
+router.use('/dashboard', dashboardRouter);
 
 export default router;
