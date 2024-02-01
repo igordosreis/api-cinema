@@ -43,9 +43,6 @@ export default class TagsService {
   public static async createTags(tagsArray: ITagsNewFormatted, typeId: number) {
     const t = await db.transaction();
     try {
-      // const tst = await TagsModel.bulkCreate(tagsArray);
-      // console.log(`---          -              tst:       --------------
-      //               `);
       const newTagsPromise = tagsArray.map(async ({ name }) => {
         const [tag, created] = await TagsModel.findOrCreate({
           where: {
