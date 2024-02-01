@@ -14,6 +14,7 @@ import { CONSOLE_LOG_ERROR_TITLE } from '../constants';
 import TagsProductsModel from '../database/models/TagsProducts.model';
 import ImageFormatter from '../utils/formatImages.util';
 import Dashboard from '../utils/dashboard.util';
+import db from '../database/models';
 
 export default class ProductsService {
   public static async getProductsByQuery(formattedSearchQuery: IProductQuery) {
@@ -108,13 +109,14 @@ export default class ProductsService {
 
   public static async createProduct(newProductInfo: IProductCreateInfo) {
     try {
+      const t = await db.transaction();
       const { tags, type, ...restOfInfo } = newProductInfo;
       
-      const { productId } = await EstablishmentsProductsModel.create({ ...restOfInfo, type });
+      const { productId } = await EstablishmentsProductsModel.create({ ...restOfInfo, type }, { transaction: t });
 
       const formattedTagsArray = Dashboard.formatTagsArrayWithIds({ tags, productId });
 
-      await TagsProductsModel.bulkCreate(formattedTagsArray);
+      await TagsProductsModel.bulkCreate(formattedTagsArray, { transaction: t });
 
       return productId;
     } catch (error) {
