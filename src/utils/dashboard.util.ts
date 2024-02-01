@@ -52,4 +52,12 @@ export default class Dashboard {
 
     return formattedArray;
   }
+
+  public static formatTagsArrayWithName(tags: string[]) {
+    const formattedArray = tags.map((tag) => ({
+      name: tag,
+    }));
+
+    return formattedArray;
+  }
 }

@@ -217,3 +217,15 @@ export const packNotFound: ICustomError = {
   title: 'Pacote não encontrado.',
   message: 'O pacote procurado não foi encontrado.',
 };
+
+export const createTagError: ICustomError = {
+  status: 503,
+  title: 'Erro ao criar tags.',
+  message: 'Não foi possível criar as tags agora. Tente novamente mais tarde.',
+};
+
+export const getTagsError: ICustomError = {
+  status: 503,
+  title: 'Erro ao buscar tags.',
+  message: 'Não foi possível buscar as tags agora. Tente novamente mais tarde.',
+};
