@@ -3,7 +3,7 @@ import { VouchersService } from '../services';
 import { IUserInfoInBody } from '../interfaces/IUser';
 import { IPaginationRequest } from '../interfaces/IPagination';
 import formatRequestQueryUtil from '../utils/formatRequestQuery.util';
-import Voucher from '../utils/voucher.util';
+import Dashboard from '../utils/dashboard.util';
 import { IVoucherNewParamsRaw } from '../interfaces/IVouchers';
 
 export default class VouchersController {
@@ -22,11 +22,14 @@ export default class VouchersController {
   }
 
   public static async createVouchers(req: Request, res: Response): Promise<void> {
-    const vouchers = Voucher.getVouchersArray(req);
+    const vouchers = Dashboard.getVoucherCodesFromReq(req);
     const vouchersParams = <IVoucherNewParamsRaw>req.query;
 
     const vouchersParamsFormatted = formatRequestQueryUtil.formartNewVouchersParams(vouchersParams);
-    const voucherCodeArray = Voucher.createArray({ ...vouchersParamsFormatted, vouchers });
+    const voucherCodeArray = Dashboard.formatVoucherCodesArray({
+      ...vouchersParamsFormatted,
+      vouchers,
+    });
 
     await VouchersService.createVouchers(voucherCodeArray);
 

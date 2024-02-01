@@ -8,8 +8,8 @@ import {
 import Excel from './excel.util';
 import CustomError, { vouchersObjectNotFound } from './customError.util';
 
-export default class Voucher {
-  public static getVouchersArray(req: Request): IVouchersNew {
+export default class Dashboard {
+  public static getVoucherCodesFromReq(req: Request): IVouchersNew {
     if (req.file?.buffer) {
       const { buffer } = req.file;
 
@@ -30,7 +30,7 @@ export default class Voucher {
     throw new CustomError(vouchersObjectNotFound);
   }
 
-  public static createArray({
+  public static formatVoucherCodesArray({
     vouchers,
     date,
     productId,
@@ -38,6 +38,15 @@ export default class Voucher {
     const formattedArray = vouchers.map((voucherCode) => ({
       voucherCode,
       expireAt: date,
+      productId,
+    }));
+
+    return formattedArray;
+  }
+
+  public static formatTagsArrayWithIds({ tags, productId }: { tags: number[]; productId: number }) {
+    const formattedArray = tags.map((tag) => ({
+      tagId: tag,
       productId,
     }));
 

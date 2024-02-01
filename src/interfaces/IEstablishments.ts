@@ -1,4 +1,6 @@
 import { z } from 'zod';
+import EstablishmentsModel from '../database/models/Establishments.model';
+import EstablishmentsImagesModel from '../database/models/EstablishmentsImages.model';
 
 // export interface IEstablishmentAddressRawQuery {
 //   limit: number | string;
@@ -23,6 +25,10 @@ import { z } from 'zod';
 //   establishmentId: number | undefined;
 //   term: string | undefined;
 // }
+
+export type IEstablishment = EstablishmentsModel & {
+  images: EstablishmentsImagesModel,
+};
 
 export const IEstablishmentAddressQueryRawSchema = z.object({
   limit: z.string().optional(),

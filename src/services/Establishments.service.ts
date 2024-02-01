@@ -5,20 +5,39 @@ import CitiesModel from '../database/models/Cities.model';
 import EstablishmentsModel from '../database/models/Establishments.model';
 import StatesModel from '../database/models/States.model';
 import createGeoSearchSqlQuery from '../utils/createGeoSearchSqlQuery.util';
-import { IAddress, IEstablishmentAddressQuery } from '../interfaces/IEstablishments';
+import {
+  IAddress,
+  IEstablishment,
+  IEstablishmentAddressQuery,
+} from '../interfaces/IEstablishments';
 import EstablishmentsImagesModel from '../database/models/EstablishmentsImages.model';
 import CustomError, { establishmentServiceUnavailable } from '../utils/customError.util';
 import { CONSOLE_LOG_ERROR_TITLE } from '../constants';
 import ImageFormatter from '../utils/formatImages.util';
 
 export default class EstablishmentsService {
-  public static async getAllEstablishments(): Promise<EstablishmentsModel[]> {
+  public static async getAllEstablishments() {
     try {
-      const allEstablishments = await EstablishmentsModel.findAll({
+      const allEstablishments = (await EstablishmentsModel.findAll({
         include: [{ model: EstablishmentsImagesModel, as: 'images' }],
-      });
+      })) as IEstablishment[];
 
-      return allEstablishments;
+      const establishmentsWithImageLinks = allEstablishments.map((establishment) => ({
+        ...establishment.dataValues,
+        images: {
+          ...establishment.images.dataValues,
+          logo: ImageFormatter.formatUrl({
+            imageName: establishment.images.logo,
+            folderPath: '/establishments/logo',
+          }),
+          cover: ImageFormatter.formatUrl({
+            imageName: establishment.images.cover,
+            folderPath: '/establishments/cover',
+          }),
+        },
+      })) as IEstablishment[];
+
+      return establishmentsWithImageLinks;
     } catch (error: CustomError | unknown) {
       if (error instanceof CustomError) throw error;
 
@@ -67,7 +86,7 @@ export default class EstablishmentsService {
     unique,
   }: IEstablishmentAddressQuery) {
     try {
-      const addresses = await db.query(
+      const addresses = (await db.query(
         createGeoSearchSqlQuery({ term, cityId, stateId, establishmentId, addressId, unique }),
         {
           type: QueryTypes.SELECT,
@@ -82,7 +101,7 @@ export default class EstablishmentsService {
             establishmentId,
           },
         },
-      ) as IAddress[];
+      )) as IAddress[];
 
       const parsedAddresses = addresses.map((address) => {
         const { logo, cover } = address;

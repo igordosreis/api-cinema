@@ -13,6 +13,7 @@ import Pagination from '../utils/pagination.util';
 import { CONSOLE_LOG_ERROR_TITLE } from '../constants';
 import TagsProductsModel from '../database/models/TagsProducts.model';
 import ImageFormatter from '../utils/formatImages.util';
+import Dashboard from '../utils/dashboard.util';
 
 export default class ProductsService {
   public static async getProductsByQuery(formattedSearchQuery: IProductQuery) {
@@ -111,8 +112,9 @@ export default class ProductsService {
       
       const { productId } = await EstablishmentsProductsModel.create({ ...restOfInfo, type });
 
-      // If new tags, create in Tags
-      // Create in TagsProducts
+      const formattedTagsArray = Dashboard.formatTagsArrayWithIds({ tags, productId });
+
+      await TagsProductsModel.bulkCreate(formattedTagsArray);
 
       return productId;
     } catch (error) {
