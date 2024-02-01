@@ -108,18 +108,21 @@ export default class ProductsService {
   }
 
   public static async createProduct(newProductInfo: IProductCreateInfo) {
+    const t = await db.transaction();
     try {
-      const t = await db.transaction();
       const { tags, type, ...restOfInfo } = newProductInfo;
       
       const { productId } = await EstablishmentsProductsModel.create({ ...restOfInfo, type }, { transaction: t });
 
       const formattedTagsArray = Dashboard.formatTagsArrayWithIds({ tags, productId });
-
       await TagsProductsModel.bulkCreate(formattedTagsArray, { transaction: t });
+
+      await t.commit();
 
       return productId;
     } catch (error) {
+      await t.rollback();
+      
       console.log(CONSOLE_LOG_ERROR_TITLE, error);
 
       throw new CustomError(createProductError);
