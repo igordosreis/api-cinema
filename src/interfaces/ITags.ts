@@ -6,6 +6,7 @@ export type ITagsNew = z.infer<typeof ITagsNewSchema>;
 
 export type ITagsNewInBody = {
   tags: ITagsNew;
+  typeId: number;
 };
 
 export type ITagsNewFormatted = Array<{

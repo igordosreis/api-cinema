@@ -8,11 +8,11 @@ export default class DashboardController {
     ProductsController.createProduct(req, res);
   }
 
-  public static async createVouchers(req: Request, res: Response): Promise<void> {
+  public static async createVoucher(req: Request, res: Response): Promise<void> {
     VouchersController.createVouchers(req, res);
   }
 
-  public static async createTags(req: Request, res: Response): Promise<void> {
+  public static async createTag(req: Request, res: Response): Promise<void> {
     TagsController.createTags(req, res);
   }
 }

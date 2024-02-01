@@ -19,11 +19,11 @@ export default class TagsController {
   }
 
   public static async createTags(req: Request, res: Response): Promise<void> {
-    const { tags } = <ITagsNewInBody>req.body;
+    const { tags, typeId } = <ITagsNewInBody>req.body;
     ITagsNewSchema.parse(tags);
 
     const formattedTags = Dashboard.formatTagsArrayWithName(tags);
-    await TagsService.createTags(formattedTags);
+    await TagsService.createTags(formattedTags, typeId);
 
     res.status(200).end();
   }
