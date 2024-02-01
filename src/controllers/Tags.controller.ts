@@ -1,5 +1,7 @@
 import { Request, Response } from 'express';
 import { TagsService } from '../services';
+import { ITagsNewInBody, ITagsNewSchema } from '../interfaces/ITags';
+import Dashboard from '../utils/dashboard.util';
 
 export default class TagsController {
   public static async getAllTags(_req: Request, res: Response): Promise<void> {
@@ -17,6 +19,12 @@ export default class TagsController {
   }
 
   public static async createTags(req: Request, res: Response): Promise<void> {
-    console.log(req, res);
+    const { tags } = <ITagsNewInBody>req.body;
+    ITagsNewSchema.parse(tags);
+
+    const formattedTags = Dashboard.formatTagsArrayWithName(tags);
+    await TagsService.createTags(formattedTags);
+
+    res.status(200).end();
   }
 }

@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import ProductsController from './Products.controller';
 import VouchersController from './Vouchers.controller';
+import TagsController from './Tags.controller';
 
 export default class DashboardController {
   public static async createProduct(req: Request, res: Response): Promise<void> {
@@ -9,5 +10,9 @@ export default class DashboardController {
 
   public static async createVouchers(req: Request, res: Response): Promise<void> {
     VouchersController.createVouchers(req, res);
+  }
+
+  public static async createTags(req: Request, res: Response): Promise<void> {
+    TagsController.createTags(req, res);
   }
 }
