@@ -42,9 +42,10 @@ class AuthRequests {
     try {
       const endpoint = SUPERAPP_URL_ADMIN_AUTH;
 
+      const formattedToken = this.formatCinemaToken(userToken);
       const { data: userInfo } = await axios.post<IAdminInfo>(
         endpoint,
-        { token: `${userToken}` },
+        { token: `${formattedToken}` },
         {
           headers: { authorization: `${BEARER_TOKEN}` },
         },

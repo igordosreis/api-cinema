@@ -3,6 +3,6 @@ import { DashboardController } from '../controllers';
 
 const dashboardRouter = Router();
 
-dashboardRouter.post('/create', DashboardController.createProduct);
+dashboardRouter.post('/product/create', DashboardController.createProduct);
 
 export default dashboardRouter;
