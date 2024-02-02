@@ -146,6 +146,22 @@ export default class EstablishmentsService {
   }) {
     try {
       const establishment = await EstablishmentsModel.findOne({
+        attributes: {
+          exclude: [
+            'link',
+            'linkDescription',
+            'telephone',
+            'telephoneTwo',
+            'whatsapp',
+            'instagram',
+            'site',
+            'active',
+            'underHighlight',
+            'views',
+            'createdAt',
+            'updatedAt',
+          ],
+        },
         include: [
           {
             model: EstablishmentsImagesModel,
