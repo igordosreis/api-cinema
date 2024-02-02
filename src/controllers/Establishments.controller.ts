@@ -44,4 +44,21 @@ export default class EstablishmentsController {
 
     res.status(200).json(allStates);
   }
+
+  public static async getEstablishmentById(req: Request, res: Response): Promise<void> {
+    const { id } = req.params;
+    const { userInfo } = <IUserInfoInBody>req.body;
+
+    const establishmentId = Number(id);
+    const latitude = userInfo.location?.latitude || '-19.919052';
+    const longitude = userInfo.location?.longitude || '-43.9386685';
+
+    const establishment = await EstablishmentsService.getEstablishmentById({
+      establishmentId,
+      latitude,
+      longitude,
+    });
+
+    res.status(200).json(establishment);
+  }
 }

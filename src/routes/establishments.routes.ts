@@ -7,5 +7,6 @@ establishmentsRouter.get('/brands', EstablishmentsController.getAllEstablishment
 establishmentsRouter.get('/search', EstablishmentsController.getEstablishmentsByAddress);
 establishmentsRouter.get('/cities', EstablishmentsController.getAllCities);
 establishmentsRouter.get('/states', EstablishmentsController.getAllStates);
+establishmentsRouter.get('/:id', EstablishmentsController.getEstablishmentById);
 
 export default establishmentsRouter;

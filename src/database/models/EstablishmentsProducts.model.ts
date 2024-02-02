@@ -111,7 +111,7 @@ EstablishmentsProductsModel.belongsTo(EstablishmentsModel, {
 });
 EstablishmentsModel.hasMany(EstablishmentsProductsModel, {
   foreignKey: 'establishmentId',
-  as: 'brand',
+  as: 'products',
 });
 
 EstablishmentsProductsModel.belongsTo(EstablishmentsImagesModel, {

@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import EstablishmentsModel from '../database/models/Establishments.model';
 import EstablishmentsImagesModel from '../database/models/EstablishmentsImages.model';
+import EstablishmentsProductsModel from '../database/models/EstablishmentsProducts.model';
 
 // export interface IEstablishmentAddressRawQuery {
 //   limit: number | string;
@@ -28,6 +29,25 @@ import EstablishmentsImagesModel from '../database/models/EstablishmentsImages.m
 
 export type IEstablishment = EstablishmentsModel & {
   images: EstablishmentsImagesModel,
+};
+
+export type IEstablishmentById = EstablishmentsModel & {
+  images: EstablishmentsImagesModel,
+  products: EstablishmentsProductsModel,
+  address: {
+    logo: string;
+    cover: string;
+    id: number;
+    establishmentId: number;
+    latitude: string;
+    longitude: string;
+    brand: string;
+    title: string;
+    address: string;
+    city: string;
+    state: string;
+    distance: number;
+  },
 };
 
 export const IEstablishmentAddressQueryRawSchema = z.object({
