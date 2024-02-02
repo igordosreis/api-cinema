@@ -191,21 +191,6 @@ export default class EstablishmentsService {
         longitude,
       });
 
-      // const establishmentsWithImageLinks = allEstablishments.map((establishment) => ({
-      //   ...establishment.dataValues,
-      //   images: {
-      //     ...establishment.images.dataValues,
-      //     logo: ImageFormatter.formatUrl({
-      //       imageName: establishment.images.logo,
-      //       folderPath: '/establishments/logo',
-      //     }),
-      //     cover: ImageFormatter.formatUrl({
-      //       imageName: establishment.images.cover,
-      //       folderPath: '/establishments/cover',
-      //     }),
-      //   },
-      // })) as IEstablishment[];
-
       const establishmentWithAddress = {
         ...establishment.dataValues,
         images: {
