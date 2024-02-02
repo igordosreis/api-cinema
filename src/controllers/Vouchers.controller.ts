@@ -21,7 +21,7 @@ export default class VouchersController {
     res.status(200).json(allUserVouchers);
   }
 
-  public static async createVouchers(req: Request, res: Response): Promise<void> {
+  public static async createVoucher(req: Request, res: Response): Promise<void> {
     const vouchers = Dashboard.getVoucherCodesFromReq(req);
     const vouchersParams = <IVoucherNewParamsRaw>req.query;
 
@@ -31,7 +31,7 @@ export default class VouchersController {
       vouchers,
     });
     IVouchersCodeArraySchema.parse(voucherCodeArray);
-    
+
     await VouchersService.createVouchers(voucherCodeArray);
 
     res.status(200).end();

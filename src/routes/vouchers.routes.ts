@@ -5,6 +5,6 @@ import VoucherExcelUploadMiddleware from '../middlewares/VoucherExcelUpload.midd
 const vouchersRouter = Router();
 
 vouchersRouter.get('/all', VouchersController.getAllVouchersUserByDate);
-vouchersRouter.post('/create', VoucherExcelUploadMiddleware, VouchersController.createVouchers);
+vouchersRouter.post('/create', VoucherExcelUploadMiddleware, VouchersController.createVoucher);
 
 export default vouchersRouter;

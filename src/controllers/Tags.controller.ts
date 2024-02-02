@@ -18,7 +18,7 @@ export default class TagsController {
     res.status(200).json(tagsByType);
   }
 
-  public static async createTags(req: Request, res: Response): Promise<void> {
+  public static async createTag(req: Request, res: Response): Promise<void> {
     const { tags, typeId } = <ITagsNewInBody>req.body;
     ITagsNewSchema.parse(tags);
 

@@ -9,10 +9,10 @@ export default class DashboardController {
   }
 
   public static async createVoucher(req: Request, res: Response): Promise<void> {
-    VouchersController.createVouchers(req, res);
+    VouchersController.createVoucher(req, res);
   }
 
   public static async createTag(req: Request, res: Response): Promise<void> {
-    TagsController.createTags(req, res);
+    TagsController.createTag(req, res);
   }
 }

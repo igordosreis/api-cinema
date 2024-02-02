@@ -7,11 +7,7 @@ export default class Excel {
     const worksheet = workbook.Sheets[sheetName];
 
     const data = xlsx.utils.sheet_to_json<T>(worksheet);
-    console.log(
-      `--------------------       ----------   data      ------------ 
-      `,
-      data,
-    );
+
     return data;
   }
 }
