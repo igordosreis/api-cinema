@@ -154,6 +154,7 @@ export default class EstablishmentsService {
             'telephoneTwo',
             'whatsapp',
             'instagram',
+            'keyWords',
             'site',
             'active',
             'underHighlight',
