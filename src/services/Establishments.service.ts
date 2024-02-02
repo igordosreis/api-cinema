@@ -156,6 +156,7 @@ export default class EstablishmentsService {
                 'createdAt',
                 'updatedAt',
                 'resizeColor',
+                'imageCarousel',
               ],
             },
           },
