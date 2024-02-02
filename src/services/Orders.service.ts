@@ -1,7 +1,7 @@
 /* eslint-disable complexity */
 /* eslint-disable sonarjs/cognitive-complexity */
 /* eslint-disable max-lines-per-function */
-import { Transaction } from 'sequelize';
+import { Transaction, Op } from 'sequelize';
 import db from '../database/models';
 import EstablishmentsProductsModel from '../database/models/EstablishmentsProducts.model';
 import VouchersAvailableModel from '../database/models/VouchersAvailable.model';
@@ -228,9 +228,13 @@ export default class OrdersService {
   public static async getAllOrders({
     userId,
     pagination: { page, limit },
+    firstDay,
+    lastDay,
   }: {
     userId: number;
     pagination: IPagination;
+    firstDay: string;
+    lastDay: string;
   }) {
     try {
       const allUserOrders = await OrdersModel.findAll({
@@ -355,7 +359,13 @@ export default class OrdersService {
             'establishmentId',
           ],
         },
-        where: { userId },
+        where: {
+          userId,
+          updatedAt: {
+            [Op.gte]: firstDay,
+            [Op.lte]: lastDay,
+          },
+        },
         limit,
         offset: page * limit,
       }) as IOrderAll[];

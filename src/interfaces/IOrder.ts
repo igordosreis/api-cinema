@@ -1,3 +1,4 @@
+import { z } from 'zod';
 import { Transaction } from 'sequelize';
 import { IUserInfo } from './IUser';
 import OrdersModel from '../database/models/Orders.model';
@@ -239,3 +240,12 @@ export type ICurrVoucher = VouchersUserModel & {
     typeInfo: ProductsTypesModel;
   };
 };
+
+export const IOrderAllRequestSchema = z.object({
+  page: z.string(),
+  limit: z.string(),
+  year: z.string(),
+  month: z.string(),
+});
+
+export type IOrderAllRequest = z.infer<typeof IOrderAllRequestSchema>;

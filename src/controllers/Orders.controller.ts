@@ -2,8 +2,12 @@ import { Request, Response } from 'express';
 import OrdersService from '../services/Orders.service';
 import { IUserInfoInBody } from '../interfaces/IUser';
 import formatRequestQueryUtil from '../utils/formatRequestQuery.util';
-import { IOrderRequestRawBody } from '../interfaces/IOrder';
-import { IPaginationRequest } from '../interfaces/IPagination';
+import {
+  IOrderAllRequest,
+  IOrderAllRequestSchema,
+  IOrderRequestRawBody, 
+} from '../interfaces/IOrder';
+import dateUtils from '../utils/date.utils';
 
 export default class OrdersController {
   public static async createOrder(req: Request, res: Response): Promise<void> {
@@ -32,10 +36,20 @@ export default class OrdersController {
         user: { id: userId },
       },
     } = <IUserInfoInBody>req.body;
-    const paginationRequest = <IPaginationRequest>req.query;
+    const { page, limit, year, month } = <IOrderAllRequest>req.query;
+    IOrderAllRequestSchema.parse({ page, limit, year, month });
 
+    const paginationRequest = { page, limit };
     const pagination = formatRequestQueryUtil.formatPagination(paginationRequest);
-    const allUserOrders = await OrdersService.getAllOrders({ userId, pagination });
+
+    const { firstDay, lastDay } = dateUtils.getFirstAndLastOfMonth({ year, month });
+
+    const allUserOrders = await OrdersService.getAllOrders({
+      userId,
+      pagination,
+      firstDay,
+      lastDay,
+    });
 
     res.status(200).json(allUserOrders);
   }

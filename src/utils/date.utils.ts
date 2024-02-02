@@ -25,6 +25,16 @@ class DateUtils {
 
   getLastDayOfMonth = (date: Date) => this.formatDateToISO(endOfMonth(date));
 
+  getFirstAndLastOfMonth = ({ year, month }: { year: string, month: string }) => {
+    const dateString = `${year}-${month}`;
+    const date = new Date(dateString);
+
+    const firstDay = this.getFirstDayOfMonth(date);
+    const lastDay = this.getLastDayOfMonth(date);
+
+    return { firstDay, lastDay };
+  };
+
   differenceInDays = (beforeDate: Date, afterDate: Date) =>
     differenceInCalendarDays(afterDate, beforeDate);
 
