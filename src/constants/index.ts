@@ -23,6 +23,11 @@ export const CONSOLE_LOG_ERROR_TITLE = `
 
 `;
 
+// FOLDER PATHS
+
+export const FOLDER_PATH_ESTABLISHMENT_LOGO = '/establishments/logo';
+export const FOLDER_PATH_ESTABLISHMENT_COVER = '/establishments/cover';
+
 // TMDB API
 
 // -- TMDB API_KEY

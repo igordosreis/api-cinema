@@ -13,7 +13,11 @@ import {
 } from '../interfaces/IEstablishments';
 import EstablishmentsImagesModel from '../database/models/EstablishmentsImages.model';
 import CustomError, { establishmentServiceUnavailable } from '../utils/customError.util';
-import { CONSOLE_LOG_ERROR_TITLE } from '../constants';
+import {
+  CONSOLE_LOG_ERROR_TITLE,
+  FOLDER_PATH_ESTABLISHMENT_COVER,
+  FOLDER_PATH_ESTABLISHMENT_LOGO,
+} from '../constants';
 import ImageFormatter from '../utils/formatImages.util';
 import EstablishmentsProductsModel from '../database/models/EstablishmentsProducts.model';
 
@@ -30,11 +34,11 @@ export default class EstablishmentsService {
           ...establishment.images.dataValues,
           logo: ImageFormatter.formatUrl({
             imageName: establishment.images.logo,
-            folderPath: '/establishments/logo',
+            folderPath: FOLDER_PATH_ESTABLISHMENT_COVER,
           }),
           cover: ImageFormatter.formatUrl({
             imageName: establishment.images.cover,
-            folderPath: '/establishments/cover',
+            folderPath: FOLDER_PATH_ESTABLISHMENT_LOGO,
           }),
         },
       })) as IEstablishment[];
@@ -109,10 +113,13 @@ export default class EstablishmentsService {
         const { logo, cover } = address;
         const addressWithImages = {
           ...address,
-          logo: ImageFormatter.formatUrl({ imageName: logo, folderPath: '/establishments/logo' }),
+          logo: ImageFormatter.formatUrl({ 
+            imageName: logo,
+            folderPath: FOLDER_PATH_ESTABLISHMENT_LOGO, 
+          }),
           cover: ImageFormatter.formatUrl({
             imageName: cover,
-            folderPath: '/establishments/cover',
+            folderPath: FOLDER_PATH_ESTABLISHMENT_COVER,
           }),
         };
 
@@ -143,10 +150,32 @@ export default class EstablishmentsService {
           {
             model: EstablishmentsImagesModel,
             as: 'images',
+            attributes: {
+              exclude: [
+                'establishmentId',
+                'createdAt',
+                'updatedAt',
+                'resizeColor',
+              ],
+            },
           },
           {
             model: EstablishmentsProductsModel,
             as: 'products',
+            attributes: {
+              exclude: [
+                'establishmentId',
+                'active',
+                'purchasable',
+                'image',
+                'price',
+                'type',
+                'soldOutAmount',
+                'createdAt',
+                'updatedAt',
+                'expireAt',
+              ],
+            },
           },
         ],
         where: { id: establishmentId },
@@ -178,6 +207,17 @@ export default class EstablishmentsService {
 
       const establishmentWithAddress = {
         ...establishment.dataValues,
+        images: {
+          ...establishment.images.dataValues,
+          logo: ImageFormatter.formatUrl({
+            imageName: establishment.images.logo,
+            folderPath: FOLDER_PATH_ESTABLISHMENT_LOGO,
+          }),
+          cover: ImageFormatter.formatUrl({
+            imageName: establishment.images.cover,
+            folderPath: FOLDER_PATH_ESTABLISHMENT_COVER,
+          }),
+        },
         address,
       };
 
