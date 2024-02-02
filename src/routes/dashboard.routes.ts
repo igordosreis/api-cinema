@@ -3,8 +3,8 @@ import { DashboardController } from '../controllers';
 
 const dashboardRouter = Router();
 
-dashboardRouter.post('/product/create', DashboardController.createProduct);
-dashboardRouter.post('/voucher/create', DashboardController.createVoucher);
-dashboardRouter.post('/tag/create', DashboardController.createTag);
+dashboardRouter.post('/create/product', DashboardController.createProduct);
+dashboardRouter.post('/create/voucher', DashboardController.createVoucher);
+dashboardRouter.post('/create/tag', DashboardController.createTag);
 
 export default dashboardRouter;

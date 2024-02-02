@@ -12,6 +12,7 @@ import searchRouter from './search.routes';
 import cartRouter from './cart.routes';
 import tagsRouter from './tags.routes';
 import dashboardRouter from './dashboard.routes';
+import VoucherExcelUploadMiddleware from '../middlewares/VoucherExcelUpload.middleware';
 
 const router = Router();
 
@@ -27,6 +28,6 @@ router.use('/vouchers', vouchersRouter);
 router.use('/search', searchRouter);
 router.use('/cart', cartRouter);
 router.use('/tags', tagsRouter);
-router.use('/dashboard', dashboardRouter);
+router.use('/dashboard', VoucherExcelUploadMiddleware, dashboardRouter);
 
 export default router;

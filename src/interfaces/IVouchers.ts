@@ -54,7 +54,13 @@ export type IVouchersByDate = OrdersModel & {
 //   }>
 // };
 
-export const IVouchersNewSchema = z.array(z.string());
+export const IVouchersNewSchema = z.object({
+  voucherCode: z.string(),
+});
+
+export const IVouchersNewArraySchema = z.array(z.object({
+  voucherCode: z.string(),
+}));
 
 export type IVouchersNew = z.infer<typeof IVouchersNewSchema>;
 
@@ -79,11 +85,12 @@ export type IVoucherNewParams = z.infer<typeof IVoucherNewParamsSchema>;
 export interface IVouchersCreateInfo {
   date: Date,
   productId: number,
-  vouchers: IVouchersNew,
+  vouchers: IVouchersNew[],
 }
+export const IVouchersCodeArraySchema = z.array(z.object({
+  expireAt: z.date(), 
+  productId: z.number(),
+  voucherCode: z.string(),
+}));
 
-export type IVouchersCodeArray = Array<{
-  expireAt: Date,
-  productId: number,
-  voucherCode: string,
-}>;
+export type IVouchersCodeArray = z.infer<typeof IVouchersCodeArraySchema>;
