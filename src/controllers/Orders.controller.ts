@@ -39,9 +39,7 @@ export default class OrdersController {
     const { page, limit, year, month } = <IOrderAllRequest>req.query;
     IOrderAllRequestSchema.parse({ page, limit, year, month });
 
-    const paginationRequest = { page, limit };
-    const pagination = formatRequestQueryUtil.formatPagination(paginationRequest);
-
+    const pagination = formatRequestQueryUtil.formatPagination({ page, limit });
     const { firstDay, lastDay } = dateUtils.getFirstAndLastOfMonth({ year, month });
 
     const allUserOrders = await OrdersService.getAllOrders({
