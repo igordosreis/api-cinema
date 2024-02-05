@@ -94,3 +94,10 @@ export const IVouchersCodeArraySchema = z.array(z.object({
 }));
 
 export type IVouchersCodeArray = z.infer<typeof IVouchersCodeArraySchema>;
+
+export const IVouchersGetDashboardSchema = z.object({
+  establishmentId: z.coerce.number().optional(),
+  productId: z.coerce.number().optional(),
+});
+ 
+export type IVouchersGetDashboard = z.infer<typeof IVouchersGetDashboardSchema>;

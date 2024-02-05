@@ -16,17 +16,24 @@ import {
 import { IProductFromGetById, IProductWithRequestedVouchers } from '../interfaces/IProducts';
 import CustomError, {
   cannotCreateVouchers,
+  cannotGetVouchers,
   productNotFound,
   voucherServiceUnavailable,
   vouchersNotFound,
 } from '../utils/customError.util';
 import ordersUtil from '../utils/orders.util';
 import PacksService from './Packs.service';
-import { IVoucherAvailable, IVouchersByDate, IVouchersCodeArray } from '../interfaces/IVouchers';
+import {
+  IVoucherAvailable, 
+  IVouchersByDate,
+  IVouchersCodeArray,
+  IVouchersGetDashboard,
+} from '../interfaces/IVouchers';
 import OrdersModel from '../database/models/Orders.model';
 import VouchersUserModel from '../database/models/VouchersUser.model';
 import { IPagination } from '../interfaces/IPagination';
 import { CONSOLE_LOG_ERROR_TITLE } from '../constants';
+import createVouchersGetSqlizeQueryUtil from '../utils/createVouchersGetSqlizeQuery.util';
 
 export default class VouchersService {
   public static async getVouchersByProductId(productId: number, transaction?: Transaction) {
@@ -346,6 +353,20 @@ export default class VouchersService {
       console.log(CONSOLE_LOG_ERROR_TITLE, error);
 
       throw new CustomError(cannotCreateVouchers);
+    }
+  }
+
+  public static async getVouchersDashboard(getParams: IVouchersGetDashboard) {
+    try {
+      const vouchers = await VouchersAvailableModel.findAll(
+        createVouchersGetSqlizeQueryUtil.create(getParams),
+      );
+
+      return vouchers;
+    } catch (error) {
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
+
+      throw new CustomError(cannotGetVouchers);
     }
   }
 }

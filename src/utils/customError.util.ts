@@ -78,6 +78,12 @@ export const cannotCreateVouchers: ICustomError = {
   message: 'Não foi possível adicionar os vouchers agora. Tente novamente mais tarde.',
 };
 
+export const cannotGetVouchers: ICustomError = {
+  status: 500,
+  title: OPERATION_UNAVAILABLE,
+  message: 'Não foi possível buscar os vouchers agora. Tente novamente mais tarde.',
+};
+
 export const orderServiceUnavailable: ICustomError = {
   status: 503,
   title: OPERATION_UNAVAILABLE,
