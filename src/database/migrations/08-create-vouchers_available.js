@@ -35,6 +35,15 @@ module.exports = {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
       },
+      establishment_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'establishment',
+          key: 'id', 
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+      },
       sold_price: {
         type: Sequelize.DECIMAL(10, 2),
         allowNull: true,

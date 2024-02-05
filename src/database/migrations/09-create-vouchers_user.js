@@ -36,6 +36,15 @@ module.exports = {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
       },
+      establishment_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'establishment',
+          key: 'id', 
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+      },
       active: {
         type: Sequelize.BOOLEAN,
         allowNull: false,

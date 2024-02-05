@@ -2,12 +2,14 @@ import { DataTypes, Model } from 'sequelize';
 import db from '.';
 import EstablishmentsProductsModel from './EstablishmentsProducts.model';
 import OrdersModel from './Orders.model';
+import EstablishmentsModel from './Establishments.model';
 
 class VouchersUserModel extends Model {
   declare id: number;
   declare voucherCode: string;
   declare productId: number;
   declare orderId: number;
+  declare establishmentId: number;
   declare active: boolean;
   declare expireAt: Date;
   declare createdAt: Date;
@@ -77,6 +79,15 @@ VouchersUserModel.belongsTo(EstablishmentsProductsModel, {
 EstablishmentsProductsModel.hasMany(VouchersUserModel, {
   foreignKey: 'productId',
   as: 'productVoucherInfo',
+});
+
+VouchersUserModel.belongsTo(EstablishmentsModel, {
+  foreignKey: 'establishmentId',
+  as: 'brand',
+});
+EstablishmentsModel.hasMany(VouchersUserModel, {
+  foreignKey: 'establishmentId',
+  as: 'vouchersUserInfo',
 });
 
 VouchersUserModel.belongsTo(OrdersModel, {
