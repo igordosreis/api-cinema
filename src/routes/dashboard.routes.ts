@@ -1,10 +1,10 @@
 import { Router } from 'express';
-import { ProductsController, TagsController, VouchersController } from '../controllers';
+import { DashboardController } from '../controllers';
 
 const dashboardRouter = Router();
 
-dashboardRouter.post('/create/product', ProductsController.createProduct);
-dashboardRouter.post('/create/voucher', VouchersController.createVoucher);
-dashboardRouter.post('/create/tag', TagsController.createTag);
+dashboardRouter.post('/create/product', DashboardController.createProduct);
+dashboardRouter.post('/create/voucher', DashboardController.createVoucher);
+dashboardRouter.post('/create/tag', DashboardController.createTag);
 
 export default dashboardRouter;
