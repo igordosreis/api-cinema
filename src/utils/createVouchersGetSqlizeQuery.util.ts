@@ -7,7 +7,7 @@ import { IVouchersGetDashboard } from '../interfaces/IVouchers';
 class CreateVouchersGetSqlizeQuery {
   private addParams = ({ productId, establishmentId }: IVouchersGetDashboard) => {
     const searchQuery = [];
-    if (establishmentId) searchQuery.push({ productId });
+    if (productId) searchQuery.push({ productId });
     if (establishmentId) searchQuery.push({ establishmentId });
 
     return {
