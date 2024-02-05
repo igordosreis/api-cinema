@@ -25,7 +25,7 @@ router.use('/packs', packsRouter);
 router.use('/plans', plansRouter);
 router.use('/favorites', favoritesRouter);
 router.use('/vouchers', vouchersRouter);
-router.use('/search', searchRouter);
+router.use('/shop', searchRouter);
 router.use('/cart', cartRouter);
 router.use('/tags', tagsRouter);
 router.use('/dashboard', VoucherExcelUploadMiddleware, dashboardRouter);
