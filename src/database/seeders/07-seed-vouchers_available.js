@@ -1,4 +1,8 @@
 // Helper function to generate a random date between the specified years
+function getRandomEstablishmentId(ids) {
+  return ids[Math.floor(Math.random() * ids.length)];
+}
+
 function generateRandomDate(startYear, endYear) {
   const startDate = new Date(`${startYear}-01-01T00:00:00`);
   const endDate = new Date(`${endYear + 1}-01-01T00:00:00`); // Add 1 to end year to include the entire year
@@ -24,10 +28,13 @@ function generateUniqueVoucher() {
 module.exports = {
   up: async (queryInterface, _Sequelize) => {
     // Generate 30 entries for the 'vouchers_available' table
+    const establishmentIds = [488, 753, 1115, 3091, 3092, 3543, 3564, 4243, 4732, 4762, 5049];
+
     const seedData = Array.from({ length: 100 }, (_, index) => ({
       id: index + 101,
       voucher_code: generateUniqueVoucher(),
       product_id: Math.floor(Math.random() * 49) + 1, // Random number between 1 and 50
+      establishment_id: getRandomEstablishmentId(establishmentIds),
       expire_at: generateRandomDate(2024, 2025),
       // created_at: generateRandomDate(2022, 2023),
     }));
