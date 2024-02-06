@@ -25,13 +25,11 @@ EstablishmentsProductsModel.init(
   {
     productId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
       autoIncrement: true,
       primaryKey: true,
     },
     establishmentId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
       references: {
         model: 'establishments',
         key: 'id',
@@ -41,35 +39,27 @@ EstablishmentsProductsModel.init(
     },
     active: {
       type: DataTypes.BOOLEAN,
-      defaultValue: true,
     },
     purchasable: {
       type: DataTypes.BOOLEAN,
-      defaultValue: true,
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: false,
     },
     description: {
       type: DataTypes.STRING,
-      allowNull: false,
     },
     image: {
       type: DataTypes.STRING,
-      allowNull: false,
     },
     price: {
       type: DataTypes.INTEGER,
-      allowNull: false,
     },
     rules: {
       type: DataTypes.STRING,
-      allowNull: true,
     },
     type: {
       type: DataTypes.INTEGER,
-      allowNull: false,
       references: {
         model: 'products_types',
         key: 'id',
@@ -82,7 +72,6 @@ EstablishmentsProductsModel.init(
     // },
     soldOutAmount: {
       type: DataTypes.INTEGER,
-      allowNull: false,
     },
     createdAt: {
       type: DataTypes.DATE,

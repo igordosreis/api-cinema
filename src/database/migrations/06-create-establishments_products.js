@@ -39,11 +39,13 @@ module.exports = {
       },
       description: {
         type: Sequelize.TEXT('long'),
-        allowNull: false,
+        allowNull: true,
+        defaultValue: null,
         collate: 'utf8mb3_unicode_ci',
       },
       image: {
         type: Sequelize.STRING,
+        allowNull: true,
         defaultValue: null,
       },
       price: {
@@ -52,7 +54,8 @@ module.exports = {
       },
       rules: {
         type: Sequelize.TEXT('long'),
-        allowNull: false,
+        allowNull: true,
+        defaultValue: null,
         collate: 'utf8mb3_unicode_ci',
       },
       type: {

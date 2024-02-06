@@ -9,7 +9,6 @@ class PacksModel extends Model {
   declare image: string;
   declare price: number;
   declare rules: string;
-  // declare category: string;
   declare counter: number;
   declare counterLimit: number;
   declare limited: boolean;
@@ -23,48 +22,35 @@ PacksModel.init(
   {
     packId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
       autoIncrement: true,
       primaryKey: true,
     },
     active: {
       type: DataTypes.BOOLEAN,
-      defaultValue: true,
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: false,
     },
     description: {
       type: DataTypes.STRING,
-      allowNull: false,
     },
     image: {
       type: DataTypes.STRING,
-      allowNull: true,
     },
     price: {
       type: DataTypes.INTEGER,
-      allowNull: false,
     },
     rules: {
       type: DataTypes.STRING,
-      allowNull: true,
     },
-    // category: {
-    //   type: DataTypes.STRING,
-    // },
     counter: {
       type: DataTypes.INTEGER,
-      allowNull: true,
     },
     counterLimit: {
       type: DataTypes.INTEGER,
-      allowNull: true,
     },
     limited: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
     },
     createdAt: {
       type: DataTypes.DATE,

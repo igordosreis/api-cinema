@@ -14,6 +14,7 @@ module.exports = {
       },
       active: {
         type: Sequelize.BOOLEAN,
+        allowNull: true,
         defaultValue: true,
       },
       name: {
@@ -23,7 +24,7 @@ module.exports = {
       },
       description: {
         type: Sequelize.TEXT('long'),
-        allowNull: false,
+        allowNull: true,
         collate: 'utf8mb3_unicode_ci',
       },
       image: {
@@ -37,7 +38,8 @@ module.exports = {
       },
       rules: {
         type: Sequelize.TEXT('long'),
-        allowNull: false,
+        allowNull: true,
+        defaultValue: null,
         collate: 'utf8mb3_unicode_ci',
       },
       counter: {
@@ -50,7 +52,8 @@ module.exports = {
       },
       limited: {
         type: Sequelize.BOOLEAN,
-        allowNull: true,
+        allowNull: false,
+        defaultValue: false,
       },
       // category: {
       //   type: Sequelize.STRING,

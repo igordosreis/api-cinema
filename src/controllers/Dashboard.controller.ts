@@ -14,9 +14,9 @@ import { ITagsNewInBody, ITagsNewSchema } from '../interfaces/ITags';
 export default class DashboardController {
   public static async createProduct(req: Request, res: Response): Promise<void> {
     const { newProductInfo } = <IProductCreateInfoBody>req.body;
-    IProductCreateInfoSchema.parse(newProductInfo);
+    const parsedNewProductInfo = IProductCreateInfoSchema.parse(newProductInfo);
 
-    const productId = await ProductsService.createProduct(newProductInfo);
+    const productId = await ProductsService.createProduct(parsedNewProductInfo);
 
     res.status(200).json(productId);
   }

@@ -41,16 +41,16 @@ export interface IProduct {
 export const IProductCreateInfoSchema = z
   .object({
     establishmentId: z.number(),
-    active: z.boolean(),
-    purchasable: z.boolean(),
+    active: z.boolean().optional(),
+    purchasable: z.boolean().optional(),
     name: z.string(),
-    description: z.string(),
-    image: z.string(),
+    description: z.string().optional(),
+    image: z.string().optional(),
     price: z.number(),
-    rules: z.string(),
+    rules: z.string().optional(),
     type: z.number(),
     soldOutAmount: z.number(),
-    expireAt: z.string().pipe(z.coerce.date()),
+    expireAt: z.string().pipe(z.coerce.date()).optional(),
     tags: z.array(z.number()),
   })
   .strict();
