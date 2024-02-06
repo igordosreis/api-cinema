@@ -358,9 +358,10 @@ export default class VouchersService {
 
   public static async getVouchersDashboard(getParams: IVouchersGetDashboard) {
     try {
-      const vouchers = await VouchersAvailableModel.findAll(
-        createVouchersGetSqlizeQueryUtil.create(getParams),
-      );
+      const vouchers = await VouchersAvailableModel.findAll({
+        ...createVouchersGetSqlizeQueryUtil.create(getParams),
+        order: [['createdAt', 'ASC']],
+      });
 
       return vouchers;
     } catch (error) {
