@@ -17,6 +17,11 @@ module.exports = {
         allowNull: false,
         collate: 'utf8mb3_unicode_ci',
       },
+      app_name: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        collate: 'utf8mb3_unicode_ci',
+      },
       icon: {
         type: Sequelize.STRING,
         allowNull: false,

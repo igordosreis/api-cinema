@@ -5,6 +5,7 @@ import EstablishmentsProductsModel from './EstablishmentsProducts.model';
 class ProductsTypesModel extends Model {
   declare id: number;
   declare name: string;
+  declare appName: string;
   declare icon: string;
   declare createdAt: Date;
   declare updatedAt: Date;
@@ -19,6 +20,9 @@ ProductsTypesModel.init(
       primaryKey: true,
     },
     name: {
+      type: DataTypes.STRING,
+    },
+    appName: {
       type: DataTypes.STRING,
     },
     icon: {

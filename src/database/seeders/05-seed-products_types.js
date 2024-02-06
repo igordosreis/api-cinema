@@ -37,6 +37,7 @@ module.exports = {
     const seedData = Array.from({ length: typesArray.length }, (_, index) => ({
       name: typesArray[index],
       icon: index === 0 ? 'ticket.svg' : 'consumable.svg',
+      app_name: index === 0 ? 'ingresso' : 'consumível',
     }));
 
     await queryInterface.bulkInsert('products_types', seedData, {});
