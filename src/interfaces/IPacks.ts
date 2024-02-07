@@ -50,6 +50,14 @@ export type IPacksByQuery = PacksModel & {
   }>;
 };
 
+export const IProductInPackSchema = z.object({
+  productId: z.number(),
+  quantity: z.number(),
+  price: z.number(),
+});
+
+export type IProductInPack = z.infer<typeof IProductInPackSchema>;
+
 export const IPackCreateInfoSchema = z
   .object({
     establishmentId: z.number(),
@@ -59,10 +67,10 @@ export const IPackCreateInfoSchema = z
     image: z.string().optional(),
     price: z.number(),
     rules: z.string().optional(),
-    type: z.number(),
     counterLimit: z.number().optional(),
     tags: z.array(z.number()),
     expireAt: z.string().pipe(z.coerce.date()).optional(),
+    products: z.array(IProductInPackSchema),
   })
   .strict();
 

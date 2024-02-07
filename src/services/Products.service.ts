@@ -13,7 +13,7 @@ import PaginationUtil from '../utils/pagination.util';
 import { CONSOLE_LOG_ERROR_TITLE } from '../constants';
 import TagsProductsModel from '../database/models/TagsProducts.model';
 import ImageFormatter from '../utils/formatImages.util';
-import Dashboard from '../utils/dashboard.util';
+import DashboardUtil from '../utils/dashboard.util';
 import db from '../database/models';
 
 export default class ProductsService {
@@ -114,7 +114,7 @@ export default class ProductsService {
       
       const { productId } = await EstablishmentsProductsModel.create({ ...restOfInfo, type }, { transaction: t });
 
-      const formattedTagsArray = Dashboard.formatTagsArrayWithIds({ tags, productId });
+      const formattedTagsArray = DashboardUtil.formatTagsArrayWithIds({ tags, productId });
       await TagsProductsModel.bulkCreate(formattedTagsArray, { transaction: t });
 
       await t.commit();

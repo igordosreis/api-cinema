@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { IProductCreateInfoBody, IProductCreateInfoSchema } from '../interfaces/IProducts';
-import { ProductsService, TagsService, VouchersService } from '../services';
-import Dashboard from '../utils/dashboard.util';
+import { PacksService, ProductsService, TagsService, VouchersService } from '../services';
+import DashboardUtil from '../utils/dashboard.util';
 import {
   IVoucherNewParamsRaw,
   IVouchersCodeArraySchema,
@@ -10,6 +10,7 @@ import {
 } from '../interfaces/IVouchers';
 import formatRequestQueryUtil from '../utils/formatRequestQuery.util';
 import { ITagsNewInBody, ITagsNewSchema } from '../interfaces/ITags';
+import { IPackCreateInfoBody, IPackCreateInfoSchema } from '../interfaces/IPacks';
 
 export default class DashboardController {
   public static async createProduct(req: Request, res: Response): Promise<void> {
@@ -21,12 +22,21 @@ export default class DashboardController {
     res.status(200).json(productId);
   }
 
+  public static async createPack(req: Request, res: Response): Promise<void> {
+    const { newPackInfo } = <IPackCreateInfoBody>req.body;
+    const parsedNewPackInfo = IPackCreateInfoSchema.parse(newPackInfo);
+
+    const packId = await PacksService.createPack(parsedNewPackInfo);
+
+    res.status(200).json(packId);
+  }
+
   public static async createVoucher(req: Request, res: Response): Promise<void> {
-    const vouchers = Dashboard.getVoucherCodesFromReq(req);
+    const vouchers = DashboardUtil.getVoucherCodesFromReq(req);
     const vouchersParams = <IVoucherNewParamsRaw>req.query;
 
     const vouchersParamsFormatted = formatRequestQueryUtil.formartNewVouchersParams(vouchersParams);
-    const voucherCodeArray = Dashboard.addInfoToVoucherCodesArray({
+    const voucherCodeArray = DashboardUtil.addInfoToVoucherCodesArray({
       ...vouchersParamsFormatted,
       vouchers,
     });
@@ -41,7 +51,7 @@ export default class DashboardController {
     const { tags, typeId } = <ITagsNewInBody>req.body;
     ITagsNewSchema.parse(tags);
 
-    const formattedTags = Dashboard.formatTagsArrayWithName(tags);
+    const formattedTags = DashboardUtil.formatTagsArrayWithName(tags);
     await TagsService.createTags(formattedTags, typeId);
 
     res.status(200).end();
