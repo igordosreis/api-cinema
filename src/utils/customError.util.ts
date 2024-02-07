@@ -224,6 +224,12 @@ export const packNotFound: ICustomError = {
   message: 'O pacote procurado não foi encontrado.',
 };
 
+export const packServiceUnavailable: ICustomError = {
+  status: 500,
+  title: OPERATION_UNAVAILABLE,
+  message: 'O serviço de pacotes não está disponível no momento. Tente novamente mais tarde.',
+};
+
 export const createTagError: ICustomError = {
   status: 503,
   title: 'Erro ao criar tags.',

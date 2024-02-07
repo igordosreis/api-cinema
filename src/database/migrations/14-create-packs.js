@@ -44,10 +44,12 @@ module.exports = {
       },
       counter: {
         type: Sequelize.INTEGER,
+        defaultValue: null,
         allowNull: true,
       },
       counter_limit: {
         type: Sequelize.INTEGER,
+        defaultValue: null,
         allowNull: true,
       },
       limited: {
