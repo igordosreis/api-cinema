@@ -104,10 +104,6 @@ class OrdersUtil {
     const currentCart = await CartService.getCart({ userId });
 
     const isCartEmpty = currentCart.length === 0;
-    console.log(`---                       currentCart:            
-    `, currentCart);
-    console.log(`---                       isCartEmpty:            
-    `, isCartEmpty);
     if (isCartEmpty) throw new CustomError(cartIsEmpty);
 
     const formattedCart = currentCart.map(({ productId, packId, quantity, establishmentId }) => {

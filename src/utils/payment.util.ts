@@ -1,6 +1,11 @@
 /* eslint-disable max-lines-per-function */
 import axios from 'axios';
-import { BEARER_TOKEN, CREATE_PAYMENT_URL, EMAIL_WEBHOOK_MOCK } from '../constants';
+import {
+  BEARER_TOKEN,
+  CONSOLE_LOG_ERROR_TITLE,
+  CREATE_PAYMENT_URL,
+  EMAIL_WEBHOOK_MOCK,
+} from '../constants';
 import { IPaymentOrderRequest, IPaymentOrderResponse } from '../interfaces/IPayment';
 import CustomError, { paymentOrderError } from './customError.util';
 
@@ -21,7 +26,7 @@ class PaymentUtil {
 
       return data;
     } catch (error: CustomError | unknown) {
-      console.log('--- -- - - - -- - -- - - -  -- - --    - pagamento error:   ', error);
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
       if (error instanceof CustomError) throw error;
 
       throw new CustomError(paymentOrderError);
