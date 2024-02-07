@@ -1,6 +1,6 @@
 import xlsx from 'xlsx';
 
-export default class Excel {
+export default class ExcelUtil {
   static read<T>(buffer: Buffer): Array<T> {
     const workbook = xlsx.read(buffer, { type: 'buffer' });
     const sheetName = workbook.SheetNames[0];

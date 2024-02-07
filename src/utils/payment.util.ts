@@ -4,7 +4,7 @@ import { BEARER_TOKEN, CREATE_PAYMENT_URL, EMAIL_WEBHOOK_MOCK } from '../constan
 import { IPaymentOrderRequest, IPaymentOrderResponse } from '../interfaces/IPayment';
 import CustomError, { paymentOrderError } from './customError.util';
 
-class Payment {
+class PaymentUtil {
   createPayment = async (paymentOrderRequest: Omit<IPaymentOrderRequest, 'webhook' | 'name'>) => {
     try {
       const endpoint = CREATE_PAYMENT_URL;
@@ -29,4 +29,4 @@ class Payment {
   };
 }
 
-export default new Payment();
+export default new PaymentUtil();

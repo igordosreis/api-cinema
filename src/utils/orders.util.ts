@@ -16,7 +16,7 @@ import planUtil from './plan.util';
 import OrdersModel from '../database/models/Orders.model';
 import { STATUS_WAITING } from '../constants';
 
-class Orders {
+class OrdersUtil {
   validateRequestedAmount = (productInfo: IProductFromGetById, amountRequested: number) => {
     const { vouchersAvailable, soldOutAmount } = productInfo;
 
@@ -150,4 +150,4 @@ class Orders {
   };
 }
 
-export default new Orders();
+export default new OrdersUtil();

@@ -5,7 +5,7 @@ import {
   IVouchersNew,
   IVouchersNewArraySchema,
 } from '../interfaces/IVouchers';
-import Excel from './excel.util';
+import ExcelUtil from './excel.util';
 import CustomError, { vouchersObjectNotFound } from './customError.util';
 
 export default class Dashboard {
@@ -13,7 +13,7 @@ export default class Dashboard {
     if (req.file?.buffer) {
       const { buffer } = req.file;
 
-      const vouchers = Excel.read<IVouchersNew>(buffer);
+      const vouchers = ExcelUtil.read<IVouchersNew>(buffer);
       IVouchersNewArraySchema.parse(vouchers);
 
       return vouchers;

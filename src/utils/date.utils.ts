@@ -10,7 +10,7 @@ import {
   addMinutes,
 } from 'date-fns';
 
-class DateUtils {
+class DateUtil {
   formatDateToISO = (date: Date) => formatISO(date, { representation: 'date' });
 
   subtractDays = (date: Date, amountOfDays: number) => subDays(date, amountOfDays);
@@ -25,7 +25,7 @@ class DateUtils {
 
   getLastDayOfMonth = (date: Date) => this.formatDateToISO(endOfMonth(date));
 
-  getFirstAndLastOfMonth = ({ year, month }: { year: string, month: string }) => {
+  getFirstAndLastOfMonth = ({ year, month }: { year: string; month: string }) => {
     const dateString = `${year}-${month}`;
     const date = new Date(dateString);
 
@@ -51,4 +51,4 @@ class DateUtils {
   };
 }
 
-export default new DateUtils();
+export default new DateUtil();

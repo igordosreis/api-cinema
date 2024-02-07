@@ -1,6 +1,6 @@
 import { IPaginationContent } from '../interfaces/IPagination';
 
-export default class Pagination {
+export default class PaginationUtil {
   static getPageContent<T>({ page, limit, array }: IPaginationContent<T>): Array<T> {
     const pageStart = page * limit;
     const pageEnd = (page + 1) * limit;

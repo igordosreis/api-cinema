@@ -15,7 +15,7 @@ import ProductsTypesModel from '../database/models/ProductsTypes.model';
 import CustomError, { totalError } from './customError.util';
 import ImageFormatter from './formatImages.util';
 
-class Plan {
+class PlanUtil {
   calculateUserTypesPerMonth = async ({ userId, cinemaPlan }: IPlanUsedAmount) => {
     try {
       const planInfo = await PlansModel.findOne({
@@ -147,4 +147,4 @@ class Plan {
   };
 }
 
-export default new Plan();
+export default new PlanUtil();

@@ -13,7 +13,7 @@ import {
 } from '../constants';
 import CustomError, { fetchError } from './customError.util';
 
-class FetchMoviesAPI {
+class FetchMoviesAPIUtil {
   private fetch = async <T>(endpoint: string): Promise<T> => {
     try {
       const { data } = await axios.get<T>(endpoint);
@@ -49,4 +49,4 @@ class FetchMoviesAPI {
   };
 }
 
-export default new FetchMoviesAPI();
+export default new FetchMoviesAPIUtil();
