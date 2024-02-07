@@ -339,7 +339,7 @@ export default class VouchersService {
 
       return allUserVouchersGroupedByDate;
     } catch (error: CustomError | unknown) {
-      // console.log(CONSOLE_LOG_ERROR_TITLE, error);
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
       if (error instanceof CustomError) throw error;
 
       throw new CustomError(voucherServiceUnavailable);
