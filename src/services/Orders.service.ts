@@ -153,7 +153,7 @@ export default class OrdersService {
     } catch (error: CustomError | unknown) {
       await t.rollback();
 
-      console.log('--- - -- -- -- - - --  - - -- - -- - ---- -- -- - -- - - - -error: ', error);
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
       if (error instanceof CustomError) throw error;
 
       throw new CustomError(orderServiceUnavailable);

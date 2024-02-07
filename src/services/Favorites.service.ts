@@ -8,6 +8,7 @@ import CustomError, { favoriteError } from '../utils/customError.util';
 import EstablishmentsAddressesModel from '../database/models/EstablishmentsAddresses.model';
 import { IUserInfo } from '../interfaces/IUser';
 import { IPagination } from '../interfaces/IPagination';
+import { CONSOLE_LOG_ERROR_TITLE } from '../constants';
 
 export default class FavoritesService {
   public static async toggleFavoriteEstablishment({ addressId, userId }: IFavoriteToggleRequest) {
@@ -31,7 +32,7 @@ export default class FavoritesService {
         });
       }
     } catch (error) {
-      console.log('--- - -- -- -- - - --  - - -- - -- - ---- -- -- - -- - - - -error: ', error);
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
 
       throw new CustomError(favoriteError);
     }
@@ -69,7 +70,7 @@ export default class FavoritesService {
       });
       return allFavorites;
     } catch (error) {
-      console.log('--- - -- -- -- - - --  - - -- - -- - ---- -- -- - -- - - - -error: ', error);
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
 
       throw new CustomError(favoriteError);
     }
