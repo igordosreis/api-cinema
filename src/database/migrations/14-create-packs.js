@@ -57,6 +57,16 @@ module.exports = {
         allowNull: false,
         defaultValue: false,
       },
+      establishment_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'establishments',
+          key: 'id', 
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+      },
       // category: {
       //   type: Sequelize.STRING,
       //   allowNull: false,

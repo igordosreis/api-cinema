@@ -1,5 +1,6 @@
 import { DataTypes, Model } from 'sequelize';
 import db from '.';
+import EstablishmentsModel from './Establishments.model';
 
 class PacksModel extends Model {
   declare packId: number;
@@ -9,10 +10,10 @@ class PacksModel extends Model {
   declare image: string;
   declare price: number;
   declare rules: string;
+  declare establishmentId: number;
   declare counter: number;
   declare counterLimit: number;
   declare limited: boolean;
-  declare soldOutAmount: number;
   declare createdAt: Date;
   declare updatedAt: Date;
   declare expireAt: Date;
@@ -42,6 +43,9 @@ PacksModel.init(
     },
     rules: {
       type: DataTypes.STRING,
+    },
+    establishmentId: {
+      type: DataTypes.INTEGER,
     },
     counter: {
       type: DataTypes.INTEGER,
@@ -74,3 +78,12 @@ PacksModel.init(
 );
 
 export default PacksModel;
+
+PacksModel.belongsTo(EstablishmentsModel, {
+  foreignKey: 'establishmentId',
+  as: 'brand',
+});
+EstablishmentsModel.hasMany(PacksModel, {
+  foreignKey: 'establishmentId',
+  as: 'packs',
+});
