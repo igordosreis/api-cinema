@@ -47,9 +47,13 @@ export default class CartController {
     );
     ICartOperationSchema.parse(cartOperationInfo);
 
-    const currentCart = await CartService.addToCart(cartOperationInfo);
+    // const currentCart = await CartService.addToCart(cartOperationInfo);
 
-    res.status(200).json(currentCart);
+    // res.status(200).json(currentCart);
+
+    await CartService.addToCart(cartOperationInfo);
+
+    res.status(200).end();
   }
 
   public static async removeFromCart(req: Request, res: Response): Promise<void> {
@@ -64,9 +68,13 @@ export default class CartController {
     );
     ICartOperationSchema.parse(cartOperationInfo);
 
-    const currentCart = await CartService.removeFromCart(cartOperationInfo);
+    // const currentCart = await CartService.removeFromCart(cartOperationInfo);
 
-    res.status(200).json(currentCart);
+    // res.status(200).json(currentCart);
+
+    await CartService.removeFromCart(cartOperationInfo);
+
+    res.status(200).end();
   }
 
   public static async deleteFromCart(req: Request, res: Response): Promise<void> {
@@ -81,9 +89,13 @@ export default class CartController {
     );
     ICartOperationSchema.parse(cartOperationInfo);
 
-    const currentCart = await CartService.deleteFromCart(cartOperationInfo);
+    // const currentCart = await CartService.deleteFromCart(cartOperationInfo);
 
-    res.status(200).json(currentCart);
+    // res.status(200).json(currentCart);
+
+    await CartService.deleteFromCart(cartOperationInfo);
+
+    res.status(200).end();
   }
 
   public static async deleteAllCart(req: Request, res: Response): Promise<void> {
