@@ -8,7 +8,7 @@ import {
 import ExcelUtil from './excel.util';
 import CustomError, { vouchersObjectNotFound } from './customError.util';
 
-export default class Dashboard {
+export default class DashboardUtil {
   public static getVoucherCodesFromReq(req: Request): IVouchersNew[] {
     if (req.file?.buffer) {
       const { buffer } = req.file;
@@ -22,7 +22,7 @@ export default class Dashboard {
     if (req.body?.vouchers) {
       const { vouchers } = req.body;
 
-      const voucherCodesArray = Dashboard.formatVoucherCodesArray(vouchers);
+      const voucherCodesArray = DashboardUtil.formatVoucherCodesArray(vouchers);
       IVouchersNewArraySchema.parse(voucherCodesArray);
 
       return voucherCodesArray;
