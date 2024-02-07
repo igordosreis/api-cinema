@@ -9,7 +9,7 @@ import { IProductCreateInfo, IProductQuery, IProductResult } from '../interfaces
 import createProductSearchSqlizeQueryUtil from '../utils/createProductSearchSqlizeQuery.util';
 import CustomError, { createProductError, establishmentServiceUnavailable } from '../utils/customError.util';
 import EstablishmentsModel from '../database/models/Establishments.model';
-import Pagination from '../utils/pagination.util';
+import PaginationUtil from '../utils/pagination.util';
 import { CONSOLE_LOG_ERROR_TITLE } from '../constants';
 import TagsProductsModel from '../database/models/TagsProducts.model';
 import ImageFormatter from '../utils/formatImages.util';
@@ -78,7 +78,7 @@ export default class ProductsService {
         : products;
 
       const { page, limit } = formattedSearchQuery;
-      const pagedProducts = Pagination.getPageContent({ page, limit, array: filteredProducts });
+      const pagedProducts = PaginationUtil.getPageContent({ page, limit, array: filteredProducts });
 
       return pagedProducts;
     } catch (error: CustomError | unknown) {

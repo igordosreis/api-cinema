@@ -9,18 +9,18 @@ import {
 } from '../interfaces/IMoviesAPI';
 import { IPagination } from '../interfaces/IPagination';
 import CustomError, { movieNotFound } from '../utils/customError.util';
-import DateUtils from '../utils/date.utils';
+import DateUtil from '../utils/date.utils';
 import formatMoviesUtil from '../utils/formatMovies.util';
-import Pagination from '../utils/pagination.util';
+import PaginationUtil from '../utils/pagination.util';
 import searchMoviesUtil from '../utils/searchMovies.util';
 
 export default class MoviesAPIService {
   public static async getNowPlaying(pagination: IPagination): Promise<IMoviesResults> {
     const currentDate = new Date();
-    const subtractFortyFiveDaysDate = DateUtils.subtractDays(currentDate, 45);
+    const subtractFortyFiveDaysDate = DateUtil.subtractDays(currentDate, 45);
 
-    const currentDateISO = DateUtils.formatDateToISO(currentDate);
-    const pastDateISO = DateUtils.formatDateToISO(subtractFortyFiveDaysDate);
+    const currentDateISO = DateUtil.formatDateToISO(currentDate);
+    const pastDateISO = DateUtil.formatDateToISO(subtractFortyFiveDaysDate);
 
     const allMoviesPlayingNow = await MoviesAPIModel.getNowPlaying(pastDateISO, currentDateISO);
 
@@ -29,7 +29,7 @@ export default class MoviesAPIService {
     });
 
     const { page, limit } = pagination;
-    const pagedMovies = Pagination.getPageContent({ page, limit, array: parsedMovies });
+    const pagedMovies = PaginationUtil.getPageContent({ page, limit, array: parsedMovies });
 
     return {
       results: pagedMovies,
@@ -39,11 +39,11 @@ export default class MoviesAPIService {
 
   public static async getUpcoming(pagination: IPagination): Promise<IMoviesResults> {
     const currentDate = new Date();
-    const addOneDayDate = DateUtils.addDays(currentDate, 1);
-    const addThirtyDaysDate = DateUtils.addDays(currentDate, 30);
+    const addOneDayDate = DateUtil.addDays(currentDate, 1);
+    const addThirtyDaysDate = DateUtil.addDays(currentDate, 30);
 
-    const tomorrowDateISO = DateUtils.formatDateToISO(addOneDayDate);
-    const futureDateISO = DateUtils.formatDateToISO(addThirtyDaysDate);
+    const tomorrowDateISO = DateUtil.formatDateToISO(addOneDayDate);
+    const futureDateISO = DateUtil.formatDateToISO(addThirtyDaysDate);
 
     const allMoviesUpcoming = await MoviesAPIModel.getUpcoming(tomorrowDateISO, futureDateISO);
 
@@ -53,7 +53,7 @@ export default class MoviesAPIService {
     });
 
     const { page, limit } = pagination;
-    const pagedMovies = Pagination.getPageContent({ page, limit, array: parsedMovies });
+    const pagedMovies = PaginationUtil.getPageContent({ page, limit, array: parsedMovies });
 
     return {
       results: pagedMovies,
@@ -64,8 +64,8 @@ export default class MoviesAPIService {
   public static async getPremieres(pagination: IPagination): Promise<IMoviesResults> {
     const currentDate = new Date();
 
-    const lastSundayISO = DateUtils.getLastSunday(currentDate);
-    const nextSundayISO = DateUtils.getNextSunday(currentDate);
+    const lastSundayISO = DateUtil.getLastSunday(currentDate);
+    const nextSundayISO = DateUtil.getNextSunday(currentDate);
 
     const allMoviesPremier = await MoviesAPIModel.getPremieres(lastSundayISO, nextSundayISO);
 
@@ -74,7 +74,7 @@ export default class MoviesAPIService {
     });
 
     const { page, limit } = pagination;
-    const pagedMovies = Pagination.getPageContent({ page, limit, array: parsedMovies });
+    const pagedMovies = PaginationUtil.getPageContent({ page, limit, array: parsedMovies });
 
     return {
       results: pagedMovies,
@@ -113,7 +113,11 @@ export default class MoviesAPIService {
       titleQuery,
     });
 
-    const pagedResults = Pagination.getPageContent({ page, limit, array: searchResults.results });
+    const pagedResults = PaginationUtil.getPageContent({
+      page,
+      limit,
+      array: searchResults.results,
+    });
     searchResults.results = pagedResults;
 
     return searchResults;
