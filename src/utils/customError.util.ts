@@ -230,6 +230,18 @@ export const packServiceUnavailable: ICustomError = {
   message: 'O serviço de pacotes não está disponível no momento. Tente novamente mais tarde.',
 };
 
+export const packEstablishmentIdError: ICustomError = {
+  status: 500,
+  title: 'Um produto não pertence ao estabelecimento.',
+  message: 'Um dos produtos incluídos no pacote não pertence ao estabelecimento solicitado.',
+};
+
+export const packPriceValidationError: ICustomError = {
+  status: 500,
+  title: 'Preço inválido.',
+  message: 'O preço do pacote é diferente o preço totalizado somando todos os produtos.',
+};
+
 export const createTagError: ICustomError = {
   status: 503,
   title: 'Erro ao criar tags.',

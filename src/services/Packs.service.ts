@@ -401,12 +401,14 @@ export default class PacksService {
   public static async createPack(newPackInfo: IPackCreateInfo) {
     const t = await db.transaction();
     try {
-      const { counterLimit, tags, products, ...restOfInfo } = newPackInfo;
+      const { counterLimit, tags, products, establishmentId, price, ...restOfInfo } = newPackInfo;
       
       const { packId } = await PacksModel.create(
-        { ...restOfInfo, ...PackUtil.setupLimit(counterLimit) },
+        { ...restOfInfo, establishmentId, price, ...PackUtil.setupLimit(counterLimit) },
         { transaction: t },
-      );
+      ); 
+
+      await PackUtil.validateProducts({ products, packPrice: price, establishmentId });
 
       const formattedTagsArray = DashboardUtil.formatTagsArrayWithIds({ tags, packId });
       await TagsPacksModel.bulkCreate(formattedTagsArray, { transaction: t });
