@@ -51,11 +51,24 @@ export default class Dashboard {
     return voucherCodesArray;
   }
 
-  public static formatTagsArrayWithIds({ tags, productId }: { tags: number[]; productId: number }) {
-    const formattedArray = tags.map((tag) => ({
-      tagId: tag,
-      productId,
-    }));
+  public static formatTagsArrayWithIds(
+    itemInfo: { tags: number[]; productId: number } | { tags: number[]; packId: number },
+  ): Array<{ tagId: number; productId: number }> | Array<{ tagId: number; packId: number }> {
+    const formattedArray = itemInfo.tags.map((tag) => {
+      if ('productId' in itemInfo) {
+        return {
+          tagId: tag,
+          productId: itemInfo.productId,
+        };
+      }
+      if ('packId' in itemInfo) {
+        return {
+          tagId: tag,
+          packId: itemInfo.packId,
+        };
+      }
+      throw new Error('Array inválido');
+    }) as Array<{ tagId: number; productId: number }> | Array<{ tagId: number; packId: number }>;
 
     return formattedArray;
   }
