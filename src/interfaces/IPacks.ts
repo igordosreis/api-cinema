@@ -49,3 +49,25 @@ export type IPacksByQuery = PacksModel & {
     };
   }>;
 };
+
+export const IPackCreateInfoSchema = z
+  .object({
+    establishmentId: z.number(),
+    active: z.boolean().optional(),
+    name: z.string(),
+    description: z.string().optional(),
+    image: z.string().optional(),
+    price: z.number(),
+    rules: z.string().optional(),
+    type: z.number(),
+    counterLimit: z.number().optional(),
+    tags: z.array(z.number()),
+    expireAt: z.string().pipe(z.coerce.date()).optional(),
+  })
+  .strict();
+
+export type IPackCreateInfo = z.infer<typeof IPackCreateInfoSchema>;
+
+export interface IPackCreateInfoBody {
+  newPackInfo: IPackCreateInfo;
+}
