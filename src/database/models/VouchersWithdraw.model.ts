@@ -1,10 +1,9 @@
 import { DataTypes, Model } from 'sequelize';
 import db from '.';
 import EstablishmentsProductsModel from './EstablishmentsProducts.model';
-import OrdersModel from './Orders.model';
 import EstablishmentsModel from './Establishments.model';
 
-class VouchersAvailableModel extends Model {
+class VouchersWithdrawModel extends Model {
   declare id: number;
   declare voucherCode: string;
   declare productId: number;
@@ -16,11 +15,11 @@ class VouchersAvailableModel extends Model {
   declare motive: string;
 }
 
-VouchersAvailableModel.init(
+VouchersWithdrawModel.init(
   {
     id: {
       type: DataTypes.INTEGER,
-      autoIncrement: true,
+      allowNull: false,
       primaryKey: true,
     },
     voucherCode: {
@@ -51,7 +50,7 @@ VouchersAvailableModel.init(
     },
   },
   {
-    modelName: 'vouchers_available',
+    modelName: 'vouchers_withdraw',
     sequelize: db,
     underscored: true,
     timestamps: false,
@@ -59,31 +58,22 @@ VouchersAvailableModel.init(
   },
 );
 
-VouchersAvailableModel.belongsTo(EstablishmentsProductsModel, {
+VouchersWithdrawModel.belongsTo(EstablishmentsProductsModel, {
   foreignKey: 'productId',
-  as: 'vouchersAvailable',
+  as: 'vouchersWithdraw',
 });
-EstablishmentsProductsModel.hasMany(VouchersAvailableModel, {
+EstablishmentsProductsModel.hasMany(VouchersWithdrawModel, {
   foreignKey: 'productId',
-  as: 'vouchersAvailable',
+  as: 'vouchersWithdraw',
 });
 
-VouchersAvailableModel.belongsTo(EstablishmentsModel, {
+VouchersWithdrawModel.belongsTo(EstablishmentsModel, {
   foreignKey: 'establishmentId',
   as: 'brand',
 });
-EstablishmentsModel.hasMany(VouchersAvailableModel, {
+EstablishmentsModel.hasMany(VouchersWithdrawModel, {
   foreignKey: 'establishmentId',
-  as: 'vouchersAvailableInfo',
+  as: 'vouchersWithdrawInfo',
 });
 
-VouchersAvailableModel.belongsTo(OrdersModel, {
-  foreignKey: 'orderId',
-  as: 'vouchersOrderUnpaid',
-});
-OrdersModel.hasMany(VouchersAvailableModel, {
-  foreignKey: 'orderId',
-  as: 'vouchersOrderUnpaid',
-});
-
-export default VouchersAvailableModel;
+export default VouchersWithdrawModel;
