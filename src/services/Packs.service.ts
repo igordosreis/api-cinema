@@ -18,6 +18,9 @@ import db from '../database/models';
 import { CONSOLE_LOG_ERROR_TITLE } from '../constants';
 import PackUtil from '../utils/pack.util';
 import DashboardUtil from '../utils/dashboard.util';
+import EstablishmentsModel from '../database/models/Establishments.model';
+import TagsModel from '../database/models/Tags.model';
+import ImageFormatter from '../utils/formatImages.util';
 
 export default class PacksService {
   public static async getPacksByQuery(formattedSearchQuery: IPackSearchQuery) {
@@ -222,7 +225,61 @@ export default class PacksService {
         include: [
           {
             model: TagsPacksModel,
-            as: 'packTags',
+            as: 'tagsPack',
+            attributes: {
+              exclude: [
+                'packId',
+              ],
+            },
+            include: [
+              {
+                model: TagsModel,
+                as: 'packTags',
+                attributes: {
+                  exclude: [
+                    'id',
+                    'createdAt',
+                    'updatedAt',
+                  ],
+                },
+              },
+            ],
+          },
+          {
+            model: EstablishmentsModel,
+            as: 'brand',
+            include: [
+              {
+                model: EstablishmentsImagesModel,
+                as: 'images',
+                attributes: {
+                  exclude: [
+                    'establishmentId',
+                    'imageCarousel',
+                    'resizeColor',
+                    'createdAt',
+                    'updatedAt',
+                  ],
+                },
+              },
+            ],
+            attributes: {
+              exclude: [
+                'link',
+                'linkDescription',
+                'telephone',
+                'telephoneTwo',
+                'whatsapp',
+                'instagram',
+                'keyWords',
+                'site',
+                'active',
+                'underHighlight',
+                'views',
+                'createdAt',
+                'updatedAt',
+              ],
+            },
           },
           {
             model: PacksProductsModel,
@@ -248,6 +305,12 @@ export default class PacksService {
                   //   'available',
                   // ],
                   ],
+                  exclude: [
+                    'establishmentId',
+                    'soldOutAmount',
+                    'purchasable',
+                    'createdAt',
+                  ],
                 },
                 include: [
                   {
@@ -262,28 +325,69 @@ export default class PacksService {
                     },
                   },
                   {
-                    model: EstablishmentsImagesModel,
-                    as: 'imagesBrand',
-                  },
-                  {
                     model: ProductsTypesModel,
                     as: 'typeInfo',
+                    attributes: {
+                      exclude: [
+                        'createdAt',
+                        'updatedAt',
+                      ],
+                    },
                   },
                   {
                     model: TagsProductsModel,
-                    as: 'productTags',
+                    as: 'tagsProducts',
+                    attributes: {
+                      exclude: [
+                        'productId',
+                      ],
+                    },
+                    include: [
+                      {
+                        model: TagsModel,
+                        as: 'productTags',
+                        attributes: {
+                          exclude: [
+                            'id',
+                            'createdAt',
+                            'updatedAt',
+                          ],
+                        },
+                      },
+                    ],
                   },
                 ],
               },
             ],
+            attributes: {
+              exclude: ['packId'],
+            },
+          },
+          {
+            model: EstablishmentsImagesModel,
+            as: 'brandImages',
+            attributes: {
+              exclude: [
+                'establishmentId',
+                'imageCarousel',
+                'resizeColor',
+                'createdAt',
+                'updatedAt',
+              ],
+            },
           },
         ],
+        attributes: {
+          exclude: [
+            'createdAt',
+          ],
+        },
         group: [
           'packs.pack_id',
           'packInfo.product_id',
           'packInfo.productDetails.product_id',
-          'packTags.tag_id',
-          'packInfo.productDetails.productTags.tag_id',
+          'tagsPack.tag_id',
+          'packInfo.productDetails.tagsProducts.tag_id',
         ],
         ...createPackSearchSqlizeQueryUtil.create(formattedSearchQuery),
       // limit: packSearchQuery.limit,
@@ -336,12 +440,26 @@ export default class PacksService {
         .filter(
           (pack) => 
             !tags
-          || tags.every((tag) => pack.packTags.some(({ tagId }) => tagId === tag))
-          || pack.packInfo.some(
-            ({ productDetails: { productTags } }) =>
-              tags.every((tag) => productTags.some(({ tagId }) => tagId === tag)),
-          ),
-        );
+            || tags.every((tag) => pack.packTags.some(({ tagId }) => tagId === tag))
+            || pack.packInfo.some(
+              ({ productDetails: { productTags } }) =>
+                tags.every((tag) => productTags.some(({ tagId }) => tagId === tag)),
+            ),
+        )
+        .map((pack) => {
+          const { brandImages: { logo, cover } } = pack;
+          const newImages = {
+            logo: ImageFormatter.formatUrl({ imageName: logo, folderPath: '/establishments/logo' }),
+            cover: ImageFormatter.formatUrl({ imageName: cover, folderPath: '/establishments/cover' }),
+          };
+
+          return {
+            ...pack,
+            brandImages: {
+              ...newImages,
+            },
+          };
+        });
 
       const { page, limit } = formattedSearchQuery;
       const pagedPacks = PaginationUtil.getPageContent({ page, limit, array: filteredPacks });

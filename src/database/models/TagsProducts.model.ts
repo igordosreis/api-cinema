@@ -36,16 +36,16 @@ TagsProductsModel.init(
   },
 );
 
-TagsProductsModel.belongsTo(TagsModel, { foreignKey: 'tagId', as: 'tagsProducts' });
-TagsModel.hasMany(TagsProductsModel, { foreignKey: 'tagId', as: 'tagsProducts' });
+TagsProductsModel.belongsTo(TagsModel, { foreignKey: 'tagId', as: 'productTags' });
+TagsModel.hasMany(TagsProductsModel, { foreignKey: 'tagId', as: 'productTags' });
 
 TagsProductsModel.belongsTo(EstablishmentsProductsModel, {
   foreignKey: 'productId',
-  as: 'productTags',
+  as: 'tagsProducts',
 });
 EstablishmentsProductsModel.hasMany(TagsProductsModel, {
   foreignKey: 'productId',
-  as: 'productTags',
+  as: 'tagsProducts',
 });
 
 export default TagsProductsModel;

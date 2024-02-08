@@ -6,6 +6,7 @@ import EstablishmentsImagesModel from '../database/models/EstablishmentsImages.m
 import ProductsTypesModel from '../database/models/ProductsTypes.model';
 import TagsProductsModel from '../database/models/TagsProducts.model';
 import TagsPacksModel from '../database/models/TagsPacks.model';
+import EstablishmentsModel from '../database/models/Establishments.model';
 
 export type IPackSummary = PacksModel & {
   packInfo: PacksProductsModel[];
@@ -40,11 +41,12 @@ export type IPackSearchQuery = z.infer<typeof IPackSearchQuerySchema>;
 export type IPacksByQuery = PacksModel & {
   available?: boolean;
   packTags: Array<TagsPacksModel>,
+  brand: EstablishmentsModel,
+  brandImages: EstablishmentsImagesModel,
   packInfo: Array<PacksProductsModel & {
     productDetails: EstablishmentsProductsModel & {
-      vouchersQuantity: number;
-      imagesBrand: EstablishmentsImagesModel;
-      typeInfo: ProductsTypesModel;
+      vouchersQuantity: number,
+      typeInfo: ProductsTypesModel,
       productTags: Array<TagsProductsModel>,
     };
   }>;

@@ -15,6 +15,7 @@ import TagsProductsModel from '../database/models/TagsProducts.model';
 import ImageFormatter from '../utils/formatImages.util';
 import DashboardUtil from '../utils/dashboard.util';
 import db from '../database/models';
+import TagsModel from '../database/models/Tags.model';
 
 export default class ProductsService {
   public static async getProductsByQuery(formattedSearchQuery: IProductQuery) {
@@ -31,7 +32,13 @@ export default class ProductsService {
               'available',
             ],
           ],
-          exclude: ['type', 'soldOutAmount'],
+          exclude: [
+            'type',
+            'soldOutAmount',
+            'active',
+            'purchasable',
+            'createdAt',
+          ],
         },
         include: [
           {
@@ -48,24 +55,74 @@ export default class ProductsService {
           {
             model: EstablishmentsModel,
             as: 'brand',
+            attributes: {
+              exclude: [
+                'link',
+                'linkDescription',
+                'telephone',
+                'telephoneTwo',
+                'whatsapp',
+                'instagram',
+                'keyWords',
+                'site',
+                'active',
+                'underHighlight',
+                'views',
+                'createdAt',
+                'updatedAt',
+              ],
+            },
           },
           {
             model: EstablishmentsImagesModel,
             as: 'imagesBrand',
+            attributes: {
+              exclude: [
+                'establishmentId',
+                'imageCarousel',
+                'resizeColor',
+                'createdAt',
+                'updatedAt',
+              ],
+            },
           },
           {
             model: ProductsTypesModel,
             as: 'typeInfo',
+            attributes: {
+              exclude: [
+                'createdAt',
+                'updatedAt',
+              ],
+            },
           },
           {
             model: TagsProductsModel,
-            as: 'productTags',
+            as: 'tagsProducts',
+            attributes: {
+              exclude: [
+                'productId',
+              ],
+            },
+            include: [
+              {
+                model: TagsModel,
+                as: 'productTags',
+                attributes: {
+                  exclude: [
+                    'id',
+                    'createdAt',
+                    'updatedAt',
+                  ],
+                },
+              },
+            ],
           },
         ],
         group: [
           'establishments_products.product_id',
-          'productTags.tag_id',
-          'productTags.product_id',
+          'tagsProducts.tag_id',
+          'tagsProducts.product_id',
         ],
         ...createProductSearchSqlizeQueryUtil.create(formattedSearchQuery),
         // limit: formattedQuery.limit,
@@ -78,7 +135,22 @@ export default class ProductsService {
         : products;
 
       const { page, limit } = formattedSearchQuery;
-      const pagedProducts = PaginationUtil.getPageContent({ page, limit, array: filteredProducts });
+      const pagedProducts = PaginationUtil.getPageContent({ page, limit, array: filteredProducts })
+        .map((product) => {
+          const { imagesBrand: { logo, cover } } = product;
+          
+          const newImagesBrand = {
+            logo: ImageFormatter.formatUrl({ imageName: logo, folderPath: '/establishments/logo' }),
+            cover: ImageFormatter.formatUrl({ imageName: cover, folderPath: '/establishments/cover' }),
+          };
+
+          return {
+            ...product.dataValues,
+            imagesBrand: {
+              ...newImagesBrand,
+            },
+          } as IProductResult;
+        });
 
       return pagedProducts;
     } catch (error: CustomError | unknown) {
