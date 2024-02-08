@@ -5,11 +5,11 @@ export const ICartOperationRequestSchema = z.union([
   z.object({
     productId: z.string().optional(),
     establishmentId: z.string().optional(),
-  }).strict(),
+  }), // .strict()
   z.object({
     packId: z.string().optional(),
     establishmentId: z.string().optional(),
-  }).strict(),
+  }), // .strict()
 ]);
 
 export type ICartOperationRequest = z.infer<typeof ICartOperationRequestSchema>;

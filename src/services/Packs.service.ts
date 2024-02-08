@@ -447,15 +447,15 @@ export default class PacksService {
             ),
         )
         .map((pack) => {
-          const { brandImages: { logo, cover } } = pack;
+          const { brandImages: { logo, cover }, ...restOfInfo } = pack;
           const newImages = {
             logo: ImageFormatter.formatUrl({ imageName: logo, folderPath: '/establishments/logo' }),
             cover: ImageFormatter.formatUrl({ imageName: cover, folderPath: '/establishments/cover' }),
           };
 
           return {
-            ...pack,
-            brandImages: {
+            ...restOfInfo,
+            imagesBrand: {
               ...newImages,
             },
           };
