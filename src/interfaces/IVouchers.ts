@@ -101,3 +101,11 @@ export const IVouchersGetDashboardSchema = z.object({
 });
  
 export type IVouchersGetDashboard = z.infer<typeof IVouchersGetDashboardSchema>;
+
+export const IVoucherSingleWithdrawSchema = z.object({
+  voucherCode: z.string(),
+  motive: z.string(),
+  // productId: z.number(),
+});
+
+export type IVoucherSingleWithdraw = z.infer<typeof IVoucherSingleWithdrawSchema>;

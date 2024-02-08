@@ -58,10 +58,10 @@ export default class DashboardController {
   }
 
   public static async getVouchers(req: Request, res: Response): Promise<void> {
-    const getParams = <IVouchersGetDashboard>req.query;
-    const parsedParams = IVouchersGetDashboardSchema.parse(getParams);
+    const vouchersInfo = <IVouchersGetDashboard>req.query;
+    const parsedVouchersInfo = IVouchersGetDashboardSchema.parse(vouchersInfo);
 
-    const vouchers = await VouchersService.getVouchersDashboard(parsedParams);
+    const vouchers = await VouchersService.getVouchersDashboard(parsedVouchersInfo);
 
     res.status(200).json(vouchers);
   }

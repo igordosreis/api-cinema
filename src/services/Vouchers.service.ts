@@ -25,6 +25,7 @@ import ordersUtil from '../utils/orders.util';
 import PacksService from './Packs.service';
 import {
   IVoucherAvailable, 
+  IVoucherSingleWithdraw, 
   IVouchersByDate,
   IVouchersCodeArray,
   IVouchersGetDashboard,
@@ -34,6 +35,8 @@ import VouchersUserModel from '../database/models/VouchersUser.model';
 import { IPagination } from '../interfaces/IPagination';
 import { CONSOLE_LOG_ERROR_TITLE } from '../constants';
 import createVouchersGetSqlizeQueryUtil from '../utils/createVouchersGetSqlizeQuery.util';
+import VouchersWithdrawModel from '../database/models/VouchersWithdraw.model';
+import db from '../database/models';
 
 export default class VouchersService {
   public static async getVouchersByProductId(productId: number, transaction?: Transaction) {
@@ -356,15 +359,41 @@ export default class VouchersService {
     }
   }
 
-  public static async getVouchersDashboard(getParams: IVouchersGetDashboard) {
+  public static async getVouchersDashboard(vouchersInfo: IVouchersGetDashboard) {
     try {
       const vouchers = await VouchersAvailableModel.findAll({
-        ...createVouchersGetSqlizeQueryUtil.create(getParams),
+        ...createVouchersGetSqlizeQueryUtil.create(vouchersInfo),
         order: [['createdAt', 'ASC']],
       });
 
       return vouchers;
     } catch (error) {
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
+
+      throw new CustomError(cannotGetVouchers);
+    }
+  }
+
+  public static async withdrawSingleVoucher(voucherInfo: IVoucherSingleWithdraw) {
+    const t = await db.transaction();
+    try {
+      const { voucherCode, motive } = voucherInfo;
+
+      const voucher = await VouchersAvailableModel.findOne({
+        where: { voucherCode },
+        transaction: t,
+      });
+
+      const isVoucherNotFound = !voucher;
+      if (isVoucherNotFound) throw new CustomError(vouchersNotFound);
+
+      await VouchersWithdrawModel.create({ ...voucher.dataValues, motive });
+      await voucher.destroy();
+
+      await t.commit();
+    } catch (error) {
+      await t.rollback();
+
       console.log(CONSOLE_LOG_ERROR_TITLE, error);
 
       throw new CustomError(cannotGetVouchers);

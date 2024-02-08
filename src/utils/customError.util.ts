@@ -56,7 +56,7 @@ export const vouchersNotEnough: ICustomError = {
 
 export const vouchersNotFound: ICustomError = {
   status: 404,
-  title: 'Vouchers não encontrados.',
+  title: 'Voucher(s) não encontrado(s).',
   message: 'Nenhum voucher foi encontrado.',
 };
 
