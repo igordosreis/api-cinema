@@ -41,6 +41,7 @@ module.exports = {
         counter: null,
         counter_limit: null,
         limited: false,
+        establishment_id: 488,
       },
       {
         active: true,
@@ -52,6 +53,7 @@ module.exports = {
         counter: 0,
         counter_limit: 10,
         limited: true,
+        establishment_id: 488,
       },
       {
         active: false,
@@ -63,6 +65,7 @@ module.exports = {
         counter: null,
         counter_limit: null,
         limited: false,
+        establishment_id: 488,
       },
       {
         active: false,
@@ -74,6 +77,7 @@ module.exports = {
         counter: 0,
         counter_limit: 10,
         limited: true,
+        establishment_id: 488,
       },
     ], {});
   },
