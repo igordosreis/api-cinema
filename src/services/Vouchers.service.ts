@@ -377,7 +377,7 @@ export default class VouchersService {
   public static async withdrawSingleVoucher(voucherInfo: IVoucherSingleWithdraw) {
     const t = await db.transaction();
     try {
-      const { voucherCode, motive } = voucherInfo;
+      const { voucherCode, motive, soldPrice } = voucherInfo;
 
       const voucher = await VouchersAvailableModel.findOne({
         where: { voucherCode },
@@ -387,8 +387,15 @@ export default class VouchersService {
       const isVoucherNotFound = !voucher;
       if (isVoucherNotFound) throw new CustomError(vouchersNotFound);
 
-      await VouchersWithdrawModel.create({ ...voucher.dataValues, motive });
-      await voucher.destroy();
+      if (soldPrice) {
+        await VouchersWithdrawModel.create(
+          { ...voucher.dataValues, motive, soldPrice },
+          { transaction: t },
+        );
+      } else {
+        await VouchersWithdrawModel.create({ ...voucher.dataValues, motive }, { transaction: t });
+      }
+      await voucher.destroy({ transaction: t });
 
       await t.commit();
     } catch (error) {

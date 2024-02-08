@@ -4,6 +4,8 @@ import { PacksService, ProductsService, TagsService, VouchersService } from '../
 import DashboardUtil from '../utils/dashboard.util';
 import {
   IVoucherNewParamsRaw,
+  IVoucherSingleWithdraw,
+  IVoucherSingleWithdrawSchema,
   IVouchersCodeArraySchema,
   IVouchersGetDashboard,
   IVouchersGetDashboardSchema,
@@ -64,5 +66,14 @@ export default class DashboardController {
     const vouchers = await VouchersService.getVouchersDashboard(parsedVouchersInfo);
 
     res.status(200).json(vouchers);
+  }
+
+  public static async withdrawSingleVoucher(req: Request, res: Response): Promise<void> {
+    const voucherInfo = req.query as unknown as IVoucherSingleWithdraw;
+    
+    const parsedVoucherInfo = IVoucherSingleWithdrawSchema.parse(voucherInfo);
+    await VouchersService.withdrawSingleVoucher(parsedVoucherInfo);
+
+    res.status(200).end();
   }
 }
