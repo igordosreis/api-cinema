@@ -28,6 +28,7 @@ module.exports = {
       },
       establishment_id: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         references: {
           model: 'establishments',
           key: 'id', 
@@ -41,8 +42,8 @@ module.exports = {
         defaultValue: null,
       },
       expire_at: {
+        allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: null,
       },
       created_at: {
         type: Sequelize.DATE,
@@ -54,7 +55,7 @@ module.exports = {
       },
       motive: {
         type: Sequelize.STRING,
-        allowNull: true,
+        allowNull: false,
       },
     }, {
       engine: 'InnoDB',

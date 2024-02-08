@@ -36,6 +36,7 @@ module.exports = {
         onUpdate: 'CASCADE',
       },
       establishment_id: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         references: {
           model: 'establishments',
@@ -50,8 +51,8 @@ module.exports = {
         defaultValue: null,
       },
       expire_at: {
+        allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: null,
       },
       created_at: {
         type: Sequelize.DATE,

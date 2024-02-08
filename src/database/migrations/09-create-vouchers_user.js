@@ -37,6 +37,7 @@ module.exports = {
         onUpdate: 'CASCADE',
       },
       establishment_id: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         references: {
           model: 'establishments',
