@@ -212,6 +212,12 @@ export const createProductError: ICustomError = {
   message: 'Não foi possível registrar o produto no momento. Tente noavmente mais tarde.',
 };
 
+export const editProductError: ICustomError = {
+  status: 500,
+  title: 'Produto não modificado.',
+  message: 'Não foi possível editar o produto no momento. Tente noavmente mais tarde.',
+};
+
 export const planNotFound: ICustomError = {
   status: 404,
   title: 'Plano não encontrado.',

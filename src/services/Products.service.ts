@@ -5,9 +5,9 @@ import EstablishmentsImagesModel from '../database/models/EstablishmentsImages.m
 import EstablishmentsProductsModel from '../database/models/EstablishmentsProducts.model';
 import ProductsTypesModel from '../database/models/ProductsTypes.model';
 import VouchersAvailableModel from '../database/models/VouchersAvailable.model';
-import { IProductCreateInfo, IProductQuery, IProductResult } from '../interfaces/IProducts';
+import { IProductCreateInfo, IProductEditInfo, IProductQuery, IProductResult } from '../interfaces/IProducts';
 import createProductSearchSqlizeQueryUtil from '../utils/createProductSearchSqlizeQuery.util';
-import CustomError, { createProductError, establishmentServiceUnavailable } from '../utils/customError.util';
+import CustomError, { createProductError, editProductError, establishmentServiceUnavailable, productNotFound } from '../utils/customError.util';
 import EstablishmentsModel from '../database/models/Establishments.model';
 import PaginationUtil from '../utils/pagination.util';
 import { CONSOLE_LOG_ERROR_TITLE } from '../constants';
@@ -198,6 +198,36 @@ export default class ProductsService {
       console.log(CONSOLE_LOG_ERROR_TITLE, error);
 
       throw new CustomError(createProductError);
+    }
+  }
+
+  public static async editProduct(editProductInfo: IProductEditInfo) {
+    const t = await db.transaction();
+    try {
+      const { productId, tags, ...restOfInfo } = editProductInfo;
+
+      const product = await EstablishmentsProductsModel.findByPk(productId, { transaction: t });
+
+      const isProductNotFound = !product;
+      if (isProductNotFound) throw new CustomError(productNotFound);
+
+      await product.update({ ...restOfInfo });
+
+      const isEditTags = tags?.length;
+      if (isEditTags) {
+        await TagsProductsModel.destroy({ where: { productId }, transaction: t });
+
+        const formattedTagsArray = DashboardUtil.formatTagsArrayWithIds({ tags, productId });
+        await TagsProductsModel.bulkCreate(formattedTagsArray, { transaction: t });
+      }
+
+      await t.commit();
+    } catch (error) {
+      await t.rollback();
+      
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
+
+      throw new CustomError(editProductError);
     }
   }
 }

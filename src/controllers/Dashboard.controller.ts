@@ -1,5 +1,10 @@
 import { Request, Response } from 'express';
-import { IProductCreateInfoBody, IProductCreateInfoSchema } from '../interfaces/IProducts';
+import {
+  IProductCreateInfoBody,
+  IProductCreateInfoSchema,
+  IProductEditInfoBody,
+  IProductEditInfoSchema,
+} from '../interfaces/IProducts';
 import { PacksService, ProductsService, TagsService, VouchersService } from '../services';
 import DashboardUtil from '../utils/dashboard.util';
 import {
@@ -16,8 +21,8 @@ import { IPackCreateInfoBody, IPackCreateInfoSchema } from '../interfaces/IPacks
 
 export default class DashboardController {
   public static async createProduct(req: Request, res: Response): Promise<void> {
-    const { newProductInfo } = <IProductCreateInfoBody>req.body;
-    const parsedNewProductInfo = IProductCreateInfoSchema.parse(newProductInfo);
+    const { productInfo } = <IProductCreateInfoBody>req.body;
+    const parsedNewProductInfo = IProductCreateInfoSchema.parse(productInfo);
 
     const productId = await ProductsService.createProduct(parsedNewProductInfo);
 
@@ -25,8 +30,8 @@ export default class DashboardController {
   }
 
   public static async createPack(req: Request, res: Response): Promise<void> {
-    const { newPackInfo } = <IPackCreateInfoBody>req.body;
-    const parsedNewPackInfo = IPackCreateInfoSchema.parse(newPackInfo);
+    const { packInfo } = <IPackCreateInfoBody>req.body;
+    const parsedNewPackInfo = IPackCreateInfoSchema.parse(packInfo);
 
     const packId = await PacksService.createPack(parsedNewPackInfo);
 
@@ -73,6 +78,15 @@ export default class DashboardController {
     
     const parsedVoucherInfo = IVoucherSingleWithdrawSchema.parse(voucherInfo);
     await VouchersService.withdrawSingleVoucher(parsedVoucherInfo);
+
+    res.status(200).end();
+  }
+
+  public static async editProduct(req: Request, res: Response): Promise<void> {
+    const { productInfo } = <IProductEditInfoBody>req.body;
+
+    const parsedEditProductInfo = IProductEditInfoSchema.parse(productInfo);
+    await ProductsService.editProduct(parsedEditProductInfo);
 
     res.status(200).end();
   }
