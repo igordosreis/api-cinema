@@ -17,7 +17,11 @@ import {
 } from '../interfaces/IVouchers';
 import formatRequestQueryUtil from '../utils/formatRequestQuery.util';
 import { ITagsNewInBody, ITagsNewSchema } from '../interfaces/ITags';
-import { IPackCreateInfoBody, IPackCreateInfoSchema } from '../interfaces/IPacks';
+import {
+  IPackCreateInfoBody,
+  IPackCreateInfoSchema,
+  IPackEditInfoBody,
+} from '../interfaces/IPacks';
 
 export default class DashboardController {
   public static async createProduct(req: Request, res: Response): Promise<void> {
@@ -28,9 +32,27 @@ export default class DashboardController {
 
     res.status(200).json(productId);
   }
+  
+  public static async editProduct(req: Request, res: Response): Promise<void> {
+    const { productInfo } = <IProductEditInfoBody>req.body;
+
+    const parsedEditProductInfo = IProductEditInfoSchema.parse(productInfo);
+    await ProductsService.editProduct(parsedEditProductInfo);
+
+    res.status(200).end();
+  }
 
   public static async createPack(req: Request, res: Response): Promise<void> {
     const { packInfo } = <IPackCreateInfoBody>req.body;
+    const parsedNewPackInfo = IPackCreateInfoSchema.parse(packInfo);
+
+    const packId = await PacksService.createPack(parsedNewPackInfo);
+
+    res.status(200).json(packId);
+  }
+
+  public static async editPack(req: Request, res: Response): Promise<void> {
+    const { packInfo } = <IPackEditInfoBody>req.body;
     const parsedNewPackInfo = IPackCreateInfoSchema.parse(packInfo);
 
     const packId = await PacksService.createPack(parsedNewPackInfo);
@@ -54,16 +76,6 @@ export default class DashboardController {
     res.status(200).end();
   }
 
-  public static async createTag(req: Request, res: Response): Promise<void> {
-    const { tags, typeId } = <ITagsNewInBody>req.body;
-    ITagsNewSchema.parse(tags);
-
-    const formattedTags = DashboardUtil.formatTagsArrayWithName(tags);
-    await TagsService.createTags(formattedTags, typeId);
-
-    res.status(200).end();
-  }
-
   public static async getVouchers(req: Request, res: Response): Promise<void> {
     const vouchersInfo = <IVouchersGetDashboard>req.query;
     const parsedVouchersInfo = IVouchersGetDashboardSchema.parse(vouchersInfo);
@@ -82,11 +94,12 @@ export default class DashboardController {
     res.status(200).end();
   }
 
-  public static async editProduct(req: Request, res: Response): Promise<void> {
-    const { productInfo } = <IProductEditInfoBody>req.body;
+  public static async createTag(req: Request, res: Response): Promise<void> {
+    const { tags, typeId } = <ITagsNewInBody>req.body;
+    ITagsNewSchema.parse(tags);
 
-    const parsedEditProductInfo = IProductEditInfoSchema.parse(productInfo);
-    await ProductsService.editProduct(parsedEditProductInfo);
+    const formattedTags = DashboardUtil.formatTagsArrayWithName(tags);
+    await TagsService.createTags(formattedTags, typeId);
 
     res.status(200).end();
   }
