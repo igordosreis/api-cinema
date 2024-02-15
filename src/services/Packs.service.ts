@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 /* eslint-disable sonarjs/cognitive-complexity */
 /* eslint-disable max-len */
 /* eslint-disable max-lines-per-function */
@@ -5,7 +6,7 @@ import sequelize, { Op } from 'sequelize';
 import EstablishmentsProductsModel from '../database/models/EstablishmentsProducts.model';
 import PacksModel from '../database/models/Packs.model';
 import PacksProductsModel from '../database/models/PacksProducts.model';
-import { IPackCreateInfo, IPackSearchQuery, IPackSummary, IPacksByQuery } from '../interfaces/IPacks';
+import { IPackCreateInfo, IPackEditInfo, IPackSearchQuery, IPackSummary, IPacksByQuery } from '../interfaces/IPacks';
 import CustomError, { packNotFound, packServiceUnavailable } from '../utils/customError.util';
 import VouchersAvailableModel from '../database/models/VouchersAvailable.model';
 import EstablishmentsImagesModel from '../database/models/EstablishmentsImages.model';
@@ -534,11 +535,49 @@ export default class PacksService {
       const formattedProductsArray = PackUtil.formatProductArrayWithPackId(products, packId);
       await PacksProductsModel.bulkCreate(formattedProductsArray, { transaction: t });
 
-      t.commit();
+      await t.commit();
 
       return packId;
     } catch (error) {
-      t.rollback();
+      await t.rollback();
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
+      if (error instanceof CustomError) throw error;
+
+      throw new CustomError(packServiceUnavailable);
+    }
+  }
+
+  public static async editPack(newPackInfo: IPackEditInfo) {
+    const t = await db.transaction();
+    try {
+      const { packId, tags, products, ...restOfInfo } = newPackInfo;
+      
+      const pack = await PacksModel.findByPk(packId, { transaction: t });
+
+      const isPackNotFound = !pack;
+      if (isPackNotFound) throw new CustomError(packNotFound);
+
+      await pack.update({ ...restOfInfo });
+
+      const isEditTags = tags?.length;
+      if (isEditTags) {
+        await TagsPacksModel.destroy({ where: { packId }, transaction: t });
+
+        const formattedTagsArray = DashboardUtil.formatTagsArrayWithIds({ tags, packId });
+        await TagsPacksModel.bulkCreate(formattedTagsArray, { transaction: t });
+      }
+
+      const isEditProducts = products?.length;
+      if (isEditProducts) {
+        await PacksProductsModel.destroy({ where: { packId }, transaction: t });
+
+        const formattedProductsArray = PackUtil.formatProductArrayWithPackId(products, packId);
+        await PacksProductsModel.bulkCreate(formattedProductsArray, { transaction: t });
+      }
+
+      await t.commit();
+    } catch (error) {
+      await t.rollback();
       console.log(CONSOLE_LOG_ERROR_TITLE, error);
       if (error instanceof CustomError) throw error;
 
