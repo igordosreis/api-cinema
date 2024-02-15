@@ -1,4 +1,5 @@
 /* eslint-disable max-lines-per-function */
+import { Transaction } from 'sequelize';
 import EstablishmentsProductsModel from '../database/models/EstablishmentsProducts.model';
 import { IProductInPack } from '../interfaces/IPacks';
 import CustomError, {
@@ -33,15 +34,17 @@ export default class PackUtil {
     products,
     packPrice,
     establishmentId,
+    transaction,
   }: {
     products: IProductInPack[];
     packPrice: number;
     establishmentId: number;
+    transaction: Transaction
   }) {
     const totalPrice = await products.reduce(async (accPrice: Promise<number>, currProduct) => {
       const newAccPrice = await accPrice;
       const { productId, price, quantity } = currProduct;
-      const product = await EstablishmentsProductsModel.findByPk(productId);
+      const product = await EstablishmentsProductsModel.findByPk(productId, { transaction });
 
       const isProductNotFound = !product;
       if (isProductNotFound) throw new CustomError(productNotFound);

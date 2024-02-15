@@ -526,7 +526,7 @@ export default class PacksService {
         { transaction: t },
       ); 
 
-      await PackUtil.validateProducts({ products, packPrice: price, establishmentId });
+      await PackUtil.validateProducts({ products, packPrice: price, establishmentId, transaction: t });
 
       const formattedTagsArray = DashboardUtil.formatTagsArrayWithIds({ tags, packId });
       await TagsPacksModel.bulkCreate(formattedTagsArray, { transaction: t });
