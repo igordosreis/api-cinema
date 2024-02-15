@@ -79,5 +79,5 @@ export const IPackCreateInfoSchema = z
 export type IPackCreateInfo = z.infer<typeof IPackCreateInfoSchema>;
 
 export interface IPackCreateInfoBody {
-  newPackInfo: IPackCreateInfo;
+  packInfo: IPackCreateInfo;
 }

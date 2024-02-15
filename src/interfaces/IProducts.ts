@@ -58,7 +58,31 @@ export const IProductCreateInfoSchema = z
 export type IProductCreateInfo = z.infer<typeof IProductCreateInfoSchema>;
 
 export interface IProductCreateInfoBody {
-  newProductInfo: IProductCreateInfo;
+  productInfo: IProductCreateInfo;
+}
+
+export const IProductEditInfoSchema = z
+  .object({
+    productId: z.number(),
+    establishmentId: z.number().optional(),
+    active: z.boolean().optional(),
+    purchasable: z.boolean().optional(),
+    name: z.string().optional(),
+    description: z.string().optional(),
+    image: z.string().optional(),
+    price: z.number().optional(),
+    rules: z.string().optional(),
+    type: z.number().optional(),
+    soldOutAmount: z.number().optional(),
+    expireAt: z.string().pipe(z.coerce.date()).optional(),
+    tags: z.array(z.number()).optional(),
+  })
+  .strict();
+
+export type IProductEditInfo = z.infer<typeof IProductEditInfoSchema>;
+
+export interface IProductEditInfoBody {
+  productInfo: IProductEditInfo;
 }
 
 export type IProductResult = EstablishmentsProductsModel & {
