@@ -81,3 +81,26 @@ export type IPackCreateInfo = z.infer<typeof IPackCreateInfoSchema>;
 export interface IPackCreateInfoBody {
   packInfo: IPackCreateInfo;
 }
+
+export const IPackEditInfoSchema = z
+  .object({
+    packId: z.number(),
+    establishmentId: z.number().optional(),
+    active: z.boolean().optional(),
+    name: z.string().optional(),
+    description: z.string().optional(),
+    image: z.string().optional(),
+    price: z.number().optional(),
+    rules: z.string().optional(),
+    counterLimit: z.number().optional(),
+    tags: z.array(z.number()).optional(),
+    expireAt: z.string().pipe(z.coerce.date()).optional(),
+    products: z.array(IProductInPackSchema).optional(),
+  })
+  .strict();
+
+export type IPackEditInfo = z.infer<typeof IPackEditInfoSchema>;
+
+export interface IPackEditInfoBody {
+  packInfo: IPackEditInfo;
+}
