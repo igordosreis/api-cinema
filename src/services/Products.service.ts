@@ -170,6 +170,13 @@ export default class ProductsService {
         icon: ImageFormatter.formatUrl({ imageName: type.icon, folderPath: '/product-types' }),
       }));
 
+      const packType = {
+        id: 'pack',
+        name: 'pack',
+        appName: 'combo',
+      };
+      productTypesWithImgLinks.push(packType);
+
       return productTypesWithImgLinks;
     } catch (error: CustomError | unknown) {
       console.log(CONSOLE_LOG_ERROR_TITLE, error);
