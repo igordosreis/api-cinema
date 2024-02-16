@@ -6,7 +6,7 @@ import {
   IProductRawQuerySchema,
 } from '../interfaces/IProducts';
 import formatRequestQueryUtil from '../utils/formatRequestQuery.util';
-import SearchService from '../services/Search.service';
+// import SearchService from '../services/Search.service';
 import { PacksService, ProductsService } from '../services';
 
 export default class SearchController {
@@ -24,21 +24,19 @@ export default class SearchController {
 
       return res.status(200).json(packs);
     }
-    if (type === 'product') {
-      const formattedSearchQuery = formatRequestQueryUtil.formatProductQuery(searchQuery);
-      IProductQuerySchema.parse(formattedSearchQuery);
-  
-      const { type: removedType, ...restOfQuery } = formattedSearchQuery;
-      const product = await ProductsService.getProductsByQuery(restOfQuery);
-
-      return res.status(200).json(product);
-    }
-
+    
     const formattedSearchQuery = formatRequestQueryUtil.formatProductQuery(searchQuery);
     IProductQuerySchema.parse(formattedSearchQuery);
 
-    const productsAndPacks = await SearchService.productsAndPacksSearch(formattedSearchQuery);
+    const { type: removedType, ...restOfQuery } = formattedSearchQuery;
+    const product = await ProductsService.getProductsByQuery(restOfQuery);
 
-    res.status(200).json(productsAndPacks);
+    return res.status(200).json(product);
+    // const formattedSearchQuery = formatRequestQueryUtil.formatProductQuery(searchQuery);
+    // IProductQuerySchema.parse(formattedSearchQuery);
+
+    // const productsAndPacks = await SearchService.productsAndPacksSearch(formattedSearchQuery);
+
+    // res.status(200).json(productsAndPacks);
   }
 }
