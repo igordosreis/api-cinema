@@ -2,7 +2,7 @@
 /* eslint-disable sonarjs/cognitive-complexity */
 /* eslint-disable max-len */
 /* eslint-disable max-lines-per-function */
-import sequelize, { Op } from 'sequelize';
+import sequelize, { Op, Transaction } from 'sequelize';
 import EstablishmentsProductsModel from '../database/models/EstablishmentsProducts.model';
 import PacksModel from '../database/models/Packs.model';
 import PacksProductsModel from '../database/models/PacksProducts.model';
@@ -509,7 +509,7 @@ export default class PacksService {
     return allPacks;
   }
 
-  public static async getPackSummaryById(packId: number) {
+  public static async getPackSummaryById(packId: number, transaction?: Transaction) {
     try {
       const pack = await PacksModel.findOne({
         include: [
@@ -519,6 +519,7 @@ export default class PacksService {
           },
         ],
         where: { packId },
+        transaction,
       });
   
       const isPackNotFound = !pack;

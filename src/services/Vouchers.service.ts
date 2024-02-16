@@ -84,7 +84,7 @@ export default class VouchersService {
       const isPack = 'packId' in unitInfo;
       if (isPack) {
         const { packId, amountRequested } = unitInfo;
-        const pack = await PacksService.getPackSummaryById(packId);
+        const pack = await PacksService.getPackSummaryById(packId, transaction);
 
         return { pack, amountRequested };
       }
