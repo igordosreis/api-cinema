@@ -28,8 +28,7 @@ export default class SearchController {
     const formattedSearchQuery = formatRequestQueryUtil.formatProductQuery(searchQuery);
     IProductQuerySchema.parse(formattedSearchQuery);
 
-    const { type: removedType, ...restOfQuery } = formattedSearchQuery;
-    const product = await ProductsService.getProductsByQuery(restOfQuery);
+    const product = await ProductsService.getProductsByQuery(formattedSearchQuery);
 
     return res.status(200).json(product);
     // const formattedSearchQuery = formatRequestQueryUtil.formatProductQuery(searchQuery);

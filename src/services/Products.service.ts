@@ -19,6 +19,9 @@ import TagsModel from '../database/models/Tags.model';
 
 export default class ProductsService {
   public static async getProductsByQuery(formattedSearchQuery: IProductQuery) {
+    console.log(` -------------------------------------- formattedSearchQuery:
+    
+    `, formattedSearchQuery);
     try {
       const { tags } = formattedSearchQuery;
       const products = await EstablishmentsProductsModel.findAll({
