@@ -12,8 +12,8 @@ import dateUtils from '../utils/date.utils';
 export default class OrdersController {
   public static async createOrder(req: Request, res: Response): Promise<void> {
     const orderRequest = <IOrderRequestRawBody>req.body;
-    const formattedRequest = formatRequestQueryUtil.formatCreateOrder(orderRequest);
 
+    const formattedRequest = formatRequestQueryUtil.formatCreateOrder(orderRequest);
     const createOrderResponse = await OrdersService.createOrder(formattedRequest);
 
     res.status(200).json(createOrderResponse);
@@ -24,7 +24,6 @@ export default class OrdersController {
     const { userInfo } = <IUserInfoInBody>req.body;
 
     const orderSearchFormatted = formatRequestQueryUtil.formatOrderSearch({ orderId, userInfo });
-
     await OrdersService.cancelOrder(orderSearchFormatted);
 
     res.status(200).end();
