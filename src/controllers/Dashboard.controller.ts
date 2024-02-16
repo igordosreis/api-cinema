@@ -21,6 +21,7 @@ import {
   IPackCreateInfoBody,
   IPackCreateInfoSchema,
   IPackEditInfoBody,
+  IPackEditInfoSchema,
 } from '../interfaces/IPacks';
 
 export default class DashboardController {
@@ -53,9 +54,9 @@ export default class DashboardController {
 
   public static async editPack(req: Request, res: Response): Promise<void> {
     const { packInfo } = <IPackEditInfoBody>req.body;
-    const parsedNewPackInfo = IPackCreateInfoSchema.parse(packInfo);
+    const parsedEditPackInfo = IPackEditInfoSchema.parse(packInfo);
 
-    const packId = await PacksService.createPack(parsedNewPackInfo);
+    const packId = await PacksService.editPack(parsedEditPackInfo);
 
     res.status(200).json(packId);
   }
