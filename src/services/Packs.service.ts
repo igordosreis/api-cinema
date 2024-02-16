@@ -487,6 +487,22 @@ export default class PacksService {
             },
           ],
         },
+        {
+          model: TagsPacksModel,
+          as: 'tagsPack',
+          include: [
+            {
+              model: TagsModel,
+              as: 'packTags',
+              attributes: {
+                exclude: ['id', 'createdAt', 'updatedAt'],
+              },
+            },
+          ],
+          attributes: {
+            exclude: ['packId'],
+          },
+        },
       ],
     });
 
