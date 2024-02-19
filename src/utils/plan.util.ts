@@ -127,10 +127,11 @@ class PlanUtil {
       const {
         productTypeId,
         quantity,
-        type: { name, icon },
+        type: { name, icon, appName },
       } = currType;
 
       const currTypeUseInfo: IPlanTypeUsedInfo = {
+        appName,
         typeId: productTypeId,
         typeName: name,
         typeIcon: ImageFormatter.formatUrl({ imageName: icon, folderPath: '/product-types' }),

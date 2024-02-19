@@ -14,6 +14,7 @@ export interface IPlanUsedAmount {
 }
 
 export type IPlanTypeUsedInfo = {
+  appName: string;
   typeId: number;
   typeName: string;
   typeIcon: string;
