@@ -4,8 +4,6 @@ import {
   IEstablishmentAddressQueryRawSchema,
   IEstablishmentAddressQuerySchema,
   IEstablishmentAddressRawQuery,
-  IEstablishmentBrandEditInBody,
-  IEstablishmentBrandEditSchema,
 } from '../interfaces/IEstablishments';
 import formatRequestQueryUtil from '../utils/formatRequestQuery.util';
 import { IUserInfoInBody } from '../interfaces/IUser';
@@ -62,14 +60,5 @@ export default class EstablishmentsController {
     });
 
     res.status(200).json(establishment);
-  }
-
-  public static async editEstablishment(req: Request, res: Response): Promise<void> {
-    const { establishmentInfo } = <IEstablishmentBrandEditInBody>req.body;
-
-    const parsedEditInfo = IEstablishmentBrandEditSchema.parse(establishmentInfo);
-    await EstablishmentsService.editEstablishment(parsedEditInfo);
-
-    res.status(200).end();
   }
 }

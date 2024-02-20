@@ -3,6 +3,7 @@ import { DashboardController } from '../controllers';
 
 const dashboardRouter = Router();
 
+dashboardRouter.patch('/establishment/edit', DashboardController.editEstablishment);
 dashboardRouter.post('/product/create', DashboardController.createProduct);
 dashboardRouter.patch('/product/edit', DashboardController.editProduct);
 dashboardRouter.post('/pack/create', DashboardController.createPack);

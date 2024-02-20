@@ -5,7 +5,13 @@ import {
   IProductEditInfoBody,
   IProductEditInfoSchema,
 } from '../interfaces/IProducts';
-import { PacksService, ProductsService, TagsService, VouchersService } from '../services';
+import {
+  EstablishmentsService,
+  PacksService,
+  ProductsService,
+  TagsService,
+  VouchersService,
+} from '../services';
 import DashboardUtil from '../utils/dashboard.util';
 import {
   IVoucherNewParamsRaw,
@@ -23,6 +29,10 @@ import {
   IPackEditInfoBody,
   IPackEditInfoSchema,
 } from '../interfaces/IPacks';
+import {
+  IEstablishmentBrandEditInBody,
+  IEstablishmentBrandEditSchema,
+} from '../interfaces/IEstablishments';
 
 export default class DashboardController {
   public static async createProduct(req: Request, res: Response): Promise<void> {
@@ -101,6 +111,15 @@ export default class DashboardController {
 
     const formattedTags = DashboardUtil.formatTagsArrayWithName(tags);
     await TagsService.createTags(formattedTags, typeId);
+
+    res.status(200).end();
+  }
+
+  public static async editEstablishment(req: Request, res: Response): Promise<void> {
+    const { establishmentInfo } = <IEstablishmentBrandEditInBody>req.body;
+
+    const parsedEditInfo = IEstablishmentBrandEditSchema.parse(establishmentInfo);
+    await EstablishmentsService.editEstablishment(parsedEditInfo);
 
     res.status(200).end();
   }
