@@ -96,3 +96,24 @@ export interface IAddress {
   state: string;
   distance: number;
 }
+
+export const IEstablishmentBrandEditSchema = z.object({
+  id: z.number(),
+  name: z.string().optional(),
+  about: z.string().optional(),
+  primaryColor: z.string().optional(),
+  link: z.string().optional(),
+  linkDescription: z.string().optional(),
+  telephone: z.string().optional(),
+  telephoneTwo: z.string().optional(),
+  whatsapp: z.string().optional(),
+  instagram: z.string().optional(),
+  site: z.string().optional(),
+  rules: z.string().optional(),
+  keywords: z.string().optional(),
+  views: z.number().optional(),
+  active: z.boolean().optional(),
+  underHighlight: z.boolean().optional(),
+});
+
+export type IEstablishmentBrandEdit = z.infer<typeof IEstablishmentBrandEditSchema>;
