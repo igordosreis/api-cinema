@@ -117,3 +117,7 @@ export const IEstablishmentBrandEditSchema = z.object({
 });
 
 export type IEstablishmentBrandEdit = z.infer<typeof IEstablishmentBrandEditSchema>;
+
+export interface IEstablishmentBrandEditInBody {
+  establishmentInfo: IEstablishmentBrandEdit;
+}
