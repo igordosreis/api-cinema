@@ -238,35 +238,3 @@ export default class ProductsService {
     }
   }
 }
-
-// {
-//   "adult": false,
-//   "backdrop_path": "/uUiIGztTrfDhPdAFJpr6m4UBMAd.jpg",
-//   "genre_ids": [
-//       {
-//           "id": 878,
-//           "name": "Ficção científica"
-//       },
-//       {
-//           "id": 28,
-//           "name": "Ação"
-//       },
-//       {
-//           "id": 12,
-//           "name": "Aventura"
-//       }
-//   ],
-//   "id": 634492,
-//   "original_language": "en",
-//   "original_title": "Madame Web",
-//   "overview": "Depois de sobreviver a um terrível acidente, a paramédica Cassandra Webb começa a desenvolver habilidades de clarividência. Forçada a enfrentar revelações sobre seu passado, ela estabelece um relacionamento com três jovens destinadas a futuros poderosos... se todas conseguirem sobreviver a um presente mortal.",
-//   "popularity": 794.984,
-//   "poster_path": "https://image.tmdb.org/t/p/w300/zWEm5oy2tE9ku1KSNM089FmZJ2p.jpg",
-//   "release_date": "2024-02-15",
-//   "title": "Madame Teia",
-//   "video": false,
-//   "vote_average": 5.635,
-//   "vote_count": 89,
-//   "isReleased": true,
-//   "daysRemainingAsNowPlaying": 29
-// },

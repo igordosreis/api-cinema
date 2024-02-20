@@ -138,6 +138,20 @@ export const establishmentServiceUnavailable: ICustomError = {
     'O serviço de estabelecimentos não está disponível no momento. Tente novamente mais tarde.',
 };
 
+export const editEstablishmentError: ICustomError = {
+  status: 503,
+  title: OPERATION_UNAVAILABLE,
+  message:
+    'Não foi possível editar o estabelecimento no momento. Tente novamente mais tarde.',
+};
+
+export const establishmentNotFound: ICustomError = {
+  status: 404,
+  title: 'Estabelecimento não encontrado.',
+  message:
+    'O estabelecimento buscado não foi encontrado.',
+};
+
 export const totalError: ICustomError = {
   status: 503,
   title: OPERATION_UNAVAILABLE,

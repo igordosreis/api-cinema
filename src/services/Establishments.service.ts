@@ -9,10 +9,15 @@ import {
   IAddress,
   IEstablishment,
   IEstablishmentAddressQuery,
+  IEstablishmentBrandEdit,
   IEstablishmentById,
 } from '../interfaces/IEstablishments';
 import EstablishmentsImagesModel from '../database/models/EstablishmentsImages.model';
-import CustomError, { establishmentServiceUnavailable } from '../utils/customError.util';
+import CustomError, {
+  editEstablishmentError,
+  establishmentNotFound,
+  establishmentServiceUnavailable,
+} from '../utils/customError.util';
 import {
   CONSOLE_LOG_ERROR_TITLE,
   FOLDER_PATH_ESTABLISHMENT_COVER,
@@ -229,6 +234,28 @@ export default class EstablishmentsService {
       if (error instanceof CustomError) throw error;
 
       throw new CustomError(establishmentServiceUnavailable);
+    }
+  }
+
+  public static async editEstablishment(editEstablishmentInfo: IEstablishmentBrandEdit) {
+    const t = await db.transaction();
+    try {
+      const { id, ...restOfInfo } = editEstablishmentInfo;
+
+      const establishment = await EstablishmentsModel.findByPk(id);
+
+      const isEstablishmentNotFound = !establishment;
+      if (isEstablishmentNotFound) throw new CustomError(establishmentNotFound);
+
+      await establishment.update({ ...restOfInfo });
+
+      await t.commit();
+    } catch (error) {
+      await t.rollback();
+      
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
+
+      throw new CustomError(editEstablishmentError);
     }
   }
 }
