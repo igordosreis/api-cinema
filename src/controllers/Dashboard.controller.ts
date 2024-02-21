@@ -12,7 +12,7 @@ import {
   TagsService,
   VouchersService,
 } from '../services';
-import DashboardUtil from '../utils/dashboard.util';
+import VoucherUtil from '../utils/voucher.util';
 import {
   IVoucherNewParamsRaw,
   IVoucherNewParamsSchema,
@@ -33,6 +33,7 @@ import {
   IEstablishmentBrandEditInBody,
   IEstablishmentBrandEditSchema,
 } from '../interfaces/IEstablishments';
+import TagsUtil from '../utils/tags.util';
 
 export default class DashboardController {
   public static async createProduct(req: Request, res: Response): Promise<void> {
@@ -43,7 +44,7 @@ export default class DashboardController {
 
     res.status(200).json(productId);
   }
-  
+
   public static async editProduct(req: Request, res: Response): Promise<void> {
     const { productInfo } = <IProductEditInfoBody>req.body;
 
@@ -72,11 +73,11 @@ export default class DashboardController {
   }
 
   public static async createVoucher(req: Request, res: Response): Promise<void> {
-    const vouchers = DashboardUtil.getVoucherCodesFromReq(req);
+    const vouchers = VoucherUtil.getVoucherCodesFromReq(req);
     const vouchersParams = <IVoucherNewParamsRaw>req.query;
 
     const vouchersParamsFormatted = IVoucherNewParamsSchema.parse(vouchersParams);
-    const voucherCodeArray = DashboardUtil.addInfoToVoucherCodesArray({
+    const voucherCodeArray = VoucherUtil.addInfoToVoucherCodesArray({
       ...vouchersParamsFormatted,
       vouchers,
     });
@@ -98,7 +99,7 @@ export default class DashboardController {
 
   public static async withdrawSingleVoucher(req: Request, res: Response): Promise<void> {
     const voucherInfo = req.query as unknown as IVoucherSingleWithdraw;
-    
+
     const parsedVoucherInfo = IVoucherSingleWithdrawSchema.parse(voucherInfo);
     await VouchersService.withdrawSingleVoucher(parsedVoucherInfo);
 
@@ -109,7 +110,7 @@ export default class DashboardController {
     const { tags, typeId } = <ITagsNewInBody>req.body;
     ITagsNewSchema.parse(tags);
 
-    const formattedTags = DashboardUtil.formatTagsArrayWithName(tags);
+    const formattedTags = TagsUtil.formatTagsArrayWithName(tags);
     await TagsService.createTags(formattedTags, typeId);
 
     res.status(200).end();

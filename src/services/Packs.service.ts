@@ -18,10 +18,10 @@ import TagsPacksModel from '../database/models/TagsPacks.model';
 import db from '../database/models';
 import { CONSOLE_LOG_ERROR_TITLE } from '../constants';
 import PackUtil from '../utils/pack.util';
-import DashboardUtil from '../utils/dashboard.util';
 import EstablishmentsModel from '../database/models/Establishments.model';
 import TagsModel from '../database/models/Tags.model';
 import ImageFormatter from '../utils/formatImages.util';
+import TagsUtil from '../utils/tags.util';
 
 export default class PacksService {
   public static async getPacksByQuery(formattedSearchQuery: IPackSearchQuery) {
@@ -546,7 +546,7 @@ export default class PacksService {
 
       await PackUtil.validateProducts({ products, packPrice: price, establishmentId, transaction: t });
 
-      const formattedTagsArray = DashboardUtil.formatTagsArrayWithIds({ tags, packId });
+      const formattedTagsArray = TagsUtil.formatTagsArrayWithIds({ tags, packId });
       await TagsPacksModel.bulkCreate(formattedTagsArray, { transaction: t });
 
       const formattedProductsArray = PackUtil.formatProductArrayWithPackId(products, packId);
@@ -580,7 +580,7 @@ export default class PacksService {
       if (isEditTags) {
         await TagsPacksModel.destroy({ where: { packId }, transaction: t });
 
-        const formattedTagsArray = DashboardUtil.formatTagsArrayWithIds({ tags, packId });
+        const formattedTagsArray = TagsUtil.formatTagsArrayWithIds({ tags, packId });
         await TagsPacksModel.bulkCreate(formattedTagsArray, { transaction: t });
       }
 

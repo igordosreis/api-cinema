@@ -8,7 +8,7 @@ import {
 import ExcelUtil from './excel.util';
 import CustomError, { vouchersObjectNotFound } from './customError.util';
 
-export default class DashboardUtil {
+export default class VoucherUtil {
   public static getVoucherCodesFromReq(req: Request): IVouchersNew[] {
     if (req.file?.buffer) {
       const { buffer } = req.file;
@@ -22,7 +22,7 @@ export default class DashboardUtil {
     if (req.body?.vouchers) {
       const { vouchers } = req.body;
 
-      const voucherCodesArray = DashboardUtil.formatVoucherCodesArray(vouchers);
+      const voucherCodesArray = VoucherUtil.formatVoucherCodesArray(vouchers);
       IVouchersNewArraySchema.parse(voucherCodesArray);
 
       return voucherCodesArray;
@@ -49,35 +49,5 @@ export default class DashboardUtil {
     const voucherCodesArray = vouchers.map((voucher) => ({ voucherCode: voucher }));
 
     return voucherCodesArray;
-  }
-
-  public static formatTagsArrayWithIds(
-    itemInfo: { tags: number[]; productId: number } | { tags: number[]; packId: number },
-  ): Array<{ tagId: number; productId: number }> | Array<{ tagId: number; packId: number }> {
-    const formattedArray = itemInfo.tags.map((tag) => {
-      if ('productId' in itemInfo) {
-        return {
-          tagId: tag,
-          productId: itemInfo.productId,
-        };
-      }
-      if ('packId' in itemInfo) {
-        return {
-          tagId: tag,
-          packId: itemInfo.packId,
-        };
-      }
-      throw new Error('Array inválido');
-    }) as Array<{ tagId: number; productId: number }> | Array<{ tagId: number; packId: number }>;
-
-    return formattedArray;
-  }
-
-  public static formatTagsArrayWithName(tags: string[]) {
-    const formattedArray = tags.map((tag) => ({
-      name: tag,
-    }));
-
-    return formattedArray;
   }
 }

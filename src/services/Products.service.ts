@@ -13,9 +13,9 @@ import PaginationUtil from '../utils/pagination.util';
 import { CONSOLE_LOG_ERROR_TITLE } from '../constants';
 import TagsProductsModel from '../database/models/TagsProducts.model';
 import ImageFormatter from '../utils/formatImages.util';
-import DashboardUtil from '../utils/dashboard.util';
 import db from '../database/models';
 import TagsModel from '../database/models/Tags.model';
+import TagsUtil from '../utils/tags.util';
 
 export default class ProductsService {
   public static async getProductsByQuery(formattedSearchQuery: IProductQuery) {
@@ -193,7 +193,7 @@ export default class ProductsService {
       
       const { productId } = await EstablishmentsProductsModel.create({ ...restOfInfo, type }, { transaction: t });
 
-      const formattedTagsArray = DashboardUtil.formatTagsArrayWithIds({ tags, productId });
+      const formattedTagsArray = TagsUtil.formatTagsArrayWithIds({ tags, productId });
       await TagsProductsModel.bulkCreate(formattedTagsArray, { transaction: t });
 
       await t.commit();
@@ -224,7 +224,7 @@ export default class ProductsService {
       if (isEditTags) {
         await TagsProductsModel.destroy({ where: { productId }, transaction: t });
 
-        const formattedTagsArray = DashboardUtil.formatTagsArrayWithIds({ tags, productId });
+        const formattedTagsArray = TagsUtil.formatTagsArrayWithIds({ tags, productId });
         await TagsProductsModel.bulkCreate(formattedTagsArray, { transaction: t });
       }
 
