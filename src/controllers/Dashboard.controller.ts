@@ -15,13 +15,13 @@ import {
 import DashboardUtil from '../utils/dashboard.util';
 import {
   IVoucherNewParamsRaw,
+  IVoucherNewParamsSchema,
   IVoucherSingleWithdraw,
   IVoucherSingleWithdrawSchema,
   IVouchersCodeArraySchema,
   IVouchersGetDashboard,
   IVouchersGetDashboardSchema,
 } from '../interfaces/IVouchers';
-import formatRequestQueryUtil from '../utils/formatRequestQuery.util';
 import { ITagsNewInBody, ITagsNewSchema } from '../interfaces/ITags';
 import {
   IPackCreateInfoBody,
@@ -75,7 +75,7 @@ export default class DashboardController {
     const vouchers = DashboardUtil.getVoucherCodesFromReq(req);
     const vouchersParams = <IVoucherNewParamsRaw>req.query;
 
-    const vouchersParamsFormatted = formatRequestQueryUtil.formartNewVouchersParams(vouchersParams);
+    const vouchersParamsFormatted = IVoucherNewParamsSchema.parse(vouchersParams);
     const voucherCodeArray = DashboardUtil.addInfoToVoucherCodesArray({
       ...vouchersParamsFormatted,
       vouchers,

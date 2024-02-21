@@ -19,7 +19,6 @@ import { IPagination, IPaginationRequest } from '../interfaces/IPagination';
 import { IMoviesSearchQuery, IMoviesSearchRawQuery } from '../interfaces/IMoviesAPI';
 import { ICartOperation, ICartOperationRequest } from '../interfaces/ICart';
 import CustomError, { badCartObject } from './customError.util';
-import { IVoucherNewParams, IVoucherNewParamsRaw } from '../interfaces/IVouchers';
 
 class FormatRequestQuery {
   private formatTerm = ({ term }: IProductRawQuery | IEstablishmentAddressRawQuery) =>
@@ -229,10 +228,10 @@ class FormatRequestQuery {
   //   cartInfo,
   // });
 
-  formartNewVouchersParams = (vouchersParams: IVoucherNewParamsRaw): IVoucherNewParams => ({
-    date: new Date(vouchersParams.date),
-    productId: Number(vouchersParams.productId),
-  });
+  // formartNewVouchersParams = (vouchersParams: IVoucherNewParamsRaw): IVoucherNewParams => ({
+  //   date: new Date(vouchersParams.date),
+  //   productId: Number(vouchersParams.productId),
+  // });
 }
 
 export default new FormatRequestQuery();

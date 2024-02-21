@@ -77,7 +77,7 @@ export type IVoucherNewParamsRaw = z.infer<typeof IVoucherNewParamsRawSchema>;
 
 export const IVoucherNewParamsSchema = z.object({
   date: z.string().pipe(z.coerce.date()),
-  productId: z.number(),
+  productId: z.string().pipe(z.coerce.number()),
 });
 
 export type IVoucherNewParams = z.infer<typeof IVoucherNewParamsSchema>;
