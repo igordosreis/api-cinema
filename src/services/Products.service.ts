@@ -173,7 +173,7 @@ export default class ProductsService {
       const packType = {
         id: 'pack',
         name: 'pack',
-        appName: 'combo',
+        appName: 'Combos',
       };
       productTypesWithImgLinks.push(packType);
 
