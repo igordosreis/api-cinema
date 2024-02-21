@@ -27,7 +27,7 @@ module.exports = {
         id: 753,
         name: 'Cinemark',
         about: 'É mais que cinema, É Cinemark. Nosso propósito sempre foi o mesmo: oferecer uma experiência cinematográfica inesquecível aos nossos clientes. ',
-        primary_color: '#0043C0',
+        primary_color: '#B5121B',
         link: undefined,
         link_description: 'Clique aqui para comprar',
         telephone: '',
