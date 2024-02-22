@@ -1,10 +1,16 @@
 import { Router } from 'express';
 import { DashboardController } from '../controllers';
 import VoucherExcelUploadMiddleware from '../middlewares/VoucherExcelUpload.middleware';
+import ImageUploadMiddleware from '../middlewares/ImageUpload.middleware';
 
 const dashboardRouter = Router();
 
 dashboardRouter.patch('/establishment/edit', DashboardController.editEstablishment);
+dashboardRouter.patch(
+  '/establishment/image/edit', 
+  ImageUploadMiddleware,
+  DashboardController.editEstablishmentImage,
+);
 dashboardRouter.post('/product/create', DashboardController.createProduct);
 dashboardRouter.patch('/product/edit', DashboardController.editProduct);
 dashboardRouter.post('/pack/create', DashboardController.createPack);
