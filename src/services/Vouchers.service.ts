@@ -24,10 +24,10 @@ import CustomError, {
 import ordersUtil from '../utils/orders.util';
 import PacksService from './Packs.service';
 import {
-  IVoucherAvailable, 
-  IVoucherSingleWithdraw, 
+  IVoucherAvailable,
+  IVoucherSingleWithdraw,
   IVouchersByDate,
-  IVouchersCodeArray,
+  IVouchersInfoArray,
   IVouchersGetDashboard,
 } from '../interfaces/IVouchers';
 import OrdersModel from '../database/models/Orders.model';
@@ -37,6 +37,7 @@ import { CONSOLE_LOG_ERROR_TITLE } from '../constants';
 import createVouchersGetSqlizeQueryUtil from '../utils/createVouchersGetSqlizeQuery.util';
 import VouchersWithdrawModel from '../database/models/VouchersWithdraw.model';
 import db from '../database/models';
+import VoucherUtil from '../utils/voucher.util';
 
 export default class VouchersService {
   public static async getVouchersByProductId(productId: number, transaction?: Transaction) {
@@ -159,7 +160,7 @@ export default class VouchersService {
 
           const newProduct = product[0] as IProductWithRequestedVouchersWithAmount;
           newProduct.amountRequested = orderItem.amountRequested;
-  
+
           return newProduct;
         }
 
@@ -349,11 +350,15 @@ export default class VouchersService {
     }
   }
 
-  public static async createVouchers(vouchersCodeArray: IVouchersCodeArray) {
+  public static async createVouchers(vouchersInfoArray: IVouchersInfoArray) {
     try {
-      await VouchersAvailableModel.bulkCreate(vouchersCodeArray);
+      await VoucherUtil.validateVoucherCodes(vouchersInfoArray);
+
+      await VouchersAvailableModel.bulkCreate(vouchersInfoArray);
     } catch (error) {
       console.log(CONSOLE_LOG_ERROR_TITLE, error);
+
+      if (error instanceof CustomError) throw error;
 
       throw new CustomError(cannotCreateVouchers);
     }
