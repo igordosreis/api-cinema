@@ -161,6 +161,13 @@ export const editEstablishmentError: ICustomError = {
     'Não foi possível editar o estabelecimento no momento. Tente novamente mais tarde.',
 };
 
+export const editEstablishmentImageError: ICustomError = {
+  status: 503,
+  title: OPERATION_UNAVAILABLE,
+  message:
+    'Não foi possível editar a imagem do estabelecimento no momento. Tente novamente mais tarde.',
+};
+
 export const establishmentNotFound: ICustomError = {
   status: 404,
   title: 'Estabelecimento não encontrado.',

@@ -121,3 +121,21 @@ export type IEstablishmentBrandEdit = z.infer<typeof IEstablishmentBrandEditSche
 export interface IEstablishmentBrandEditInBody {
   establishmentInfo: IEstablishmentBrandEdit;
 }
+
+export const IEstablishmentImageEditRawSchema = z.object({
+  establishmentId: z.string(),
+  imageType: z.string(),
+});
+
+export type IEstablishmentImageRawEdit = z.infer<typeof IEstablishmentImageEditRawSchema>;
+
+export const IEstablishmentImageEditSchema = z.object({
+  establishmentId: z.string().pipe(z.coerce.number()),
+  imageType: z.string(),
+});
+
+export type IEstablishmentImageEdit = z.infer<typeof IEstablishmentImageEditSchema>;
+
+export interface IEstablishmentImageName {
+  name: string;
+}

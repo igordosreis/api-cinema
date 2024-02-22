@@ -11,10 +11,12 @@ import {
   IEstablishmentAddressQuery,
   IEstablishmentBrandEdit,
   IEstablishmentById,
+  IEstablishmentImageEdit,
 } from '../interfaces/IEstablishments';
 import EstablishmentsImagesModel from '../database/models/EstablishmentsImages.model';
 import CustomError, {
   editEstablishmentError,
+  editEstablishmentImageError,
   establishmentNotFound,
   establishmentServiceUnavailable,
 } from '../utils/customError.util';
@@ -256,6 +258,32 @@ export default class EstablishmentsService {
       console.log(CONSOLE_LOG_ERROR_TITLE, error);
 
       throw new CustomError(editEstablishmentError);
+    }
+  }
+
+  public static async editImage(imageInfo: IEstablishmentImageEdit, name: string) {
+    try {
+      const { establishmentId, imageType } = imageInfo;
+
+      const isCover = imageType === 'cover';
+      if (isCover) {
+        await EstablishmentsImagesModel.update(
+          { cover: name },
+          { where: { establishmentId } },
+        );
+      }
+
+      const isLogo = imageType === 'logo';
+      if (isLogo) {
+        await EstablishmentsImagesModel.update(
+          { logo: name },
+          { where: { establishmentId } },
+        );
+      }
+    } catch (error) {
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
+
+      throw new CustomError(editEstablishmentImageError);
     }
   }
 }

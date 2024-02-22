@@ -32,6 +32,9 @@ import {
 import {
   IEstablishmentBrandEditInBody,
   IEstablishmentBrandEditSchema,
+  IEstablishmentImageEditSchema,
+  IEstablishmentImageName,
+  IEstablishmentImageRawEdit,
 } from '../interfaces/IEstablishments';
 import TagsUtil from '../utils/tags.util';
 
@@ -121,6 +124,16 @@ export default class DashboardController {
 
     const parsedEditInfo = IEstablishmentBrandEditSchema.parse(establishmentInfo);
     await EstablishmentsService.editEstablishment(parsedEditInfo);
+
+    res.status(200).end();
+  }
+
+  public static async editEstablishmentImage(req: Request, res: Response): Promise<void> {
+    const imageInfo = <IEstablishmentImageRawEdit>req.query;
+    const { name } = <IEstablishmentImageName>req.body;
+
+    const parsedImageInfo = IEstablishmentImageEditSchema.parse(imageInfo);
+    await EstablishmentsService.editImage(parsedImageInfo, name);
 
     res.status(200).end();
   }
