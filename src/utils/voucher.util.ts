@@ -1,5 +1,6 @@
 /* eslint-disable max-lines-per-function */
 import { Request } from 'express';
+import { Transaction } from 'sequelize';
 import {
   IVouchersInfoArray,
   IVouchersCreateInfo,
@@ -77,11 +78,17 @@ export default class VoucherUtil {
     return duplicatesIndexes;
   }
 
-  private static async findDuplicateCodesInDatabase(vouchers: IVouchersInfoArray) {
+  private static async findDuplicateCodesInDatabase(
+    vouchers: IVouchersInfoArray,
+    transaction: Transaction,
+  ) {
     const duplicatesIndexes: IVoucherDuplicateIndexes = {};
 
     await Promise.all(vouchers.map(async ({ voucherCode, productId }, index) => {
-      const voucher = await VouchersAvailableModel.findOne({ where: { voucherCode, productId } });
+      const voucher = await VouchersAvailableModel.findOne({ 
+        where: { voucherCode, productId },
+        transaction, 
+      });
 
       const isVoucherCodeFoundInDB = voucher;
       if (isVoucherCodeFoundInDB) {
@@ -94,7 +101,7 @@ export default class VoucherUtil {
     return duplicatesIndexes;
   }
 
-  public static async formatVouchersDuplicateErrors(
+  public static formatVouchersDuplicateErrors(
     voucherCodesStringArray: string[],
     fileDuplicates: IVoucherDuplicateIndexes,
     databaseDuplicates: IVoucherDuplicateIndexes,
@@ -130,17 +137,17 @@ export default class VoucherUtil {
     return errorsArray;
   }
 
-  public static async validateVoucherCodes(vouchers: IVouchersInfoArray) {
+  public static async validateVoucherCodes(vouchers: IVouchersInfoArray, transaction: Transaction) {
     try {
       const voucherCodesStringArray = vouchers.map(({ voucherCode }) => voucherCode);
 
       const fileDuplicates = this.findDuplicateCodesInFile(voucherCodesStringArray);
-      const databaseDuplicates = await this.findDuplicateCodesInDatabase(vouchers);
+      const databaseDuplicates = await this.findDuplicateCodesInDatabase(vouchers, transaction);
 
       const isError = Object.keys(fileDuplicates).length > 0 
         || Object.keys(databaseDuplicates).length > 0;
       if (isError) {
-        const errorsArray = await this.formatVouchersDuplicateErrors(
+        const errorsArray = this.formatVouchersDuplicateErrors(
           voucherCodesStringArray,
           fileDuplicates,
           databaseDuplicates,

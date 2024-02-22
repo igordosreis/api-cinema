@@ -351,11 +351,15 @@ export default class VouchersService {
   }
 
   public static async createVouchers(vouchersInfoArray: IVouchersInfoArray) {
+    const t = await db.transaction();
     try {
-      await VoucherUtil.validateVoucherCodes(vouchersInfoArray);
+      await VoucherUtil.validateVoucherCodes(vouchersInfoArray, t);
 
-      await VouchersAvailableModel.bulkCreate(vouchersInfoArray);
+      await VouchersAvailableModel.bulkCreate(vouchersInfoArray, { transaction: t });
+
+      await t.commit();
     } catch (error) {
+      await t.rollback();
       console.log(CONSOLE_LOG_ERROR_TITLE, error);
 
       if (error instanceof CustomError) throw error;
