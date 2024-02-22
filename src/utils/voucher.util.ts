@@ -64,13 +64,13 @@ export default class VoucherUtil {
 
   private static findDuplicateCodesInFile(voucherCodesStringArray: string[]) {
     const duplicatesIndexes: IVoucherDuplicateIndexes = {};
-    // const duplicatesIndexes: number[] = [];
     voucherCodesStringArray.filter((item, index) => {
       if (voucherCodesStringArray.indexOf(item) !== index) {
         duplicatesIndexes[index] = index;
-        // duplicatesIndexes.push(index);
+
         return item;
       }
+
       return false;
     });
     
@@ -79,7 +79,6 @@ export default class VoucherUtil {
 
   private static async findDuplicateCodesInDatabase(vouchers: IVouchersInfoArray) {
     const duplicatesIndexes: IVoucherDuplicateIndexes = {};
-    // const duplicatesIndexes: number[] = [];
 
     await Promise.all(vouchers.map(async ({ voucherCode, productId }, index) => {
       const voucher = await VouchersAvailableModel.findOne({ where: { voucherCode, productId } });
@@ -87,7 +86,6 @@ export default class VoucherUtil {
       const isVoucherCodeFoundInDB = voucher;
       if (isVoucherCodeFoundInDB) {
         duplicatesIndexes[index] = index;
-        // duplicatesIndexes.push(index);
       }
 
       return voucher;
@@ -120,9 +118,7 @@ export default class VoucherUtil {
           voucherCodeArray.push('duplicado no banco de dados');
         }
       }
-      console.log(`-------            ---------               --------------       
-      -                          voucherCodeArray
-  `, voucherCodeArray);
+
       return voucherCodeArray;
     });
 
@@ -130,9 +126,7 @@ export default class VoucherUtil {
       headers,
       ...vouchersErrorsAoA,
     ];
-    console.log(`-------            ---------               --------------       
-    -                          errorsArray
-`, errorsArray);
+
     return errorsArray;
   }
 
