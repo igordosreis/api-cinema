@@ -17,7 +17,7 @@ export default class ExcelUtil {
     const worksheet = xlsx.utils.aoa_to_sheet(errorsArray);
     xlsx.utils.book_append_sheet(workbook, worksheet, 'Planilha 1');
 
-    const fileName = `falha-registro-vouchers-${Number(new Date())}.xlsx`;
+    const fileName = `falha_registro_vouchers_${Number(new Date())}.xlsx`;
     const filePath = `uploads/dashboard/excel/${fileName}`;
     xlsx.writeFile(workbook, filePath);
 
