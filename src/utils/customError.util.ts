@@ -84,6 +84,22 @@ export const cannotGetVouchers: ICustomError = {
   message: 'Não foi possível buscar os vouchers agora. Tente novamente mais tarde.',
 };
 
+export const cannotValidateVouchers: ICustomError = {
+  status: 500,
+  title: OPERATION_UNAVAILABLE,
+  message: 'Não foi possível validar os vouchers agora. Tente novamente mais tarde.',
+};
+
+export const voucherDuplicateFound = (url: string): ICustomError => {
+  const errorObject = {
+    status: 400,
+    title: 'Códigos duplicados encontrados.',
+    message: `${url}`,
+  };
+
+  return errorObject;
+};
+
 export const orderServiceUnavailable: ICustomError = {
   status: 503,
   title: OPERATION_UNAVAILABLE,
