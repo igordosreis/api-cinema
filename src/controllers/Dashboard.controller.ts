@@ -18,7 +18,7 @@ import {
   IVoucherNewParamsSchema,
   IVoucherSingleWithdraw,
   IVoucherSingleWithdrawSchema,
-  IVouchersCodeArraySchema,
+  IVouchersInfoArraySchema,
   IVouchersGetDashboard,
   IVouchersGetDashboardSchema,
 } from '../interfaces/IVouchers';
@@ -73,17 +73,17 @@ export default class DashboardController {
   }
 
   public static async createVoucher(req: Request, res: Response): Promise<void> {
-    const vouchers = VoucherUtil.getVoucherCodesFromReq(req);
+    const voucherCodes = VoucherUtil.getVoucherCodesFromReq(req);
     const vouchersParams = <IVoucherNewParamsRaw>req.query;
 
     const vouchersParamsFormatted = IVoucherNewParamsSchema.parse(vouchersParams);
-    const voucherCodeArray = VoucherUtil.addInfoToVoucherCodesArray({
+    const voucherInfoArray = VoucherUtil.addInfoToVoucherCodesArray({
       ...vouchersParamsFormatted,
-      vouchers,
+      voucherCodes,
     });
-    IVouchersCodeArraySchema.parse(voucherCodeArray);
+    IVouchersInfoArraySchema.parse(voucherInfoArray);
 
-    await VouchersService.createVouchers(voucherCodeArray);
+    await VouchersService.createVouchers(voucherInfoArray);
 
     res.status(200).end();
   }

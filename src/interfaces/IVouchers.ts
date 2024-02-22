@@ -85,15 +85,15 @@ export type IVoucherNewParams = z.infer<typeof IVoucherNewParamsSchema>;
 export interface IVouchersCreateInfo {
   date: Date,
   productId: number,
-  vouchers: IVouchersNew[],
+  voucherCodes: IVouchersNew[],
 }
-export const IVouchersCodeArraySchema = z.array(z.object({
+export const IVouchersInfoArraySchema = z.array(z.object({
   expireAt: z.date(), 
   productId: z.number(),
   voucherCode: z.string(),
 }));
 
-export type IVouchersCodeArray = z.infer<typeof IVouchersCodeArraySchema>;
+export type IVouchersInfoArray = z.infer<typeof IVouchersInfoArraySchema>;
 
 export const IVouchersGetDashboardSchema = z.object({
   establishmentId: z.coerce.number().optional(),
