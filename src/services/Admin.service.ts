@@ -17,7 +17,7 @@ export default class AdminService {
       paid: async (updateParams: IOrderUpdate) => {
         await this.orderSuccess(updateParams);
       },
-      cancelled: async (updateParams: IOrderUpdate) => {
+      canceled: async (updateParams: IOrderUpdate) => {
         await this.orderFail(updateParams);
       },
       expired: async (updateParams: IOrderUpdate) => {
