@@ -95,9 +95,17 @@ export const IVouchersInfoArraySchema = z.array(z.object({
 
 export type IVouchersInfoArray = z.infer<typeof IVouchersInfoArraySchema>;
 
+export const VoucherTypeSchema = z.union([
+  z.literal('available'),
+  z.literal('user'),
+  z.literal('withdraw'),
+]).optional();
+
 export const IVouchersGetDashboardSchema = z.object({
   establishmentId: z.coerce.number().optional(),
   productId: z.coerce.number().optional(),
+  voucherType: VoucherTypeSchema,
+  search: z.string().optional(),
 });
  
 export type IVouchersGetDashboard = z.infer<typeof IVouchersGetDashboardSchema>;
