@@ -12,7 +12,7 @@ export const MAX_DAYS_REMAINING = 30;
 // -- ORDER STATUS
 export const STATUS_WAITING = 'waiting';
 export const STATUS_PAID = 'paid';
-export const STATUS_CANCELLED = 'cancelled';
+export const STATUS_CANCELLED = 'canceled';
 export const STATUS_EXPIRED = 'expired';
 
 // -- ERROR MSGS
