@@ -34,7 +34,7 @@ EstablishmentsImagesModel.init(
       defaultValue: null,
     },
     cover: {
-      type: DataTypes.STRING(120),
+      type: DataTypes.STRING,
       defaultValue: null,
     },
     resizeColor: {
