@@ -32,7 +32,7 @@ import {
   IVouchersByType,
   IVoucherInfo,
 } from '../interfaces/IOrder';
-import { CONSOLE_LOG_ERROR_TITLE, STATUS_CANCELLED, STATUS_WAITING } from '../constants';
+import { CONSOLE_LOG_ERROR_TITLE, STATUS_CANCELED, STATUS_WAITING } from '../constants';
 import VouchersService from './Vouchers.service';
 import OrdersPacksModel from '../database/models/OrdersPacks.model';
 import { IPagination } from '../interfaces/IPagination';
@@ -176,7 +176,7 @@ export default class OrdersService {
       );
 
       await OrdersModel.update(
-        { status: status || STATUS_CANCELLED },
+        { status: status || STATUS_CANCELED },
         { where: { id: orderId, userId }, transaction: t },
       );
       
