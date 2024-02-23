@@ -69,5 +69,5 @@ export const SUPERAPP_URL_ADMIN_AUTH =
 
 // -- -- SUPERAPP PAYMENT MICROSERVICE
 export const CREATE_PAYMENT_URL = 'https://node.clubecerto.com.br/superapp/microservices/payment/';
-export const EMAIL_WEBHOOK_MOCK =
-  'https://node.clubecerto.com.br/superapp/webhook/mocks/email/igor';
+export const ADMIN_PAYMENT_WEBHOOK =
+  'https://node.clubecerto.com.br/superapp/cinema/admin/resolve_payment';

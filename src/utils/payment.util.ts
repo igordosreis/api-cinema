@@ -4,7 +4,7 @@ import {
   BEARER_TOKEN,
   CONSOLE_LOG_ERROR_TITLE,
   CREATE_PAYMENT_URL,
-  EMAIL_WEBHOOK_MOCK,
+  ADMIN_PAYMENT_WEBHOOK,
 } from '../constants';
 import { IPaymentOrderRequest, IPaymentOrderResponse } from '../interfaces/IPayment';
 import CustomError, { paymentOrderError } from './customError.util';
@@ -15,7 +15,7 @@ class PaymentUtil {
       const endpoint = CREATE_PAYMENT_URL;
       const body: IPaymentOrderRequest = {
         ...paymentOrderRequest,
-        webhook: EMAIL_WEBHOOK_MOCK,
+        webhook: ADMIN_PAYMENT_WEBHOOK,
         name: 'Pagamento - Módulo Cinema',
       };
       const headers = {

@@ -2,7 +2,7 @@
 import { NextFunction, Request, Response } from 'express';
 import authRequestsUtil from '../utils/authRequests.util';
 
-const authMiddleware = async (req: Request, _res: Response, next: NextFunction) => {
+const appAuthMiddleware = async (req: Request, _res: Response, next: NextFunction) => {
   const token: string | undefined = req.headers.authorization;
 
   const isDashboardUrl = req.originalUrl.includes('/dashboard');
@@ -16,4 +16,4 @@ const authMiddleware = async (req: Request, _res: Response, next: NextFunction) 
   next();
 };
 
-export default authMiddleware;
+export default appAuthMiddleware;
