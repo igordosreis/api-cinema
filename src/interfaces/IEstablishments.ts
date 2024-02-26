@@ -139,3 +139,9 @@ export type IEstablishmentImageEdit = z.infer<typeof IEstablishmentImageEditSche
 export interface IEstablishmentImageName {
   name: string;
 }
+
+export const IEstablishmentAddressGetSchema = z.object({
+  search: z.string(),
+});
+
+export type IEstablishmentAddressGet = z.infer<typeof IEstablishmentAddressGetSchema>;
