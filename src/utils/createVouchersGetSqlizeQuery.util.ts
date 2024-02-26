@@ -5,10 +5,11 @@ import { Op } from 'sequelize';
 import { IVouchersGetDashboard } from '../interfaces/IVouchers';
 
 class CreateVouchersGetSqlizeQuery {
-  private addParams = ({ productId, establishmentId }: IVouchersGetDashboard) => {
+  private addParams = ({ productId, establishmentId, search }: IVouchersGetDashboard) => {
     const searchQuery = [];
     if (productId) searchQuery.push({ productId });
     if (establishmentId) searchQuery.push({ establishmentId });
+    if (search) searchQuery.push({ voucherCode: search });
 
     return {
       where: {

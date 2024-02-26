@@ -370,12 +370,37 @@ export default class VouchersService {
 
   public static async getVouchersDashboard(vouchersInfo: IVouchersGetDashboard) {
     try {
-      const vouchers = await VouchersAvailableModel.findAll({
-        ...createVouchersGetSqlizeQueryUtil.create(vouchersInfo),
-        order: [['createdAt', 'ASC']],
-      });
+      const { voucherType } = vouchersInfo;
 
-      return vouchers;
+      const isAvailable = voucherType === 'available' || voucherType === undefined;
+      if (isAvailable) {
+        const vouchers = await VouchersAvailableModel.findAll({
+          ...createVouchersGetSqlizeQueryUtil.create(vouchersInfo),
+          order: [['createdAt', 'ASC']],
+        });
+
+        return vouchers;
+      }
+
+      const isUser = voucherType === 'user';
+      if (isUser) {
+        const vouchers = await VouchersUserModel.findAll({
+          ...createVouchersGetSqlizeQueryUtil.create(vouchersInfo),
+          order: [['createdAt', 'ASC']],
+        });
+
+        return vouchers;
+      }
+
+      const isWithdraw = voucherType === 'withdraw';
+      if (isWithdraw) {
+        const vouchers = await VouchersWithdrawModel.findAll({
+          ...createVouchersGetSqlizeQueryUtil.create(vouchersInfo),
+          order: [['createdAt', 'ASC']],
+        });
+
+        return vouchers;
+      }
     } catch (error) {
       console.log(CONSOLE_LOG_ERROR_TITLE, error);
 
