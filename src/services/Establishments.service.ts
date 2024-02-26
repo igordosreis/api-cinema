@@ -8,6 +8,7 @@ import createGeoSearchSqlQuery from '../utils/createGeoSearchSqlQuery.util';
 import {
   IAddress,
   IEstablishment,
+  IEstablishmentAddressGet,
   IEstablishmentAddressQuery,
   IEstablishmentBrandEdit,
   IEstablishmentById,
@@ -27,6 +28,8 @@ import {
 } from '../constants';
 import ImageFormatter from '../utils/formatImages.util';
 import EstablishmentsProductsModel from '../database/models/EstablishmentsProducts.model';
+import EstablishmentsAddressesModel from '../database/models/EstablishmentsAddresses.model';
+import createAddressGetSqlizeQueryUtil from '../utils/createAddressGetSqlizeQuery.util';
 
 export default class EstablishmentsService {
   public static async getAllEstablishments() {
@@ -236,6 +239,20 @@ export default class EstablishmentsService {
       if (error instanceof CustomError) throw error;
 
       throw new CustomError(establishmentServiceUnavailable);
+    }
+  }
+
+  public static async getEstablishmentAddress(addressInfo: IEstablishmentAddressGet) {
+    try {
+      const addresses = await EstablishmentsAddressesModel.findAll({
+        ...createAddressGetSqlizeQueryUtil.create(addressInfo),
+      });
+      
+      return addresses;
+    } catch (error) {
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
+
+      throw new CustomError(editEstablishmentError);
     }
   }
 

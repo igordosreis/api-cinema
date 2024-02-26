@@ -30,6 +30,8 @@ import {
   IPackEditInfoSchema,
 } from '../interfaces/IPacks';
 import {
+  IEstablishmentAddressGet,
+  IEstablishmentAddressGetSchema,
   IEstablishmentBrandEditInBody,
   IEstablishmentBrandEditSchema,
   IEstablishmentImageEditSchema,
@@ -117,6 +119,15 @@ export default class DashboardController {
     await TagsService.createTagsDashboard(formattedTags, typeId);
 
     res.status(200).end();
+  }
+
+  public static async getEstablishmentAddress(req: Request, res: Response): Promise<void> {
+    const addressInfo = <IEstablishmentAddressGet>req.query;
+
+    const parsedAddressInfo = IEstablishmentAddressGetSchema.parse(addressInfo);
+    const addresses = await EstablishmentsService.getEstablishmentAddress(parsedAddressInfo);
+
+    res.status(200).json(addresses);
   }
 
   public static async editEstablishment(req: Request, res: Response): Promise<void> {
