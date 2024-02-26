@@ -186,7 +186,7 @@ export default class ProductsService {
     }
   }
 
-  public static async createProduct(newProductInfo: IProductCreateInfo) {
+  public static async createProductDashboard(newProductInfo: IProductCreateInfo) {
     const t = await db.transaction();
     try {
       const { tags, type, ...restOfInfo } = newProductInfo;
@@ -208,7 +208,7 @@ export default class ProductsService {
     }
   }
 
-  public static async editProduct(editProductInfo: IProductEditInfo) {
+  public static async editProductDashboard(editProductInfo: IProductEditInfo) {
     const t = await db.transaction();
     try {
       const { productId, tags, ...restOfInfo } = editProductInfo;

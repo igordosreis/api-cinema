@@ -31,9 +31,9 @@ import EstablishmentsProductsModel from '../database/models/EstablishmentsProduc
 export default class EstablishmentsService {
   public static async getAllEstablishments() {
     try {
-      const allEstablishments = await EstablishmentsModel.findAll({
+      const allEstablishments = (await EstablishmentsModel.findAll({
         include: [{ model: EstablishmentsImagesModel, as: 'images' }],
-      }) as IEstablishment[];
+      })) as IEstablishment[];
 
       const establishmentsWithImageLinks = allEstablishments.map((establishment) => ({
         ...establishment.dataValues,
@@ -99,7 +99,7 @@ export default class EstablishmentsService {
     unique,
   }: IEstablishmentAddressQuery) {
     try {
-      const addresses = await db.query(
+      const addresses = (await db.query(
         createGeoSearchSqlQuery({ term, cityId, stateId, establishmentId, addressId, unique }),
         {
           type: QueryTypes.SELECT,
@@ -114,15 +114,15 @@ export default class EstablishmentsService {
             establishmentId,
           },
         },
-      ) as IAddress[];
+      )) as IAddress[];
 
       const parsedAddresses = addresses.map((address) => {
         const { logo, cover } = address;
         const addressWithImages = {
           ...address,
-          logo: ImageFormatter.formatUrl({ 
+          logo: ImageFormatter.formatUrl({
             imageName: logo,
-            folderPath: FOLDER_PATH_ESTABLISHMENT_LOGO, 
+            folderPath: FOLDER_PATH_ESTABLISHMENT_LOGO,
           }),
           cover: ImageFormatter.formatUrl({
             imageName: cover,
@@ -146,13 +146,13 @@ export default class EstablishmentsService {
     establishmentId,
     latitude,
     longitude,
-  }: { 
-    establishmentId: number,
-    latitude: string,
-    longitude: string,
+  }: {
+    establishmentId: number;
+    latitude: string;
+    longitude: string;
   }) {
     try {
-      const establishment = await EstablishmentsModel.findOne({
+      const establishment = (await EstablishmentsModel.findOne({
         attributes: {
           exclude: [
             'link',
@@ -204,7 +204,7 @@ export default class EstablishmentsService {
           },
         ],
         where: { id: establishmentId },
-      }) as IEstablishmentById;
+      })) as IEstablishmentById;
 
       const [address] = await this.getEstablishmentsByAddress({
         limit: 1,
@@ -239,7 +239,7 @@ export default class EstablishmentsService {
     }
   }
 
-  public static async editEstablishment(editEstablishmentInfo: IEstablishmentBrandEdit) {
+  public static async editEstablishmentDashboard(editEstablishmentInfo: IEstablishmentBrandEdit) {
     const t = await db.transaction();
     try {
       const { id, ...restOfInfo } = editEstablishmentInfo;
@@ -254,31 +254,25 @@ export default class EstablishmentsService {
       await t.commit();
     } catch (error) {
       await t.rollback();
-      
+
       console.log(CONSOLE_LOG_ERROR_TITLE, error);
 
       throw new CustomError(editEstablishmentError);
     }
   }
 
-  public static async editImage(imageInfo: IEstablishmentImageEdit, name: string) {
+  public static async editImageDashboard(imageInfo: IEstablishmentImageEdit, name: string) {
     try {
       const { establishmentId, imageType } = imageInfo;
 
       const isCover = imageType === 'cover';
       if (isCover) {
-        await EstablishmentsImagesModel.update(
-          { cover: name },
-          { where: { establishmentId } },
-        );
+        await EstablishmentsImagesModel.update({ cover: name }, { where: { establishmentId } });
       }
 
       const isLogo = imageType === 'logo';
       if (isLogo) {
-        await EstablishmentsImagesModel.update(
-          { logo: name },
-          { where: { establishmentId } },
-        );
+        await EstablishmentsImagesModel.update({ logo: name }, { where: { establishmentId } });
       }
     } catch (error) {
       console.log(CONSOLE_LOG_ERROR_TITLE, error);

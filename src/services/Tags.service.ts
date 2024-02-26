@@ -40,7 +40,7 @@ export default class TagsService {
     }
   }
 
-  public static async createTags(tagsArray: ITagsNewFormatted, typeId: number) {
+  public static async createTagsDashboard(tagsArray: ITagsNewFormatted, typeId: number) {
     const t = await db.transaction();
     try {
       const newTagsPromise = tagsArray.map(async ({ name }) => {

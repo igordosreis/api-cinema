@@ -350,7 +350,7 @@ export default class VouchersService {
     }
   }
 
-  public static async createVouchers(vouchersInfoArray: IVouchersInfoArray) {
+  public static async createVouchersDashboard(vouchersInfoArray: IVouchersInfoArray) {
     const t = await db.transaction();
     try {
       await VoucherUtil.validateVoucherCodes(vouchersInfoArray, t);
@@ -383,7 +383,7 @@ export default class VouchersService {
     }
   }
 
-  public static async withdrawSingleVoucher(voucherInfo: IVoucherSingleWithdraw) {
+  public static async withdrawSingleVoucherDashboard(voucherInfo: IVoucherSingleWithdraw) {
     const t = await db.transaction();
     try {
       const { voucherCode, motive, soldPrice } = voucherInfo;

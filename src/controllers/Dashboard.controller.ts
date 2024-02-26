@@ -43,7 +43,7 @@ export default class DashboardController {
     const { productInfo } = <IProductCreateInfoBody>req.body;
     const parsedNewProductInfo = IProductCreateInfoSchema.parse(productInfo);
 
-    const productId = await ProductsService.createProduct(parsedNewProductInfo);
+    const productId = await ProductsService.createProductDashboard(parsedNewProductInfo);
 
     res.status(200).json(productId);
   }
@@ -52,7 +52,7 @@ export default class DashboardController {
     const { productInfo } = <IProductEditInfoBody>req.body;
 
     const parsedEditProductInfo = IProductEditInfoSchema.parse(productInfo);
-    await ProductsService.editProduct(parsedEditProductInfo);
+    await ProductsService.editProductDashboard(parsedEditProductInfo);
 
     res.status(200).end();
   }
@@ -61,7 +61,7 @@ export default class DashboardController {
     const { packInfo } = <IPackCreateInfoBody>req.body;
     const parsedNewPackInfo = IPackCreateInfoSchema.parse(packInfo);
 
-    const packId = await PacksService.createPack(parsedNewPackInfo);
+    const packId = await PacksService.createPackDashboard(parsedNewPackInfo);
 
     res.status(200).json(packId);
   }
@@ -70,7 +70,7 @@ export default class DashboardController {
     const { packInfo } = <IPackEditInfoBody>req.body;
     const parsedEditPackInfo = IPackEditInfoSchema.parse(packInfo);
 
-    const packId = await PacksService.editPack(parsedEditPackInfo);
+    const packId = await PacksService.editPackDashboard(parsedEditPackInfo);
 
     res.status(200).json(packId);
   }
@@ -86,7 +86,7 @@ export default class DashboardController {
     });
     IVouchersInfoArraySchema.parse(voucherInfoArray);
 
-    await VouchersService.createVouchers(voucherInfoArray);
+    await VouchersService.createVouchersDashboard(voucherInfoArray);
 
     res.status(200).end();
   }
@@ -104,7 +104,7 @@ export default class DashboardController {
     const voucherInfo = req.query as unknown as IVoucherSingleWithdraw;
 
     const parsedVoucherInfo = IVoucherSingleWithdrawSchema.parse(voucherInfo);
-    await VouchersService.withdrawSingleVoucher(parsedVoucherInfo);
+    await VouchersService.withdrawSingleVoucherDashboard(parsedVoucherInfo);
 
     res.status(200).end();
   }
@@ -114,7 +114,7 @@ export default class DashboardController {
     ITagsNewSchema.parse(tags);
 
     const formattedTags = TagsUtil.formatTagsArrayWithName(tags);
-    await TagsService.createTags(formattedTags, typeId);
+    await TagsService.createTagsDashboard(formattedTags, typeId);
 
     res.status(200).end();
   }
@@ -123,7 +123,7 @@ export default class DashboardController {
     const { establishmentInfo } = <IEstablishmentBrandEditInBody>req.body;
 
     const parsedEditInfo = IEstablishmentBrandEditSchema.parse(establishmentInfo);
-    await EstablishmentsService.editEstablishment(parsedEditInfo);
+    await EstablishmentsService.editEstablishmentDashboard(parsedEditInfo);
 
     res.status(200).end();
   }
@@ -133,7 +133,7 @@ export default class DashboardController {
     const { name } = <IEstablishmentImageName>req.body;
 
     const parsedImageInfo = IEstablishmentImageEditSchema.parse(imageInfo);
-    await EstablishmentsService.editImage(parsedImageInfo, name);
+    await EstablishmentsService.editImageDashboard(parsedImageInfo, name);
 
     res.status(200).end();
   }

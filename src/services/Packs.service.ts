@@ -534,7 +534,7 @@ export default class PacksService {
     }
   }
 
-  public static async createPack(newPackInfo: IPackCreateInfo) {
+  public static async createPackDashboard(newPackInfo: IPackCreateInfo) {
     const t = await db.transaction();
     try {
       const { counterLimit, tags, products, establishmentId, price, ...restOfInfo } = newPackInfo;
@@ -564,7 +564,7 @@ export default class PacksService {
     }
   }
 
-  public static async editPack(newPackInfo: IPackEditInfo) {
+  public static async editPackDashboard(newPackInfo: IPackEditInfo) {
     const t = await db.transaction();
     try {
       const { packId, tags, products, ...restOfInfo } = newPackInfo;
