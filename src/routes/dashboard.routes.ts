@@ -5,8 +5,8 @@ import ImageUploadMiddleware from '../middlewares/ImageUpload.middleware';
 
 const dashboardRouter = Router();
 
-dashboardRouter.get('/establishment/get', DashboardController.getEstablishmentAddress);
-dashboardRouter.patch('/establishment/edit', DashboardController.editEstablishment);
+dashboardRouter.get('/establishment/address/get', DashboardController.getEstablishmentAddress);
+dashboardRouter.patch('/establishment/brand/edit', DashboardController.editEstablishment);
 dashboardRouter.put(
   '/establishment/image/edit', 
   ImageUploadMiddleware,
