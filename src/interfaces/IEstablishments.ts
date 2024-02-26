@@ -141,7 +141,10 @@ export interface IEstablishmentImageName {
 }
 
 export const IEstablishmentAddressGetSchema = z.object({
-  search: z.string(),
+  search: z.string().optional(),
+  establishmentId: z.coerce.number().optional(),
+  cityId: z.coerce.number().optional(),
+  active: z.string().transform((x) => x.toLowerCase() === 'true').pipe(z.boolean()).optional(),
 });
 
 export type IEstablishmentAddressGet = z.infer<typeof IEstablishmentAddressGetSchema>;

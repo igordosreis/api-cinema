@@ -5,7 +5,7 @@ import { Op } from 'sequelize';
 import { IEstablishmentAddressGet } from '../interfaces/IEstablishments';
 
 class CreateAddressGetSqlizeQuery {
-  private addParams = ({ search }: IEstablishmentAddressGet) => {
+  private addParams = ({ search, establishmentId, cityId, active }: IEstablishmentAddressGet) => {
     const searchQuery = [];
     if (search) {
       searchQuery.push({
@@ -15,6 +15,9 @@ class CreateAddressGetSqlizeQuery {
         },
       });
     }
+    if (establishmentId) searchQuery.push({ establishmentId });
+    if (cityId) searchQuery.push({ cityId });
+    if (active) searchQuery.push({ active });
 
     return {
       where: {
