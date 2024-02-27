@@ -371,6 +371,7 @@ export default class OrdersService {
             [Op.lte]: lastDay,
           },
         },
+        order: [['updatedAt', 'ASC']],
         limit,
         offset: page * limit,
       }) as IOrderAll[];
