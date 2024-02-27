@@ -241,11 +241,20 @@ export type ICurrVoucher = VouchersUserModel & {
   };
 };
 
+export const IOrderStatusSchema = z.union([
+  z.literal('all'),
+  z.literal('paid'),
+  z.literal('unpaid'),
+  z.literal('expired'),
+  z.literal('canceled'),
+]);
+
 export const IOrderAllRequestSchema = z.object({
   page: z.string(),
   limit: z.string(),
   year: z.string(),
   month: z.string(),
+  status: IOrderStatusSchema.optional(),
 });
 
 export type IOrderAllRequest = z.infer<typeof IOrderAllRequestSchema>;
