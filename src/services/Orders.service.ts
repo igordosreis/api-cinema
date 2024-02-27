@@ -37,11 +37,11 @@ import VouchersService from './Vouchers.service';
 import OrdersPacksModel from '../database/models/OrdersPacks.model';
 import { IPagination } from '../interfaces/IPagination';
 import PacksModel from '../database/models/Packs.model';
-import CartModel from '../database/models/Cart.model';
 import EstablishmentsModel from '../database/models/Establishments.model';
 import EstablishmentsImagesModel from '../database/models/EstablishmentsImages.model';
 import ProductsTypesModel from '../database/models/ProductsTypes.model';
 import ImageFormatter from '../utils/formatImages.util';
+import CartModel from '../database/models/Cart.model';
 
 export default class OrdersService {
   private static async createPacksOrder(
@@ -145,7 +145,11 @@ export default class OrdersService {
 
       await OrdersModel.update({ paymentId }, { where: { id: orderId }, transaction: t });
 
-      await CartModel.update({ waiting: true }, { where: { userId }, transaction: t });
+      // Save cart after createOrder
+      // await CartModel.update({ waiting: true }, { where: { userId }, transaction: t });
+
+      // Empty cart after createOrder
+      await CartModel.destroy({ where: { userId } });
 
       await t.commit();
 
@@ -180,10 +184,11 @@ export default class OrdersService {
         { where: { id: orderId, userId }, transaction: t },
       );
       
-      await CartModel.update(
-        { waiting: false },
-        { where: { userId, waiting: true }, transaction: t },
-      );
+      // Restore cart after cancelOrder
+      // await CartModel.update(
+      //   { waiting: false },
+      //   { where: { userId, waiting: true }, transaction: t },
+      // );
 
       const isPackInOrder = packDetails.length > 0;
       if (isPackInOrder) {
