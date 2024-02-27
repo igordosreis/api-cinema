@@ -248,6 +248,7 @@ export default class OrdersService {
       const statusFilter = status === undefined || status === 'all'
         ? {}
         : { status };
+        
       const allUserOrders = await OrdersModel.findAll({
         include: [
           {
