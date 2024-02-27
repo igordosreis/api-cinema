@@ -379,7 +379,7 @@ export default class OrdersService {
           },
           ...statusFilter,
         },
-        order: [['updatedAt', 'ASC']],
+        order: [['updatedAt', 'DESC']],
         limit,
         offset: page * limit,
       }) as IOrderAll[];
