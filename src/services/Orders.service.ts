@@ -31,6 +31,7 @@ import {
   ICurrVoucher,
   IVouchersByType,
   IVoucherInfo,
+  IOrderStatus,
 } from '../interfaces/IOrder';
 import { CONSOLE_LOG_ERROR_TITLE, STATUS_CANCELED, STATUS_WAITING } from '../constants';
 import VouchersService from './Vouchers.service';
@@ -235,13 +236,18 @@ export default class OrdersService {
     pagination: { page, limit },
     firstDay,
     lastDay,
+    status,
   }: {
     userId: number;
     pagination: IPagination;
     firstDay: string;
     lastDay: string;
+    status: IOrderStatus | undefined;
   }) {
     try {
+      const statusFilter = status === undefined || status === 'all'
+        ? {}
+        : { status };
       const allUserOrders = await OrdersModel.findAll({
         include: [
           {
@@ -370,6 +376,7 @@ export default class OrdersService {
             [Op.gte]: firstDay,
             [Op.lte]: lastDay,
           },
+          ...statusFilter,
         },
         order: [['updatedAt', 'ASC']],
         limit,

@@ -249,6 +249,8 @@ export const IOrderStatusSchema = z.union([
   z.literal('canceled'),
 ]);
 
+export type IOrderStatus = z.infer<typeof IOrderStatusSchema>;
+
 export const IOrderAllRequestSchema = z.object({
   page: z.string(),
   limit: z.string(),

@@ -35,7 +35,7 @@ export default class OrdersController {
         user: { id: userId },
       },
     } = <IUserInfoInBody>req.body;
-    const { page, limit, year, month } = <IOrderAllRequest>req.query;
+    const { page, limit, year, month, status } = <IOrderAllRequest>req.query;
     IOrderAllRequestSchema.parse({ page, limit, year, month });
 
     const pagination = formatRequestQueryUtil.formatPagination({ page, limit });
@@ -46,6 +46,7 @@ export default class OrdersController {
       pagination,
       firstDay,
       lastDay,
+      status,
     });
 
     res.status(200).json(allUserOrders);
