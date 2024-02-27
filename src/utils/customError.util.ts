@@ -178,7 +178,7 @@ export const establishmentNotFound: ICustomError = {
 export const totalError: ICustomError = {
   status: 503,
   title: OPERATION_UNAVAILABLE,
-  message: 'Não foi possível realizar essa operação nesse. Tente novamente mais tarde.',
+  message: 'Não foi possível realizar essa operação nesse momento. Tente novamente mais tarde.',
 };
 
 export const favoriteError: ICustomError = {
