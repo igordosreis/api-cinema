@@ -16,6 +16,7 @@ import ImageFormatter from '../utils/formatImages.util';
 import db from '../database/models';
 import TagsModel from '../database/models/Tags.model';
 import TagsUtil from '../utils/tags.util';
+import createProductSearchSqlizeQueryDashboardUtil from '../utils/createProductSearchSqlizeQueryDashboard.util';
 
 export default class ProductsService {
   public static async getProductsByQuery(formattedSearchQuery: IProductQuery) {
@@ -235,6 +236,150 @@ export default class ProductsService {
       console.log(CONSOLE_LOG_ERROR_TITLE, error);
 
       throw new CustomError(editProductError);
+    }
+  }
+
+  public static async getProductsByQueryDashboard(formattedSearchQuery: IProductQuery) {
+    try {
+      const { tags } = formattedSearchQuery;
+      const products = await EstablishmentsProductsModel.findAll({
+        attributes: {
+          include: [
+            // [sequelize.fn('COUNT', sequelize.col('vouchersAvailable.id')), 'vouchersQuantity'],
+            [
+              sequelize.literal(
+                'COUNT(vouchersAvailable.id) > establishments_products.sold_out_amount',
+              ),
+              'available',
+            ],
+          ],
+          exclude: [
+            'type',
+            'soldOutAmount',
+            'active',
+            'purchasable',
+            'createdAt',
+          ],
+        },
+        include: [
+          {
+            model: VouchersAvailableModel,
+            attributes: [],
+            as: 'vouchersAvailable',
+            where: {
+              orderId: null,
+              expireAt: {
+                [Op.gt]: new Date(),
+              },
+            },
+          },
+          {
+            model: EstablishmentsModel,
+            as: 'brand',
+            attributes: {
+              exclude: [
+                'link',
+                'linkDescription',
+                'telephone',
+                'telephoneTwo',
+                'whatsapp',
+                'instagram',
+                'keyWords',
+                'site',
+                'active',
+                'underHighlight',
+                'views',
+                'createdAt',
+                'updatedAt',
+              ],
+            },
+          },
+          {
+            model: EstablishmentsImagesModel,
+            as: 'imagesBrand',
+            attributes: {
+              exclude: [
+                'establishmentId',
+                'imageCarousel',
+                'resizeColor',
+                'createdAt',
+                'updatedAt',
+              ],
+            },
+          },
+          {
+            model: ProductsTypesModel,
+            as: 'typeInfo',
+            attributes: {
+              exclude: [
+                'createdAt',
+                'updatedAt',
+              ],
+            },
+          },
+          {
+            model: TagsProductsModel,
+            as: 'tagsProducts',
+            attributes: {
+              exclude: [
+                'productId',
+              ],
+            },
+            include: [
+              {
+                model: TagsModel,
+                as: 'productTags',
+                attributes: {
+                  exclude: [
+                    'id',
+                    'createdAt',
+                    'updatedAt',
+                  ],
+                },
+              },
+            ],
+          },
+        ],
+        group: [
+          'establishments_products.product_id',
+          'tagsProducts.tag_id',
+          'tagsProducts.product_id',
+        ],
+        ...createProductSearchSqlizeQueryDashboardUtil.create(formattedSearchQuery),
+        // limit: formattedQuery.limit,
+        // offset: formattedQuery.limit * formattedQuery.page,
+      }) as IProductResult[];
+
+      const filteredProducts = tags
+        ? products.filter((product) => tags.every((tag) => product.productTags.some(({ tagId }) => tagId === tag)))
+        // ? products.filter((product) => tags.every((tag) => product.productTags.map(({ tagId }) => tagId).includes(tag)))
+        : products;
+        
+      const { page, limit } = formattedSearchQuery;
+      const pagedProducts = PaginationUtil.getPageContent({ page, limit, array: filteredProducts })
+        // eslint-disable-next-line sonarjs/no-identical-functions
+        .map((product) => {
+          const { imagesBrand: { logo, cover } } = product;
+          
+          const newImagesBrand = {
+            logo: ImageFormatter.formatUrl({ imageName: logo, folderPath: '/establishments/logo' }),
+            cover: ImageFormatter.formatUrl({ imageName: cover, folderPath: '/establishments/cover' }),
+          };
+
+          return {
+            ...product.dataValues,
+            imagesBrand: {
+              ...newImagesBrand,
+            },
+          } as IProductResult;
+        });
+
+      return pagedProducts;
+    } catch (error: CustomError | unknown) {
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
+      if (error instanceof CustomError) throw error;
+
+      throw new CustomError(establishmentServiceUnavailable);
     }
   }
 }

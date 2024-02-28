@@ -112,6 +112,7 @@ export const IProductQuerySchema = z.object({
   type: z.number().optional(),
   active: z.boolean().optional(),
   available: z.boolean().optional(),
+  purchasable: z.boolean().optional(),
   term: z.string().optional(),
   tags: z.array(z.number()).optional(),
 });
@@ -129,3 +130,37 @@ export interface IProductWithRequestedVouchers extends IProduct {
 export type IProductFromGetById = EstablishmentsProductsModel & {
   vouchersAvailable: Array<VouchersAvailableModel>;
 };
+
+export const IProductQueryDashboardSchema = z.object({
+  limit: z.coerce.number().optional(),
+  page: z.coerce.number().optional(),
+  establishmentId: z.coerce.number().optional(),
+  type: z.union([
+    z.literal('pack'),
+    z.coerce.number(),
+  ]).optional(),
+  // type: z.coerce.number().optional(),
+  active: z.string().transform((x) => x.toLowerCase() === 'true').pipe(z.boolean()).optional(),
+  available: z.string().transform((x) => x.toLowerCase() === 'true').pipe(z.boolean()).optional(),
+  term: z.string().optional(),
+  tags: z.string().transform((tagsString, ctx) => {
+    const parsedNumbersArray = tagsString.split(',').map((tag) => {
+      const parsedTag = Number(tag);
+      if (Number.isNaN(parsedTag)) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: 'Not a number',
+        });
+
+        return z.NEVER;
+      }
+
+      return parsedTag;
+    });
+
+    return parsedNumbersArray;
+  }).optional(),
+  purchasable: z.string().transform((x) => x.toLowerCase() === 'true').pipe(z.boolean()).optional(),
+});
+
+export type IProductQueryDashboard = z.infer<typeof IProductQueryDashboardSchema>;

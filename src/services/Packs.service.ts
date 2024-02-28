@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-identical-functions */
 /* eslint-disable complexity */
 /* eslint-disable sonarjs/cognitive-complexity */
 /* eslint-disable max-len */
@@ -22,6 +23,7 @@ import EstablishmentsModel from '../database/models/Establishments.model';
 import TagsModel from '../database/models/Tags.model';
 import ImageFormatter from '../utils/formatImages.util';
 import TagsUtil from '../utils/tags.util';
+import createPackSearchSqlizeQueryDashboardUtil from '../utils/createPackSearchSqlizeQueryDashboard.util';
 
 export default class PacksService {
   public static async getPacksByQuery(formattedSearchQuery: IPackSearchQuery) {
@@ -595,6 +597,252 @@ export default class PacksService {
       await t.commit();
     } catch (error) {
       await t.rollback();
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
+      if (error instanceof CustomError) throw error;
+
+      throw new CustomError(packServiceUnavailable);
+    }
+  }
+
+  public static async getPacksByQueryDashboard(formattedSearchQuery: IPackSearchQuery) {
+    try {
+      const packs = await PacksModel.findAll({
+        include: [
+          {
+            model: TagsPacksModel,
+            as: 'tagsPack',
+            attributes: {
+              exclude: [
+                'packId',
+              ],
+            },
+            include: [
+              {
+                model: TagsModel,
+                as: 'packTags',
+                attributes: {
+                  exclude: [
+                    'id',
+                    'createdAt',
+                    'updatedAt',
+                  ],
+                },
+              },
+            ],
+          },
+          {
+            model: EstablishmentsModel,
+            as: 'brand',
+            include: [
+              {
+                model: EstablishmentsImagesModel,
+                as: 'images',
+                attributes: {
+                  exclude: [
+                    'establishmentId',
+                    'imageCarousel',
+                    'resizeColor',
+                    'createdAt',
+                    'updatedAt',
+                  ],
+                },
+              },
+            ],
+            attributes: {
+              exclude: [
+                'link',
+                'linkDescription',
+                'telephone',
+                'telephoneTwo',
+                'whatsapp',
+                'instagram',
+                'keyWords',
+                'site',
+                'active',
+                'underHighlight',
+                'views',
+                'createdAt',
+                'updatedAt',
+              ],
+            },
+          },
+          {
+            model: PacksProductsModel,
+            as: 'packInfo',
+            include: [
+              {
+                model: EstablishmentsProductsModel,
+                as: 'productDetails',
+                required: true,
+                attributes: {
+                  include: [
+                    [
+                      sequelize.fn(
+                        'COUNT',
+                        sequelize.col('packInfo.productDetails.vouchersAvailable.id'),
+                      ),
+                      'vouchersQuantity',
+                    ],
+                  ],
+                  exclude: [
+                    'establishmentId',
+                    'soldOutAmount',
+                    'purchasable',
+                    'createdAt',
+                  ],
+                },
+                include: [
+                  {
+                    model: VouchersAvailableModel,
+                    as: 'vouchersAvailable',
+                    attributes: [],
+                    where: {
+                      orderId: null,
+                      expireAt: {
+                        [Op.gt]: new Date(),
+                      },
+                    },
+                  },
+                  {
+                    model: ProductsTypesModel,
+                    as: 'typeInfo',
+                    attributes: {
+                      exclude: [
+                        'createdAt',
+                        'updatedAt',
+                      ],
+                    },
+                  },
+                  {
+                    model: TagsProductsModel,
+                    as: 'tagsProducts',
+                    attributes: {
+                      exclude: [
+                        'productId',
+                      ],
+                    },
+                    include: [
+                      {
+                        model: TagsModel,
+                        as: 'productTags',
+                        attributes: {
+                          exclude: [
+                            'id',
+                            'createdAt',
+                            'updatedAt',
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+            attributes: {
+              exclude: ['packId'],
+            },
+          },
+          {
+            model: EstablishmentsImagesModel,
+            as: 'brandImages',
+            attributes: {
+              exclude: [
+                'establishmentId',
+                'imageCarousel',
+                'resizeColor',
+                'createdAt',
+                'updatedAt',
+              ],
+            },
+          },
+        ],
+        attributes: {
+          exclude: [
+            'createdAt',
+          ],
+        },
+        group: [
+          'packs.pack_id',
+          'packInfo.product_id',
+          'packInfo.productDetails.product_id',
+          'tagsPack.tag_id',
+          'packInfo.productDetails.tagsProducts.tag_id',
+        ],
+        ...createPackSearchSqlizeQueryDashboardUtil.create(formattedSearchQuery),
+      }) as IPacksByQuery[];
+      
+      const { available, type, term, tags } = formattedSearchQuery;
+
+      const filteredPacks = packs
+        .filter(({ packInfo }) => packInfo.every(({ productDetails: { active } }) => active))
+        .map((pack) => {
+          const { limited, counter, counterLimit, packInfo } = pack;
+          const newPack: IPacksByQuery = pack.dataValues;
+
+          if (limited) {
+            const isAvailable = counter < counterLimit;
+            newPack.available = isAvailable;
+
+            return newPack;
+          }
+
+          const isAvailable = packInfo.every((product) => {
+            const {
+              quantity,
+              productDetails: { vouchersQuantity, soldOutAmount },
+            } = product;
+
+            return quantity * vouchersQuantity > soldOutAmount;
+          });
+          newPack.available = isAvailable;
+
+          return newPack;
+        })
+        .filter((pack) => !available || pack.available)
+        .filter(
+          ({ packInfo }) =>
+            !type
+          || packInfo.some(({ productDetails: { type: productType } }) => productType === type),
+        )
+        .filter(
+          (pack) =>
+            !term
+          || pack.name.toLowerCase().includes(term)
+          || pack.description.toLowerCase().includes(term)
+          || pack.packInfo.some(
+            ({ productDetails: { name, description } }) =>
+              name.toLowerCase().includes(term) || description.toLowerCase().includes(term),
+          ),
+        )
+        .filter(
+          (pack) => 
+            !tags
+            || tags.every((tag) => pack.packTags.some(({ tagId }) => tagId === tag))
+            || pack.packInfo.some(
+              ({ productDetails: { productTags } }) =>
+                tags.every((tag) => productTags.some(({ tagId }) => tagId === tag)),
+            ),
+        )
+        .map((pack) => {
+          const { brandImages: { logo, cover }, ...restOfInfo } = pack;
+          const newImages = {
+            logo: ImageFormatter.formatUrl({ imageName: logo, folderPath: '/establishments/logo' }),
+            cover: ImageFormatter.formatUrl({ imageName: cover, folderPath: '/establishments/cover' }),
+          };
+
+          return {
+            ...restOfInfo,
+            imagesBrand: {
+              ...newImages,
+            },
+          };
+        });
+
+      const { page, limit } = formattedSearchQuery;
+      const pagedPacks = PaginationUtil.getPageContent({ page, limit, array: filteredPacks });
+
+      return pagedPacks;
+    } catch (error) {
       console.log(CONSOLE_LOG_ERROR_TITLE, error);
       if (error instanceof CustomError) throw error;
 

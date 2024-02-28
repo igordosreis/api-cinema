@@ -1,9 +1,14 @@
+/* eslint-disable sonarjs/cognitive-complexity */
+/* eslint-disable max-lines-per-function */
+/* eslint-disable complexity */
 import { Request, Response } from 'express';
 import {
   IProductCreateInfoBody,
   IProductCreateInfoSchema,
   IProductEditInfoBody,
   IProductEditInfoSchema,
+  IProductQueryDashboard,
+  IProductQueryDashboardSchema,
 } from '../interfaces/IProducts';
 import {
   EstablishmentsService,
@@ -147,5 +152,34 @@ export default class DashboardController {
     await EstablishmentsService.editImageDashboard(parsedImageInfo, name);
 
     res.status(200).end();
+  }
+
+  public static async productsAndPacksSearch(req: Request, res: Response) {
+    const searchQuery = <IProductQueryDashboard>req.query;
+    const formattedSearchQuery = IProductQueryDashboardSchema.parse(searchQuery);
+
+    const { type } = searchQuery;
+    if (type === 'pack') {
+      const parsedSearchQuery = {
+        ...formattedSearchQuery,
+        limit: formattedSearchQuery.limit || 20,
+        page: formattedSearchQuery.page || 0,
+      };
+
+      const { type: removedType, ...restOfQuery } = parsedSearchQuery;
+      const packs = await PacksService.getPacksByQueryDashboard(restOfQuery);
+
+      return res.status(200).json(packs);
+    } 
+
+    const parsedSearchQuery = {
+      ...formattedSearchQuery,
+      type,
+      limit: formattedSearchQuery.limit || 20,
+      page: formattedSearchQuery.page || 0,
+    };
+    const product = await ProductsService.getProductsByQueryDashboard(parsedSearchQuery);
+
+    return res.status(200).json(product);
   }
 }
