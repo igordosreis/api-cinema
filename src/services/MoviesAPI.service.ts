@@ -30,7 +30,7 @@ export default class MoviesAPIService {
 
     const { page, limit } = pagination;
     const pagedMovies = PaginationUtil.getPageContent({ page, limit, array: parsedMovies })
-      .filter(({ poster_path: posterPath }) => posterPath);
+      .filter(({ poster_path: posterPath }) => !posterPath.endsWith('null'));
 
     return {
       results: pagedMovies,
@@ -55,7 +55,7 @@ export default class MoviesAPIService {
 
     const { page, limit } = pagination;
     const pagedMovies = PaginationUtil.getPageContent({ page, limit, array: parsedMovies })
-      .filter(({ poster_path: posterPath }) => posterPath);
+      .filter(({ poster_path: posterPath }) => !posterPath.endsWith('null'));
 
     return {
       results: pagedMovies,
@@ -77,11 +77,11 @@ export default class MoviesAPIService {
 
     const { page, limit } = pagination;
     const pagedMovies = PaginationUtil.getPageContent({ page, limit, array: parsedMovies })
-      .filter(({ poster_path: posterPath }) => posterPath);
+      .filter(({ poster_path: posterPath }) => !posterPath.endsWith('null'));
 
     return {
       results: pagedMovies,
-      total_results: parsedMovies.length,
+      total_results: pagedMovies.length,
     };
   }
 
