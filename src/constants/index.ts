@@ -71,3 +71,6 @@ export const SUPERAPP_URL_ADMIN_AUTH =
 export const CREATE_PAYMENT_URL = 'https://node.clubecerto.com.br/superapp/microservices/payment/';
 export const ADMIN_PAYMENT_WEBHOOK =
   'https://node.clubecerto.com.br/superapp/cinema/admin/resolve_payment';
+
+// -- -- SUPERAPP IMAGES
+export const DEFAULT_PERSON_IMAGE = `${SUPERAPP_CINEMA_BASE_URL}/images/movies/crew/default_img.png`;

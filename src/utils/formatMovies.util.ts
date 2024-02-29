@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable camelcase */
 /* eslint-disable max-lines-per-function */
-import { MAX_DAYS_REMAINING } from '../constants';
+import { DEFAULT_PERSON_IMAGE, MAX_DAYS_REMAINING } from '../constants';
 import {
   CastMember,
   CrewMember,
@@ -137,12 +137,16 @@ class FormatMovies {
     }));
     const cast = this.getFirstFiveElements<CastMember>(movieDetails.credits.cast).map((actor) => ({
       ...actor,
-      profile_path: this.parseImgPathToImgLink(actor.profile_path),
+      profile_path: actor.profile_path
+        ? this.parseImgPathToImgLink(actor.profile_path)
+        : DEFAULT_PERSON_IMAGE,
     }));
     const crew = this.filterCrewForDirectorAndProducers(movieDetails.credits.crew).map(
       (crewMember) => ({
         ...crewMember,
-        profile_path: this.parseImgPathToImgLink(crewMember.profile_path),
+        profile_path: crewMember.profile_path
+          ? this.parseImgPathToImgLink(crewMember.profile_path)
+          : DEFAULT_PERSON_IMAGE,
       }),
     );
 
