@@ -126,6 +126,7 @@ export interface IOrderRequestRawBody {
 
 export interface IOrderRequestBody {
   userId: number;
+  companyId: number;
   cinemaPlan: number;
   // orderInfo: IOrderRequestInfo[];
 }

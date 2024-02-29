@@ -97,7 +97,7 @@ export default class OrdersService {
   public static async createOrder(orderRequest: IOrderRequestBody) {
     const t = await db.transaction();
     try {
-      const { userId, cinemaPlan } = orderRequest;
+      const { userId, companyId, cinemaPlan } = orderRequest;
 
       await ordersUtil.verifyIfAllOrdersAreFinalized({ userId, transaction: t });
 
@@ -120,7 +120,7 @@ export default class OrdersService {
       const { establishmentId } = orderInfo[0];
       const { totalPrice, totalUnits } = orderTotals;
       const { id: orderId } = await OrdersModel.create(
-        { totalPrice, totalUnits, expireAt, userId, establishmentId },
+        { totalPrice, totalUnits, expireAt, userId, companyId, establishmentId },
         { transaction: t },
       );
 

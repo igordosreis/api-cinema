@@ -130,6 +130,12 @@ class FormatRequestQuery {
     },
   }: IOrderRequestRawBody) => Number(userId);
 
+  private formatCompanyId = ({
+    userInfo: {
+      company: { id: companyId },
+    },
+  }: IOrderRequestRawBody) => Number(companyId);
+
   // private formatOrderInfo = ({ orderInfo }: IOrderRequestRawBody) =>
   //   orderInfo.map(({ productId, packId, amountRequested }: IOrderRequestRawInfo) => {
   //     if (productId) {
@@ -155,6 +161,7 @@ class FormatRequestQuery {
 
   formatCreateOrder = (orderRequest: IOrderRequestRawBody): IOrderRequestBody => ({
     userId: this.formatUserId(orderRequest),
+    companyId: this.formatCompanyId(orderRequest),
     cinemaPlan: Number(orderRequest.userInfo.user.cinemaPlan),
     // orderInfo: this.formatOrderInfo(orderRequest),
   });

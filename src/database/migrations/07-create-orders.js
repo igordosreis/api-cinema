@@ -16,6 +16,10 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
+      company_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
       status: {
         type: Sequelize.STRING,
         allowNull: false,

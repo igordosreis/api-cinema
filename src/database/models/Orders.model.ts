@@ -5,6 +5,7 @@ import EstablishmentsModel from './Establishments.model';
 class OrdersModel extends Model {
   declare id: number;
   declare userId: number;
+  declare companyId: number;
   declare status: string;
   declare paymentId: string;
   declare totalPrice: number;
@@ -24,6 +25,9 @@ OrdersModel.init(
       primaryKey: true,
     },
     userId: {
+      type: DataTypes.INTEGER,
+    },
+    companyId: {
       type: DataTypes.INTEGER,
     },
     status: {
