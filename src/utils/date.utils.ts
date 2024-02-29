@@ -11,7 +11,7 @@ import {
 } from 'date-fns';
 
 class DateUtil {
-  formatDateToISO = (date: Date) => formatISO(date, { representation: 'date' });
+  formatDateToISO = (date: Date) => formatISO(date);
 
   subtractDays = (date: Date, amountOfDays: number) => subDays(date, amountOfDays);
 

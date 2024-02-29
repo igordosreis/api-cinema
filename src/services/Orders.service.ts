@@ -386,6 +386,7 @@ export default class OrdersService {
 
       const allUserOrdersParsed = allUserOrders.map((currOrder) => {
         const { vouchersOrderPaid, establishmentInfo, ...restOfOrderInfo } = currOrder.toJSON();
+
         // Remove Sequelize-specific properties
         delete restOfOrderInfo.include;
         delete restOfOrderInfo.parent;
@@ -597,6 +598,6 @@ export default class OrdersService {
   }
 
   public static async verifyOrders(userId: number) {
-    ordersUtil.verifyIfAllOrdersAreFinalized({ userId });
+    await ordersUtil.verifyIfAllOrdersAreFinalized({ userId });
   }
 }
