@@ -308,6 +308,7 @@ export default class OrdersService {
                 'soldAt',
                 'productId',
                 'orderId',
+                'batchId',
               ],
             },
             include: [
@@ -344,23 +345,6 @@ export default class OrdersService {
               },
             ],
           },
-          // {
-          //   model: OrdersProductsModel,
-          //   as: 'productsDetails',
-          //   required: false,
-          //   attributes: {
-          //     exclude: ['orderId'],
-          //   },
-          //   include: [
-          //     {
-          //       model: EstablishmentsProductsModel,
-          //       as: 'productInfo',
-          //       attributes: {
-          //         exclude: ['id'],
-          //       },
-          //     },
-          //   ],
-          // },
         ],
         attributes: {
           exclude: [
@@ -543,7 +527,7 @@ export default class OrdersService {
             },
             required: false,
             attributes: {
-              exclude: ['createdAt', 'updatedAt'],
+              exclude: ['createdAt', 'updatedAt', 'batchId'],
             },
           },
           {

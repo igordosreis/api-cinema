@@ -294,7 +294,7 @@ export default class VouchersService {
             as: 'vouchersOrderPaid',
             required: true,
             attributes: {
-              exclude: ['createdAt', 'updatedAt'],
+              exclude: ['createdAt', 'updatedAt', 'batchId'],
             },
             include: [
               {
