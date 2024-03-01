@@ -89,7 +89,7 @@ export type IProductResult = EstablishmentsProductsModel & {
   brand: EstablishmentsModel;
   imagesBrand: EstablishmentsImagesModel;
   typeInfo: ProductsTypesModel;
-  productTags: Array<TagsProductsModel>;
+  tagsProducts: Array<TagsProductsModel>;
 };
 
 export const IProductRawQuerySchema = z.object({
@@ -142,7 +142,7 @@ export const IProductQueryDashboardSchema = z.object({
   // type: z.coerce.number().optional(),
   active: z.string().transform((x) => x.toLowerCase() === 'true').pipe(z.boolean()).optional(),
   available: z.string().transform((x) => x.toLowerCase() === 'true').pipe(z.boolean()).optional(),
-  term: z.string().optional(),
+  search: z.string().optional(),
   tags: z.string().transform((tagsString, ctx) => {
     const parsedNumbersArray = tagsString.split(',').map((tag) => {
       const parsedTag = Number(tag);

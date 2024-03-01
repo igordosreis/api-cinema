@@ -24,6 +24,7 @@ import TagsModel from '../database/models/Tags.model';
 import ImageFormatter from '../utils/formatImages.util';
 import TagsUtil from '../utils/tags.util';
 import createPackSearchSqlizeQueryDashboardUtil from '../utils/createPackSearchSqlizeQueryDashboard.util';
+import { IProductQueryDashboard } from '../interfaces/IProducts';
 
 export default class PacksService {
   public static async getPacksByQuery(formattedSearchQuery: IPackSearchQuery) {
@@ -604,7 +605,7 @@ export default class PacksService {
     }
   }
 
-  public static async getPacksByQueryDashboard(formattedSearchQuery: IPackSearchQuery) {
+  public static async getPacksByQueryDashboard(formattedSearchQuery: IProductQueryDashboard) {
     try {
       const packs = await PacksModel.findAll({
         include: [
@@ -771,7 +772,7 @@ export default class PacksService {
         ...createPackSearchSqlizeQueryDashboardUtil.create(formattedSearchQuery),
       }) as IPacksByQuery[];
       
-      const { available, type, term, tags } = formattedSearchQuery;
+      const { available, type, search, tags } = formattedSearchQuery;
 
       const filteredPacks = packs
         .filter(({ packInfo }) => packInfo.every(({ productDetails: { active } }) => active))
@@ -806,12 +807,12 @@ export default class PacksService {
         )
         .filter(
           (pack) =>
-            !term
-          || pack.name.toLowerCase().includes(term)
-          || pack.description.toLowerCase().includes(term)
+            !search
+          || pack.name.toLowerCase().includes(search)
+          || pack.description.toLowerCase().includes(search)
           || pack.packInfo.some(
             ({ productDetails: { name, description } }) =>
-              name.toLowerCase().includes(term) || description.toLowerCase().includes(term),
+              name.toLowerCase().includes(search) || description.toLowerCase().includes(search),
           ),
         )
         .filter(

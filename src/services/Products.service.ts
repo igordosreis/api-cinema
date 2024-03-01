@@ -5,7 +5,7 @@ import EstablishmentsImagesModel from '../database/models/EstablishmentsImages.m
 import EstablishmentsProductsModel from '../database/models/EstablishmentsProducts.model';
 import ProductsTypesModel from '../database/models/ProductsTypes.model';
 import VouchersAvailableModel from '../database/models/VouchersAvailable.model';
-import { IProductCreateInfo, IProductEditInfo, IProductQuery, IProductResult } from '../interfaces/IProducts';
+import { IProductCreateInfo, IProductEditInfo, IProductQuery, IProductQueryDashboard, IProductResult } from '../interfaces/IProducts';
 import createProductSearchSqlizeQueryUtil from '../utils/createProductSearchSqlizeQuery.util';
 import CustomError, { createProductError, editProductError, establishmentServiceUnavailable, productNotFound } from '../utils/customError.util';
 import EstablishmentsModel from '../database/models/Establishments.model';
@@ -131,7 +131,7 @@ export default class ProductsService {
       }) as IProductResult[];
 
       const filteredProducts = tags
-        ? products.filter((product) => tags.every((tag) => product.productTags.some(({ tagId }) => tagId === tag)))
+        ? products.filter((product) => tags.every((tag) => product.tagsProducts.some(({ tagId }) => tagId === tag)))
         // ? products.filter((product) => tags.every((tag) => product.productTags.map(({ tagId }) => tagId).includes(tag)))
         : products;
 
@@ -239,7 +239,7 @@ export default class ProductsService {
     }
   }
 
-  public static async getProductsByQueryDashboard(formattedSearchQuery: IProductQuery) {
+  public static async getProductsByQueryDashboard(formattedSearchQuery: IProductQueryDashboard) {
     try {
       const { tags } = formattedSearchQuery;
       const products = await EstablishmentsProductsModel.findAll({
@@ -351,7 +351,7 @@ export default class ProductsService {
       }) as IProductResult[];
 
       const filteredProducts = tags
-        ? products.filter((product) => tags.every((tag) => product.productTags.some(({ tagId }) => tagId === tag)))
+        ? products.filter((product) => tags.every((tag) => product.tagsProducts.some(({ tagId }) => tagId === tag)))
         // ? products.filter((product) => tags.every((tag) => product.productTags.map(({ tagId }) => tagId).includes(tag)))
         : products;
         

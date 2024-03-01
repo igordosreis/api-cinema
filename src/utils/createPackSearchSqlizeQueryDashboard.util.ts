@@ -2,10 +2,10 @@
 /* eslint-disable max-lines-per-function */
 /* eslint-disable complexity */
 import { Op } from 'sequelize';
-import { IPackSearchQuery } from '../interfaces/IPacks';
+import { IProductQueryDashboard } from '../interfaces/IProducts';
 
 class CreatePackSearchSqlizeQueryDashboard {
-  private addParams = ({ establishmentId, active }: IPackSearchQuery) => {
+  private addParams = ({ establishmentId, active }: IProductQueryDashboard) => {
     const searchQuery = [];
     if (active) searchQuery.push({ active });
     if (establishmentId) {
@@ -21,7 +21,7 @@ class CreatePackSearchSqlizeQueryDashboard {
     };
   };
 
-  create = (packSearchQuery: IPackSearchQuery) => {
+  create = (packSearchQuery: IProductQueryDashboard) => {
     const areThereAnyParams = Object.values(packSearchQuery).some((param) => param);
 
     return areThereAnyParams ? this.addParams(packSearchQuery) : { where: {} };

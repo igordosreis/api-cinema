@@ -1,6 +1,6 @@
 export interface IPaginationContent<T> {
-  page: number;
-  limit: number;
+  page: number | undefined;
+  limit: number | undefined;
   array: Array<T>;
 }
 

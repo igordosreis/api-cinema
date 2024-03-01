@@ -154,7 +154,7 @@ export default class DashboardController {
     res.status(200).end();
   }
 
-  public static async productsAndPacksSearch(req: Request, res: Response) {
+  public static async productsAndPacksGet(req: Request, res: Response) {
     const searchQuery = <IProductQueryDashboard>req.query;
     const formattedSearchQuery = IProductQueryDashboardSchema.parse(searchQuery);
 
