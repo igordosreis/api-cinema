@@ -126,6 +126,12 @@ export default class DashboardController {
     res.status(200).end();
   }
 
+  public static async getEstablishmentBrands(_req: Request, res: Response): Promise<void> {
+    const brands = await EstablishmentsService.getAllEstablishments();
+
+    res.status(200).json(brands);
+  }
+
   public static async getEstablishmentAddress(req: Request, res: Response): Promise<void> {
     const addressInfo = <IEstablishmentAddressGet>req.query;
 
@@ -135,11 +141,11 @@ export default class DashboardController {
     res.status(200).json(addresses);
   }
 
-  public static async editEstablishment(req: Request, res: Response): Promise<void> {
+  public static async editEstablishmentBrand(req: Request, res: Response): Promise<void> {
     const { establishmentInfo } = <IEstablishmentBrandEditInBody>req.body;
 
     const parsedEditInfo = IEstablishmentBrandEditSchema.parse(establishmentInfo);
-    await EstablishmentsService.editEstablishmentDashboard(parsedEditInfo);
+    await EstablishmentsService.editEstablishmentBrandDashboard(parsedEditInfo);
 
     res.status(200).end();
   }
@@ -170,7 +176,7 @@ export default class DashboardController {
       const packs = await PacksService.getPacksByQueryDashboard(restOfQuery);
 
       return res.status(200).json(packs);
-    } 
+    }
 
     const parsedSearchQuery = {
       ...formattedSearchQuery,

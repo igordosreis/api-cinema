@@ -256,7 +256,9 @@ export default class EstablishmentsService {
     }
   }
 
-  public static async editEstablishmentDashboard(editEstablishmentInfo: IEstablishmentBrandEdit) {
+  public static async editEstablishmentBrandDashboard(
+    editEstablishmentInfo: IEstablishmentBrandEdit,
+  ) {
     const t = await db.transaction();
     try {
       const { id, ...restOfInfo } = editEstablishmentInfo;
