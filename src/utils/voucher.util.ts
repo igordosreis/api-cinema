@@ -10,11 +10,14 @@ import {
 import ExcelUtil from './excel.util';
 import CustomError, {
   cannotValidateVouchers,
+  productNotFound,
   voucherDuplicateFound,
   vouchersObjectNotFound,
+  wrongEstablishmentId,
 } from './customError.util';
 import { CONSOLE_LOG_ERROR_TITLE } from '../constants';
 import VouchersAvailableModel from '../database/models/VouchersAvailable.model';
+import EstablishmentsProductsModel from '../database/models/EstablishmentsProducts.model';
 
 type IVoucherDuplicateIndexes = {
   [key: number]: number;
@@ -160,6 +163,31 @@ export default class VoucherUtil {
         const errorFileUrl = ExcelUtil.writeErrorFileWIthUrl(errorsArray);
         throw new CustomError(voucherDuplicateFound(errorFileUrl));
       }
+    } catch (error) {
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
+
+      if (error instanceof CustomError) throw error;
+
+      throw new CustomError(cannotValidateVouchers);
+    }
+  }
+
+  public static async validateProductAndEstablishmentIds(
+    vouchers: IVouchersInfoArray,
+    transaction: Transaction,
+  ) {
+    try {
+      const { productId, establishmentId } = vouchers[0];
+
+      const product = await EstablishmentsProductsModel.findByPk(productId, { transaction });
+
+      const isProductNotFound = !product;
+      if (isProductNotFound) throw new CustomError(productNotFound);
+
+      const { establishmentId: establishmentIdFromDb } = product;
+      
+      const isEstablishmentIdDifferent = establishmentId !== establishmentIdFromDb;
+      if (isEstablishmentIdDifferent) throw new CustomError(wrongEstablishmentId);
     } catch (error) {
       console.log(CONSOLE_LOG_ERROR_TITLE, error);
 

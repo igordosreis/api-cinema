@@ -175,6 +175,12 @@ export const establishmentNotFound: ICustomError = {
     'O estabelecimento buscado não foi encontrado.',
 };
 
+export const wrongEstablishmentId: ICustomError = {
+  status: 400,
+  title: 'Estabelecimento errado.',
+  message: 'O produto não pertece ao estabelecimento fornecido.',
+};
+
 export const totalError: ICustomError = {
   status: 503,
   title: OPERATION_UNAVAILABLE,
