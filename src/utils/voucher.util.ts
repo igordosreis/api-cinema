@@ -47,11 +47,15 @@ export default class VoucherUtil {
     voucherCodes,
     date,
     productId,
+    establishmentId,
+    batchId,
   }: IVouchersCreateInfo): IVouchersInfoArray {
     const formattedArray = voucherCodes.map((voucherCode) => ({
       ...voucherCode,
       expireAt: date,
+      establishmentId,
       productId,
+      batchId,
     }));
 
     return formattedArray;
