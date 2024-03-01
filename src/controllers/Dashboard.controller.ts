@@ -127,7 +127,7 @@ export default class DashboardController {
   }
 
   public static async getEstablishmentBrands(_req: Request, res: Response): Promise<void> {
-    const brands = await EstablishmentsService.getAllEstablishments();
+    const brands = await EstablishmentsService.getAllEstablishmentsDashboard();
 
     res.status(200).json(brands);
   }
@@ -136,7 +136,9 @@ export default class DashboardController {
     const addressInfo = <IEstablishmentAddressGet>req.query;
 
     const parsedAddressInfo = IEstablishmentAddressGetSchema.parse(addressInfo);
-    const addresses = await EstablishmentsService.getEstablishmentAddress(parsedAddressInfo);
+    const addresses = await EstablishmentsService.getEstablishmentAddressDashboard(
+      parsedAddressInfo,
+    );
 
     res.status(200).json(addresses);
   }

@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-identical-functions */
 /* eslint-disable max-lines-per-function */
 import { QueryTypes } from 'sequelize';
 import db from '../database/models';
@@ -242,7 +243,7 @@ export default class EstablishmentsService {
     }
   }
 
-  public static async getEstablishmentAddress(addressInfo: IEstablishmentAddressGet) {
+  public static async getEstablishmentAddressDashboard(addressInfo: IEstablishmentAddressGet) {
     try {
       const addresses = await EstablishmentsAddressesModel.findAll({
         ...createAddressGetSqlizeQueryUtil.create(addressInfo),
@@ -297,6 +298,35 @@ export default class EstablishmentsService {
       console.log(CONSOLE_LOG_ERROR_TITLE, error);
 
       throw new CustomError(editEstablishmentImageError);
+    }
+  }
+
+  public static async getAllEstablishmentsDashboard() {
+    try {
+      const allEstablishments = (await EstablishmentsModel.findAll({
+        include: [{ model: EstablishmentsImagesModel, as: 'images' }],
+      })) as IEstablishment[];
+
+      const establishmentsWithImageLinks = allEstablishments.map((establishment) => ({
+        ...establishment.dataValues,
+        images: {
+          ...establishment.images.dataValues,
+          logo: ImageFormatter.formatUrl({
+            imageName: establishment.images.logo,
+            folderPath: FOLDER_PATH_ESTABLISHMENT_COVER,
+          }),
+          cover: ImageFormatter.formatUrl({
+            imageName: establishment.images.cover,
+            folderPath: FOLDER_PATH_ESTABLISHMENT_LOGO,
+          }),
+        },
+      })) as IEstablishment[];
+
+      return establishmentsWithImageLinks;
+    } catch (error: CustomError | unknown) {
+      if (error instanceof CustomError) throw error;
+
+      throw new CustomError(establishmentServiceUnavailable);
     }
   }
 }
