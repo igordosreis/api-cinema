@@ -332,6 +332,18 @@ module.exports = {
         type: 1,
         sold_out_amount: 3,
       },
+
+      // TESTE
+      {
+        establishment_id: 5049,
+        active: true,
+        purchasable: true,
+        name: '2D Todo Dia TESTE',
+        description: 'Válido todos os dias. Não aceito em salas 3D.',
+        price: 14.90,
+        type: 1,
+        sold_out_amount: 3,
+      },
     ];
 
     await queryInterface.bulkInsert('establishments_products', data, {});
