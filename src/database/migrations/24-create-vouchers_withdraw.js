@@ -27,7 +27,7 @@ module.exports = {
         onUpdate: 'CASCADE',
       },
       batch_id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false,
       },
       establishment_id: {

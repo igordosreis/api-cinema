@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { faker } = require('@faker-js/faker');
 
@@ -46,6 +47,15 @@ module.exports = {
       type: getRandomType(),
       sold_out_amount: 3,
     }));
+
+    // const data = [
+    //   {
+    //     establishment_id: 488,
+    //     active: true,
+    //     purchasable: true,
+    //     name: '2D segunda à quinta',
+    //   },
+    // ];
 
     // Insert seed data into the 'establishments_addresses' table
     await queryInterface.bulkInsert('establishments_products', seedData, {});
