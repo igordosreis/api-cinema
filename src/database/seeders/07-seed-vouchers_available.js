@@ -30,10 +30,10 @@ module.exports = {
     // Generate 30 entries for the 'vouchers_available' table
     const establishmentIds = [488, 753, 1115, 3091, 3092, 3543, 3564, 4243, 4732, 4762, 5049];
 
-    const seedData = Array.from({ length: 100 }, (_, index) => ({
+    const seedData = Array.from({ length: 300 }, (_, index) => ({
       id: index + 101,
       voucher_code: generateUniqueVoucher(),
-      product_id: Math.floor(Math.random() * 49) + 1, // Random number between 1 and 50
+      product_id: Math.floor(Math.random() * 25) + 1, // Random number between 1 and 26
       batch_id: `FLRT${Math.floor(Math.random() * 10) + 1}`,
       establishment_id: getRandomEstablishmentId(establishmentIds),
       expire_at: generateRandomDate(2024, 2025),

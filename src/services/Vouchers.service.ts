@@ -354,7 +354,6 @@ export default class VouchersService {
     const t = await db.transaction();
     try {
       await VoucherUtil.validateProductAndEstablishmentIds(vouchersInfoArray, t);
-      
       await VoucherUtil.validateVoucherCodes(vouchersInfoArray, t);
 
       await VouchersAvailableModel.bulkCreate(vouchersInfoArray, { transaction: t });

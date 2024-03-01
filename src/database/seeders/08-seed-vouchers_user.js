@@ -52,14 +52,10 @@ module.exports = {
     const seedData = Array.from({ length: 100 }, (_, index) => ({
       id: index + 1,
       voucher_code: generateUniqueVoucher(),
-      product_id: Math.floor(Math.random() * 49) + 1, // Random number between 1 and 50
+      product_id: Math.floor(Math.random() * 25) + 1, // Random number between 1 and 50
       establishment_id: 488,
-      // order_id: Math.floor(Math.random() * 10) + 1, // Random number between 1 and 10000
       expire_at: generateRandomDate(2024, 2025),
       batch_id: `FLRT${Math.floor(Math.random() * 10) + 1}`,
-      // payment_id: generateUniquePaymentId(),
-      // created_at: generateRandomDate(2022, 2023),
-      // sold_at: generateRandomDate(2022, 2023),
       sold_price: generateRandomPrice(10, 300),
     }));
 
