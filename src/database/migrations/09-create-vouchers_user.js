@@ -36,6 +36,10 @@ module.exports = {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
       },
+      batch_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
       establishment_id: {
         allowNull: false,
         type: Sequelize.INTEGER,

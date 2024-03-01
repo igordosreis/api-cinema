@@ -9,6 +9,7 @@ class VouchersUserModel extends Model {
   declare voucherCode: string;
   declare productId: number;
   declare orderId: number;
+  declare batchId: number;
   declare establishmentId: number;
   declare active: boolean;
   declare expireAt: Date;
@@ -34,6 +35,10 @@ VouchersUserModel.init(
       allowNull: false,
     },
     orderId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    batchId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },

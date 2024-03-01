@@ -10,6 +10,7 @@ class VouchersAvailableModel extends Model {
   declare productId: number;
   declare orderId: number;
   declare establishmentId: number;
+  declare batchId: number;
   declare soldPrice: number;
   declare expireAt: Date;
   declare createdAt: Date;
@@ -29,6 +30,10 @@ VouchersAvailableModel.init(
       allowNull: false,
     },
     productId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    batchId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
