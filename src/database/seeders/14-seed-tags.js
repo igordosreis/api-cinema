@@ -15,7 +15,7 @@ module.exports = {
         name: 'Segunda à Quinta',
       },
       {
-        name: 'Final de semana',
+        name: 'Todo Dia',
       },
       {
         name: 'Feriado',

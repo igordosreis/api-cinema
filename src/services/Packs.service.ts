@@ -471,6 +471,7 @@ export default class PacksService {
       return pagedPacks;
     } catch (error) {
       console.log(CONSOLE_LOG_ERROR_TITLE, error);
+
       if (error instanceof CustomError) throw error;
 
       throw new CustomError(packServiceUnavailable);
@@ -531,6 +532,7 @@ export default class PacksService {
       return pack as IPackSummary;
     } catch (error) {
       console.log(CONSOLE_LOG_ERROR_TITLE, error);
+      
       if (error instanceof CustomError) throw error;
 
       throw new CustomError(packServiceUnavailable);
@@ -561,6 +563,7 @@ export default class PacksService {
     } catch (error) {
       await t.rollback();
       console.log(CONSOLE_LOG_ERROR_TITLE, error);
+
       if (error instanceof CustomError) throw error;
 
       throw new CustomError(packServiceUnavailable);
@@ -599,6 +602,7 @@ export default class PacksService {
     } catch (error) {
       await t.rollback();
       console.log(CONSOLE_LOG_ERROR_TITLE, error);
+
       if (error instanceof CustomError) throw error;
 
       throw new CustomError(packServiceUnavailable);
@@ -845,6 +849,7 @@ export default class PacksService {
       return pagedPacks;
     } catch (error) {
       console.log(CONSOLE_LOG_ERROR_TITLE, error);
+
       if (error instanceof CustomError) throw error;
 
       throw new CustomError(packServiceUnavailable);
