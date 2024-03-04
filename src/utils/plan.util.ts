@@ -6,7 +6,7 @@ import EstablishmentsProductsModel from '../database/models/EstablishmentsProduc
 import OrdersModel from '../database/models/Orders.model';
 import OrdersProductsModel from '../database/models/OrdersProducts.model';
 import dateUtils from './date.utils';
-import { STATUS_PAID, STATUS_WAITING } from '../constants';
+import { CONSOLE_LOG_ERROR_TITLE, STATUS_PAID, STATUS_WAITING } from '../constants';
 import { IOrderProductsInMonth, PriceUnitAndTypeTotals, TypeId } from '../interfaces/IOrder';
 import { IPlanUsedAmount, IPlanTypeUsedInfo, IPlanInfo } from '../interfaces/IPlan';
 import PlansModel from '../database/models/Plans.model';
@@ -113,6 +113,8 @@ class PlanUtil {
 
       return { planInfo, userTypeTotalsInCurrentMonth };
     } catch (error) {
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
+
       throw new CustomError(totalError);
     }
   };
