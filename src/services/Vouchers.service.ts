@@ -441,4 +441,14 @@ export default class VouchersService {
       throw new CustomError(cannotGetVouchers);
     }
   }
+
+  public static async getVoucherTypes() {
+    const voucherTypes = [
+      'available',
+      'user',
+      'withdraw',
+    ];
+
+    return voucherTypes;
+  }
 }

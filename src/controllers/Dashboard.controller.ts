@@ -46,6 +46,37 @@ import {
 import TagsUtil from '../utils/tags.util';
 
 export default class DashboardController {
+  // Shop
+  public static async productsAndPacksGet(req: Request, res: Response) {
+    const searchQuery = <IProductQueryDashboard>req.query;
+    const formattedSearchQuery = IProductQueryDashboardSchema.parse(searchQuery);
+
+    const { type } = searchQuery;
+    if (type === 'pack') {
+      const parsedSearchQuery = {
+        ...formattedSearchQuery,
+        limit: formattedSearchQuery.limit || 20,
+        page: formattedSearchQuery.page || 0,
+      };
+
+      const { type: removedType, ...restOfQuery } = parsedSearchQuery;
+      const packs = await PacksService.getPacksByQueryDashboard(restOfQuery);
+
+      return res.status(200).json(packs);
+    }
+
+    const parsedSearchQuery = {
+      ...formattedSearchQuery,
+      type,
+      limit: formattedSearchQuery.limit || 20,
+      page: formattedSearchQuery.page || 0,
+    };
+    const product = await ProductsService.getProductsByQueryDashboard(parsedSearchQuery);
+
+    return res.status(200).json(product);
+  }
+
+  // -- Products
   public static async createProduct(req: Request, res: Response): Promise<void> {
     const { productInfo } = <IProductCreateInfoBody>req.body;
     const parsedNewProductInfo = IProductCreateInfoSchema.parse(productInfo);
@@ -64,6 +95,7 @@ export default class DashboardController {
     res.status(200).end();
   }
 
+  // -- Packs
   public static async createPack(req: Request, res: Response): Promise<void> {
     const { packInfo } = <IPackCreateInfoBody>req.body;
     const parsedNewPackInfo = IPackCreateInfoSchema.parse(packInfo);
@@ -82,6 +114,7 @@ export default class DashboardController {
     res.status(200).json(packId);
   }
 
+  // Voucher
   public static async createVoucher(req: Request, res: Response): Promise<void> {
     const voucherCodes = VoucherUtil.getVoucherCodesFromReq(req);
     const vouchersParams = <IVoucherNewParamsRaw>req.query;
@@ -116,6 +149,13 @@ export default class DashboardController {
     res.status(200).end();
   }
 
+  public static async getVoucherTypes(req: Request, res: Response): Promise<void> {
+    const types = await VouchersService.getVoucherTypes();
+
+    res.status(200).json(types);
+  }
+
+  // Tag
   public static async createTag(req: Request, res: Response): Promise<void> {
     const { tags, typeId } = <ITagsNewInBody>req.body;
     ITagsNewSchema.parse(tags);
@@ -126,6 +166,7 @@ export default class DashboardController {
     res.status(200).end();
   }
 
+  // Establishmet
   public static async getEstablishmentBrands(_req: Request, res: Response): Promise<void> {
     const brands = await EstablishmentsService.getAllEstablishmentsDashboard();
 
@@ -160,34 +201,5 @@ export default class DashboardController {
     await EstablishmentsService.editImageDashboard(parsedImageInfo, name);
 
     res.status(200).end();
-  }
-
-  public static async productsAndPacksGet(req: Request, res: Response) {
-    const searchQuery = <IProductQueryDashboard>req.query;
-    const formattedSearchQuery = IProductQueryDashboardSchema.parse(searchQuery);
-
-    const { type } = searchQuery;
-    if (type === 'pack') {
-      const parsedSearchQuery = {
-        ...formattedSearchQuery,
-        limit: formattedSearchQuery.limit || 20,
-        page: formattedSearchQuery.page || 0,
-      };
-
-      const { type: removedType, ...restOfQuery } = parsedSearchQuery;
-      const packs = await PacksService.getPacksByQueryDashboard(restOfQuery);
-
-      return res.status(200).json(packs);
-    }
-
-    const parsedSearchQuery = {
-      ...formattedSearchQuery,
-      type,
-      limit: formattedSearchQuery.limit || 20,
-      page: formattedSearchQuery.page || 0,
-    };
-    const product = await ProductsService.getProductsByQueryDashboard(parsedSearchQuery);
-
-    return res.status(200).json(product);
   }
 }

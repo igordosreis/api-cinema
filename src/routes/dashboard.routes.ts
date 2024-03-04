@@ -26,6 +26,7 @@ dashboardRouter.post(
   DashboardController.createVoucher,
 );
 dashboardRouter.get('/voucher/get', DashboardController.getVouchers);
+dashboardRouter.get('/voucher/types', DashboardController.getVoucherTypes);
 dashboardRouter.put('/voucher/withdraw/single', DashboardController.withdrawSingleVoucher);
 
 dashboardRouter.post('/tag/create', DashboardController.createTag);
