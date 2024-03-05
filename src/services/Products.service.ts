@@ -245,7 +245,7 @@ export default class ProductsService {
       const products = await EstablishmentsProductsModel.findAll({
         attributes: {
           include: [
-            // [sequelize.fn('COUNT', sequelize.col('vouchersAvailable.id')), 'vouchersQuantity'],
+            [sequelize.fn('COUNT', sequelize.col('vouchersAvailable.id')), 'vouchersQuantity'],
             [
               sequelize.literal(
                 'COUNT(vouchersAvailable.id) > establishments_products.sold_out_amount',
@@ -253,13 +253,13 @@ export default class ProductsService {
               'available',
             ],
           ],
-          exclude: [
-            'type',
-            'soldOutAmount',
-            'active',
-            'purchasable',
-            'createdAt',
-          ],
+          // exclude: [
+          //   'type',
+          //   'soldOutAmount',
+          //   'active',
+          //   'purchasable',
+          //   'createdAt',
+          // ],
         },
         include: [
           {

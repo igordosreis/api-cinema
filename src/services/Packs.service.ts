@@ -691,9 +691,9 @@ export default class PacksService {
                   ],
                   exclude: [
                     'establishmentId',
-                    'soldOutAmount',
-                    'purchasable',
-                    'createdAt',
+                    // 'soldOutAmount',
+                    // 'purchasable',
+                    // 'createdAt',
                   ],
                 },
                 include: [
