@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 /* eslint-disable max-len */
 /* eslint-disable max-lines-per-function */
 import sequelize, { Op } from 'sequelize';
@@ -7,7 +8,7 @@ import ProductsTypesModel from '../database/models/ProductsTypes.model';
 import VouchersAvailableModel from '../database/models/VouchersAvailable.model';
 import { IProductCreateInfo, IProductEditInfo, IProductQuery, IProductQueryDashboard, IProductResult } from '../interfaces/IProducts';
 import createProductSearchSqlizeQueryUtil from '../utils/createProductSearchSqlizeQuery.util';
-import CustomError, { createProductError, editProductError, establishmentServiceUnavailable, productNotFound } from '../utils/customError.util';
+import CustomError, { createProductError, editProductError, establishmentServiceUnavailable, getProductError, productNotFound } from '../utils/customError.util';
 import EstablishmentsModel from '../database/models/Establishments.model';
 import PaginationUtil from '../utils/pagination.util';
 import { CONSOLE_LOG_ERROR_TITLE } from '../constants';
@@ -184,6 +185,129 @@ export default class ProductsService {
       if (error instanceof CustomError) throw error;
 
       throw new CustomError(establishmentServiceUnavailable);
+    }
+  }
+
+  public static async getProductDetails(productId: number) {
+    try {
+      const productDetails = await EstablishmentsProductsModel.findByPk(
+        productId,
+        {
+          attributes: {
+            include: [
+              // [sequelize.fn('COUNT', sequelize.col('vouchersAvailable.id')), 'vouchersQuantity'],
+              [
+                sequelize.literal(
+                  'COUNT(vouchersAvailable.id) > establishments_products.sold_out_amount',
+                ),
+                'available',
+              ],
+            ],
+            exclude: [
+              'type',
+              'soldOutAmount',
+              'active',
+              'purchasable',
+              'createdAt',
+            ],
+          },
+          include: [
+            {
+              model: VouchersAvailableModel,
+              attributes: [],
+              as: 'vouchersAvailable',
+              where: {
+                orderId: null,
+                expireAt: {
+                  [Op.gt]: new Date(),
+                },
+              },
+            },
+            {
+              model: EstablishmentsModel,
+              as: 'brand',
+              attributes: {
+                exclude: [
+                  'link',
+                  'linkDescription',
+                  'telephone',
+                  'telephoneTwo',
+                  'whatsapp',
+                  'instagram',
+                  'keyWords',
+                  'site',
+                  'active',
+                  'underHighlight',
+                  'views',
+                  'createdAt',
+                  'updatedAt',
+                ],
+              },
+            },
+            {
+              model: EstablishmentsImagesModel,
+              as: 'imagesBrand',
+              attributes: {
+                exclude: [
+                  'establishmentId',
+                  'imageCarousel',
+                  'resizeColor',
+                  'createdAt',
+                  'updatedAt',
+                ],
+              },
+            },
+            {
+              model: ProductsTypesModel,
+              as: 'typeInfo',
+              attributes: {
+                exclude: [
+                  'createdAt',
+                  'updatedAt',
+                ],
+              },
+            },
+            {
+              model: TagsProductsModel,
+              as: 'tagsProducts',
+              attributes: {
+                exclude: [
+                  'productId',
+                ],
+              },
+              include: [
+                {
+                  model: TagsModel,
+                  as: 'productTags',
+                  attributes: {
+                    exclude: [
+                      'id',
+                      'createdAt',
+                      'updatedAt',
+                    ],
+                  },
+                },
+              ],
+            },
+          ],
+          group: [
+            'establishments_products.product_id',
+            'tagsProducts.tag_id',
+            'tagsProducts.product_id',
+          ],
+        },
+      );
+
+      const isProductNotFound = !productDetails;
+      if (isProductNotFound) throw new CustomError(productNotFound);
+
+      return productDetails;
+    } catch (error) {
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
+
+      if (error instanceof CustomError) throw error;
+
+      throw new CustomError(getProductError);
     }
   }
 
