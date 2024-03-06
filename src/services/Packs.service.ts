@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 /* eslint-disable sonarjs/no-identical-functions */
 /* eslint-disable complexity */
 /* eslint-disable sonarjs/cognitive-complexity */
@@ -511,6 +512,194 @@ export default class PacksService {
     });
 
     return allPacks;
+  }
+
+  public static async getPackDetails(packId: number) {
+    try {
+      const packDetails = await PacksModel.findByPk(
+        packId,
+        {
+          include: [
+            {
+              model: TagsPacksModel,
+              as: 'tagsPack',
+              attributes: {
+                exclude: [
+                  'packId',
+                ],
+              },
+              include: [
+                {
+                  model: TagsModel,
+                  as: 'packTags',
+                  attributes: {
+                    exclude: [
+                      'id',
+                      'createdAt',
+                      'updatedAt',
+                    ],
+                  },
+                },
+              ],
+            },
+            {
+              model: EstablishmentsModel,
+              as: 'brand',
+              include: [
+                {
+                  model: EstablishmentsImagesModel,
+                  as: 'images',
+                  attributes: {
+                    exclude: [
+                      'establishmentId',
+                      'imageCarousel',
+                      'resizeColor',
+                      'createdAt',
+                      'updatedAt',
+                    ],
+                  },
+                },
+              ],
+              attributes: {
+                exclude: [
+                  'link',
+                  'linkDescription',
+                  'telephone',
+                  'telephoneTwo',
+                  'whatsapp',
+                  'instagram',
+                  'keyWords',
+                  'site',
+                  'active',
+                  'underHighlight',
+                  'views',
+                  'createdAt',
+                  'updatedAt',
+                ],
+              },
+            },
+            {
+              model: PacksProductsModel,
+              as: 'packInfo',
+              include: [
+                {
+                  model: EstablishmentsProductsModel,
+                  as: 'productDetails',
+                  required: true,
+                  attributes: {
+                    include: [
+                      [
+                        sequelize.fn(
+                          'COUNT',
+                          sequelize.col('packInfo.productDetails.vouchersAvailable.id'),
+                        ),
+                        'vouchersQuantity',
+                      ],
+                    // [
+                    //   sequelize.literal(
+                    //     'COUNT(packInfo.productDetails.vouchersAvailable.product_id) > packInfo.productDetails.sold_out_amount',
+                    //   ),
+                    //   'available',
+                    // ],
+                    ],
+                    exclude: [
+                      'establishmentId',
+                      'soldOutAmount',
+                      'purchasable',
+                      'createdAt',
+                    ],
+                  },
+                  include: [
+                    {
+                      model: VouchersAvailableModel,
+                      as: 'vouchersAvailable',
+                      attributes: [],
+                      where: {
+                        orderId: null,
+                        expireAt: {
+                          [Op.gt]: new Date(),
+                        },
+                      },
+                    },
+                    {
+                      model: ProductsTypesModel,
+                      as: 'typeInfo',
+                      attributes: {
+                        exclude: [
+                          'createdAt',
+                          'updatedAt',
+                        ],
+                      },
+                    },
+                    {
+                      model: TagsProductsModel,
+                      as: 'tagsProducts',
+                      attributes: {
+                        exclude: [
+                          'productId',
+                        ],
+                      },
+                      include: [
+                        {
+                          model: TagsModel,
+                          as: 'productTags',
+                          attributes: {
+                            exclude: [
+                              'id',
+                              'createdAt',
+                              'updatedAt',
+                            ],
+                          },
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+              attributes: {
+                exclude: ['packId'],
+              },
+            },
+            {
+              model: EstablishmentsImagesModel,
+              as: 'brandImages',
+              attributes: {
+                exclude: [
+                  'establishmentId',
+                  'imageCarousel',
+                  'resizeColor',
+                  'createdAt',
+                  'updatedAt',
+                ],
+              },
+            },
+          ],
+          attributes: {
+            exclude: [
+              'createdAt',
+            ],
+          },
+          group: [
+            'packs.pack_id',
+            'packInfo.product_id',
+            'packInfo.productDetails.product_id',
+            'tagsPack.tag_id',
+            'packInfo.productDetails.tagsProducts.tag_id',
+          ],
+        },
+      );
+  
+      const isPackNotFound = !packDetails;
+      if (isPackNotFound) throw new CustomError(packNotFound);
+  
+      return packDetails;
+    } catch (error) {
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
+      
+      if (error instanceof CustomError) throw error;
+
+      throw new CustomError(packServiceUnavailable);
+    }
   }
 
   public static async getPackSummaryById(packId: number, transaction?: Transaction) {

@@ -14,10 +14,10 @@ export default class PacksController {
     res.status(200).json(allPacks);
   }
 
-  public static async getPackSummaryById(req: Request, res: Response): Promise<void> {
-    const { id } = req.params;
+  public static async getPackDetails(req: Request, res: Response): Promise<void> {
+    const { id: packId } = req.params;
 
-    const allPacks = await PacksService.getPackSummaryById(Number(id));
+    const allPacks = await PacksService.getPackDetails(Number(packId));
 
     res.status(200).json(allPacks);
   }
