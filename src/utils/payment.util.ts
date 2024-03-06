@@ -27,6 +27,7 @@ class PaymentUtil {
       return data;
     } catch (error: CustomError | unknown) {
       console.log(CONSOLE_LOG_ERROR_TITLE, error);
+      
       if (error instanceof CustomError) throw error;
 
       throw new CustomError(paymentOrderError);

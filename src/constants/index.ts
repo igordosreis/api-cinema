@@ -52,7 +52,7 @@ export const LANGUAGE_PT_BR = '&language=pt-br';
 
 // SUPERAPP
 
-// -- SUPERAPP BEARER_TOKEN
+// -- TOKENS
 export const { BEARER_TOKEN } = process.env;
 
 // -- SUPERAPP URLs & ENDPOINTS
@@ -64,8 +64,10 @@ export const SUPERAPP_CINEMA_BASE_URL = 'https://node.clubecerto.com.br/superapp
 // -- -- SUPERAPP AUTH
 export const SUPERAPP_URL_BASE_AUTH =
   'https://node.clubecerto.com.br/superapp/microservices/validations/cinema';
-export const SUPERAPP_URL_ADMIN_AUTH =
+export const SUPERAPP_URL_DASHBOARD_AUTH =
   'https://node.clubecerto.com.br/superapp/microservices/validations/dashboard';
+export const SUPERAPP_URL_ADMIN_AUTH =
+  'https://node.clubecerto.com.br/superapp/microservices/validations/microservice';
 
 // -- -- SUPERAPP PAYMENT MICROSERVICE
 export const CREATE_PAYMENT_URL = 'https://node.clubecerto.com.br/superapp/microservices/payment/';

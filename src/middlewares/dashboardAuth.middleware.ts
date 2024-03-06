@@ -5,7 +5,7 @@ import authRequestsUtil from '../utils/authRequests.util';
 const dashboardAuthMiddleware = async (req: Request, _res: Response, next: NextFunction) => {
   const token: string | undefined = req.headers.authorization;
 
-  const userInfo = await authRequestsUtil.validateAdminToken(token);
+  const userInfo = await authRequestsUtil.validateDashboardToken(token);
 
   req.body.userInfo = userInfo;
 

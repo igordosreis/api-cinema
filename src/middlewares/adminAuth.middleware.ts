@@ -2,14 +2,12 @@
 import { NextFunction, Request, Response } from 'express';
 import authRequestsUtil from '../utils/authRequests.util';
 
-const appAuthMiddleware = async (req: Request, _res: Response, next: NextFunction) => {
+const adminAuthMiddleware = async (req: Request, _res: Response, next: NextFunction) => {
   const token: string | undefined = req.headers.authorization;
 
-  const userInfo = await authRequestsUtil.validateAppToken(token);
-
-  req.body.userInfo = userInfo;
+  await authRequestsUtil.validateAdminToken(token);
 
   next();
 };
 
-export default appAuthMiddleware;
+export default adminAuthMiddleware;
