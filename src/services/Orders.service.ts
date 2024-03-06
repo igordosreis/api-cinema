@@ -481,6 +481,7 @@ export default class OrdersService {
       return allUserOrdersParsed;
     } catch (error: CustomError | unknown) {
       console.log(CONSOLE_LOG_ERROR_TITLE, error);
+
       if (error instanceof CustomError) throw error;
 
       throw new CustomError(orderServiceUnavailable);
@@ -490,6 +491,7 @@ export default class OrdersService {
   public static async getOrderById({
     orderId,
     userId,
+    status,
     transaction,
     isAdmin,
   }: IOrderSearchFormatted) {
@@ -497,6 +499,9 @@ export default class OrdersService {
       const attributes = isAdmin
         ? { exclude: ['createdAt', 'updatedAt'] }
         : { exclude: ['createdAt', 'updatedAt', 'voucherCode'] };
+      const whereClause = status 
+        ? { id: orderId, userId, status }
+        : { id: orderId, userId };
 
       const orderInfo = await OrdersModel.findOne({
         include: [
@@ -565,7 +570,7 @@ export default class OrdersService {
             ],
           },
         ],
-        where: { id: orderId, userId },
+        where: { ...whereClause },
         order: [['createdAt', 'ASC']],
         transaction,
       });
@@ -575,6 +580,8 @@ export default class OrdersService {
 
       return orderInfo as IOrderInfo;
     } catch (error: CustomError | unknown) {
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
+      
       if (error instanceof CustomError) throw error;
 
       throw new CustomError(orderServiceUnavailable);

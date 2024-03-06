@@ -33,6 +33,7 @@ export interface IOrderSearchRaw extends Express.Request {
 export interface IOrderSearchFormatted {
   orderId: number;
   userId: number;
+  status?: string;
   transaction?: Transaction;
   isAdmin?: boolean;
 }

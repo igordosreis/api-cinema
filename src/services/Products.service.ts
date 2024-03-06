@@ -157,6 +157,7 @@ export default class ProductsService {
       return pagedProducts;
     } catch (error: CustomError | unknown) {
       console.log(CONSOLE_LOG_ERROR_TITLE, error);
+
       if (error instanceof CustomError) throw error;
 
       throw new CustomError(establishmentServiceUnavailable);
@@ -182,6 +183,7 @@ export default class ProductsService {
       return productTypesWithImgLinks;
     } catch (error: CustomError | unknown) {
       console.log(CONSOLE_LOG_ERROR_TITLE, error);
+
       if (error instanceof CustomError) throw error;
 
       throw new CustomError(establishmentServiceUnavailable);
@@ -501,6 +503,7 @@ export default class ProductsService {
       return pagedProducts;
     } catch (error: CustomError | unknown) {
       console.log(CONSOLE_LOG_ERROR_TITLE, error);
+      
       if (error instanceof CustomError) throw error;
 
       throw new CustomError(establishmentServiceUnavailable);

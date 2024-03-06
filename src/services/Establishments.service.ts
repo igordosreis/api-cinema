@@ -56,6 +56,8 @@ export default class EstablishmentsService {
 
       return establishmentsWithImageLinks;
     } catch (error: CustomError | unknown) {
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
+
       if (error instanceof CustomError) throw error;
 
       throw new CustomError(establishmentServiceUnavailable);
@@ -71,6 +73,8 @@ export default class EstablishmentsService {
 
       return allCities;
     } catch (error: CustomError | unknown) {
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
+      
       if (error instanceof CustomError) throw error;
 
       throw new CustomError(establishmentServiceUnavailable);
@@ -83,6 +87,8 @@ export default class EstablishmentsService {
 
       return allStates;
     } catch (error: CustomError | unknown) {
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
+      
       if (error instanceof CustomError) throw error;
 
       throw new CustomError(establishmentServiceUnavailable);
@@ -140,6 +146,7 @@ export default class EstablishmentsService {
       return parsedAddresses;
     } catch (error: CustomError | unknown) {
       console.log(CONSOLE_LOG_ERROR_TITLE, error);
+
       if (error instanceof CustomError) throw error;
 
       throw new CustomError(establishmentServiceUnavailable);
@@ -237,6 +244,8 @@ export default class EstablishmentsService {
 
       return establishmentWithAddress;
     } catch (error: CustomError | unknown) {
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
+      
       if (error instanceof CustomError) throw error;
 
       throw new CustomError(establishmentServiceUnavailable);
@@ -324,6 +333,8 @@ export default class EstablishmentsService {
 
       return establishmentsWithImageLinks;
     } catch (error: CustomError | unknown) {
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
+      
       if (error instanceof CustomError) throw error;
 
       throw new CustomError(establishmentServiceUnavailable);

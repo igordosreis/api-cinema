@@ -5,6 +5,7 @@ import {
   SUPERAPP_URL_DASHBOARD_AUTH,
   SUPERAPP_URL_BASE_AUTH,
   SUPERAPP_URL_ADMIN_AUTH,
+  CONSOLE_LOG_ERROR_TITLE,
 } from '../constants';
 import CustomError, { userTokenNotFound, requestUnauthorized } from './customError.util';
 import { IUserInfo } from '../interfaces/IUser';
@@ -33,7 +34,9 @@ class AuthRequests {
       );
 
       return userInfo;
-    } catch {
+    } catch (error) {
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
+
       throw new CustomError(requestUnauthorized);
     }
   };
@@ -57,7 +60,9 @@ class AuthRequests {
       );
 
       return userInfo;
-    } catch {
+    } catch (error) {
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
+
       throw new CustomError(requestUnauthorized);
     }
   };
@@ -81,7 +86,9 @@ class AuthRequests {
       );
 
       return userInfo;
-    } catch {
+    } catch (error) {
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
+
       throw new CustomError(requestUnauthorized);
     }
   };

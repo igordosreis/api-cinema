@@ -1,4 +1,5 @@
 /* eslint-disable max-lines-per-function */
+import { CONSOLE_LOG_ERROR_TITLE, STATUS_WAITING } from '../constants';
 import db from '../database/models';
 import CartModel from '../database/models/Cart.model';
 import OrdersModel from '../database/models/Orders.model';
@@ -39,6 +40,7 @@ export default class AdminService {
       const { vouchersOrderUnpaid } = await OrdersService.getOrderById({
         orderId,
         userId,
+        status: STATUS_WAITING,
         transaction: t,
         isAdmin: true,
       });
@@ -65,7 +67,8 @@ export default class AdminService {
     } catch (error) {
       await t.rollback();
 
-      console.log(error);
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
+
       throw new Error();
     }
   }
