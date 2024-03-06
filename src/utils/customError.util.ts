@@ -69,7 +69,8 @@ export const voucherServiceUnavailable: ICustomError = {
 export const vouchersObjectNotFound: ICustomError = {
   status: 404,
   title: 'Vouchers não econtrados.',
-  message: 'Os vouchers devem ser enviados por um array de strings no body ou por um arquivo de Excel.',
+  message:
+    'Os vouchers devem ser enviados por um array de strings no body ou por um arquivo de Excel.',
 };
 
 export const cannotCreateVouchers: ICustomError = {
@@ -157,8 +158,7 @@ export const establishmentServiceUnavailable: ICustomError = {
 export const editEstablishmentError: ICustomError = {
   status: 503,
   title: OPERATION_UNAVAILABLE,
-  message:
-    'Não foi possível editar o estabelecimento no momento. Tente novamente mais tarde.',
+  message: 'Não foi possível editar o estabelecimento no momento. Tente novamente mais tarde.',
 };
 
 export const editEstablishmentImageError: ICustomError = {
@@ -171,8 +171,7 @@ export const editEstablishmentImageError: ICustomError = {
 export const establishmentNotFound: ICustomError = {
   status: 404,
   title: 'Estabelecimento não encontrado.',
-  message:
-    'O estabelecimento buscado não foi encontrado.',
+  message: 'O estabelecimento buscado não foi encontrado.',
 };
 
 export const wrongEstablishmentId: ICustomError = {
@@ -241,6 +240,12 @@ export const movieNotFound: ICustomError = {
   status: 404,
   title: 'Filme não encontrado.',
   message: 'O filme procurado não foi encontrado.',
+};
+
+export const getProductError: ICustomError = {
+  status: 503,
+  title: OPERATION_UNAVAILABLE,
+  message: 'Não foi possível buscar o produto nesse momento. Tente novamente mais tarde.',
 };
 
 export const productNotFound: ICustomError = {
