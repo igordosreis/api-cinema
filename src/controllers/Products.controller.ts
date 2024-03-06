@@ -24,4 +24,12 @@ export default class ProductsController {
 
     res.status(200).json(allProductsTypes);
   }
+
+  public static async getProductDetails(req: Request, res: Response): Promise<void> {
+    const { id: productId } = req.params;
+
+    const productDetails = await ProductsService.getProductDetails(Number(productId));
+
+    res.status(200).json(productDetails);
+  }
 }
