@@ -7,21 +7,23 @@ import EstablishmentsImagesModel from '../database/models/EstablishmentsImages.m
 import ProductsTypesModel from '../database/models/ProductsTypes.model';
 import TagsProductsModel from '../database/models/TagsProducts.model';
 
-export interface IProduct {
-  productId: number;
-  establishmentId: number;
-  active: boolean;
-  purchasable: boolean;
-  name: string;
-  description: string;
-  image: string | null;
-  price: number;
-  rules: string;
-  type: number;
-  available?: boolean;
-  soldOutAmount: number;
-  expireAt: Date;
-}
+// export interface IProduct {
+//   productId: number;
+//   establishmentId: number;
+//   active: boolean;
+//   purchasable: boolean;
+//   name: string;
+//   description: string;
+//   image: string | null;
+//   price: number;
+//   rules: string;
+//   type: number;
+//   available?: boolean;
+//   soldOutAmount: number;
+//   expireAt: Date;
+// }
+
+export type IProduct = EstablishmentsProductsModel;
 
 // export interface IProductCreateInfo {
 //   establishmentId: number;
