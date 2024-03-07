@@ -12,6 +12,7 @@ class EstablishmentsProductsModel extends Model {
   declare description: string;
   declare image: string;
   declare price: number;
+  declare originalPrice: number;
   declare rules: string;
   declare type: number;
   // declare category: string;
@@ -53,6 +54,9 @@ EstablishmentsProductsModel.init(
       type: DataTypes.STRING,
     },
     price: {
+      type: DataTypes.INTEGER,
+    },
+    originalPrice: {
       type: DataTypes.INTEGER,
     },
     rules: {
