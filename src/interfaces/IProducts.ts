@@ -49,6 +49,7 @@ export const IProductCreateInfoSchema = z
     description: z.string().optional(),
     image: z.string().optional(),
     price: z.number(),
+    originalPrice: z.number().optional(),
     rules: z.string().optional(),
     type: z.number(),
     soldOutAmount: z.number(),
@@ -114,7 +115,6 @@ export const IProductQuerySchema = z.object({
   type: z.number().optional(),
   active: z.boolean().optional(),
   available: z.boolean().optional(),
-  purchasable: z.boolean().optional(),
   term: z.string().optional(),
   tags: z.array(z.number()).optional(),
 });
