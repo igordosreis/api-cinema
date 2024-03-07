@@ -52,6 +52,11 @@ module.exports = {
         type: Sequelize.DECIMAL(10, 2),
         allowNull: false,
       },
+      originalPrice: {
+        type: Sequelize.DECIMAL(10, 2),
+        allowNull: true,
+        defaultValue: null,
+      },
       rules: {
         type: Sequelize.TEXT('long'),
         allowNull: true,
