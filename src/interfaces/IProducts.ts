@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-identical-functions */
 import { z } from 'zod';
 import { IVoucherAvailable } from './IVouchers';
 import EstablishmentsProductsModel from '../database/models/EstablishmentsProducts.model';
@@ -98,21 +99,50 @@ export const IProductRawQuerySchema = z.object({
   page: z.string().optional(),
   establishmentId: z.string().optional(),
   type: z.string().optional(),
-  available: z.string().optional(),
+  available: z.union([
+    z.literal('true'),
+    z.literal('false'),
+  ]).optional(),
   term: z.string().optional(),
   tags: z.string().optional(),
 });
 
 export type IProductRawQuery = z.infer<typeof IProductRawQuerySchema>;
 
+// export const IProductQuerySchema = z.object({
+//   limit: z.number(),
+//   page: z.number(),
+//   establishmentId: z.number().optional(),
+//   type: z.number().optional(),
+//   available: z.boolean().optional(),
+//   term: z.string().optional(),
+//   tags: z.array(z.number()).optional(),
+// });
+
 export const IProductQuerySchema = z.object({
-  limit: z.number(),
-  page: z.number(),
-  establishmentId: z.number().optional(),
-  type: z.number().optional(),
-  available: z.boolean().optional(),
+  limit: z.coerce.number().default(20),
+  page: z.coerce.number().default(0),
   term: z.string().optional(),
-  tags: z.array(z.number()).optional(),
+  establishmentId: z.coerce.number().optional(),
+  type: z.coerce.number().optional(),
+  available: z.string().transform((x) => x.toLowerCase() === 'true').pipe(z.boolean()).optional(),
+  tags: z.string().transform((tagsString, ctx) => {
+    const parsedNumbersArray = tagsString.split(',').map((tag) => {
+      const parsedTag = Number(tag);
+      if (Number.isNaN(parsedTag)) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: 'Not a number',
+        });
+
+        return z.NEVER;
+      }
+
+      return parsedTag;
+    });
+
+    return parsedNumbersArray;
+  }).optional(),
 });
 
 export type IProductQuery = z.infer<typeof IProductQuerySchema>;

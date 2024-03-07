@@ -92,17 +92,17 @@ class FormatRequestQuery {
     longitude: this.formatLongitude({ searchQuery, userInfo }),
   });
 
-  private formatType = ({ type }: IProductRawQuery) => Number(type) || undefined;
+  private formatType = ({ type }: IProductRawQuery | IPackSearchQueryRaw) => Number(type) || undefined;
 
-  private formatEstablishmentId = ({ establishmentId }: IProductRawQuery) =>
+  private formatEstablishmentId = ({ establishmentId }: IProductRawQuery | IPackSearchQueryRaw) =>
     Number(establishmentId) || undefined;
 
-  private formatAvailable = ({ available }: IProductRawQuery) =>
+  private formatAvailable = ({ available }: IProductRawQuery | IPackSearchQueryRaw) =>
     (available === 'true' ? true : undefined);
 
   private formatActive = ({ active }: IPackSearchQueryRaw) => (active === 'true' ? true : undefined);
 
-  private formatTags = ({ tags }: IProductRawQuery) => (tags
+  private formatTags = ({ tags }: IProductRawQuery | IPackSearchQueryRaw) => (tags
     ? tags.split(',').map((id) => Number(id))
     : undefined);
 

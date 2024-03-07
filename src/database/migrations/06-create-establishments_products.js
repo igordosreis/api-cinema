@@ -52,7 +52,7 @@ module.exports = {
         type: Sequelize.DECIMAL(10, 2),
         allowNull: false,
       },
-      originalPrice: {
+      original_price: {
         type: Sequelize.DECIMAL(10, 2),
         allowNull: true,
         defaultValue: null,

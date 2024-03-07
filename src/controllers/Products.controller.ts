@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { ProductsService } from '../services';
-import formatRequestQueryUtil from '../utils/formatRequestQuery.util';
+// import formatRequestQueryUtil from '../utils/formatRequestQuery.util';
 import {
   IProductQuerySchema,
   IProductRawQuery,
@@ -9,11 +9,15 @@ import {
 
 export default class ProductsController {
   public static async getProductsByQuery(req: Request, res: Response): Promise<void> {
+    // const searchQuery = <IProductRawQuery>req.query;
+    // IProductRawQuerySchema.parse(searchQuery);
+
+    // const formattedSearchQuery = formatRequestQueryUtil.formatProductQuery(searchQuery);
+    // IProductQuerySchema.parse(formattedSearchQuery);
     const searchQuery = <IProductRawQuery>req.query;
     IProductRawQuerySchema.parse(searchQuery);
 
-    const formattedSearchQuery = formatRequestQueryUtil.formatProductQuery(searchQuery);
-    IProductQuerySchema.parse(formattedSearchQuery);
+    const formattedSearchQuery = IProductQuerySchema.parse(searchQuery);
     const products = await ProductsService.getProductsByQuery(formattedSearchQuery);
 
     res.status(200).json(products);
