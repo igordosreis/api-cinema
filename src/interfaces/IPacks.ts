@@ -73,8 +73,7 @@ export const IPackCreateInfoSchema = z
     tags: z.array(z.number()),
     expireAt: z.string().pipe(z.coerce.date()).optional(),
     products: z.array(IProductInPackSchema),
-  })
-  .strict();
+  });
 
 export type IPackCreateInfo = z.infer<typeof IPackCreateInfoSchema>;
 
@@ -96,8 +95,7 @@ export const IPackEditInfoSchema = z
     tags: z.array(z.number()).optional(),
     expireAt: z.string().pipe(z.coerce.date()).optional(),
     products: z.array(IProductInPackSchema).optional(),
-  })
-  .strict();
+  });
 
 export type IPackEditInfo = z.infer<typeof IPackEditInfoSchema>;
 

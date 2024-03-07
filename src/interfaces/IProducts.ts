@@ -55,8 +55,7 @@ export const IProductCreateInfoSchema = z
     soldOutAmount: z.number(),
     expireAt: z.string().pipe(z.coerce.date()).optional(),
     tags: z.array(z.number()),
-  })
-  .strict();
+  });
 
 export type IProductCreateInfo = z.infer<typeof IProductCreateInfoSchema>;
 
@@ -79,8 +78,7 @@ export const IProductEditInfoSchema = z
     soldOutAmount: z.number().optional(),
     expireAt: z.string().pipe(z.coerce.date()).optional(),
     tags: z.array(z.number()).optional(),
-  })
-  .strict();
+  });
 
 export type IProductEditInfo = z.infer<typeof IProductEditInfoSchema>;
 
@@ -100,7 +98,6 @@ export const IProductRawQuerySchema = z.object({
   page: z.string().optional(),
   establishmentId: z.string().optional(),
   type: z.string().optional(),
-  active: z.string().optional(),
   available: z.string().optional(),
   term: z.string().optional(),
   tags: z.string().optional(),
@@ -113,7 +110,6 @@ export const IProductQuerySchema = z.object({
   page: z.number(),
   establishmentId: z.number().optional(),
   type: z.number().optional(),
-  active: z.boolean().optional(),
   available: z.boolean().optional(),
   term: z.string().optional(),
   tags: z.array(z.number()).optional(),

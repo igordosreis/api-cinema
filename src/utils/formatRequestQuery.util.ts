@@ -100,7 +100,7 @@ class FormatRequestQuery {
   private formatAvailable = ({ available }: IProductRawQuery) =>
     (available === 'true' ? true : undefined);
 
-  private formatActive = ({ active }: IProductRawQuery) => (active === 'true' ? true : undefined);
+  private formatActive = ({ active }: IPackSearchQueryRaw) => (active === 'true' ? true : undefined);
 
   private formatTags = ({ tags }: IProductRawQuery) => (tags
     ? tags.split(',').map((id) => Number(id))
@@ -113,7 +113,6 @@ class FormatRequestQuery {
     type: this.formatType(searchQuery),
     establishmentId: this.formatEstablishmentId(searchQuery),
     available: this.formatAvailable(searchQuery),
-    active: this.formatActive(searchQuery),
     tags: this.formatTags(searchQuery),
   });
 
