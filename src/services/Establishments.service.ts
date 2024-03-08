@@ -266,6 +266,23 @@ export default class EstablishmentsService {
     }
   }
 
+  public static async getEstablishmentByIdDashboard(id: number) {
+    try {
+      const establishment = await EstablishmentsModel.findByPk(id);
+
+      const isEstablishmentNotFound = !establishment;
+      if (isEstablishmentNotFound) throw new CustomError(establishmentNotFound);
+
+      return establishment;
+    } catch (error) {
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
+
+      if (error instanceof CustomError) throw error;
+
+      throw new CustomError(establishmentServiceUnavailable);
+    }
+  }
+
   public static async editEstablishmentBrandDashboard(
     editEstablishmentInfo: IEstablishmentBrandEdit,
   ) {
@@ -278,7 +295,7 @@ export default class EstablishmentsService {
       const isEstablishmentNotFound = !establishment;
       if (isEstablishmentNotFound) throw new CustomError(establishmentNotFound);
 
-      await establishment.update({ ...restOfInfo });
+      await establishment.update({ ...restOfInfo, transaction: t });
 
       await t.commit();
     } catch (error) {
@@ -322,11 +339,11 @@ export default class EstablishmentsService {
           ...establishment.images.dataValues,
           logo: ImageFormatter.formatUrl({
             imageName: establishment.images.logo,
-            folderPath: FOLDER_PATH_ESTABLISHMENT_COVER,
+            folderPath: FOLDER_PATH_ESTABLISHMENT_LOGO,
           }),
           cover: ImageFormatter.formatUrl({
             imageName: establishment.images.cover,
-            folderPath: FOLDER_PATH_ESTABLISHMENT_LOGO,
+            folderPath: FOLDER_PATH_ESTABLISHMENT_COVER,
           }),
         },
       })) as IEstablishment[];
