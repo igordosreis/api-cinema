@@ -7,6 +7,7 @@ const dashboardRouter = Router();
 
 // Establishment
 dashboardRouter.get('/establishment/brand/get', DashboardController.getEstablishmentBrands);
+dashboardRouter.get('/establishment/brand/get/:id', DashboardController.getEstablishmentBrandById);
 dashboardRouter.get('/establishment/address/get', DashboardController.getEstablishmentAddress);
 dashboardRouter.patch('/establishment/brand/edit', DashboardController.editEstablishmentBrand);
 dashboardRouter.put(

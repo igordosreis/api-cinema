@@ -167,6 +167,14 @@ export default class DashboardController {
   }
 
   // Establishmet
+  public static async getEstablishmentBrandById(req: Request, res: Response): Promise<void> {
+    const { id } = req.params;
+
+    const brand = await EstablishmentsService.getEstablishmentByIdDashboard(Number(id));
+
+    res.status(200).json(brand);
+  }
+
   public static async getEstablishmentBrands(_req: Request, res: Response): Promise<void> {
     const brands = await EstablishmentsService.getAllEstablishmentsDashboard();
 
