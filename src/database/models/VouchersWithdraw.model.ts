@@ -2,6 +2,7 @@ import { DataTypes, Model } from 'sequelize';
 import db from '.';
 import EstablishmentsProductsModel from './EstablishmentsProducts.model';
 import EstablishmentsModel from './Establishments.model';
+import BatchesModel from './Batches.model';
 
 class VouchersWithdrawModel extends Model {
   declare id: number;
@@ -78,6 +79,15 @@ VouchersWithdrawModel.belongsTo(EstablishmentsModel, {
 EstablishmentsModel.hasMany(VouchersWithdrawModel, {
   foreignKey: 'establishmentId',
   as: 'vouchersWithdrawInfo',
+});
+
+VouchersWithdrawModel.belongsTo(BatchesModel, {
+  foreignKey: 'batchId',
+  as: 'vouchersWithdrawBatchInfo',
+});
+BatchesModel.hasMany(VouchersWithdrawModel, {
+  foreignKey: 'batchId',
+  as: 'vouchersWithdrawBatchInfo',
 });
 
 export default VouchersWithdrawModel;

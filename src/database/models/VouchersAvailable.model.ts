@@ -3,6 +3,7 @@ import db from '.';
 import EstablishmentsProductsModel from './EstablishmentsProducts.model';
 import OrdersModel from './Orders.model';
 import EstablishmentsModel from './Establishments.model';
+import BatchesModel from './Batches.model';
 
 class VouchersAvailableModel extends Model {
   declare id: number;
@@ -86,6 +87,15 @@ VouchersAvailableModel.belongsTo(EstablishmentsModel, {
 EstablishmentsModel.hasMany(VouchersAvailableModel, {
   foreignKey: 'establishmentId',
   as: 'vouchersAvailableInfo',
+});
+
+VouchersAvailableModel.belongsTo(BatchesModel, {
+  foreignKey: 'batchId',
+  as: 'vouchersAvailableBatchInfo',
+});
+BatchesModel.hasMany(VouchersAvailableModel, {
+  foreignKey: 'batchId',
+  as: 'vouchersAvailableBatchInfo',
 });
 
 VouchersAvailableModel.belongsTo(OrdersModel, {
