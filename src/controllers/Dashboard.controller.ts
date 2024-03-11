@@ -51,11 +51,11 @@ export default class DashboardController {
     const searchQuery = <IProductQueryDashboard>req.query;
     const formattedSearchQuery = IProductQueryDashboardSchema.parse(searchQuery);
 
-    const { type } = searchQuery;
+    const { type } = formattedSearchQuery;
     if (type === 'pack') {
       const parsedSearchQuery = {
         ...formattedSearchQuery,
-        limit: formattedSearchQuery.limit || 20,
+        limit: formattedSearchQuery.limit || 10000,
         page: formattedSearchQuery.page || 0,
       };
 
@@ -65,15 +65,32 @@ export default class DashboardController {
       return res.status(200).json(packs);
     }
 
-    const parsedSearchQuery = {
-      ...formattedSearchQuery,
-      type,
-      limit: formattedSearchQuery.limit || 20,
-      page: formattedSearchQuery.page || 0,
-    };
-    const product = await ProductsService.getProductsByQueryDashboard(parsedSearchQuery);
+    if (typeof type === 'number') {
+      const parsedSearchQuery = {
+        ...formattedSearchQuery,
+        type,
+        limit: formattedSearchQuery.limit || 10000,
+        page: formattedSearchQuery.page || 0,
+      };
+      const product = await ProductsService.getProductsByQueryDashboard(parsedSearchQuery);
+  
+      return res.status(200).json(product);
+    }
 
-    return res.status(200).json(product);
+    if (typeof type === 'undefined') {
+      const parsedSearchQuery = {
+        ...formattedSearchQuery,
+        limit: formattedSearchQuery.limit || 10000,
+        page: formattedSearchQuery.page || 0,
+      };
+      const { type: removedType, ...restOfQuery } = parsedSearchQuery;
+
+      const product = await ProductsService.getProductsByQueryDashboard(restOfQuery);
+      const packs = await PacksService.getPacksByQueryDashboard(restOfQuery);
+      const allItems = [...product, ...packs];
+
+      return res.status(200).json(allItems);
+    }
   }
 
   // -- Products

@@ -17,24 +17,27 @@ class CreateProductSearchSqlizeQueryDashboard {
     if (purchasable) searchQuery.push({ purchasable });
     if (active) searchQuery.push({ active });
     if (search) {
-      searchQuery.push({
-        [Op.or]: {
-          name: { [Op.substring]: search },
-          description: { [Op.substring]: search },
-          '$brand.name$': { [Op.substring]: search },
-        },
-      });
+      const isSearchNumber = Number(search);
+      if (isSearchNumber) {
+        searchQuery.push({ productId: search });
+      } else {
+        searchQuery.push({
+          [Op.or]: {
+            name: { [Op.substring]: search },
+            description: { [Op.substring]: search },
+            '$brand.name$': { [Op.substring]: search },
+          },
+        });
+      }
     }
     if (type) searchQuery.push({ '$typeInfo.id$': { [Op.eq]: type } });
     if (establishmentId) searchQuery.push({ establishmentId });
-    // if (tags) searchQuery.push({ '$productTags.tag_id$': { [Op.and]: tags } });
 
     return {
       where: {
         [Op.and]: searchQuery,
       },
       having: available ? { available } : {},
-      // having: available ? { available } : { '$productTags.tag_id$': { [Op.overlap]: tags } },
     };
   };
 
