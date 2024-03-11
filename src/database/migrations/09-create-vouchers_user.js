@@ -39,6 +39,12 @@ module.exports = {
       batch_id: {
         type: Sequelize.STRING,
         allowNull: false,
+        references: {
+          model: 'batches',
+          key: 'id', 
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
       },
       establishment_id: {
         allowNull: false,
