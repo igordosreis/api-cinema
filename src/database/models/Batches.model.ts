@@ -3,7 +3,7 @@ import db from '.';
 import EstablishmentsProductsModel from './EstablishmentsProducts.model';
 // import EstablishmentsModel from './Establishments.model';
 
-class Batches extends Model {
+class BatchesModel extends Model {
   declare id: number;
   declare batchCode: string;
   declare productId: number;
@@ -13,7 +13,7 @@ class Batches extends Model {
   declare updatedAt: Date;
 }
 
-Batches.init(
+BatchesModel.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -48,13 +48,13 @@ Batches.init(
   },
 );
 
-Batches.belongsTo(EstablishmentsProductsModel, {
+BatchesModel.belongsTo(EstablishmentsProductsModel, {
   foreignKey: 'productId',
-  as: 'batchInfo',
+  as: 'batchProduct',
 });
-EstablishmentsProductsModel.hasMany(Batches, {
+EstablishmentsProductsModel.hasMany(BatchesModel, {
   foreignKey: 'productId',
-  as: 'batchInfo',
+  as: 'batchProduct',
 });
 
 // Batches.belongsTo(EstablishmentsModel, {
@@ -66,4 +66,4 @@ EstablishmentsProductsModel.hasMany(Batches, {
 //   as: 'batchInfo',
 // });
 
-export default Batches;
+export default BatchesModel;
