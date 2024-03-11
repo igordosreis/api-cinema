@@ -72,7 +72,7 @@ export const IVoucherNewParamsRawSchema = z.object({
   date: z.string(),
   productId: z.string(),
   establishmentId: z.string(),
-  batchId: z.string(),
+  batchCode: z.string(),
 });
 
 export type IVoucherNewParamsRaw = z.infer<typeof IVoucherNewParamsRawSchema>;
@@ -81,7 +81,7 @@ export const IVoucherNewParamsSchema = z.object({
   date: z.string().pipe(z.coerce.date()),
   productId: z.string().pipe(z.coerce.number()),
   establishmentId: z.string().pipe(z.coerce.number()),
-  batchId: z.string(),
+  batchCode: z.string(),
 });
 
 export type IVoucherNewParams = z.infer<typeof IVoucherNewParamsSchema>;
@@ -90,14 +90,14 @@ export interface IVouchersCreateInfo {
   date: Date,
   productId: number,
   establishmentId: number,
-  batchId: string,
+  batchCode: string,
   voucherCodes: IVouchersNew[],
 }
 export const IVouchersInfoArraySchema = z.array(z.object({
   expireAt: z.date(), 
   productId: z.number(),
   establishmentId: z.number(),
-  batchId: z.string(),
+  batchCode: z.string(),
   voucherCode: z.string(),
 }));
 
