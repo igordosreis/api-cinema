@@ -12,6 +12,7 @@ class CreateProductSearchSqlizeQueryDashboard {
     establishmentId,
     type,
     available,
+    // expireAt,
   }: IProductQueryDashboard) => {
     const searchQuery = [];
     if (purchasable) searchQuery.push({ purchasable });
@@ -32,6 +33,7 @@ class CreateProductSearchSqlizeQueryDashboard {
     }
     if (type) searchQuery.push({ '$typeInfo.id$': { [Op.eq]: type } });
     if (establishmentId) searchQuery.push({ establishmentId });
+    // if (expireAt) searchQuery.push({ '$batchProduct.expireAt$': { [Op.like]: expireAt } });
 
     return {
       where: {

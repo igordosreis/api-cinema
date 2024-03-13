@@ -189,6 +189,7 @@ export const IProductQueryDashboardSchema = z.object({
     return parsedNumbersArray;
   }).optional(),
   purchasable: z.string().transform((x) => x.toLowerCase() === 'true').pipe(z.boolean()).optional(),
+  expireAt: z.string().pipe(z.coerce.date()).optional(),
 });
 
 export type IProductQueryDashboard = z.infer<typeof IProductQueryDashboardSchema>;

@@ -86,10 +86,10 @@ export default class DashboardController {
       const { type: removedType, ...restOfQuery } = parsedSearchQuery;
 
       const product = await ProductsService.getProductsByQueryDashboard(restOfQuery);
-      const packs = await PacksService.getPacksByQueryDashboard(restOfQuery);
-      const allItems = [...product, ...packs];
+      // const packs = await PacksService.getPacksByQueryDashboard(restOfQuery);
+      // const allItems = [...product, ...packs];
 
-      return res.status(200).json(allItems);
+      return res.status(200).json(product);
     }
   }
 

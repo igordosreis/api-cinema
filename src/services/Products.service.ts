@@ -403,8 +403,15 @@ export default class ProductsService {
           {
             model: BatchesModel,
             as: 'batchProduct',
-            order: [['createdAt', 'DESC']],
-            limit: 1,
+            attributes: {
+              exclude: [
+                'productId',
+                // 'createdAt',
+                // 'updatedAt',
+              ],
+            },
+            // order: [['createdAt', 'ASC']],
+            // limit: 1,
           },
           {
             model: EstablishmentsModel,
@@ -477,6 +484,7 @@ export default class ProductsService {
           'establishments_products.product_id',
           'tagsProducts.tag_id',
           'tagsProducts.product_id',
+          'batchProduct.batch_id',
         ],
         ...createProductSearchSqlizeQueryDashboardUtil.create(formattedSearchQuery),
         // limit: formattedQuery.limit,
