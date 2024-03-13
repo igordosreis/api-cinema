@@ -38,6 +38,7 @@ import createVouchersGetSqlizeQueryUtil from '../utils/createVouchersGetSqlizeQu
 import VouchersWithdrawModel from '../database/models/VouchersWithdraw.model';
 import db from '../database/models';
 import VoucherUtil from '../utils/voucher.util';
+import BatchesModel from '../database/models/Batches.model';
 
 export default class VouchersService {
   public static async getVouchersByProductId(productId: number, transaction?: Transaction) {
@@ -354,9 +355,15 @@ export default class VouchersService {
   public static async createVouchersDashboard(vouchersInfoArray: IVouchersInfoArray) {
     const t = await db.transaction();
     try {
-      await VoucherUtil.validateProductAndEstablishmentIds(vouchersInfoArray, t);
+      const { batchId, expireAt, productId, establishmentId } = vouchersInfoArray[0];
+
+      await VoucherUtil.validateProductAndEstablishmentIds(productId, establishmentId, t);
       await VoucherUtil.validateVoucherCodes(vouchersInfoArray, t);
 
+      await BatchesModel.create(
+        { batchId, expireAt, productId, establishmentId },
+        { transaction: t },
+      );
       await VouchersAvailableModel.bulkCreate(vouchersInfoArray, { transaction: t });
 
       await t.commit();

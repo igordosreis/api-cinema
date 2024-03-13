@@ -173,12 +173,11 @@ export default class VoucherUtil {
   }
 
   public static async validateProductAndEstablishmentIds(
-    vouchers: IVouchersInfoArray,
+    productId: number, 
+    establishmentId: number,
     transaction: Transaction,
   ) {
     try {
-      const { productId, establishmentId } = vouchers[0];
-
       const product = await EstablishmentsProductsModel.findByPk(productId, { transaction });
 
       const isProductNotFound = !product;
