@@ -34,7 +34,7 @@ module.exports = {
       id: index + 101,
       voucher_code: generateUniqueVoucher(),
       product_id: Math.floor(Math.random() * 25) + 1, // Random number between 1 and 26
-      batch_code: `FLRT${Math.floor(Math.random() * 10) + 1}`,
+      batch_id: 'BCG1202',
       establishment_id: getRandomEstablishmentId(establishmentIds),
       expire_at: generateRandomDate(2024, 2025),
       // created_at: generateRandomDate(2022, 2023),

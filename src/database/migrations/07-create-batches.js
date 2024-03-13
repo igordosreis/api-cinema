@@ -6,15 +6,10 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('batches', {
-      id: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-      },
-      batch_code: {
+      batch_id: {
         type: Sequelize.STRING,
         allowNull: false,
+        primaryKey: true,
       },
       product_id: {
         type: Sequelize.INTEGER,

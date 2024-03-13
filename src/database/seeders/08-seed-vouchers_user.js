@@ -55,7 +55,7 @@ module.exports = {
       product_id: Math.floor(Math.random() * 25) + 1, // Random number between 1 and 50
       establishment_id: 488,
       expire_at: generateRandomDate(2024, 2025),
-      batch_code: `FLRT${Math.floor(Math.random() * 10) + 1}`,
+      batch_id: 'BCG1202',
       sold_price: generateRandomPrice(10, 300),
     }));
 

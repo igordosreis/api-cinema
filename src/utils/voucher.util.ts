@@ -51,14 +51,14 @@ export default class VoucherUtil {
     date,
     productId,
     establishmentId,
-    batchCode,
+    batchId,
   }: IVouchersCreateInfo): IVouchersInfoArray {
     const formattedArray = voucherCodes.map((voucherCode) => ({
       ...voucherCode,
       expireAt: date,
       establishmentId,
       productId,
-      batchCode,
+      batchId,
     }));
 
     return formattedArray;
@@ -195,5 +195,9 @@ export default class VoucherUtil {
 
       throw new CustomError(cannotValidateVouchers);
     }
+  }
+
+  public static async validateBatchCode() {
+    console.log();
   }
 }

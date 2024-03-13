@@ -41,7 +41,7 @@ module.exports = {
         allowNull: false,
         references: {
           model: 'batches',
-          key: 'id', 
+          key: 'batch_id', 
         },
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
