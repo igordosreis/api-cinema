@@ -18,6 +18,7 @@ import db from '../database/models';
 import TagsModel from '../database/models/Tags.model';
 import TagsUtil from '../utils/tags.util';
 import createProductSearchSqlizeQueryDashboardUtil from '../utils/createProductSearchSqlizeQueryDashboard.util';
+import BatchesModel from '../database/models/Batches.model';
 
 export default class ProductsService {
   public static async getProductsByQuery(formattedSearchQuery: IProductQuery) {
@@ -398,6 +399,12 @@ export default class ProductsService {
                 [Op.gt]: new Date(),
               },
             },
+          },
+          {
+            model: BatchesModel,
+            as: 'batchProduct',
+            order: [['createdAt', 'DESC']],
+            limit: 1,
           },
           {
             model: EstablishmentsModel,
