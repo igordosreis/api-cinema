@@ -543,4 +543,122 @@ export default class ProductsService {
       throw new CustomError(establishmentServiceUnavailable);
     }
   }
+
+  public static async getProductByIdDashboard(productId: number) {
+    const product = await EstablishmentsProductsModel.findByPk(
+      productId,
+      {
+        attributes: {
+          include: [
+            [sequelize.fn('COUNT', sequelize.col('vouchersAvailable.id')), 'vouchersQuantity'],
+            [
+              sequelize.literal(
+                'COUNT(vouchersAvailable.id) > establishments_products.sold_out_amount',
+              ),
+              'available',
+            ],
+          ],
+          // exclude: [
+          //   'type',
+          //   'soldOutAmount',
+          //   'active',
+          //   'purchasable',
+          //   'createdAt',
+          // ],
+        },
+        include: [
+          {
+            model: VouchersAvailableModel,
+            attributes: [],
+            as: 'vouchersAvailable',
+            where: {
+              orderId: null,
+              expireAt: {
+                [Op.gt]: new Date(),
+              },
+            },
+          },
+          {
+            model: BatchesModel,
+            as: 'batchProduct',
+            attributes: {
+              exclude: [
+                'productId',
+                // 'createdAt',
+                // 'updatedAt',
+              ],
+            },
+          },
+          {
+            model: EstablishmentsModel,
+            as: 'brand',
+            attributes: {
+              exclude: [
+                'link',
+                'linkDescription',
+                'telephone',
+                'telephoneTwo',
+                'whatsapp',
+                'instagram',
+                'keyWords',
+                'site',
+                'active',
+                'underHighlight',
+                'views',
+                'createdAt',
+                'updatedAt',
+              ],
+            },
+          },
+          {
+            model: EstablishmentsImagesModel,
+            as: 'imagesBrand',
+            attributes: {
+              exclude: [
+                'establishmentId',
+                'imageCarousel',
+                'resizeColor',
+                'createdAt',
+                'updatedAt',
+              ],
+            },
+          },
+          {
+            model: ProductsTypesModel,
+            as: 'typeInfo',
+            attributes: {
+              exclude: [
+                'createdAt',
+                'updatedAt',
+              ],
+            },
+          },
+          {
+            model: TagsProductsModel,
+            as: 'tagsProducts',
+            attributes: {
+              exclude: [
+                'productId',
+              ],
+            },
+            include: [
+              {
+                model: TagsModel,
+                as: 'productTags',
+                attributes: {
+                  exclude: [
+                    'id',
+                    'createdAt',
+                    'updatedAt',
+                  ],
+                },
+              },
+            ],
+          },
+        ],
+      },
+    );
+
+    return product;
+  }
 }

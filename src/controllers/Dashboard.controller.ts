@@ -112,6 +112,14 @@ export default class DashboardController {
     res.status(200).end();
   }
 
+  public static async getProductById(req: Request, res: Response): Promise<void> {
+    const { id: productId } = req.params;
+
+    const product = await ProductsService.getProductByIdDashboard(Number(productId));
+
+    res.status(200).json(product);
+  }
+
   // -- Packs
   public static async createPack(req: Request, res: Response): Promise<void> {
     const { packInfo } = <IPackCreateInfoBody>req.body;
