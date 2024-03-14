@@ -139,6 +139,14 @@ export default class DashboardController {
     res.status(200).json(packId);
   }
 
+  public static async getPackById(req: Request, res: Response): Promise<void> {
+    const { id: packId } = req.params;
+
+    const pack = await PacksService.getPackByIdDashboard(Number(packId));
+
+    res.status(200).json(pack);
+  }
+
   // Voucher
   public static async createVoucher(req: Request, res: Response): Promise<void> {
     const voucherCodes = VoucherUtil.getVoucherCodesFromReq(req);

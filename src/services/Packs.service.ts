@@ -1044,4 +1044,186 @@ export default class PacksService {
       throw new CustomError(packServiceUnavailable);
     }
   }
+
+  public static async getPackByIdDashboard(packId: number) {
+    try {
+      const pack = await PacksModel.findByPk(
+        packId,
+        {
+          include: [
+            {
+              model: TagsPacksModel,
+              as: 'tagsPack',
+              attributes: {
+                exclude: [
+                  'packId',
+                ],
+              },
+              include: [
+                {
+                  model: TagsModel,
+                  as: 'packTags',
+                  attributes: {
+                    exclude: [
+                      'id',
+                      'createdAt',
+                      'updatedAt',
+                    ],
+                  },
+                },
+              ],
+            },
+            {
+              model: EstablishmentsModel,
+              as: 'brand',
+              include: [
+                {
+                  model: EstablishmentsImagesModel,
+                  as: 'images',
+                  attributes: {
+                    exclude: [
+                      'establishmentId',
+                      'imageCarousel',
+                      'resizeColor',
+                      'createdAt',
+                      'updatedAt',
+                    ],
+                  },
+                },
+              ],
+              attributes: {
+                exclude: [
+                  'link',
+                  'linkDescription',
+                  'telephone',
+                  'telephoneTwo',
+                  'whatsapp',
+                  'instagram',
+                  'keyWords',
+                  'site',
+                  'active',
+                  'underHighlight',
+                  'views',
+                  'createdAt',
+                  'updatedAt',
+                ],
+              },
+            },
+            {
+              model: PacksProductsModel,
+              as: 'packInfo',
+              include: [
+                {
+                  model: EstablishmentsProductsModel,
+                  as: 'productDetails',
+                  required: true,
+                  attributes: {
+                    include: [
+                      [
+                        sequelize.fn(
+                          'COUNT',
+                          sequelize.col('packInfo.productDetails.vouchersAvailable.id'),
+                        ),
+                        'vouchersQuantity',
+                      ],
+                    ],
+                    exclude: [
+                      'establishmentId',
+                      // 'soldOutAmount',
+                      // 'purchasable',
+                      // 'createdAt',
+                    ],
+                  },
+                  include: [
+                    {
+                      model: VouchersAvailableModel,
+                      as: 'vouchersAvailable',
+                      attributes: [],
+                      where: {
+                        orderId: null,
+                        expireAt: {
+                          [Op.gt]: new Date(),
+                        },
+                      },
+                    },
+                    {
+                      model: ProductsTypesModel,
+                      as: 'typeInfo',
+                      attributes: {
+                        exclude: [
+                          'createdAt',
+                          'updatedAt',
+                        ],
+                      },
+                    },
+                    {
+                      model: TagsProductsModel,
+                      as: 'tagsProducts',
+                      attributes: {
+                        exclude: [
+                          'productId',
+                        ],
+                      },
+                      include: [
+                        {
+                          model: TagsModel,
+                          as: 'productTags',
+                          attributes: {
+                            exclude: [
+                              'id',
+                              'createdAt',
+                              'updatedAt',
+                            ],
+                          },
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+              attributes: {
+                exclude: ['packId'],
+              },
+            },
+            {
+              model: EstablishmentsImagesModel,
+              as: 'brandImages',
+              attributes: {
+                exclude: [
+                  'establishmentId',
+                  'imageCarousel',
+                  'resizeColor',
+                  'createdAt',
+                  'updatedAt',
+                ],
+              },
+            },
+          ],
+          attributes: {
+            exclude: [
+              'createdAt',
+            ],
+          },
+          group: [
+            'packs.pack_id',
+            'packInfo.product_id',
+            'packInfo.productDetails.product_id',
+            'tagsPack.tag_id',
+            'packInfo.productDetails.tagsProducts.tag_id',
+          ],
+        },
+      ) as IPacksByQuery;
+
+      const isPackNotFound = !pack;
+      if (isPackNotFound) throw new CustomError(packNotFound);
+
+      return pack;
+    } catch (error) {
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
+
+      if (error instanceof CustomError) throw error;
+
+      throw new CustomError(packServiceUnavailable);
+    }
+  }
 }
