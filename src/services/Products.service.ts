@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/cognitive-complexity */
 /* eslint-disable sonarjs/no-duplicate-string */
 /* eslint-disable max-len */
 /* eslint-disable max-lines-per-function */
@@ -6,7 +7,7 @@ import EstablishmentsImagesModel from '../database/models/EstablishmentsImages.m
 import EstablishmentsProductsModel from '../database/models/EstablishmentsProducts.model';
 import ProductsTypesModel from '../database/models/ProductsTypes.model';
 import VouchersAvailableModel from '../database/models/VouchersAvailable.model';
-import { IProductCreateInfo, IProductEditInfo, IProductQuery, IProductQueryDashboard, IProductResult } from '../interfaces/IProducts';
+import { IProductCreateInfo, IProductEditInfo, IProductParsed, IProductQuery, IProductQueryDashboard, IProductResult } from '../interfaces/IProducts';
 import createProductSearchSqlizeQueryUtil from '../utils/createProductSearchSqlizeQuery.util';
 import CustomError, { createProductError, editProductError, establishmentServiceUnavailable, getProductError, productNotFound } from '../utils/customError.util';
 import EstablishmentsModel from '../database/models/Establishments.model';
@@ -368,7 +369,7 @@ export default class ProductsService {
 
   public static async getProductsByQueryDashboard(formattedSearchQuery: IProductQueryDashboard) {
     try {
-      const { tags } = formattedSearchQuery;
+      const { tags, expireAt } = formattedSearchQuery;
       const products = await EstablishmentsProductsModel.findAll({
         attributes: {
           include: [
@@ -410,7 +411,7 @@ export default class ProductsService {
                 // 'updatedAt',
               ],
             },
-            // order: [['createdAt', 'ASC']],
+            // order: [['createdAt', 'DESC']],
             // limit: 1,
           },
           {
@@ -491,13 +492,31 @@ export default class ProductsService {
         // offset: formattedQuery.limit * formattedQuery.page,
       }) as IProductResult[];
 
-      const filteredProducts = tags
-        ? products.filter((product) => tags.every((tag) => product.tagsProducts.some(({ tagId }) => tagId === tag)))
+      const parsedProducts = products
+        .map(({ dataValues: product }) => {
+          const { batchProduct, ...restOfInfo } = product;
+
+          const lastBatch = Array.isArray(batchProduct) && batchProduct.sort((batchA, batchB) => batchA.expireAt - batchB.expireAt)[0];
+
+          const newProductInfo = {
+            ...restOfInfo,
+            batchProduct: lastBatch,
+          };
+
+          return newProductInfo;
+        }) as IProductParsed[];
+
+      const filteredByTags = tags
+        ? parsedProducts.filter((product) => tags.every((tag) => product.tagsProducts.some(({ tagId }) => tagId === tag)))
         // ? products.filter((product) => tags.every((tag) => product.productTags.map(({ tagId }) => tagId).includes(tag)))
-        : products;
+        : parsedProducts;
+      
+      const filteredByExpireAt = expireAt
+        ? filteredByTags.filter((product) => product.batchProduct?.expireAt.toString().includes(expireAt.toString()))
+        : filteredByTags;
         
       const { page, limit } = formattedSearchQuery;
-      const pagedProducts = PaginationUtil.getPageContent({ page, limit, array: filteredProducts })
+      const pagedProducts = PaginationUtil.getPageContent({ page, limit, array: filteredByExpireAt })
         // eslint-disable-next-line sonarjs/no-identical-functions
         .map((product) => {
           const { imagesBrand: { logo, cover } } = product;
@@ -508,11 +527,11 @@ export default class ProductsService {
           };
 
           return {
-            ...product.dataValues,
+            ...product,
             imagesBrand: {
               ...newImagesBrand,
             },
-          } as IProductResult;
+          } as IProductParsed;
         });
 
       return pagedProducts;

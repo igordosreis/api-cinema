@@ -7,6 +7,7 @@ import EstablishmentsModel from '../database/models/Establishments.model';
 import EstablishmentsImagesModel from '../database/models/EstablishmentsImages.model';
 import ProductsTypesModel from '../database/models/ProductsTypes.model';
 import TagsProductsModel from '../database/models/TagsProducts.model';
+import BatchesModel from '../database/models/Batches.model';
 
 // export interface IProduct {
 //   productId: number;
@@ -92,7 +93,58 @@ export type IProductResult = EstablishmentsProductsModel & {
   imagesBrand: EstablishmentsImagesModel;
   typeInfo: ProductsTypesModel;
   tagsProducts: Array<TagsProductsModel>;
+  batchProduct: Array<BatchesModel> | BatchesModel;
 };
+
+export interface IProductParsed {
+  productId: number;
+  establishmentId: number;
+  active: boolean;
+  purchasable: boolean;
+  name: string;
+  description: string | null;
+  image: string | null;
+  price: string;
+  originalPrice: string | null;
+  rules: string | null;
+  type: number;
+  soldOutAmount: number;
+  createdAt: string;
+  updatedAt: string;
+  expireAt: string | null;
+  vouchersQuantity: number;
+  available: number;
+  brand: {
+    id: number;
+    name: string;
+    about: string;
+    primaryColor: string;
+    rules: string;
+  };
+  imagesBrand: {
+    logo: string;
+    cover: string;
+  };
+  typeInfo: {
+    id: number;
+    name: string;
+    appName: string;
+    icon: string;
+  };
+  tagsProducts: {
+    tagId: number;
+    productTags: {
+      name: string;
+    };
+  }[];
+  batchProduct: {
+    batchId: string;
+    establishmentId: number;
+    expireAt: string;
+    createdAt: string;
+    updatedAt: string;
+  };
+}
 
 export const IProductRawQuerySchema = z.object({
   limit: z.string().optional(),
