@@ -11,7 +11,7 @@ class VouchersAvailableModel extends Model {
   declare productId: number;
   declare orderId: number;
   declare establishmentId: number;
-  declare batchId: number;
+  declare batchId: string;
   declare soldPrice: number;
   declare expireAt: Date;
   declare createdAt: Date;

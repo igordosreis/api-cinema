@@ -9,7 +9,7 @@ class VouchersWithdrawModel extends Model {
   declare voucherCode: string;
   declare productId: number;
   declare establishmentId: number;
-  declare batchId: number;
+  declare batchId: string;
   declare soldPrice: number;
   declare expireAt: Date;
   declare createdAt: Date;
@@ -33,7 +33,7 @@ VouchersWithdrawModel.init(
       type: DataTypes.INTEGER,
     },
     batchId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
     },
     soldPrice: {
       type: DataTypes.INTEGER,

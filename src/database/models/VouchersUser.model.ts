@@ -40,7 +40,7 @@ VouchersUserModel.init(
       allowNull: false,
     },
     batchId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     active: {

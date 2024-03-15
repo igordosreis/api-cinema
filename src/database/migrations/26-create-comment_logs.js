@@ -25,7 +25,7 @@ module.exports = {
         allowNull: false,
       },
       action_id: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'comment_actions',

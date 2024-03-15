@@ -4,7 +4,7 @@ import EstablishmentsProductsModel from './EstablishmentsProducts.model';
 // import EstablishmentsModel from './Establishments.model';
 
 class BatchesModel extends Model {
-  declare batchId: number;
+  declare batchId: string;
   declare productId: number;
   declare establishmentId: number;
   declare expireAt: Date;
@@ -15,7 +15,7 @@ class BatchesModel extends Model {
 BatchesModel.init(
   {
     batchId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
       primaryKey: true,
     },
