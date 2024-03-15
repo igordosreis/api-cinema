@@ -307,3 +307,15 @@ export const getTagsError: ICustomError = {
   title: 'Erro ao buscar tags.',
   message: 'Não foi possível buscar as tags agora. Tente novamente mais tarde.',
 };
+
+export const invalidCommentLength: ICustomError = {
+  status: 403,
+  title: 'Comentário inválido.',
+  message: 'O comentário não pode estar vazio e precisa ter pelo menos 40 caracteres.',
+};
+
+export const commentServiceUnavailable: ICustomError = {
+  status: 500,
+  title: OPERATION_UNAVAILABLE,
+  message: 'Não foi possível salvar o comentário agora. Tente novamente mais tarde.',
+};

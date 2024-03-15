@@ -11,6 +11,6 @@ const router = Router();
 
 router.use('/app', appAuthMiddleware, appRouter);
 router.use('/admin', adminAuthMiddleware, adminRouter);
-router.use('/dashboard', commentsMiddleware, dashboardAuthMiddleware, dashboardRouter);
+router.use('/dashboard', dashboardAuthMiddleware, commentsMiddleware, dashboardRouter);
 
 export default router;
