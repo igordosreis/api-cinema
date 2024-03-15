@@ -420,7 +420,7 @@ export default class VouchersService {
   public static async withdrawSingleVoucherDashboard(voucherInfo: IVoucherSingleWithdraw) {
     const t = await db.transaction();
     try {
-      const { voucherCode, motive, soldPrice } = voucherInfo;
+      const { voucherCode, soldPrice } = voucherInfo;
 
       const voucher = await VouchersAvailableModel.findOne({
         where: { voucherCode },
@@ -432,11 +432,11 @@ export default class VouchersService {
 
       if (soldPrice) {
         await VouchersWithdrawModel.create(
-          { ...voucher.dataValues, motive, soldPrice },
+          { ...voucher.dataValues, soldPrice },
           { transaction: t },
         );
       } else {
-        await VouchersWithdrawModel.create({ ...voucher.dataValues, motive }, { transaction: t });
+        await VouchersWithdrawModel.create({ ...voucher.dataValues }, { transaction: t });
       }
       await voucher.destroy({ transaction: t });
 

@@ -14,7 +14,6 @@ class VouchersWithdrawModel extends Model {
   declare expireAt: Date;
   declare createdAt: Date;
   declare updatedAt: Date;
-  declare motive: string;
 }
 
 VouchersWithdrawModel.init(
@@ -38,9 +37,6 @@ VouchersWithdrawModel.init(
     },
     soldPrice: {
       type: DataTypes.INTEGER,
-    },
-    motive: {
-      type: DataTypes.STRING,
     },
     expireAt: {
       type: DataTypes.DATE,

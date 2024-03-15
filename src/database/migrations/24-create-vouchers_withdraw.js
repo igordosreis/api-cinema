@@ -63,10 +63,6 @@ module.exports = {
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
       },
-      motive: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
     }, {
       engine: 'InnoDB',
       charset: 'latin1',

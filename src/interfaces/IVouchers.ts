@@ -124,7 +124,6 @@ export type IVouchersGetDashboard = z.infer<typeof IVouchersGetDashboardSchema>;
 
 export const IVoucherSingleWithdrawSchema = z.object({
   voucherCode: z.string(),
-  motive: z.string(),
   soldPrice: z.string().pipe(z.coerce.number()).optional(),
   // productId: z.number(),
 });
