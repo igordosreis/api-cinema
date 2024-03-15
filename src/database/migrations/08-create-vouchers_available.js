@@ -36,7 +36,7 @@ module.exports = {
         onUpdate: 'CASCADE',
       },
       batch_id: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'batches',
