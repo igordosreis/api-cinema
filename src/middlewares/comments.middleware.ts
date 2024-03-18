@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 /* eslint-disable sonarjs/cognitive-complexity */
 /* eslint-disable max-lines-per-function */
 import { NextFunction, Request, Response } from 'express';
@@ -13,42 +14,45 @@ import CustomError, {
 } from '../utils/customError.util';
 
 const commentsMiddleware = async (req: Request, _res: Response, next: NextFunction) => {
-  const t = await db.transaction();
-  try {
-    const { method, originalUrl, path, body } = req;
+  const { method, originalUrl, path, body } = req;
 
-    const isLogMethod = CommentsUtil.validateMethod(method);
-    if (isLogMethod) {
+  const isLogMethod = CommentsUtil.validateMethod(method);
+  if (isLogMethod) {
+    const t = await db.transaction();
+
+    try {
       const {
         comment,
         userInfo: { id: userId },
       } = <ICommentsInBody>body;
-
+  
       CommentsUtil.validateComment(comment);
-
+  
       const commentAction = await CommentActions.findOne({
         where: { urlPath: path, httpMethod: method },
         transaction: t,
       });
-      if (commentAction) {
+  
+      const isCommentActionFound = commentAction;
+      if (isCommentActionFound) {
         const { id: actionId } = commentAction;
         await CommentLogs.create({ originalUrl, userId, comment, actionId }, { transaction: t });
       } else {
         throw new CustomError(commentActionUnavailable);
       }
+
+      await t.commit();
+    } catch (error) {
+      await t.rollback();
+
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
+      if (error instanceof CustomError) throw error;
+  
+      throw new CustomError(commentServiceUnavailable);
     }
-
-    await t.commit();
-
-    next();
-  } catch (error) {
-    await t.rollback();
-
-    console.log(CONSOLE_LOG_ERROR_TITLE, error);
-    if (error instanceof CustomError) throw error;
-
-    throw new CustomError(commentServiceUnavailable);
   }
+
+  next();
 };
 
 export default commentsMiddleware;
