@@ -45,6 +45,7 @@ import {
   IEstablishmentImageRawEdit,
 } from '../interfaces/IEstablishments';
 import TagsUtil from '../utils/tags.util';
+import { ICommentLogsSearchQuerySchema } from '../interfaces/IComments';
 
 export default class DashboardController {
   // Shop
@@ -252,7 +253,13 @@ export default class DashboardController {
     res.status(200).json(allActions);
   }
 
-  public static async getCommentLogsByQuery(_req: Request, _res: Response): Promise<void> {
-    console.log();
+  public static async getCommentLogsByQuery(req: Request, res: Response): Promise<void> {
+    const commentLogsSearchQuery = req.query;
+
+    const parsedCommentLogsSearchQuery = ICommentLogsSearchQuerySchema
+      .parse(commentLogsSearchQuery);
+    const allCommentLogs = await CommentService.getCommentLogsByQuery(parsedCommentLogsSearchQuery);
+
+    res.status(200).json(allCommentLogs);
   }
 }

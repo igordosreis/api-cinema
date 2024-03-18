@@ -40,5 +40,6 @@ dashboardRouter.post('/tag/create', DashboardController.createTag);
 
 // Comment
 dashboardRouter.get('/comment/actions/get', DashboardController.getAllCommentActions);
+dashboardRouter.get('/comment/logs/get', DashboardController.getCommentLogsByQuery);
 
 export default dashboardRouter;

@@ -12,7 +12,7 @@ class CreateCommentLogsSearchSqlizeQueryDashboard {
   }: ICommentLogsSearchQuery) => {
     const searchQuery = [];
     if (userId) searchQuery.push({ userId });
-    if (createdAt) searchQuery.push({ createdAt });
+    if (createdAt) searchQuery.push({ createdAt: { [Op.substring]: createdAt } });
     if (action) {
       searchQuery.push({
         '$commentAction.name$': { [Op.substring]: action },
