@@ -9,6 +9,7 @@ import PlansService from './Plans.service';
 import FavoritesService from './Favorites.service';
 import CartService from './Cart.service';
 import TagsService from './Tags.service';
+import CommentService from './Comment.service';
 
 export {
   EstablishmentsService,
@@ -22,4 +23,5 @@ export {
   FavoritesService,
   CartService,
   TagsService,
+  CommentService,
 };
