@@ -38,4 +38,7 @@ dashboardRouter.put('/voucher/withdraw/single', DashboardController.withdrawSing
 // Tag
 dashboardRouter.post('/tag/create', DashboardController.createTag);
 
+// Comment
+dashboardRouter.get('/comment/actions/get', DashboardController.getAllCommentActions);
+
 export default dashboardRouter;

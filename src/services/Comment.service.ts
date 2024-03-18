@@ -3,7 +3,7 @@ import CommentActions from '../database/models/CommentActions.model';
 import CustomError, { cannotGetCommentActions } from '../utils/customError.util';
 
 export default class CommentService {
-  public static async getCommentActions() {
+  public static async getAllCommentActions() {
     try {
       const allActions = await CommentActions.findAll();
 

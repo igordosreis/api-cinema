@@ -11,6 +11,7 @@ import {
   IProductQueryDashboardSchema,
 } from '../interfaces/IProducts';
 import {
+  CommentService,
   EstablishmentsService,
   PacksService,
   ProductsService,
@@ -73,7 +74,7 @@ export default class DashboardController {
         page: formattedSearchQuery.page || 0,
       };
       const product = await ProductsService.getProductsByQueryDashboard(parsedSearchQuery);
-  
+
       return res.status(200).json(product);
     }
 
@@ -242,5 +243,12 @@ export default class DashboardController {
     await EstablishmentsService.editImageDashboard(parsedImageInfo, name);
 
     res.status(200).end();
+  }
+
+  // Comment
+  public static async getAllCommentActions(_req: Request, res: Response): Promise<void> {
+    const allActions = await CommentService.getAllCommentActions();
+
+    res.status(200).json(allActions);
   }
 }
