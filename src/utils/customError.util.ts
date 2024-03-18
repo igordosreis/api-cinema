@@ -309,7 +309,7 @@ export const getTagsError: ICustomError = {
 };
 
 export const invalidCommentLength: ICustomError = {
-  status: 403,
+  status: 400,
   title: 'Comentário inválido.',
   message: 'O comentário não pode estar vazio e precisa ter pelo menos 40 caracteres.',
 };
