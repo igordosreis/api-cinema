@@ -251,4 +251,8 @@ export default class DashboardController {
 
     res.status(200).json(allActions);
   }
+
+  public static async getCommentLogsByQuery(_req: Request, _res: Response): Promise<void> {
+    console.log();
+  }
 }

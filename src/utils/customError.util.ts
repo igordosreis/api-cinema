@@ -331,3 +331,9 @@ export const cannotGetCommentActions: ICustomError = {
   title: OPERATION_UNAVAILABLE,
   message: 'Não foi possível buscar as ações de comentário agora. Tente novamente mais tarde.',
 };
+
+export const cannotGetCommentLogs: ICustomError = {
+  status: 500,
+  title: OPERATION_UNAVAILABLE,
+  message: 'Não foi possível buscar os comentário agora. Tente novamente mais tarde.',
+};
