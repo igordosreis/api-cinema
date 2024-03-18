@@ -319,3 +319,9 @@ export const commentServiceUnavailable: ICustomError = {
   title: OPERATION_UNAVAILABLE,
   message: 'Não foi possível salvar o comentário agora. Tente novamente mais tarde.',
 };
+
+export const commentActionUnavailable: ICustomError = {
+  status: 500,
+  title: OPERATION_UNAVAILABLE,
+  message: 'Não foi possível salvar essa alteração agora. Tente novamente mais tarde.',
+};

@@ -1,22 +1,23 @@
+/* eslint-disable max-lines-per-function */
 import CustomError, { invalidCommentLength } from './customError.util';
 
-export default class CommentsUtil {  
+export default class CommentsUtil {
   public static validateMethod(method: string) {
     const methodsToLog = ['POST', 'PATCH', 'PUT', 'DELETE'];
 
-    const isRequestLog = methodsToLog.includes(method);
+    const isLogMethod = methodsToLog.includes(method);
 
-    return isRequestLog;
+    return isLogMethod;
   }
 
   public static validateComment(comment: string | undefined) {
     const isCommentNotFound = !comment;
     if (isCommentNotFound) throw new CustomError(invalidCommentLength);
-    
+
     const minCharQuantity = 40;
     const trimmedComment = comment.trim();
 
-    const isCommentLengthInvalid = trimmedComment.length >= minCharQuantity;
+    const isCommentLengthInvalid = trimmedComment.length < minCharQuantity;
     if (isCommentLengthInvalid) throw new CustomError(invalidCommentLength);
   }
 }

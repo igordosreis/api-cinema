@@ -21,6 +21,12 @@ CommentActions.init(
     name: {
       type: DataTypes.STRING,
     },
+    urlPath: {
+      type: DataTypes.STRING,
+    },
+    httpMethod: {
+      type: DataTypes.STRING,
+    },
     createdAt: {
       type: DataTypes.DATE,
       // defaultValue: DataTypes.NOW,
