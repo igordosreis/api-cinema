@@ -8,14 +8,16 @@ class CreateCommentLogsSearchSqlizeQueryDashboard {
   private addParams = ({
     userId,
     createdAt,
-    action,
+    actionId,
+    search,
   }: ICommentLogsSearchQuery) => {
     const searchQuery = [];
     if (userId) searchQuery.push({ userId });
     if (createdAt) searchQuery.push({ createdAt: { [Op.substring]: createdAt } });
-    if (action) {
+    if (actionId) searchQuery.push({ actionId });
+    if (search) {
       searchQuery.push({
-        '$commentAction.name$': { [Op.substring]: action },
+        '$commentAction.name$': { [Op.substring]: search },
       });
     }
 
