@@ -3,7 +3,7 @@ import CustomError, { invalidCommentLength } from './customError.util';
 
 export default class CommentsUtil {
   public static validateMethod(method: string) {
-    const methodsToLog = ['POST', 'PATCH', 'PUT', 'DELETE'];
+    const methodsToLog = ['PATCH', 'PUT', 'DELETE'];
 
     const isLogMethod = methodsToLog.includes(method);
 
