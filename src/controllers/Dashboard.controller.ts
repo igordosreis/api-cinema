@@ -122,6 +122,14 @@ export default class DashboardController {
     res.status(200).json(product);
   }
 
+  public static async deleteProductType(req: Request, res: Response): Promise<void> {
+    const { id: typeId } = req.params;
+
+    await ProductsService.deleteProductTypeDashboard(Number(typeId));
+
+    res.status(200).end();
+  }
+
   // -- Packs
   public static async createPack(req: Request, res: Response): Promise<void> {
     const { packInfo } = <IPackCreateInfoBody>req.body;

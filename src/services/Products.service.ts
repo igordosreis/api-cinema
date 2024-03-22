@@ -1,4 +1,3 @@
-/* eslint-disable sonarjs/cognitive-complexity */
 /* eslint-disable sonarjs/no-duplicate-string */
 /* eslint-disable max-len */
 /* eslint-disable max-lines-per-function */
@@ -9,7 +8,7 @@ import ProductsTypesModel from '../database/models/ProductsTypes.model';
 import VouchersAvailableModel from '../database/models/VouchersAvailable.model';
 import { IProductCreateInfo, IProductEditInfo, IProductParsed, IProductQuery, IProductQueryDashboard, IProductResult } from '../interfaces/IProducts';
 import createProductSearchSqlizeQueryUtil from '../utils/createProductSearchSqlizeQuery.util';
-import CustomError, { createProductError, editProductError, establishmentServiceUnavailable, getProductError, productNotFound } from '../utils/customError.util';
+import CustomError, { cannotDeleteTypeError, createProductError, editProductError, establishmentServiceUnavailable, getProductError, productNotFound, protectedTypeError, typeNotFound } from '../utils/customError.util';
 import EstablishmentsModel from '../database/models/Establishments.model';
 import PaginationUtil from '../utils/pagination.util';
 import { CONSOLE_LOG_ERROR_TITLE } from '../constants';
@@ -367,6 +366,7 @@ export default class ProductsService {
     }
   }
 
+  // eslint-disable-next-line sonarjs/cognitive-complexity
   public static async getProductsByQueryDashboard(formattedSearchQuery: IProductQueryDashboard) {
     try {
       const { tags, expireAt } = formattedSearchQuery;
@@ -676,6 +676,31 @@ export default class ProductsService {
       if (error instanceof CustomError) throw error;
 
       throw new CustomError(getProductError);
+    }
+  }
+
+  public static async deleteProductTypeDashboard(typeId: number) {
+    const t = await db.transaction();
+    try {
+      const protectedTypes = [1, 2];
+      const isProtectedType = protectedTypes.includes(typeId);
+      if (isProtectedType) throw new CustomError(protectedTypeError);
+      
+      const type = await ProductsTypesModel.findByPk(typeId, { transaction: t });
+
+      const isTypeNotFound = !type;
+      if (isTypeNotFound) throw new CustomError(typeNotFound);
+
+      await type.destroy();
+
+      await t.commit();
+    } catch (error) {
+      await t.rollback();
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
+      
+      if (error instanceof CustomError) throw error;
+
+      throw new CustomError(cannotDeleteTypeError);
     }
   }
 }

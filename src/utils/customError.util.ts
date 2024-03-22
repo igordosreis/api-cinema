@@ -254,6 +254,24 @@ export const getProductError: ICustomError = {
   message: 'Não foi possível buscar o produto nesse momento. Tente novamente mais tarde.',
 };
 
+export const cannotDeleteTypeError: ICustomError = {
+  status: 503,
+  title: OPERATION_UNAVAILABLE,
+  message: 'Não foi possível deletar esse tipo no momento. Tente novamente mais tarde.',
+};
+
+export const typeNotFound: ICustomError = {
+  status: 404,
+  title: 'Tipo não encontrado.',
+  message: 'O tipo buscado não foi encontrado.',
+};
+
+export const protectedTypeError: ICustomError = {
+  status: 403,
+  title: 'Tipo protegido.',
+  message: 'Esse tipo não pode ser deletado.',
+};
+
 export const productNotFound: ICustomError = {
   status: 404,
   title: 'Produto não encontrado.',
