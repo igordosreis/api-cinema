@@ -357,6 +357,7 @@ export default class VouchersService {
     try {
       const { batchId, expireAt, productId, establishmentId } = vouchersInfoArray[0];
 
+      await VoucherUtil.validateBatchCode(batchId, t);
       await VoucherUtil.validateProductAndEstablishmentIds(productId, establishmentId, t);
       await VoucherUtil.validateVoucherCodes(vouchersInfoArray, t);
 

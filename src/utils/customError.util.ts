@@ -66,6 +66,12 @@ export const voucherServiceUnavailable: ICustomError = {
   message: 'O serviço de vouchers não está disponível no momento. Tente novamente mais tarde.',
 };
 
+export const batchAlreadyInUse: ICustomError = {
+  status: 400,
+  title: 'Código do lote em uso.',
+  message: 'O código do lote enviado já está em uso.',
+};
+
 export const vouchersObjectNotFound: ICustomError = {
   status: 404,
   title: 'Vouchers não econtrados.',

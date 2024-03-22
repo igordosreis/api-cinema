@@ -9,6 +9,7 @@ import {
 } from '../interfaces/IVouchers';
 import ExcelUtil from './excel.util';
 import CustomError, {
+  batchAlreadyInUse,
   cannotValidateVouchers,
   productNotFound,
   voucherDuplicateFound,
@@ -198,8 +199,24 @@ export default class VoucherUtil {
     }
   }
 
-  public static async validateBatchCode() {
-    console.log();
+  public static async validateBatchCode(batchId: string, transaction: Transaction) {
+    const verifyBatchInVouchersAvailable = await VouchersAvailableModel.findOne({ 
+      where: { batchId },
+      transaction,
+    });
+    const verifyBatchInVouchersUser = await VouchersUserModel.findOne({ 
+      where: { batchId },
+      transaction,
+    });
+    const verifyBatchInVouchersWithdraw = await VouchersWithdrawModel.findOne({ 
+      where: { batchId },
+      transaction,
+    });
+    const isBatchIdAlreadyInUse = verifyBatchInVouchersAvailable 
+      || verifyBatchInVouchersUser
+      || verifyBatchInVouchersWithdraw;
+
+    if (isBatchIdAlreadyInUse) throw new CustomError(batchAlreadyInUse);
   }
 
   private static parseStatus(status: undefined | 'available' | 'user' | 'withdraw') {
