@@ -388,7 +388,7 @@ export default class VouchersService {
           order: [['createdAt', 'ASC']],
         });
 
-        return vouchers;
+        return VoucherUtil.addStatusToVoucher(vouchers, voucherType);
       }
 
       const isUser = voucherType === 'user';
@@ -398,7 +398,7 @@ export default class VouchersService {
           order: [['createdAt', 'ASC']],
         });
 
-        return vouchers;
+        return VoucherUtil.addStatusToVoucher(vouchers, voucherType);
       }
 
       const isWithdraw = voucherType === 'withdraw';
@@ -408,7 +408,7 @@ export default class VouchersService {
           order: [['createdAt', 'ASC']],
         });
 
-        return vouchers;
+        return VoucherUtil.addStatusToVoucher(vouchers, voucherType);
       }
     } catch (error) {
       console.log(CONSOLE_LOG_ERROR_TITLE, error);

@@ -18,6 +18,8 @@ import CustomError, {
 import { CONSOLE_LOG_ERROR_TITLE } from '../constants';
 import VouchersAvailableModel from '../database/models/VouchersAvailable.model';
 import EstablishmentsProductsModel from '../database/models/EstablishmentsProducts.model';
+import VouchersWithdrawModel from '../database/models/VouchersWithdraw.model';
+import VouchersUserModel from '../database/models/VouchersUser.model';
 
 type IVoucherDuplicateIndexes = {
   [key: number]: number;
@@ -198,5 +200,29 @@ export default class VoucherUtil {
 
   public static async validateBatchCode() {
     console.log();
+  }
+
+  private static parseStatus(status: undefined | 'available' | 'user' | 'withdraw') {
+    if (status === 'available' || status === undefined) return 'disponível';
+    if (status === 'user') return 'usado';
+    if (status === 'withdraw') return 'usado';
+  }
+
+  public static addStatusToVoucher(
+    vouchers: VouchersAvailableModel[] | VouchersUserModel[] | VouchersWithdrawModel[],
+    status: undefined | 'available' | 'user' | 'withdraw',
+  ) {
+    const parsedVouchers = vouchers.map((voucher) => {
+      const parsedVoucher = voucher.toJSON();
+
+      const newVoucher = {
+        ...parsedVoucher,
+        status: VoucherUtil.parseStatus(status),
+      };
+
+      return newVoucher;
+    });
+
+    return parsedVouchers;
   }
 }
