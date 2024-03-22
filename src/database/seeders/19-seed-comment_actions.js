@@ -50,6 +50,11 @@ module.exports = {
         url_path: '/tag/create',
         http_method: 'POST',
       },
+      {
+        name: 'remoção de tipo',
+        url_path: '/shop/product/type/del',
+        http_method: 'DELETE',
+      },
     ], {});
   },
 

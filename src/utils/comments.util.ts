@@ -20,4 +20,15 @@ export default class CommentsUtil {
     const isCommentLengthInvalid = trimmedComment.length < minCharQuantity;
     if (isCommentLengthInvalid) throw new CustomError(invalidCommentLength);
   }
+
+  public static removeLastNumberBlock(path: string) {
+    const regex = /\/(\d+)$/;
+
+    const match = regex.exec(path);
+
+    if (match && Number(match[1])) {
+      return path.replace(regex, '');
+    }
+    return path;
+  }
 }

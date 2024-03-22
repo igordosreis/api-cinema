@@ -21,6 +21,7 @@ dashboardRouter.get('/shop/get', DashboardController.productsAndPacksGet);
 dashboardRouter.get('/shop/product/get/:id', DashboardController.getProductById);
 dashboardRouter.post('/shop/product/create', DashboardController.createProduct);
 dashboardRouter.patch('/shop/product/edit', DashboardController.editProduct);
+dashboardRouter.delete('/shop/product/type/del/:id', DashboardController.deleteProductType);
 dashboardRouter.get('/shop/pack/get/:id', DashboardController.getPackById);
 dashboardRouter.post('/shop/pack/create', DashboardController.createPack);
 dashboardRouter.patch('/shop/pack/edit', DashboardController.editPack);

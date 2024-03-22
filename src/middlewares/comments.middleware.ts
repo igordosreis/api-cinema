@@ -16,6 +16,15 @@ import CustomError, {
 const commentsMiddleware = async (req: Request, _res: Response, next: NextFunction) => {
   const { method, originalUrl, path, body } = req;
 
+  console.log(
+    `--------        ----------       ------------ 
+    method, originalUrl, path, body
+    `,
+    method,
+    originalUrl,
+    path,
+    body,
+  );
   const isLogMethod = CommentsUtil.validateMethod(method);
   if (isLogMethod) {
     const t = await db.transaction();
@@ -28,8 +37,9 @@ const commentsMiddleware = async (req: Request, _res: Response, next: NextFuncti
   
       CommentsUtil.validateComment(comment);
   
+      const parsedPath = CommentsUtil.removeLastNumberBlock(path);
       const commentAction = await CommentActions.findOne({
-        where: { urlPath: path, httpMethod: method },
+        where: { urlPath: parsedPath, httpMethod: method },
         transaction: t,
       });
   
