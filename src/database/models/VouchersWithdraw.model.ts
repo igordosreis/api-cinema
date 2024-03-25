@@ -65,7 +65,7 @@ VouchersWithdrawModel.belongsTo(EstablishmentsProductsModel, {
 });
 EstablishmentsProductsModel.hasMany(VouchersWithdrawModel, {
   foreignKey: 'productId',
-  as: 'vouchersWithdraw',
+  as: 'voucherWithdrawProduct',
 });
 
 VouchersWithdrawModel.belongsTo(EstablishmentsModel, {

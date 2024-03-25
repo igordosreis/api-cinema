@@ -404,7 +404,7 @@ export default class VouchersService {
           include: [
             {
               model: EstablishmentsProductsModel,
-              as: 'voucherProduct',
+              as: 'voucherUserProduct',
             },
           ],
           ...createVouchersGetSqlizeQueryUtil.create(vouchersInfo),
@@ -420,7 +420,7 @@ export default class VouchersService {
           include: [
             {
               model: EstablishmentsProductsModel,
-              as: 'voucherProduct',
+              as: 'voucherWithdrawProduct',
             },
           ],
           ...createVouchersGetSqlizeQueryUtil.create(vouchersInfo),

@@ -77,7 +77,7 @@ VouchersAvailableModel.belongsTo(EstablishmentsProductsModel, {
 });
 EstablishmentsProductsModel.hasMany(VouchersAvailableModel, {
   foreignKey: 'productId',
-  as: 'voucherProduct',
+  as: 'voucherAvailableProduct',
 });
 
 VouchersAvailableModel.belongsTo(EstablishmentsModel, {
