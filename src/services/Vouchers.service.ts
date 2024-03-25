@@ -388,7 +388,7 @@ export default class VouchersService {
           include: [
             {
               model: EstablishmentsProductsModel,
-              as: 'voucherProduct',
+              as: 'voucherAvailableProduct',
             },
           ],
           ...createVouchersGetSqlizeQueryUtil.create(vouchersInfo),
