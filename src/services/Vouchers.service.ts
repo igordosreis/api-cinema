@@ -39,6 +39,7 @@ import VouchersWithdrawModel from '../database/models/VouchersWithdraw.model';
 import db from '../database/models';
 import VoucherUtil from '../utils/voucher.util';
 import BatchesModel from '../database/models/Batches.model';
+import EstablishmentsModel from '../database/models/Establishments.model';
 
 export default class VouchersService {
   public static async getVouchersByProductId(productId: number, transaction?: Transaction) {
@@ -388,14 +389,27 @@ export default class VouchersService {
           include: [
             {
               model: EstablishmentsProductsModel,
-              as: 'voucherAvailableProduct',
+              as: 'vouchersAvailable',
+            },
+            {
+              model: EstablishmentsModel,
+              as: 'brand',
             },
           ],
           ...createVouchersGetSqlizeQueryUtil.create(vouchersInfo),
           order: [['createdAt', 'ASC']],
         });
 
-        return VoucherUtil.addStatusToVoucher(vouchers, voucherType);
+        const parsedVouchers = vouchers.map((voucher) => {
+          const { vouchersAvailable, ...restOfInfo } = voucher.toJSON();
+
+          return {
+            ...restOfInfo,
+            productInfo: { ...vouchersAvailable },
+          };
+        }) as unknown as VouchersAvailableModel[];
+
+        return VoucherUtil.addStatusToVoucher(parsedVouchers, voucherType);
       }
 
       const isUser = voucherType === 'user';
@@ -404,14 +418,27 @@ export default class VouchersService {
           include: [
             {
               model: EstablishmentsProductsModel,
-              as: 'voucherUserProduct',
+              as: 'productVoucherInfo',
+            },
+            {
+              model: EstablishmentsModel,
+              as: 'brand',
             },
           ],
           ...createVouchersGetSqlizeQueryUtil.create(vouchersInfo),
           order: [['createdAt', 'ASC']],
         });
 
-        return VoucherUtil.addStatusToVoucher(vouchers, voucherType);
+        const parsedVouchers = vouchers.map((voucher) => {
+          const { productVoucherInfo, ...restOfInfo } = voucher.dataValues;
+
+          return {
+            ...restOfInfo,
+            productInfo: { ...productVoucherInfo },
+          };
+        }) as unknown as VouchersUserModel[];
+
+        return VoucherUtil.addStatusToVoucher(parsedVouchers, voucherType);
       }
 
       const isWithdraw = voucherType === 'withdraw';
@@ -420,14 +447,27 @@ export default class VouchersService {
           include: [
             {
               model: EstablishmentsProductsModel,
-              as: 'voucherWithdrawProduct',
+              as: 'vouchersWithdraw',
+            },
+            {
+              model: EstablishmentsModel,
+              as: 'brand',
             },
           ],
           ...createVouchersGetSqlizeQueryUtil.create(vouchersInfo),
           order: [['createdAt', 'ASC']],
         });
 
-        return VoucherUtil.addStatusToVoucher(vouchers, voucherType);
+        const parsedVouchers = vouchers.map((voucher) => {
+          const { vouchersWithdraw, ...restOfInfo } = voucher.dataValues;
+
+          return {
+            ...restOfInfo,
+            productInfo: { ...vouchersWithdraw },
+          };
+        }) as unknown as VouchersWithdrawModel[];
+
+        return VoucherUtil.addStatusToVoucher(parsedVouchers, voucherType);
       }
     } catch (error) {
       console.log(CONSOLE_LOG_ERROR_TITLE, error);

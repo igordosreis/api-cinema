@@ -230,10 +230,10 @@ export default class VoucherUtil {
     status: undefined | 'available' | 'user' | 'withdraw',
   ) {
     const parsedVouchers = vouchers.map((voucher) => {
-      const parsedVoucher = voucher.toJSON();
+      // const parsedVoucher = voucher.toJSON();
 
       const newVoucher = {
-        ...parsedVoucher,
+        ...voucher,
         status: VoucherUtil.parseStatus(status),
       };
 
