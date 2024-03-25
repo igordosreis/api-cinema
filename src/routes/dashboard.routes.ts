@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { DashboardController } from '../controllers';
 import VoucherExcelUploadMiddleware from '../middlewares/VoucherExcelUpload.middleware';
-import ImageUploadMiddleware from '../middlewares/ImageUpload.middleware';
+import EstablishmentImageUploadMiddleware from '../middlewares/EstablishmentImageUpload.middleware';
 
 const dashboardRouter = Router();
 
@@ -12,7 +12,7 @@ dashboardRouter.get('/establishment/address/get', DashboardController.getEstabli
 dashboardRouter.patch('/establishment/brand/edit', DashboardController.editEstablishmentBrand);
 dashboardRouter.put(
   '/establishment/image/edit',
-  ImageUploadMiddleware,
+  EstablishmentImageUploadMiddleware,
   DashboardController.editEstablishmentImage,
 );
 

@@ -16,6 +16,6 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage });
-const ImageUploadMiddleware = upload.single('file');
+const EstablishmentImageUploadMiddleware = upload.single('file');
 
-export default ImageUploadMiddleware;
+export default EstablishmentImageUploadMiddleware;
