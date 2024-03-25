@@ -401,6 +401,12 @@ export default class VouchersService {
       const isUser = voucherType === 'user';
       if (isUser) {
         const vouchers = await VouchersUserModel.findAll({
+          include: [
+            {
+              model: EstablishmentsProductsModel,
+              as: 'voucherProduct',
+            },
+          ],
           ...createVouchersGetSqlizeQueryUtil.create(vouchersInfo),
           order: [['createdAt', 'ASC']],
         });
@@ -411,6 +417,12 @@ export default class VouchersService {
       const isWithdraw = voucherType === 'withdraw';
       if (isWithdraw) {
         const vouchers = await VouchersWithdrawModel.findAll({
+          include: [
+            {
+              model: EstablishmentsProductsModel,
+              as: 'voucherProduct',
+            },
+          ],
           ...createVouchersGetSqlizeQueryUtil.create(vouchersInfo),
           order: [['createdAt', 'ASC']],
         });
