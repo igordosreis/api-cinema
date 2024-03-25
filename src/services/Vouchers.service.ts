@@ -385,6 +385,12 @@ export default class VouchersService {
       const isAvailable = voucherType === 'available' || voucherType === undefined;
       if (isAvailable) {
         const vouchers = await VouchersAvailableModel.findAll({
+          include: [
+            {
+              model: EstablishmentsProductsModel,
+              as: 'voucherProduct',
+            },
+          ],
           ...createVouchersGetSqlizeQueryUtil.create(vouchersInfo),
           order: [['createdAt', 'ASC']],
         });
