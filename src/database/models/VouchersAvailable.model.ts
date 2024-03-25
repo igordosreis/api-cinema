@@ -73,11 +73,11 @@ VouchersAvailableModel.init(
 
 VouchersAvailableModel.belongsTo(EstablishmentsProductsModel, {
   foreignKey: 'productId',
-  as: 'vouchersAvailable',
+  as: 'voucherAvailableProduct',
 });
 EstablishmentsProductsModel.hasMany(VouchersAvailableModel, {
   foreignKey: 'productId',
-  as: 'voucherAvailableProduct',
+  as: 'vouchersAvailable',
 });
 
 VouchersAvailableModel.belongsTo(EstablishmentsModel, {
