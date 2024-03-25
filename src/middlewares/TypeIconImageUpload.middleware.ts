@@ -3,11 +3,11 @@ import multer from 'multer';
 
 const storage = multer.diskStorage({
   destination: (req, _file, cb) => {
-    cb(null, `images/establishments/${req.query.imageType}`);
+    cb(null, `images/product-types/${req.query.name}`);
   },
   filename: (req, file, cb) => {
     const fileExtension = file.originalname.split('.').pop();
-    const fileName = `${req.query.establishmentId}_${req.query.imageType}_${Number(new Date())}.${fileExtension}`;
+    const fileName = `${req.query.name}.${fileExtension}`;
 
     req.body.name = fileName;
     
@@ -16,6 +16,6 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage });
-const EstablishmentImageUploadMiddleware = upload.single('file');
+const TypeIconImageUploadMiddleware = upload.single('file');
 
-export default EstablishmentImageUploadMiddleware;
+export default TypeIconImageUploadMiddleware;
