@@ -16,15 +16,6 @@ import CustomError, {
 const commentsMiddleware = async (req: Request, _res: Response, next: NextFunction) => {
   const { method, originalUrl, path, body } = req;
 
-  console.log(
-    `--------        ----------       ------------ 
-    method, originalUrl, path, body
-    `,
-    method,
-    originalUrl,
-    path,
-    body,
-  );
   const isLogMethod = CommentsUtil.validateMethod(method);
   if (isLogMethod) {
     const t = await db.transaction();

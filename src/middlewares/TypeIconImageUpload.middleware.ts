@@ -1,9 +1,13 @@
 /* eslint-disable max-len */
 import multer from 'multer';
+import { IProductTypeCreate, IProductTypeCreateSchema } from '../interfaces/IProducts';
 
 const storage = multer.diskStorage({
   destination: (req, _file, cb) => {
-    cb(null, `images/product-types/${req.query.name}`);
+    const typeInfo = <IProductTypeCreate>req.query;
+    IProductTypeCreateSchema.parse(typeInfo);
+
+    cb(null, 'images/product-types');
   },
   filename: (req, file, cb) => {
     const fileExtension = file.originalname.split('.').pop();

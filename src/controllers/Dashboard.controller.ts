@@ -130,8 +130,12 @@ export default class DashboardController {
     res.status(200).end();
   }
 
-  public static async addProductType(req: Request, res: Response): Promise<void> {
-    console.log(req, res);
+  public static async createProductType(req: Request, res: Response): Promise<void> {
+    console.log(`
+    ---------------------------------------------------------------
+                            req
+    `, req.file);
+    res.status(200).end();
   }
 
   // -- Packs

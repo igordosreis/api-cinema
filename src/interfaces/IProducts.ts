@@ -245,3 +245,13 @@ export const IProductQueryDashboardSchema = z.object({
 });
 
 export type IProductQueryDashboard = z.infer<typeof IProductQueryDashboardSchema>;
+
+const brazilianPortugueseRegex = /^[a-zA-ZÀ-ÖØ-öø-ÿ]+$/;
+
+export const IProductTypeCreateSchema = z.object({
+  name: z.string().regex(brazilianPortugueseRegex, {
+    message: 'O nome contém caracteres inválidos.',
+  }),
+});
+
+export type IProductTypeCreate = z.infer<typeof IProductTypeCreateSchema>;
