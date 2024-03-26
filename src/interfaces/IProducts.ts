@@ -255,3 +255,7 @@ export const IProductTypeCreateSchema = z.object({
 });
 
 export type IProductTypeCreate = z.infer<typeof IProductTypeCreateSchema>;
+
+export interface IProductTypeCreateInBody {
+  name: string
+}

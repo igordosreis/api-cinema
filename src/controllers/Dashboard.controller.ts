@@ -9,6 +9,8 @@ import {
   IProductEditInfoSchema,
   IProductQueryDashboard,
   IProductQueryDashboardSchema,
+  IProductTypeCreate,
+  IProductTypeCreateInBody,
 } from '../interfaces/IProducts';
 import {
   CommentService,
@@ -46,6 +48,7 @@ import {
 } from '../interfaces/IEstablishments';
 import TagsUtil from '../utils/tags.util';
 import { ICommentLogsSearchQuerySchema } from '../interfaces/IComments';
+import CustomError, { typeIconNotFound } from '../utils/customError.util';
 
 export default class DashboardController {
   // Shop
@@ -131,10 +134,14 @@ export default class DashboardController {
   }
 
   public static async createProductType(req: Request, res: Response): Promise<void> {
-    console.log(`
-    ---------------------------------------------------------------
-                            req
-    `, req.file);
+    const { name } = <IProductTypeCreate>req.query;
+    const { name: fileName } = <IProductTypeCreateInBody>req.body;
+    
+    const isFileNotFound = !req.file;
+    if (isFileNotFound) throw new CustomError(typeIconNotFound);
+
+    await ProductsService.createProductType({ name, fileName });
+
     res.status(200).end();
   }
 

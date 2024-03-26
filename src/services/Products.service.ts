@@ -8,7 +8,7 @@ import ProductsTypesModel from '../database/models/ProductsTypes.model';
 import VouchersAvailableModel from '../database/models/VouchersAvailable.model';
 import { IProductCreateInfo, IProductEditInfo, IProductParsed, IProductQuery, IProductQueryDashboard, IProductResult } from '../interfaces/IProducts';
 import createProductSearchSqlizeQueryUtil from '../utils/createProductSearchSqlizeQuery.util';
-import CustomError, { cannotDeleteTypeError, createProductError, editProductError, establishmentServiceUnavailable, getProductError, productNotFound, protectedTypeError, typeNotFound } from '../utils/customError.util';
+import CustomError, { cannotCreateTypeError, cannotDeleteTypeError, createProductError, editProductError, establishmentServiceUnavailable, getProductError, nameInUseError, productNotFound, protectedTypeError, typeNotFound } from '../utils/customError.util';
 import EstablishmentsModel from '../database/models/Establishments.model';
 import PaginationUtil from '../utils/pagination.util';
 import { CONSOLE_LOG_ERROR_TITLE } from '../constants';
@@ -701,6 +701,28 @@ export default class ProductsService {
       if (error instanceof CustomError) throw error;
 
       throw new CustomError(cannotDeleteTypeError);
+    }
+  }
+
+  public static async createProductType({ name, fileName }: { name: string, fileName: string }) {
+    const t = await db.transaction();
+    try {
+      const isNameInUse = await ProductsTypesModel.findOne({ where: { name }, transaction: t });
+      if (isNameInUse) throw new CustomError(nameInUseError);
+
+      await ProductsTypesModel.create(
+        { name, appName: name, icon: fileName },
+        { transaction: t },
+      );
+
+      await t.commit();
+    } catch (error) {
+      await t.rollback();
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
+      
+      if (error instanceof CustomError) throw error;
+
+      throw new CustomError(cannotCreateTypeError);
     }
   }
 }
