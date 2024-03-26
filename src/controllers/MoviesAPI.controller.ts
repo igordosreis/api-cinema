@@ -57,6 +57,12 @@ export default class MoviesAPIController {
     res.status(200).json(allMovieGenres);
   }
 
+  public static async getMovieOffer(_req: Request, res: Response): Promise<void> {
+    const movieOffer = await MoviesAPIService.getMovieOffer();
+
+    res.status(200).json(movieOffer);
+  }
+
   // public static async getPopular(_req: Request, res: Response): Promise<void> {
   //   const allMoviesPlayingSortedByPopular = await MoviesAPIService.getPopular();
 

@@ -233,3 +233,32 @@ export const IMoviesSearchQuerySchema = z.object({
 });
 
 export type IMoviesSearchQuery = z.infer<typeof IMoviesSearchQuerySchema>;
+
+interface IAction {
+  type: 'internal',
+  href: 'CineScreens',
+  params: {
+    screen: 'movieDetails',
+    params: {
+      id: number,
+    }
+  }
+}
+
+interface ISizes {
+  width: 136;
+  height: 200;
+}
+
+export type IBannerUniversal = {
+  image: string,
+  title: string,
+  action: IAction,
+  sizes: ISizes,
+};
+
+export interface IOffer {
+  title: 'Em cartaz',
+  type: 'HorizontalBanners',
+  cards: Array<IBannerUniversal>,
+}

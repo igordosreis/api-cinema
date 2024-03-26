@@ -2,10 +2,12 @@
 /* eslint-disable operator-linebreak */
 import MoviesAPIModel from '../database/models/MoviesAPI.model';
 import {
+  IBannerUniversal,
   IGenreList,
   IMovieDetails,
   IMoviesResults,
   IMoviesSearchQuery,
+  IOffer,
 } from '../interfaces/IMoviesAPI';
 import { IPagination } from '../interfaces/IPagination';
 import CustomError, { movieNotFound } from '../utils/customError.util';
@@ -124,6 +126,43 @@ export default class MoviesAPIService {
     searchResults.results = pagedResults;
 
     return searchResults;
+  }
+
+  public static async getMovieOffer(): Promise<IOffer> {
+    const { results } = await this.getNowPlaying({ page: 0, limit: 20 });
+
+    const cards: IBannerUniversal[] = results.map((movie) => {
+      const { title, id, poster_path: posterPath } = movie;
+
+      const banner: IBannerUniversal = {
+        title,
+        image: posterPath,
+        sizes: {
+          width: 136,
+          height: 200,
+        },
+        action: {
+          type: 'internal',
+          href: 'CineScreens',
+          params: {
+            screen: 'movieDetails',
+            params: {
+              id,
+            },
+          },
+        },
+      };
+
+      return banner;
+    });
+
+    const offer: IOffer = {
+      title: 'Em cartaz',
+      type: 'HorizontalBanners',
+      cards,
+    };
+
+    return offer;
   }
 
   // public static async getPopular(): Promise<IMoviesResults> {
