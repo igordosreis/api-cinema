@@ -260,6 +260,18 @@ export const cannotDeleteTypeError: ICustomError = {
   message: 'Não foi possível deletar esse tipo no momento. Tente novamente mais tarde.',
 };
 
+export const cannotCreateTypeError: ICustomError = {
+  status: 503,
+  title: OPERATION_UNAVAILABLE,
+  message: 'Não foi possível criar esse tipo no momento. Tente novamente mais tarde.',
+};
+
+export const nameInUseError: ICustomError = {
+  status: 400,
+  title: 'Nome repetido.',
+  message: 'Já existe um tipo com esse nome.',
+};
+
 export const typeNotFound: ICustomError = {
   status: 404,
   title: 'Tipo não encontrado.',
@@ -288,6 +300,12 @@ export const editProductError: ICustomError = {
   status: 500,
   title: 'Produto não modificado.',
   message: 'Não foi possível editar o produto no momento. Tente noavmente mais tarde.',
+};
+
+export const typeIconNotFound: ICustomError = {
+  status: 404,
+  title: 'Ícone do tipo não encontrado.',
+  message: 'O ícone para o novo tipo de produto não foi encontrado. Por favor enviar o ícone.',
 };
 
 export const planNotFound: ICustomError = {
