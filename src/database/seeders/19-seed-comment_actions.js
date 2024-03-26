@@ -52,7 +52,7 @@ module.exports = {
       },
       {
         name: 'remoção de tipo',
-        url_path: '/shop/product/type/del',
+        url_path: '/shop/product/type/remove',
         http_method: 'DELETE',
       },
     ], {});
