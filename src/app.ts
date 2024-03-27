@@ -3,7 +3,6 @@ import express from 'express';
 import cors from 'cors';
 import router from './routes';
 import errorMiddleware from './middlewares/error.middleware';
-import geolocationMiddleware from './middlewares/geolocation.middleware';
 import imagesRouter from './routes/images.routes';
 
 class App {
@@ -13,7 +12,6 @@ class App {
     this.app.use(cors());
     this.app.use('/images', imagesRouter);
     // this.app.use('/images', express.static(`${__dirname}/images`));
-    this.app.use(geolocationMiddleware);
     this.app.use(router);
     this.app.use(errorMiddleware);
   }

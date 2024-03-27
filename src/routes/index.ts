@@ -6,10 +6,11 @@ import appAuthMiddleware from '../middlewares/appAuth.middleware';
 import dashboardAuthMiddleware from '../middlewares/dashboardAuth.middleware';
 import adminAuthMiddleware from '../middlewares/adminAuth.middleware';
 import commentsMiddleware from '../middlewares/comments.middleware';
+import geolocationMiddleware from '../middlewares/geolocation.middleware';
 
 const router = Router();
 
-router.use('/app', appAuthMiddleware, appRouter);
+router.use('/app', appAuthMiddleware, geolocationMiddleware, appRouter);
 router.use('/admin', adminAuthMiddleware, adminRouter);
 router.use('/dashboard', dashboardAuthMiddleware, commentsMiddleware, dashboardRouter);
 

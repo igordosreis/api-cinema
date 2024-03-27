@@ -36,6 +36,7 @@ interface Company {
 interface Location {
   latitude: string | null;
   longitude: string | null;
+  geolocation: boolean | undefined;
 }
 
 export interface IUserInfo {
