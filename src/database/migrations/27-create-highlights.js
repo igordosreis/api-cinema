@@ -6,24 +6,46 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('highlights', {
-      position: {
-        field: 'position',
+      id: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        autoIncrement: true,
         primaryKey: true,
-        unique: false,
       },
       address_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         primaryKey: true,
-        unique: false,
         references: {
           model: 'establishments_addresses',
           key: 'id', 
         },
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
+      },
+      establishment_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'establishments',
+          key: 'id', 
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+      },
+      city_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'cities', 
+          key: 'id', 
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+      },
+      position: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
       },
       created_at: {
         type: Sequelize.DATE,
