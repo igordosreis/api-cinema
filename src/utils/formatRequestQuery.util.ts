@@ -47,20 +47,18 @@ class FormatRequestQuery {
     Number(stateId) || undefined;
 
   private formatLatitude = ({
-    searchQuery,
     userInfo,
   }: {
     searchQuery: IEstablishmentAddressRawQuery;
     userInfo: IUserInfo;
-  }) => searchQuery.latitude || userInfo.location?.latitude || '-19.919052';
+  }) => userInfo.location.latitude || undefined;
 
   private formatLongitude = ({
-    searchQuery,
     userInfo,
   }: {
     searchQuery: IEstablishmentAddressRawQuery;
     userInfo: IUserInfo;
-  }) => searchQuery.longitude || userInfo.location?.longitude || '-43.9386685';
+  }) => userInfo.location.longitude || undefined;
 
   private formatBrandId = ({ establishmentId }: IEstablishmentAddressRawQuery) =>
     Number(establishmentId) || undefined;
