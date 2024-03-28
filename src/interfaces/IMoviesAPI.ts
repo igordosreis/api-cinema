@@ -238,7 +238,7 @@ interface IAction {
   type: 'internal',
   href: 'CineScreens',
   params: {
-    screen: 'movieDetails',
+    screen: 'moviesDetails',
     params: {
       id: number,
     }

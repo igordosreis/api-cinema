@@ -145,7 +145,7 @@ export default class MoviesAPIService {
           type: 'internal',
           href: 'CineScreens',
           params: {
-            screen: 'movieDetails',
+            screen: 'moviesDetails',
             params: {
               id,
             },
