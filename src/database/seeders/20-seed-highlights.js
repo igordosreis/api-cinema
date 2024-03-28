@@ -7,15 +7,15 @@ module.exports = {
     await QueryInterface.bulkInsert('highlights', [
       {
         position: 1,
-        addressId: 2702,
-        establishmentId: 488,
-        cityId: 1,
+        address_id: 2702,
+        establishment_id: 488,
+        city_id: 1,
       },
       {
         position: 2,
-        addressId: 2753,
-        establishmentId: 753,
-        cityId: 1,
+        address_id: 2753,
+        establishment_id: 753,
+        city_id: 1,
       },
     ], {});
   },
