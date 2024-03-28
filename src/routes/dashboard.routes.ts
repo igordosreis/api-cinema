@@ -22,6 +22,7 @@ dashboardRouter.get('/shop/get', DashboardController.productsAndPacksGet);
 dashboardRouter.get('/shop/product/get/:id', DashboardController.getProductById);
 dashboardRouter.post('/shop/product/create', DashboardController.createProduct);
 dashboardRouter.patch('/shop/product/edit', DashboardController.editProduct);
+dashboardRouter.get('/shop/product/type/get', DashboardController.getAllProductTypes);
 dashboardRouter.post(
   '/shop/product/type/create',
   TypeIconImageUploadMiddleware,

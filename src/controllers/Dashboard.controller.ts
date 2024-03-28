@@ -145,6 +145,12 @@ export default class DashboardController {
     res.status(200).end();
   }
 
+  public static async getAllProductTypes(_req: Request, res: Response): Promise<void> {
+    const allProductsTypes = await ProductsService.getProductsTypes();
+
+    res.status(200).json(allProductsTypes);
+  }
+
   // -- Packs
   public static async createPack(req: Request, res: Response): Promise<void> {
     const { packInfo } = <IPackCreateInfoBody>req.body;
