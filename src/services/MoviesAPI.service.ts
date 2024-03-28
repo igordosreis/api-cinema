@@ -136,6 +136,7 @@ export default class MoviesAPIService {
 
       const banner: IBannerUniversal = {
         title,
+        childrenStyle: { borderRadius: 13 },
         image: posterPath,
         sizes: {
           width: 136,

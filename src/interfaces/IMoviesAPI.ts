@@ -255,6 +255,7 @@ export type IBannerUniversal = {
   title: string,
   action: IAction,
   sizes: ISizes,
+  childrenStyle: { borderRadius: 13 },
 };
 
 export interface IOffer {
