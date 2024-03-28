@@ -3,27 +3,53 @@ import db from '.';
 import EstablishmentsAddressesModel from './EstablishmentsAddresses.model';
 
 class Highlights extends Model {
+  declare id: number;
   declare position: number;
   declare addressId: number;
+  declare establishmentId: number;
+  declare cityId: number;
   declare createdAt: Date;
   declare updatedAt: Date;
 }
 
 Highlights.init(
   {
-    position: {
+    id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
+      autoIncrement: true,
+    },
+    position: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
     },
     addressId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      primaryKey: true,
       references: {
         model: 'establishments_addresses',
         key: 'id',
       },
+    },
+    establishmentId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'establishments',
+        key: 'id',
+      },
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    },
+    cityId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'cities',
+        key: 'id',
+      },
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
     },
     createdAt: {
       type: DataTypes.DATE,
