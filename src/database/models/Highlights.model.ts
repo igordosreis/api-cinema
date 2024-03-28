@@ -1,6 +1,8 @@
 import { DataTypes, Model } from 'sequelize';
 import db from '.';
 import EstablishmentsAddressesModel from './EstablishmentsAddresses.model';
+import EstablishmentsModel from './Establishments.model';
+import CitiesModel from './Cities.model';
 
 class Highlights extends Model {
   declare id: number;
@@ -76,6 +78,24 @@ Highlights.belongsTo(EstablishmentsAddressesModel, {
 EstablishmentsAddressesModel.hasMany(Highlights, {
   foreignKey: 'addressId',
   as: 'highlightAddress',
+});
+
+Highlights.belongsTo(EstablishmentsModel, {
+  foreignKey: 'addressId',
+  as: 'highlightEstablishment',
+});
+EstablishmentsModel.hasMany(Highlights, {
+  foreignKey: 'addressId',
+  as: 'highlightEstablishment',
+});
+
+Highlights.belongsTo(CitiesModel, {
+  foreignKey: 'addressId',
+  as: 'highlightCity',
+});
+CitiesModel.hasMany(Highlights, {
+  foreignKey: 'addressId',
+  as: 'highlightCity',
 });
 
 export default Highlights;
