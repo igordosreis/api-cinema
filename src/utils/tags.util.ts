@@ -1,9 +1,8 @@
-/* eslint-disable max-len */
 export default class TagsUtil {
   public static formatTagsArrayWithIds(
-    itemInfo: { tags: number[] | undefined; productId: number } | { tags: number[] | undefined; packId: number },
+    itemInfo: { tags: number[]; productId: number } | { tags: number[]; packId: number },
   ): Array<{ tagId: number; productId: number }> | Array<{ tagId: number; packId: number }> {
-    const formattedArray = itemInfo.tags?.map((tag) => {
+    const formattedArray = itemInfo.tags.map((tag) => {
       if ('productId' in itemInfo) {
         return {
           tagId: tag,
