@@ -56,7 +56,7 @@ export const IProductCreateInfoSchema = z
     type: z.number(),
     soldOutAmount: z.number(),
     expireAt: z.string().pipe(z.coerce.date()).optional(),
-    tags: z.array(z.number()),
+    tags: z.array(z.number()).optional(),
   });
 
 export type IProductCreateInfo = z.infer<typeof IProductCreateInfoSchema>;
