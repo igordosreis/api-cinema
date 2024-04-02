@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 import { Request, Response } from 'express';
 import { EstablishmentsService } from '../services';
 import { 
@@ -19,18 +20,28 @@ export default class EstablishmentsController {
     const searchQuery = <IEstablishmentAddressRawQuery>req.query;
     const { userInfo } = <IUserInfoInBody>req.body;
 
-    IEstablishmentAddressQueryRawSchema.parse(searchQuery);
-    
-    const formattedQuery = formatRequestQueryUtil.formatEstablishmentQuery({
-      searchQuery,
-      userInfo,
-    });
-    IEstablishmentAddressQuerySchema.parse(formattedQuery);
-    const establishmentsByAddress = await EstablishmentsService.getEstablishmentsByAddress(
-      formattedQuery,
-    );
+    const { location: { geolocation } } = userInfo;
 
-    res.status(200).json(establishmentsByAddress);
+    const isAnySearchQueryProvided = Object.values(searchQuery).some((query) => query);
+    if (isAnySearchQueryProvided) {
+      if (geolocation) {
+        IEstablishmentAddressQueryRawSchema.parse(searchQuery);
+      
+        const formattedQuery = formatRequestQueryUtil.formatEstablishmentQuery({
+          searchQuery,
+          userInfo,
+        });
+        IEstablishmentAddressQuerySchema.parse(formattedQuery);
+        const establishmentsByAddress = await EstablishmentsService.getEstablishmentsByAddress(
+          formattedQuery,
+        );
+    
+        res.status(200).json(establishmentsByAddress);
+      }
+
+      console.log('funcao para fazer busca sem geoloc');
+    }
+    console.log('funcao para retornar highlights');
   }
 
   public static async getAllCities(_req: Request, res: Response): Promise<void> {
