@@ -5,8 +5,8 @@ import { IGeolocation } from '../interfaces/IGeolocation';
 const geolocationMiddleware = async (req: Request, _res: Response, next: NextFunction) => {
   const { lastLat, lastLong, geolocation } = <IGeolocation>req.query;
 
-  const isGeolocaion = !geolocation;
-  if (isGeolocaion) {
+  const isGeolocaionProvided = geolocation;
+  if (isGeolocaionProvided) {
     req.body.userInfo.location.geolocation = geolocation;
 
     const isLastLatAndLastLong = lastLat && lastLong;
