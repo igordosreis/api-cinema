@@ -6,6 +6,7 @@ import CitiesModel from '../database/models/Cities.model';
 import EstablishmentsModel from '../database/models/Establishments.model';
 import StatesModel from '../database/models/States.model';
 import createGeoSearchSqlQuery from '../utils/createGeoSearchSqlQuery.util';
+import createNoGeoSearchSqlQuery from '../utils/createNoGeoSearchSqlQuery.util';
 import {
   IAddress,
   IEstablishment,
@@ -74,7 +75,7 @@ export default class EstablishmentsService {
       return allCities;
     } catch (error: CustomError | unknown) {
       console.log(CONSOLE_LOG_ERROR_TITLE, error);
-      
+
       if (error instanceof CustomError) throw error;
 
       throw new CustomError(establishmentServiceUnavailable);
@@ -88,14 +89,14 @@ export default class EstablishmentsService {
       return allStates;
     } catch (error: CustomError | unknown) {
       console.log(CONSOLE_LOG_ERROR_TITLE, error);
-      
+
       if (error instanceof CustomError) throw error;
 
       throw new CustomError(establishmentServiceUnavailable);
     }
   }
 
-  public static async getEstablishmentsByAddress({
+  public static async getEstablishmentsByGeolocQuery({
     page,
     limit,
     distance,
@@ -126,6 +127,56 @@ export default class EstablishmentsService {
         },
       )) as IAddress[];
 
+      const parsedAddresses = addresses.map((address) => {
+        const { logo, cover } = address;
+        const addressWithImages = {
+          ...address,
+          logo: ImageFormatter.formatUrl({
+            imageName: logo,
+            folderPath: FOLDER_PATH_ESTABLISHMENT_LOGO,
+          }),
+          cover: ImageFormatter.formatUrl({
+            imageName: cover,
+            folderPath: FOLDER_PATH_ESTABLISHMENT_COVER,
+          }),
+        };
+
+        return addressWithImages;
+      });
+
+      return parsedAddresses;
+    } catch (error: CustomError | unknown) {
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
+
+      if (error instanceof CustomError) throw error;
+
+      throw new CustomError(establishmentServiceUnavailable);
+    }
+  }
+
+  public static async getEstablishmentAddressByQueryNoGeoloc({
+    page,
+    limit,
+    cityId,
+    stateId,
+    establishmentId,
+    addressId,
+    term,
+  }: IEstablishmentAddressQuery) {
+    try {
+      const addresses = (await db.query(
+        createNoGeoSearchSqlQuery({ term, cityId, stateId, establishmentId, addressId }),
+        {
+          type: QueryTypes.SELECT,
+          replacements: {
+            limit,
+            offset: page * limit,
+            cityId,
+            stateId,
+            establishmentId,
+          },
+        },
+      )) as IAddress[];
       const parsedAddresses = addresses.map((address) => {
         const { logo, cover } = address;
         const addressWithImages = {
@@ -217,7 +268,7 @@ export default class EstablishmentsService {
         where: { id: establishmentId },
       })) as IEstablishmentById;
 
-      const [address] = await this.getEstablishmentsByAddress({
+      const [address] = await this.getEstablishmentsByGeolocQuery({
         limit: 1,
         page: 0,
         establishmentId,
@@ -245,7 +296,7 @@ export default class EstablishmentsService {
       return establishmentWithAddress;
     } catch (error: CustomError | unknown) {
       console.log(CONSOLE_LOG_ERROR_TITLE, error);
-      
+
       if (error instanceof CustomError) throw error;
 
       throw new CustomError(establishmentServiceUnavailable);
@@ -257,7 +308,7 @@ export default class EstablishmentsService {
       const addresses = await EstablishmentsAddressesModel.findAll({
         ...createAddressGetSqlizeQueryUtil.create(addressInfo),
       });
-      
+
       return addresses;
     } catch (error) {
       console.log(CONSOLE_LOG_ERROR_TITLE, error);
@@ -351,7 +402,7 @@ export default class EstablishmentsService {
       return establishmentsWithImageLinks;
     } catch (error: CustomError | unknown) {
       console.log(CONSOLE_LOG_ERROR_TITLE, error);
-      
+
       if (error instanceof CustomError) throw error;
 
       throw new CustomError(establishmentServiceUnavailable);

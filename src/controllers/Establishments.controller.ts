@@ -1,7 +1,7 @@
 /* eslint-disable max-lines-per-function */
 import { Request, Response } from 'express';
 import { EstablishmentsService } from '../services';
-import { 
+import {
   IEstablishmentAddressQueryRawSchema,
   IEstablishmentAddressQuerySchema,
   IEstablishmentAddressRawQuery,
@@ -19,29 +19,43 @@ export default class EstablishmentsController {
   public static async getEstablishmentsByAddress(req: Request, res: Response): Promise<void> {
     const searchQuery = <IEstablishmentAddressRawQuery>req.query;
     const { userInfo } = <IUserInfoInBody>req.body;
-
-    const { location: { geolocation } } = userInfo;
+    const {
+      location: { geolocation },
+    } = userInfo;
 
     const isAnySearchQueryProvided = Object.values(searchQuery).some((query) => query);
     if (isAnySearchQueryProvided) {
       if (geolocation) {
         IEstablishmentAddressQueryRawSchema.parse(searchQuery);
-      
+
         const formattedQuery = formatRequestQueryUtil.formatEstablishmentQuery({
           searchQuery,
           userInfo,
         });
         IEstablishmentAddressQuerySchema.parse(formattedQuery);
-        const establishmentsByAddress = await EstablishmentsService.getEstablishmentsByAddress(
+        const establishmentsByAddress = await EstablishmentsService.getEstablishmentsByGeolocQuery(
           formattedQuery,
         );
-    
+
+        res.status(200).json(establishmentsByAddress);
+      } else {
+        IEstablishmentAddressQueryRawSchema.parse(searchQuery);
+
+        const formattedQuery = formatRequestQueryUtil.formatEstablishmentQuery({
+          searchQuery,
+          userInfo,
+        });
+        IEstablishmentAddressQuerySchema.parse(formattedQuery);
+        const establishmentsByAddress = await EstablishmentsService
+          .getEstablishmentAddressByQueryNoGeoloc(
+            formattedQuery,
+          );
+  
         res.status(200).json(establishmentsByAddress);
       }
-
-      console.log('funcao para fazer busca sem geoloc');
+    } else {
+      console.log('funcao para retornar highlights');
     }
-    console.log('funcao para retornar highlights');
   }
 
   public static async getAllCities(_req: Request, res: Response): Promise<void> {
