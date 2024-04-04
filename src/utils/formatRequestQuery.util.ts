@@ -22,15 +22,15 @@ import CustomError, { badCartObject } from './customError.util';
 
 class FormatRequestQuery {
   private formatTerm = ({ term }: IProductRawQuery | IEstablishmentAddressRawQuery) =>
-    typeof term === 'string' ? term : undefined;
+    (typeof term === 'string' ? term : undefined);
 
   private formatLimit = ({
     limit,
   }:
-    | IEstablishmentAddressRawQuery
-    | IPaginationRequest
-    | IProductRawQuery
-    | IPackSearchQueryRaw) => {
+  | IEstablishmentAddressRawQuery
+  | IPaginationRequest
+  | IProductRawQuery
+  | IPackSearchQueryRaw) => {
     const numberLimit = Number(limit);
 
     if (!Number.isNaN(numberLimit) && numberLimit >= 0) return numberLimit;
@@ -40,10 +40,10 @@ class FormatRequestQuery {
   private formatPage = ({
     page,
   }:
-    | IEstablishmentAddressRawQuery
-    | IPaginationRequest
-    | IProductRawQuery
-    | IPackSearchQueryRaw) => {
+  | IEstablishmentAddressRawQuery
+  | IPaginationRequest
+  | IProductRawQuery
+  | IPackSearchQueryRaw) => {
     const numberPage = Number(page);
 
     if (!Number.isNaN(numberPage) && numberPage >= 0) return numberPage;
@@ -51,7 +51,7 @@ class FormatRequestQuery {
   };
 
   private formatDistance = ({ distance, cityId, stateId }: IEstablishmentAddressRawQuery) =>
-    !Number(distance) || cityId || stateId ? 10000 : Number(distance);
+    (!Number(distance) || cityId || stateId ? 10000 : Number(distance));
 
   private formatCityId = ({ cityId }: IEstablishmentAddressRawQuery) => Number(cityId) || undefined;
 
@@ -68,10 +68,10 @@ class FormatRequestQuery {
     Number(establishmentId) || undefined;
 
   private formatAddressId = ({ addressId }: IEstablishmentAddressRawQuery) =>
-    addressId ? addressId.split(',').map((id) => Number(id)) : undefined;
+    (addressId ? addressId.split(',').map((id) => Number(id)) : undefined);
 
   private formatUnique = ({ unique }: IEstablishmentAddressRawQuery) =>
-    unique === 'true' ? true : undefined;
+    (unique === 'true' ? true : undefined);
 
   formatEstablishmentQuery = ({
     searchQuery,
@@ -100,13 +100,13 @@ class FormatRequestQuery {
     Number(establishmentId) || undefined;
 
   private formatAvailable = ({ available }: IProductRawQuery | IPackSearchQueryRaw) =>
-    available === 'true' ? true : undefined;
+    (available === 'true' ? true : undefined);
 
   private formatActive = ({ active }: IPackSearchQueryRaw) =>
-    active === 'true' ? true : undefined;
+    (active === 'true' ? true : undefined);
 
   private formatTags = ({ tags }: IProductRawQuery | IPackSearchQueryRaw) =>
-    tags ? tags.split(',').map((id) => Number(id)) : undefined;
+    (tags ? tags.split(',').map((id) => Number(id)) : undefined);
 
   formatProductQuery = (searchQuery: IProductRawQuery): IProductQuery => ({
     limit: this.formatLimit(searchQuery),
