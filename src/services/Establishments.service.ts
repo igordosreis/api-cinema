@@ -32,6 +32,7 @@ import ImageFormatter from '../utils/formatImages.util';
 import EstablishmentsProductsModel from '../database/models/EstablishmentsProducts.model';
 import EstablishmentsAddressesModel from '../database/models/EstablishmentsAddresses.model';
 import createAddressGetSqlizeQueryUtil from '../utils/createAddressGetSqlizeQuery.util';
+import createHighlightSearchSqlQuery from '../utils/createHighlightSearchSqlQuery.util';
 
 export default class EstablishmentsService {
   public static async getAllEstablishments() {
@@ -177,6 +178,43 @@ export default class EstablishmentsService {
           },
         },
       )) as IAddress[];
+
+      const parsedAddresses = addresses.map((address) => {
+        const { logo, cover } = address;
+        const addressWithImages = {
+          ...address,
+          logo: ImageFormatter.formatUrl({
+            imageName: logo,
+            folderPath: FOLDER_PATH_ESTABLISHMENT_LOGO,
+          }),
+          cover: ImageFormatter.formatUrl({
+            imageName: cover,
+            folderPath: FOLDER_PATH_ESTABLISHMENT_COVER,
+          }),
+        };
+
+        return addressWithImages;
+      });
+
+      return parsedAddresses;
+    } catch (error: CustomError | unknown) {
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
+
+      if (error instanceof CustomError) throw error;
+
+      throw new CustomError(establishmentServiceUnavailable);
+    }
+  }
+
+  public static async getEstablishmentHighlights() {
+    try {
+      const addresses = (await db.query(
+        createHighlightSearchSqlQuery(),
+        {
+          type: QueryTypes.SELECT,
+        },
+      )) as IAddress[];
+
       const parsedAddresses = addresses.map((address) => {
         const { logo, cover } = address;
         const addressWithImages = {

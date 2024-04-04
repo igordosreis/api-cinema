@@ -25,7 +25,8 @@ export default class EstablishmentsController {
 
     const isAnySearchQueryProvided = Object.values(searchQuery).some((query) => query);
     if (isAnySearchQueryProvided) {
-      if (geolocation) {
+      const isGeolocationProvided = geolocation;
+      if (isGeolocationProvided) {
         IEstablishmentAddressQueryRawSchema.parse(searchQuery);
 
         const formattedQuery = formatRequestQueryUtil.formatEstablishmentQuery({
@@ -54,7 +55,9 @@ export default class EstablishmentsController {
         res.status(200).json(establishmentsByAddress);
       }
     } else {
-      console.log('funcao para retornar highlights');
+      const establishmentsByAddress = await EstablishmentsService.getEstablishmentHighlights();
+
+      res.status(200).json(establishmentsByAddress);
     }
   }
 

@@ -5,17 +5,17 @@ const geoQueryWithAddress = (term: string) => `SELECT *
 FROM (
   SELECT
     a.id,
-    a.establishment_id as establishmentId,
+    a.establishment_id AS establishmentId,
     a.latitude,
     a.longitude,
-    e.name as brand,
+    e.name AS brand,
     i.logo,
     i.cover,
-    e.primary_color as primaryColor,
-    a.name as title,
-    a.address as address,
-    c.name as city,
-    s.name as state,
+    e.primary_color AS primaryColor,
+    a.name AS title,
+    a.address AS address,
+    c.name AS city,
+    s.name AS state,
     ( 3959 * acos( cos( radians(u.lat) )
               * cos( radians( a.latitude ) )
               * cos( radians( a.longitude ) - radians( u.lng ) )
@@ -24,8 +24,8 @@ FROM (
   FROM establishments_addresses AS a
   JOIN establishments AS e ON a.establishment_id = e.id
   JOIN establishments_images AS i ON e.id = i.establishment_id
-  JOIN cities as c on c.id = a.city_id
-  JOIN states as s on s.id = c.state_id
+  JOIN cities AS c ON c.id = a.city_id
+  JOIN states AS s ON s.id = c.state_id
   JOIN (
     SELECT
       :latitude AS lat,
@@ -58,17 +58,17 @@ FROM (
   FROM (
     SELECT
       a.id,
-      a.establishment_id as establishmentId,
+      a.establishment_id AS establishmentId,
       a.latitude,
       a.longitude,
-      e.name as brand,
+      e.name AS brand,
       i.logo,
       i.cover,
-      e.primary_color as primaryColor,
-      a.name as title,
-      a.address as address,
-      c.name as city,
-      s.name as state,
+      e.primary_color AS primaryColor,
+      a.name AS title,
+      a.address AS address,
+      c.name AS city,
+      s.name AS state,
       ( 3959 * acos( cos( radians(u.lat) )
                 * cos( radians( a.latitude ) )
                 * cos( radians( a.longitude ) - radians( u.lng ) )
@@ -77,8 +77,8 @@ FROM (
     FROM establishments_addresses AS a
     JOIN establishments AS e ON a.establishment_id = e.id
     JOIN establishments_images AS i ON e.id = i.establishment_id
-    JOIN cities as c on c.id = a.city_id
-    JOIN states as s on s.id = c.state_id
+    JOIN cities as c ON c.id = a.city_id
+    JOIN states as s ON s.id = c.state_id
     JOIN (
       SELECT
         :latitude AS lat,

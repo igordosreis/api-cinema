@@ -1,7 +1,7 @@
 /* eslint-disable sonarjs/cognitive-complexity */
 /* eslint-disable complexity */
 /* eslint-disable max-lines-per-function */
-const geoQueryWithAddress = (term: string) => `SELECT *
+const noGeoQueryWithAddress = (term: string) => `SELECT *
 FROM (
   SELECT
     a.id,
@@ -52,7 +52,7 @@ const formatTerm = (term: string) =>
 
 const formatAddressId = (addressId: number[]) => addressId.map((id) => `a.id = ${id}`).join(' or ');
 
-const createGeoSearchSqlQuery = ({
+const createNoGeoSearchSqlQuery = ({
   term,
   cityId,
   stateId,
@@ -73,7 +73,7 @@ const createGeoSearchSqlQuery = ({
   if (cityId) query += ' and c.id = :cityId';
   else if (stateId) query += ' and s.id = :stateId';
 
-  return geoQueryWithAddress(query);
+  return noGeoQueryWithAddress(query);
 };
 
-export default createGeoSearchSqlQuery;
+export default createNoGeoSearchSqlQuery;
