@@ -70,7 +70,7 @@ export const IPackCreateInfoSchema = z
     price: z.number(),
     rules: z.string().optional(),
     counterLimit: z.number().optional(),
-    tags: z.array(z.number()),
+    tags: z.array(z.number()).optional(),
     expireAt: z.string().pipe(z.coerce.date()).optional(),
     products: z.array(IProductInPackSchema),
   });

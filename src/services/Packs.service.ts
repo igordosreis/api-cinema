@@ -740,8 +740,11 @@ export default class PacksService {
 
       await PackUtil.validateProducts({ products, packPrice: price, establishmentId, transaction: t });
 
-      const formattedTagsArray = TagsUtil.formatTagsArrayWithIds({ tags, packId });
-      await TagsPacksModel.bulkCreate(formattedTagsArray, { transaction: t });
+      const areTagsProvided = tags && tags.length > 0;
+      if (areTagsProvided) {
+        const formattedTagsArray = TagsUtil.formatTagsArrayWithIds({ tags, packId });
+        await TagsPacksModel.bulkCreate(formattedTagsArray, { transaction: t });
+      }
 
       const formattedProductsArray = PackUtil.formatProductArrayWithPackId(products, packId);
       await PacksProductsModel.bulkCreate(formattedProductsArray, { transaction: t });

@@ -22,16 +22,28 @@ import CustomError, { badCartObject } from './customError.util';
 
 class FormatRequestQuery {
   private formatTerm = ({ term }: IProductRawQuery | IEstablishmentAddressRawQuery) =>
-    (typeof term === 'string' ? term : undefined);
+    typeof term === 'string' ? term : undefined;
 
-  private formatLimit = ({ limit }: IEstablishmentAddressRawQuery | IPaginationRequest | IProductRawQuery | IPackSearchQueryRaw) => {
+  private formatLimit = ({
+    limit,
+  }:
+    | IEstablishmentAddressRawQuery
+    | IPaginationRequest
+    | IProductRawQuery
+    | IPackSearchQueryRaw) => {
     const numberLimit = Number(limit);
 
     if (!Number.isNaN(numberLimit) && numberLimit >= 0) return numberLimit;
     return LIMIT_NUMBER_DEFAULT;
   };
 
-  private formatPage = ({ page }: IEstablishmentAddressRawQuery | IPaginationRequest | IProductRawQuery | IPackSearchQueryRaw) => {
+  private formatPage = ({
+    page,
+  }:
+    | IEstablishmentAddressRawQuery
+    | IPaginationRequest
+    | IProductRawQuery
+    | IPackSearchQueryRaw) => {
     const numberPage = Number(page);
 
     if (!Number.isNaN(numberPage) && numberPage >= 0) return numberPage;
@@ -39,36 +51,27 @@ class FormatRequestQuery {
   };
 
   private formatDistance = ({ distance, cityId, stateId }: IEstablishmentAddressRawQuery) =>
-    (!Number(distance) || cityId || stateId ? 10000 : Number(distance));
+    !Number(distance) || cityId || stateId ? 10000 : Number(distance);
 
   private formatCityId = ({ cityId }: IEstablishmentAddressRawQuery) => Number(cityId) || undefined;
 
   private formatStateId = ({ stateId }: IEstablishmentAddressRawQuery) =>
     Number(stateId) || undefined;
 
-  private formatLatitude = ({
-    userInfo,
-  }: {
-    searchQuery: IEstablishmentAddressRawQuery;
-    userInfo: IUserInfo;
-  }) => userInfo.location.latitude || undefined;
+  private formatLatitude = ({ userInfo }: { userInfo: IUserInfo }) =>
+    userInfo.location?.latitude || undefined;
 
-  private formatLongitude = ({
-    userInfo,
-  }: {
-    searchQuery: IEstablishmentAddressRawQuery;
-    userInfo: IUserInfo;
-  }) => userInfo.location.longitude || undefined;
+  private formatLongitude = ({ userInfo }: { userInfo: IUserInfo }) =>
+    userInfo.location?.longitude || undefined;
 
   private formatBrandId = ({ establishmentId }: IEstablishmentAddressRawQuery) =>
     Number(establishmentId) || undefined;
 
-  private formatAddressId = ({ addressId }: IEstablishmentAddressRawQuery) => (addressId
-    ? addressId.split(',').map((id) => Number(id))
-    : undefined);
+  private formatAddressId = ({ addressId }: IEstablishmentAddressRawQuery) =>
+    addressId ? addressId.split(',').map((id) => Number(id)) : undefined;
 
-  private formatUnique = ({ unique }: IEstablishmentAddressRawQuery) => 
-    (unique === 'true' ? true : undefined);
+  private formatUnique = ({ unique }: IEstablishmentAddressRawQuery) =>
+    unique === 'true' ? true : undefined;
 
   formatEstablishmentQuery = ({
     searchQuery,
@@ -86,23 +89,24 @@ class FormatRequestQuery {
     term: this.formatTerm(searchQuery),
     unique: this.formatUnique(searchQuery),
     distance: this.formatDistance(searchQuery),
-    latitude: this.formatLatitude({ searchQuery, userInfo }),
-    longitude: this.formatLongitude({ searchQuery, userInfo }),
+    latitude: this.formatLatitude({ userInfo }),
+    longitude: this.formatLongitude({ userInfo }),
   });
 
-  private formatType = ({ type }: IProductRawQuery | IPackSearchQueryRaw) => Number(type) || undefined;
+  private formatType = ({ type }: IProductRawQuery | IPackSearchQueryRaw) =>
+    Number(type) || undefined;
 
   private formatEstablishmentId = ({ establishmentId }: IProductRawQuery | IPackSearchQueryRaw) =>
     Number(establishmentId) || undefined;
 
   private formatAvailable = ({ available }: IProductRawQuery | IPackSearchQueryRaw) =>
-    (available === 'true' ? true : undefined);
+    available === 'true' ? true : undefined;
 
-  private formatActive = ({ active }: IPackSearchQueryRaw) => (active === 'true' ? true : undefined);
+  private formatActive = ({ active }: IPackSearchQueryRaw) =>
+    active === 'true' ? true : undefined;
 
-  private formatTags = ({ tags }: IProductRawQuery | IPackSearchQueryRaw) => (tags
-    ? tags.split(',').map((id) => Number(id))
-    : undefined);
+  private formatTags = ({ tags }: IProductRawQuery | IPackSearchQueryRaw) =>
+    tags ? tags.split(',').map((id) => Number(id)) : undefined;
 
   formatProductQuery = (searchQuery: IProductRawQuery): IProductQuery => ({
     limit: this.formatLimit(searchQuery),
@@ -114,8 +118,7 @@ class FormatRequestQuery {
     tags: this.formatTags(searchQuery),
   });
 
-  private formatProductId = (productId: number | string | undefined) =>
-    Number(productId);
+  private formatProductId = (productId: number | string | undefined) => Number(productId);
 
   private formatPackId = (packId: number | string | undefined) => Number(packId);
 
@@ -142,16 +145,16 @@ class FormatRequestQuery {
   //       };
 
   //       return parsedProduct;
-  //     } 
+  //     }
 
   //     if (packId) {
   //       const parsedPack = {
   //         packId: this.formatPackId(packId),
   //         amountRequested: this.formatAmount(amountRequested),
   //       };
-  
+
   //       return parsedPack;
-  //     } 
+  //     }
 
   //     throw new CustomError(badCartObject);
   //   });
@@ -165,10 +168,13 @@ class FormatRequestQuery {
 
   private convertStringToNumber = (string: string | number | undefined): number => Number(string);
 
-  formatOrderSearch = (
-    { orderId, userInfo }:
-    { orderId: string, userInfo: IUserInfo },
-  ): IOrderSearchFormatted => ({
+  formatOrderSearch = ({
+    orderId,
+    userInfo,
+  }: {
+    orderId: string;
+    userInfo: IUserInfo;
+  }): IOrderSearchFormatted => ({
     userId: this.convertStringToNumber(userInfo.user.id),
     orderId: this.convertStringToNumber(orderId),
   });
@@ -202,7 +208,7 @@ class FormatRequestQuery {
     userInfo: IUserInfo,
   ): ICartOperation => {
     const userId = Number(userInfo.user.id);
-    
+
     const isProduct = 'productId' in cartAddRequest;
     if (isProduct) {
       const addInfo = {

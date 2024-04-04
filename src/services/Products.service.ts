@@ -321,8 +321,11 @@ export default class ProductsService {
       
       const { productId } = await EstablishmentsProductsModel.create({ ...restOfInfo, type }, { transaction: t });
 
-      const formattedTagsArray = TagsUtil.formatTagsArrayWithIds({ tags, productId });
-      await TagsProductsModel.bulkCreate(formattedTagsArray, { transaction: t });
+      const areTagsProvided = tags && tags.length > 0;
+      if (areTagsProvided) {
+        const formattedTagsArray = TagsUtil.formatTagsArrayWithIds({ tags, productId });
+        await TagsProductsModel.bulkCreate(formattedTagsArray, { transaction: t });
+      }
 
       await t.commit();
 
