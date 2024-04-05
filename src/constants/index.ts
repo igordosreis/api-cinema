@@ -56,23 +56,24 @@ export const LANGUAGE_PT_BR = '&language=pt-br';
 export const { BEARER_TOKEN } = process.env;
 
 // -- SUPERAPP URLs & ENDPOINTS
-export const SUPERAPP_BASE_URL = 'https://node.clubecerto.com.br/superapp';
+export const SUPERAPP_BASE_URL = 'https://node.stations.cloud';
 
 // -- -- SUPERAPP CINEMA
-export const SUPERAPP_CINEMA_BASE_URL = 'https://node.clubecerto.com.br/superapp/cinema';
+export const SUPERAPP_CINEMA_BASE_URL = `${SUPERAPP_BASE_URL}/cinema`;
+export const SUPERAPP_MICROSERVICES_BASE_URL = `${SUPERAPP_BASE_URL}/microservices`;
 
 // -- -- SUPERAPP AUTH
 export const SUPERAPP_URL_BASE_AUTH =
-  'https://node.clubecerto.com.br/superapp/microservices/validations/cinema';
+  `${SUPERAPP_MICROSERVICES_BASE_URL}/validations/cinema`;
 export const SUPERAPP_URL_DASHBOARD_AUTH =
-  'https://node.clubecerto.com.br/superapp/microservices/validations/dashboard';
+  `${SUPERAPP_MICROSERVICES_BASE_URL}/validations/dashboard`;
 export const SUPERAPP_URL_ADMIN_AUTH =
-  'https://node.clubecerto.com.br/superapp/microservices/validations/microservice';
+  `${SUPERAPP_MICROSERVICES_BASE_URL}/validations/microservices`;
 
 // -- -- SUPERAPP PAYMENT MICROSERVICE
-export const CREATE_PAYMENT_URL = 'https://node.clubecerto.com.br/superapp/microservices/payment/';
+export const CREATE_PAYMENT_URL = `${SUPERAPP_MICROSERVICES_BASE_URL}/payment/`;
 export const ADMIN_PAYMENT_WEBHOOK =
-  'https://node.clubecerto.com.br/superapp/cinema/admin/resolve_payment';
+  `${SUPERAPP_CINEMA_BASE_URL}/admin/resolve_payment`;
 
 // -- -- SUPERAPP IMAGES
 export const DEFAULT_PERSON_IMAGE = `${SUPERAPP_CINEMA_BASE_URL}/images/movies/crew/default_img.png`;
