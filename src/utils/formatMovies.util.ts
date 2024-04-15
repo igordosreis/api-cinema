@@ -196,6 +196,21 @@ class FormatMovies {
 
     return movieWithImgYoutubeAndReleaseInfo;
   };
+
+  replaceDotForComma = (distanceString: string): string => distanceString.replace('.', ',');
+
+  formatDistance = (distance: number): string => {
+    const fixedDistance = distance.toFixed(1);
+
+    const isDistanceBiggerThan1Km = distance >= 1;
+    if (isDistanceBiggerThan1Km) {
+      return `${fixedDistance.split('.')[0]} km`;
+    }
+    
+    const formattedDistance = `${this.replaceDotForComma(distance.toFixed(1))} km`;
+      
+    return formattedDistance;
+  };
 }
 
 export default new FormatMovies();

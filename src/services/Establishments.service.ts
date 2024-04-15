@@ -36,6 +36,7 @@ import EstablishmentsProductsModel from '../database/models/EstablishmentsProduc
 import EstablishmentsAddressesModel from '../database/models/EstablishmentsAddresses.model';
 import createAddressGetSqlizeQueryUtil from '../utils/createAddressGetSqlizeQuery.util';
 import createHighlightSearchSqlQuery from '../utils/createHighlightSearchSqlQuery.util';
+import formatMoviesUtil from '../utils/formatMovies.util';
 
 export default class EstablishmentsService {
   public static async getAllEstablishments() {
@@ -351,7 +352,7 @@ export default class EstablishmentsService {
       const { distance, establishmentId, logo } = address;
 
       const banner: IBannerUniversalEstablishment = {
-        title: `${distance} km`,
+        title: formatMoviesUtil.formatDistance(distance),
         image: logo, 
         sizes: {
           width: 60,
