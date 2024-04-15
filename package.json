@@ -6,8 +6,8 @@
     "check-types": "tsc --noEmit --skipLibCheck",
     "db:reset": "npx -y tsc && sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all --debug",
     "prepare": "husky install",
-    "reset": "pm2 delete ./build/server.js && npx -y tsc && pm2 start ./build/server.js && pm2 logs",
-    "relogs": "git pull && npx -y tsc && pm2 delete ./build/server.js && pm2 start ./build/server.js && pm2 logs"
+    "reset": "pm2 delete ./build/server.js && npx -y tsc && pm2 start ./build/server.js --name cinema && pm2 logs",
+    "relogs": "git pull && npx -y tsc && pm2 delete ./build/server.js && pm2 start ./build/server.js --name cinema && pm2 logs"
   },
   "dependencies": {
     "axios": "1.6.2",
