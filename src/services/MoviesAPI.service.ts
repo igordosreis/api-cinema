@@ -7,7 +7,7 @@ import {
   IMovieDetails,
   IMoviesResults,
   IMoviesSearchQuery,
-  IOffer,
+  IOfferMovie,
 } from '../interfaces/IMoviesAPI';
 import { IPagination } from '../interfaces/IPagination';
 import CustomError, { movieNotFound } from '../utils/customError.util';
@@ -31,8 +31,9 @@ export default class MoviesAPIService {
     });
 
     const { page, limit } = pagination;
-    const pagedMovies = PaginationUtil.getPageContent({ page, limit, array: parsedMovies })
-      .filter(({ poster_path: posterPath }) => !posterPath.endsWith('null'));
+    const pagedMovies = PaginationUtil.getPageContent({ page, limit, array: parsedMovies }).filter(
+      ({ poster_path: posterPath }) => !posterPath.endsWith('null'),
+    );
 
     return {
       results: pagedMovies,
@@ -56,8 +57,9 @@ export default class MoviesAPIService {
     });
 
     const { page, limit } = pagination;
-    const pagedMovies = PaginationUtil.getPageContent({ page, limit, array: parsedMovies })
-      .filter(({ poster_path: posterPath }) => !posterPath.endsWith('null'));
+    const pagedMovies = PaginationUtil.getPageContent({ page, limit, array: parsedMovies }).filter(
+      ({ poster_path: posterPath }) => !posterPath.endsWith('null'),
+    );
 
     return {
       results: pagedMovies,
@@ -78,8 +80,9 @@ export default class MoviesAPIService {
     });
 
     const { page, limit } = pagination;
-    const pagedMovies = PaginationUtil.getPageContent({ page, limit, array: parsedMovies })
-      .filter(({ poster_path: posterPath }) => !posterPath.endsWith('null'));
+    const pagedMovies = PaginationUtil.getPageContent({ page, limit, array: parsedMovies }).filter(
+      ({ poster_path: posterPath }) => !posterPath.endsWith('null'),
+    );
 
     return {
       results: pagedMovies,
@@ -128,7 +131,7 @@ export default class MoviesAPIService {
     return searchResults;
   }
 
-  public static async getMovieOffer(): Promise<IOffer> {
+  public static async getMovieOffer(): Promise<IOfferMovie> {
     const { results } = await this.getNowPlaying({ page: 0, limit: 20 });
 
     const cards: IBannerUniversal[] = results.map((movie) => {
@@ -157,7 +160,7 @@ export default class MoviesAPIService {
       return banner;
     });
 
-    const offer: IOffer = {
+    const offer: IOfferMovie = {
       title: 'Em cartaz',
       type: 'HorizontalBanners',
       cards,
