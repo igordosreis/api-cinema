@@ -2,7 +2,7 @@
 /* eslint-disable operator-linebreak */
 import MoviesAPIModel from '../database/models/MoviesAPI.model';
 import {
-  IBannerUniversal,
+  IBannerUniversalMovie,
   IGenreList,
   IMovieDetails,
   IMoviesResults,
@@ -134,10 +134,10 @@ export default class MoviesAPIService {
   public static async getMovieOffer(): Promise<IOfferMovie> {
     const { results } = await this.getNowPlaying({ page: 0, limit: 20 });
 
-    const cards: IBannerUniversal[] = results.map((movie) => {
+    const cards: IBannerUniversalMovie[] = results.map((movie) => {
       const { title, id, poster_path: posterPath } = movie;
 
-      const banner: IBannerUniversal = {
+      const banner: IBannerUniversalMovie = {
         title,
         childrenStyle: { borderRadius: 13 },
         image: posterPath,

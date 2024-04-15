@@ -9,12 +9,15 @@ import createGeoSearchSqlQuery from '../utils/createGeoSearchSqlQuery.util';
 import createNoGeoSearchSqlQuery from '../utils/createNoGeoSearchSqlQuery.util';
 import {
   IAddress,
+  IAddressWithImages,
+  IBannerUniversalEstablishment,
   IEstablishment,
   IEstablishmentAddressGet,
   IEstablishmentAddressQuery,
   IEstablishmentBrandEdit,
   IEstablishmentById,
   IEstablishmentImageEdit,
+  IOfferEstablishment,
 } from '../interfaces/IEstablishments';
 import EstablishmentsImagesModel from '../database/models/EstablishmentsImages.model';
 import CustomError, {
@@ -145,7 +148,7 @@ export default class EstablishmentsService {
         return addressWithImages;
       });
 
-      return parsedAddresses;
+      return parsedAddresses as IAddressWithImages[];
     } catch (error: CustomError | unknown) {
       console.log(CONSOLE_LOG_ERROR_TITLE, error);
 
@@ -339,6 +342,43 @@ export default class EstablishmentsService {
 
       throw new CustomError(establishmentServiceUnavailable);
     }
+  }
+
+  public static async getEstablishmentOffer(formattedQuery: IEstablishmentAddressQuery) {
+    const addresses = await this.getEstablishmentsByGeolocQuery(formattedQuery);
+
+    const cards: IBannerUniversalEstablishment[] = addresses.map((address) => {
+      const { distance, establishmentId, logo } = address;
+
+      const banner: IBannerUniversalEstablishment = {
+        title: `${distance} km`,
+        image: logo, 
+        sizes: {
+          width: 60,
+          height: 60,
+        },
+        action: {
+          type: 'internal',
+          href: 'CineScreens',
+          params: {
+            screen: 'cineDetails',
+            params: {
+              id: establishmentId,
+            },
+          },
+        },
+      };
+
+      return banner;
+    });
+
+    const offer: IOfferEstablishment = {
+      title: 'Cinemas próximos',
+      type: 'BallBanner',
+      cards,
+    };
+
+    return offer;
   }
 
   public static async getEstablishmentAddressDashboard(addressInfo: IEstablishmentAddressGet) {

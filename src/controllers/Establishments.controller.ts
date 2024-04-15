@@ -89,4 +89,21 @@ export default class EstablishmentsController {
 
     res.status(200).json(establishment);
   }
+
+  public static async getEstablishmentOffer(req: Request, res: Response): Promise<void> {
+    const searchQuery: IEstablishmentAddressRawQuery = { limit: '8', page: '0' };
+    const { userInfo } = <IUserInfoInBody>req.body;
+
+    IEstablishmentAddressQueryRawSchema.parse(searchQuery);
+
+    const formattedQuery = formatRequestQueryUtil.formatEstablishmentQuery({
+      searchQuery,
+      userInfo,
+    });
+    IEstablishmentAddressQuerySchema.parse(formattedQuery);
+
+    const establishmentOffer = await EstablishmentsService.getEstablishmentOffer(formattedQuery);
+
+    res.status(200).json(establishmentOffer);
+  }
 }
