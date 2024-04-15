@@ -250,7 +250,7 @@ interface ISizes {
   height: 200;
 }
 
-export type IBannerUniversal = {
+export type IBannerUniversalMovie = {
   image: string;
   title: string;
   action: IAction;
@@ -261,5 +261,5 @@ export type IBannerUniversal = {
 export interface IOfferMovie {
   title: 'Em cartaz';
   type: 'HorizontalBanners';
-  cards: Array<IBannerUniversal>;
+  cards: Array<IBannerUniversalMovie>;
 }

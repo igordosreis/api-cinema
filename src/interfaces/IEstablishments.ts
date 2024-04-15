@@ -97,6 +97,11 @@ export interface IAddress {
   distance: number;
 }
 
+export interface IAddressWithImages extends IAddress {
+  logo: string;
+  conver: string;
+}
+
 export const IEstablishmentBrandEditSchema = z.object({
   id: z.number(),
   name: z.string().optional(),
@@ -165,7 +170,7 @@ interface ISizes {
   height: 60;
 }
 
-export type IBannerUniversal = {
+export type IBannerUniversalEstablishment = {
   image: string;
   title: string;
   action: IAction;
@@ -175,5 +180,5 @@ export type IBannerUniversal = {
 export interface IOfferEstablishment {
   title: 'Cinemas próximos';
   type: 'BallBanner';
-  cards: Array<IBannerUniversal>;
+  cards: Array<IBannerUniversalEstablishment>;
 }
