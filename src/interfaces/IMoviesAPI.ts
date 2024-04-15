@@ -235,14 +235,14 @@ export const IMoviesSearchQuerySchema = z.object({
 export type IMoviesSearchQuery = z.infer<typeof IMoviesSearchQuerySchema>;
 
 interface IAction {
-  type: 'internal',
-  href: 'CineScreens',
+  type: 'internal';
+  href: 'CineScreens';
   params: {
-    screen: 'moviesDetails',
+    screen: 'moviesDetails';
     params: {
-      id: number,
-    }
-  }
+      id: number;
+    };
+  };
 }
 
 interface ISizes {
@@ -251,15 +251,15 @@ interface ISizes {
 }
 
 export type IBannerUniversal = {
-  image: string,
-  title: string,
-  action: IAction,
-  sizes: ISizes,
-  childrenStyle: { borderRadius: 13 },
+  image: string;
+  title: string;
+  action: IAction;
+  sizes: ISizes;
+  childrenStyle: { borderRadius: 13 };
 };
 
-export interface IOffer {
-  title: 'Em cartaz',
-  type: 'HorizontalBanners',
-  cards: Array<IBannerUniversal>,
+export interface IOfferMovie {
+  title: 'Em cartaz';
+  type: 'HorizontalBanners';
+  cards: Array<IBannerUniversal>;
 }

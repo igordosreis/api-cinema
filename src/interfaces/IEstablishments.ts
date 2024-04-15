@@ -148,3 +148,32 @@ export const IEstablishmentAddressGetSchema = z.object({
 });
 
 export type IEstablishmentAddressGet = z.infer<typeof IEstablishmentAddressGetSchema>;
+
+interface IAction {
+  type: 'internal';
+  href: 'CineScreens';
+  params: {
+    screen: 'cineDetails';
+    params: {
+      id: number;
+    };
+  };
+}
+
+interface ISizes {
+  width: 60;
+  height: 60;
+}
+
+export type IBannerUniversal = {
+  image: string;
+  title: string;
+  action: IAction;
+  sizes: ISizes;
+};
+
+export interface IOfferEstablishment {
+  title: 'Cinemas próximos';
+  type: 'BallBanner';
+  cards: Array<IBannerUniversal>;
+}
