@@ -210,10 +210,10 @@ export default class EstablishmentsService {
     }
   }
 
-  public static async getEstablishmentHighlights() {
+  public static async getEstablishmentHighlights(unique?: true) {
     try {
       const addresses = (await db.query(
-        createHighlightSearchSqlQuery(),
+        createHighlightSearchSqlQuery(unique),
         {
           type: QueryTypes.SELECT,
         },

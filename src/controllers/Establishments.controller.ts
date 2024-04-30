@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/cognitive-complexity */
 /* eslint-disable max-lines-per-function */
 import { Request, Response } from 'express';
 import { EstablishmentsService } from '../services';
@@ -19,9 +20,11 @@ export default class EstablishmentsController {
   public static async getEstablishmentsByAddress(req: Request, res: Response): Promise<void> {
     const searchQuery = <IEstablishmentAddressRawQuery>req.query;
     const { userInfo } = <IUserInfoInBody>req.body;
+
     const {
       location: { geolocation },
     } = userInfo;
+    const { unique } = searchQuery;
 
     const isAnySearchQueryProvided = Object.values(searchQuery).some((query) => query);
     if (isAnySearchQueryProvided) {
@@ -39,6 +42,11 @@ export default class EstablishmentsController {
         );
 
         res.status(200).json(establishmentsByAddress);
+      } else if (unique && unique.toLowerCase() === 'true') {
+        const establishmentsByAddress = await EstablishmentsService
+          .getEstablishmentHighlights(true);
+
+        res.status(200).json(establishmentsByAddress); 
       } else {
         IEstablishmentAddressQueryRawSchema.parse(searchQuery);
 
