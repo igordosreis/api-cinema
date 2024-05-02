@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 /* eslint-disable sonarjs/cognitive-complexity */
 /* eslint-disable max-lines-per-function */
 import { Request, Response } from 'express';
@@ -22,13 +23,14 @@ export default class EstablishmentsController {
     const { userInfo } = <IUserInfoInBody>req.body;
 
     const {
-      location: { geolocation },
+      location: { geolocation, latitude, longitude },
     } = userInfo;
     const { unique } = searchQuery;
 
+    // isAnySearchQueryProvided shouldn't account for pagination; remove pagination from searchQuery
     const isAnySearchQueryProvided = Object.values(searchQuery).some((query) => query);
     if (isAnySearchQueryProvided) {
-      const isGeolocationProvided = geolocation;
+      const isGeolocationProvided = geolocation && latitude && longitude;
       if (isGeolocationProvided) {
         IEstablishmentAddressQueryRawSchema.parse(searchQuery);
 
@@ -46,7 +48,7 @@ export default class EstablishmentsController {
         const establishmentsByAddress = await EstablishmentsService
           .getEstablishmentHighlights(true);
 
-        res.status(200).json(establishmentsByAddress); 
+        res.status(200).json(establishmentsByAddress);
       } else {
         IEstablishmentAddressQueryRawSchema.parse(searchQuery);
 
