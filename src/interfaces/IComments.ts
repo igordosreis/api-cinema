@@ -7,7 +7,7 @@ export interface ICommentsInBody {
 }
 
 export const ICommentLogsSearchQuerySchema = z.object({
-  userId: z.string().pipe(z.coerce.number()).optional(),
+  userId: z.string().optional(),
   createdAt: z.string().optional(),
   actionId: z.string().pipe(z.coerce.number()).optional(),
   search: z.string().optional(),

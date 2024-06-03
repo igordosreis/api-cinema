@@ -6,7 +6,7 @@ class CommentLogs extends Model {
   declare id: number;
   declare comment: string;
   declare originalUrl: string;
-  declare userId: number;
+  declare userId: string;
   declare actionId: number;
   declare createdAt: Date;
   declare updatedAt: Date;
@@ -27,7 +27,7 @@ CommentLogs.init(
       type: DataTypes.STRING,
     },
     userId: {
-      type: DataTypes.NUMBER,
+      type: DataTypes.STRING,
     },
     actionId: {
       type: DataTypes.NUMBER,

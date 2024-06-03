@@ -70,7 +70,7 @@ export default class OrdersController {
       },
     } = <IUserInfoInBody>req.body;
 
-    const userId = Number(id);
+    const userId = id;
     await OrdersService.verifyOrders(userId);
 
     res.status(200).end();

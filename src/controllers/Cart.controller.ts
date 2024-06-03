@@ -16,7 +16,7 @@ export default class CartController {
       },
     } = <IUserInfoInBody>req.body;
 
-    const userId = Number(id);
+    const userId = id;
     const currentCart = await CartService.getCart({ userId });
 
     res.status(200).json(currentCart);
@@ -29,7 +29,7 @@ export default class CartController {
       },
     } = <IUserInfoInBody>req.body;
 
-    const userId = Number(id);
+    const userId = id;
     const currentCartCount = await CartService.getCartCount(userId);
 
     res.status(200).json(currentCartCount);
@@ -105,7 +105,7 @@ export default class CartController {
       },
     } = <IUserInfoInBody>req.body;
 
-    const userId = Number(id);
+    const userId = id;
     await CartService.deleteAllCart(userId);
 
     res.status(200).end();

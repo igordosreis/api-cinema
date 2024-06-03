@@ -128,7 +128,7 @@ class FormatRequestQuery {
     userInfo: {
       user: { id: userId },
     },
-  }: IOrderRequestRawBody) => Number(userId);
+  }: IOrderRequestRawBody) => userId;
 
   private formatCompanyId = ({
     userInfo: {
@@ -175,7 +175,7 @@ class FormatRequestQuery {
     orderId: string;
     userInfo: IUserInfo;
   }): IOrderSearchFormatted => ({
-    userId: this.convertStringToNumber(userInfo.user.id),
+    userId: userInfo.user.id,
     orderId: this.convertStringToNumber(orderId),
   });
 
@@ -207,7 +207,7 @@ class FormatRequestQuery {
     cartAddRequest: ICartOperationRequest,
     userInfo: IUserInfo,
   ): ICartOperation => {
-    const userId = Number(userInfo.user.id);
+    const userId = userInfo.user.id;
 
     const isProduct = 'productId' in cartAddRequest;
     if (isProduct) {
@@ -234,7 +234,7 @@ class FormatRequestQuery {
     throw new CustomError(badCartObject);
   };
   // formatCartAddRequest = ({ cartInfo, userInfo }: ICartAddRequest): ICartAdd => ({
-  //   userId: Number(userInfo.user.id),
+  //   userId: userInfo.user.id,
   //   cartInfo,
   // });
 

@@ -57,6 +57,7 @@ export default class EstablishmentsController {
           userInfo,
         });
         IEstablishmentAddressQuerySchema.parse(formattedQuery);
+        console.log({ formattedQuery });
         const establishmentsByAddress = await EstablishmentsService
           .getEstablishmentAddressByQueryNoGeoloc(
             formattedQuery,
@@ -101,7 +102,14 @@ export default class EstablishmentsController {
   }
 
   public static async getEstablishmentOffer(req: Request, res: Response): Promise<void> {
-    const searchQuery: IEstablishmentAddressRawQuery = { limit: '8', page: '0' };
+    const searchQuery: IEstablishmentAddressRawQuery = {  
+      limit: '10',
+      page: '0',
+      unique: 'true',
+      latitude: '1',
+      longitude: '1',
+      distance: '10000',
+    };
     const { userInfo } = <IUserInfoInBody>req.body;
 
     IEstablishmentAddressQueryRawSchema.parse(searchQuery);
