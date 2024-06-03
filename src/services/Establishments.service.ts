@@ -345,14 +345,21 @@ export default class EstablishmentsService {
     }
   }
 
-  public static async getEstablishmentOffer(formattedQuery: IEstablishmentAddressQuery) {
-    const addresses = await this.getEstablishmentsByGeolocQuery(formattedQuery);
+  public static async getEstablishmentOffer(
+    formattedQuery: IEstablishmentAddressQuery,
+    geolocation?: boolean,
+  ) {
+    const addresses = geolocation
+      ? await this.getEstablishmentsByGeolocQuery(formattedQuery)
+      : await this.getEstablishmentHighlights(true);
 
     const cards: IBannerUniversalEstablishment[] = addresses.map((address) => {
       const { distance, establishmentId, logo } = address;
 
       const banner: IBannerUniversalEstablishment = {
-        title: formatMoviesUtil.formatDistance(distance),
+        title: geolocation 
+          ? formatMoviesUtil.formatDistance(distance)
+          : formatMoviesUtil.formatTitle(address.title),
         image: logo, 
         sizes: {
           width: 60,

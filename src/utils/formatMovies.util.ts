@@ -211,6 +211,23 @@ class FormatMovies {
       
     return formattedDistance;
   };
+
+  formatTitle = (title: string): string => {
+    const wordsArray = title.trim().split(' ');
+
+    const formattedTitle = wordsArray.reduce((accTitle: string, currWord: string) => {
+      const firstLetterUppercase = currWord.charAt(0).toUpperCase();
+      const remainingLettersLowercase = currWord.slice(1).toLowerCase();
+
+      const capitalizedWord = firstLetterUppercase + remainingLettersLowercase;
+
+      if (!accTitle) return capitalizedWord;
+
+      return `${accTitle} ${capitalizedWord}`;
+    }, '');
+
+    return formattedTitle;
+  };
 }
 
 export default new FormatMovies();

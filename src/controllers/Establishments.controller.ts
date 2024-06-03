@@ -105,12 +105,11 @@ export default class EstablishmentsController {
     const searchQuery: IEstablishmentAddressRawQuery = {  
       limit: '10',
       page: '0',
-      unique: 'true',
-      latitude: '1',
-      longitude: '1',
-      distance: '10000',
     };
     const { userInfo } = <IUserInfoInBody>req.body;
+    const {
+      location: { geolocation },
+    } = userInfo;
 
     IEstablishmentAddressQueryRawSchema.parse(searchQuery);
 
@@ -120,7 +119,8 @@ export default class EstablishmentsController {
     });
     IEstablishmentAddressQuerySchema.parse(formattedQuery);
 
-    const establishmentOffer = await EstablishmentsService.getEstablishmentOffer(formattedQuery);
+    const establishmentOffer = await EstablishmentsService
+      .getEstablishmentOffer(formattedQuery, geolocation);
 
     res.status(200).json(establishmentOffer);
   }
