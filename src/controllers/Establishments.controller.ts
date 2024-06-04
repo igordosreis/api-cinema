@@ -1,4 +1,5 @@
 /* eslint-disable complexity */
+/* eslint-disable complexity */
 /* eslint-disable sonarjs/cognitive-complexity */
 /* eslint-disable max-lines-per-function */
 import { Request, Response } from 'express';
