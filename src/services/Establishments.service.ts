@@ -131,40 +131,7 @@ export default class EstablishmentsService {
           },
         },
       )) as IAddress[];
-      console.log(`
-    
-      ------------{
-        page,
-        limit,
-        distance,
-        latitude,
-        longitude,
-        cityId,
-        stateId,
-        establishmentId,
-        addressId,
-        term,
-        unique,
-      }------------
-  
-      `, {
-        page,
-        limit,
-        distance,
-        latitude,
-        longitude,
-        cityId,
-        stateId,
-        establishmentId,
-        addressId,
-        term,
-        unique,
-      });
-      console.log(`
-    
-      ------------addresses------------
-  
-      `, addresses);
+
       const parsedAddresses = addresses.map((address) => {
         const { logo, cover } = address;
         const addressWithImages = {

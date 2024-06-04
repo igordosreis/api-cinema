@@ -58,7 +58,7 @@ export default class EstablishmentsController {
           userInfo,
         });
         IEstablishmentAddressQuerySchema.parse(formattedQuery);
-        console.log({ formattedQuery });
+        
         const establishmentsByAddress = await EstablishmentsService
           .getEstablishmentAddressByQueryNoGeoloc(
             formattedQuery,
