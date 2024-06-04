@@ -18,12 +18,12 @@ export const ICartOperationSchema = z.union([
   z.object({
     productId: z.number(),
     establishmentId: z.number(),
-    userId: z.number(),
+    userId: z.string(),
   }),
   z.object({
     packId: z.number(),
     establishmentId: z.number(),
-    userId: z.number(),
+    userId: z.string(),
   }),
 ]);
 
@@ -52,7 +52,7 @@ export type ICartOperation = z.infer<typeof ICartOperationSchema>;
 // }
 
 // export const ICartAddSchema = z.object({
-//   userId: z.number(),
+//   userId: z.string(),
 //   cartInfo: ICartInfoSchema,
 // });
 
@@ -78,7 +78,7 @@ export type ICartOperation = z.infer<typeof ICartOperationSchema>;
 // }
 
 // export const ICartAddSchema = z.object({
-//   userId: z.number(),
+//   userId: z.string(),
 //   cartInfo: ICartInfoSchema,
 // });
 

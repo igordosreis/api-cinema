@@ -131,7 +131,40 @@ export default class EstablishmentsService {
           },
         },
       )) as IAddress[];
-
+      console.log(`
+    
+      ------------{
+        page,
+        limit,
+        distance,
+        latitude,
+        longitude,
+        cityId,
+        stateId,
+        establishmentId,
+        addressId,
+        term,
+        unique,
+      }------------
+  
+      `, {
+        page,
+        limit,
+        distance,
+        latitude,
+        longitude,
+        cityId,
+        stateId,
+        establishmentId,
+        addressId,
+        term,
+        unique,
+      });
+      console.log(`
+    
+      ------------addresses------------
+  
+      `, addresses);
       const parsedAddresses = addresses.map((address) => {
         const { logo, cover } = address;
         const addressWithImages = {
@@ -195,6 +228,7 @@ export default class EstablishmentsService {
             imageName: cover,
             folderPath: FOLDER_PATH_ESTABLISHMENT_COVER,
           }),
+          distance: null,
         };
 
         return addressWithImages;
@@ -218,7 +252,7 @@ export default class EstablishmentsService {
           type: QueryTypes.SELECT,
         },
       )) as IAddress[];
-
+      console.log('ENTROU AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
       const parsedAddresses = addresses.map((address) => {
         const { logo, cover } = address;
         const addressWithImages = {
@@ -231,6 +265,7 @@ export default class EstablishmentsService {
             imageName: cover,
             folderPath: FOLDER_PATH_ESTABLISHMENT_COVER,
           }),
+          distance: null,
         };
 
         return addressWithImages;
@@ -346,13 +381,20 @@ export default class EstablishmentsService {
   }
 
   public static async getEstablishmentOffer(formattedQuery: IEstablishmentAddressQuery) {
-    const addresses = await this.getEstablishmentsByGeolocQuery(formattedQuery);
+    const { latitude, longitude } = formattedQuery;
+    const isGeolocation = !!(latitude && longitude);
+
+    const addresses = isGeolocation
+      ? await this.getEstablishmentsByGeolocQuery({ ...formattedQuery, unique: true })
+      : await this.getEstablishmentHighlights(true);
 
     const cards: IBannerUniversalEstablishment[] = addresses.map((address) => {
       const { distance, establishmentId, logo } = address;
 
       const banner: IBannerUniversalEstablishment = {
-        title: formatMoviesUtil.formatDistance(distance),
+        title: isGeolocation 
+          ? formatMoviesUtil.formatDistance(distance)
+          : formatMoviesUtil.formatTitle(address.brand),
         image: logo, 
         sizes: {
           width: 60,

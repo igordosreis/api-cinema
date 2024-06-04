@@ -2,7 +2,7 @@ export type IPaymentStatus = 'paid' | 'waiting' | 'canceled' | 'expired';
 
 export interface IPaymentOrderRequest {
   establishmentId: number;
-  userId: number;
+  userId: string;
   orderId: number;
   expireAt: string;
   value: string;

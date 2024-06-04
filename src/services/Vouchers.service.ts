@@ -269,7 +269,7 @@ export default class VouchersService {
     userId,
     pagination: { page, limit },
   }: {
-    userId: number;
+    userId: string;
     pagination: IPagination;
   }) {
     try {

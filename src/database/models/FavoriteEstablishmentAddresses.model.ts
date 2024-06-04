@@ -3,7 +3,7 @@ import db from '.';
 import EstablishmentsAddressesModel from './EstablishmentsAddresses.model';
 
 class FavoriteEstablishmentAddresses extends Model {
-  declare userId: number;
+  declare userId: string;
   declare establishmentAddressesId: string;
   declare createdAt: Date;
   declare updatedAt: Date;
@@ -12,7 +12,7 @@ class FavoriteEstablishmentAddresses extends Model {
 FavoriteEstablishmentAddresses.init(
   {
     userId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
       primaryKey: true,
     },

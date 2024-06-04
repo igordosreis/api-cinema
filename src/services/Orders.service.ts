@@ -238,7 +238,7 @@ export default class OrdersService {
     lastDay,
     status,
   }: {
-    userId: number;
+    userId: string;
     pagination: IPagination;
     firstDay: string;
     lastDay: string;
@@ -588,7 +588,7 @@ export default class OrdersService {
     }
   }
 
-  public static async verifyOrders(userId: number) {
+  public static async verifyOrders(userId: string) {
     await ordersUtil.verifyIfAllOrdersAreFinalized({ userId });
   }
 }

@@ -32,7 +32,7 @@ export interface IOrderSearchRaw extends Express.Request {
 
 export interface IOrderSearchFormatted {
   orderId: number;
-  userId: number;
+  userId: string;
   status?: string;
   transaction?: Transaction;
   isAdmin?: boolean;
@@ -40,31 +40,31 @@ export interface IOrderSearchFormatted {
 
 export interface IOrderSucessUpdate {
   orderId: number;
-  userId: number;
+  userId: string;
   status: string;
 }
 
 export interface IOrderFailedUpdate {
   orderId: number;
-  userId: number;
+  userId: string;
   status: string;
 }
 
 export interface IOrderUpdate {
   orderId: number;
-  userId: number;
+  userId: string;
   status?: string;
 }
 
 export interface IOrderValidatePlan {
-  userId: number;
+  userId: string;
   cinemaPlan: number;
   orderTotals: PriceUnitAndTypeTotals;
 }
 
 export interface IOrdersDetails {
   id: number;
-  userId: number;
+  userId: string;
   status: string;
   paymentId: string;
   totalPrice: number;
@@ -76,7 +76,7 @@ export interface IOrdersDetails {
 
 // export interface IOrderInfo {
 //   id: number;
-//   userId: number;
+//   userId: string;
 //   status: string;
 //   paymentId: string;
 //   totalPrice: string;
@@ -126,7 +126,7 @@ export interface IOrderRequestRawBody {
 }
 
 export interface IOrderRequestBody {
-  userId: number;
+  userId: string;
   companyId: number;
   cinemaPlan: number;
   // orderInfo: IOrderRequestInfo[];
@@ -134,7 +134,7 @@ export interface IOrderRequestBody {
 
 export interface ICreateOrderParams {
   productId: number;
-  userId: number;
+  userId: string;
   amountRequested: number;
 }
 

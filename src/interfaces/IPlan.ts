@@ -9,7 +9,7 @@ export type IPlanInfo = PlansModel & {
 };
 
 export interface IPlanUsedAmount {
-  userId: number;
+  userId: string;
   cinemaPlan: number;
 }
 

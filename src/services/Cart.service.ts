@@ -15,7 +15,7 @@ import PacksModel from '../database/models/Packs.model';
 import { CONSOLE_LOG_ERROR_TITLE } from '../constants';
 
 export default class CartService {
-  public static async getCart({ userId, isCount }: { userId: number, isCount?: boolean }) {
+  public static async getCart({ userId, isCount }: { userId: string, isCount?: boolean }) {
     try {
       const searchParams = isCount
         ? { where: { userId } }
@@ -45,7 +45,7 @@ export default class CartService {
     }
   }
 
-  public static async getCartCount(userId: number) {
+  public static async getCartCount(userId: string) {
     try {
       const isCount = true;
       const currentCart = await this.getCart({ userId, isCount });
@@ -210,7 +210,7 @@ export default class CartService {
     }
   }
 
-  public static async deleteAllCart(userId: number) {
+  public static async deleteAllCart(userId: string) {
     try {
       await CartModel.destroy({
         where: { userId },

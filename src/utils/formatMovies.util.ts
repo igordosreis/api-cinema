@@ -199,7 +199,8 @@ class FormatMovies {
 
   replaceDotForComma = (distanceString: string): string => distanceString.replace('.', ',');
 
-  formatDistance = (distance: number): string => {
+  formatDistance = (distance: number | null): string => {
+    if (!distance) throw new Error('Invalid distance');
     const fixedDistance = distance.toFixed(1);
 
     const isDistanceBiggerThan1Km = distance >= 1;
@@ -210,6 +211,23 @@ class FormatMovies {
     const formattedDistance = `${this.replaceDotForComma(distance.toFixed(1))} km`;
       
     return formattedDistance;
+  };
+
+  formatTitle = (title: string): string => {
+    const wordsArray = title.trim().split(' ');
+
+    const formattedTitle = wordsArray.reduce((accTitle: string, currWord: string) => {
+      const firstLetterUppercase = currWord.charAt(0).toUpperCase();
+      const remainingLettersLowercase = currWord.slice(1).toLowerCase();
+
+      const capitalizedWord = firstLetterUppercase + remainingLettersLowercase;
+
+      if (!accTitle) return capitalizedWord;
+
+      return `${accTitle} ${capitalizedWord}`;
+    }, '');
+
+    return formattedTitle;
   };
 }
 

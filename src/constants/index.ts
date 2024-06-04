@@ -68,7 +68,7 @@ export const SUPERAPP_URL_BASE_AUTH =
 export const SUPERAPP_URL_DASHBOARD_AUTH =
   `${SUPERAPP_MICROSERVICES_BASE_URL}/validations/dashboard`;
 export const SUPERAPP_URL_ADMIN_AUTH =
-  `${SUPERAPP_MICROSERVICES_BASE_URL}/validations/microservices`;
+  `${SUPERAPP_MICROSERVICES_BASE_URL}/validations/microservice`;
 
 // -- -- SUPERAPP PAYMENT MICROSERVICE
 export const CREATE_PAYMENT_URL = `${SUPERAPP_MICROSERVICES_BASE_URL}/payment/`;

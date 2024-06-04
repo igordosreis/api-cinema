@@ -1,5 +1,5 @@
 export interface IGeolocation {
-  lastLong?: string;
+  lastLng?: string;
   lastLat?: string;
   geolocation?: boolean;
 }

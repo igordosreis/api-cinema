@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 /* eslint-disable sonarjs/cognitive-complexity */
 /* eslint-disable max-lines-per-function */
 import { Request, Response } from 'express';
@@ -22,13 +23,14 @@ export default class EstablishmentsController {
     const { userInfo } = <IUserInfoInBody>req.body;
 
     const {
-      location: { geolocation },
+      location: { geolocation, latitude, longitude },
     } = userInfo;
     const { unique } = searchQuery;
 
+    // isAnySearchQueryProvided shouldn't account for pagination; remove pagination from searchQuery
     const isAnySearchQueryProvided = Object.values(searchQuery).some((query) => query);
     if (isAnySearchQueryProvided) {
-      const isGeolocationProvided = geolocation;
+      const isGeolocationProvided = geolocation && latitude && longitude;
       if (isGeolocationProvided) {
         IEstablishmentAddressQueryRawSchema.parse(searchQuery);
 
@@ -46,7 +48,7 @@ export default class EstablishmentsController {
         const establishmentsByAddress = await EstablishmentsService
           .getEstablishmentHighlights(true);
 
-        res.status(200).json(establishmentsByAddress); 
+        res.status(200).json(establishmentsByAddress);
       } else {
         IEstablishmentAddressQueryRawSchema.parse(searchQuery);
 
@@ -55,6 +57,7 @@ export default class EstablishmentsController {
           userInfo,
         });
         IEstablishmentAddressQuerySchema.parse(formattedQuery);
+        console.log({ formattedQuery });
         const establishmentsByAddress = await EstablishmentsService
           .getEstablishmentAddressByQueryNoGeoloc(
             formattedQuery,
@@ -99,7 +102,10 @@ export default class EstablishmentsController {
   }
 
   public static async getEstablishmentOffer(req: Request, res: Response): Promise<void> {
-    const searchQuery: IEstablishmentAddressRawQuery = { limit: '8', page: '0' };
+    const searchQuery: IEstablishmentAddressRawQuery = {  
+      limit: '10',
+      page: '0',
+    };
     const { userInfo } = <IUserInfoInBody>req.body;
 
     IEstablishmentAddressQueryRawSchema.parse(searchQuery);
@@ -110,7 +116,8 @@ export default class EstablishmentsController {
     });
     IEstablishmentAddressQuerySchema.parse(formattedQuery);
 
-    const establishmentOffer = await EstablishmentsService.getEstablishmentOffer(formattedQuery);
+    const establishmentOffer = await EstablishmentsService
+      .getEstablishmentOffer(formattedQuery);
 
     res.status(200).json(establishmentOffer);
   }

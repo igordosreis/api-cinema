@@ -5,7 +5,7 @@ import PacksModel from './Packs.model';
 
 class CartModel extends Model {
   declare id: number;
-  declare userId: number;
+  declare userId: string;
   declare productId: number;
   declare packId: number;
   declare establishmentId: number;
@@ -24,7 +24,7 @@ CartModel.init(
       primaryKey: true,
     },
     userId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
       // primaryKey: true,
     },

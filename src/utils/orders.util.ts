@@ -100,7 +100,7 @@ class OrdersUtil {
     };
   };
 
-  getCartFormatted = async (userId: number): Promise<IOrderRequestInfo[]> => {
+  getCartFormatted = async (userId: string): Promise<IOrderRequestInfo[]> => {
     const currentCart = await CartService.getCart({ userId });
 
     const isCartEmpty = currentCart.length === 0;
@@ -135,7 +135,7 @@ class OrdersUtil {
 
   verifyIfAllOrdersAreFinalized = async (
     { userId, transaction }:
-    { userId: number, transaction?: Transaction },
+    { userId: string, transaction?: Transaction },
   ) => {
     const allUserOrders = await OrdersModel.findAll({ where: { userId }, transaction });
 
