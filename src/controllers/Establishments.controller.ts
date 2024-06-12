@@ -1,5 +1,4 @@
 /* eslint-disable complexity */
-/* eslint-disable complexity */
 /* eslint-disable sonarjs/cognitive-complexity */
 /* eslint-disable max-lines-per-function */
 import { Request, Response } from 'express';
@@ -58,7 +57,7 @@ export default class EstablishmentsController {
           userInfo,
         });
         IEstablishmentAddressQuerySchema.parse(formattedQuery);
-        
+
         const establishmentsByAddress = await EstablishmentsService
           .getEstablishmentAddressByQueryNoGeoloc(
             formattedQuery,
@@ -87,11 +86,9 @@ export default class EstablishmentsController {
 
   public static async getEstablishmentById(req: Request, res: Response): Promise<void> {
     const { id } = req.params;
-    const { userInfo } = <IUserInfoInBody>req.body;
+    const { userInfo: { location: { latitude, longitude } } } = <IUserInfoInBody>req.body;
 
     const establishmentId = Number(id);
-    const latitude = userInfo.location?.latitude || '-19.919052';
-    const longitude = userInfo.location?.longitude || '-43.9386685';
 
     const establishment = await EstablishmentsService.getEstablishmentById({
       establishmentId,

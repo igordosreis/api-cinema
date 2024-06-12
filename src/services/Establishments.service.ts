@@ -219,7 +219,7 @@ export default class EstablishmentsService {
           type: QueryTypes.SELECT,
         },
       )) as IAddress[];
-      console.log('ENTROU AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
+
       const parsedAddresses = addresses.map((address) => {
         const { logo, cover } = address;
         const addressWithImages = {
@@ -254,8 +254,8 @@ export default class EstablishmentsService {
     longitude,
   }: {
     establishmentId: number;
-    latitude: string;
-    longitude: string;
+    latitude: string | null;
+    longitude: string | null;
   }) {
     try {
       const establishment = (await EstablishmentsModel.findOne({
@@ -312,14 +312,25 @@ export default class EstablishmentsService {
         where: { id: establishmentId },
       })) as IEstablishmentById;
 
-      const [address] = await this.getEstablishmentsByGeolocQuery({
-        limit: 1,
-        page: 0,
-        establishmentId,
-        distance: 10000,
-        latitude,
-        longitude,
-      });
+      const isGeolocation = !!(latitude && longitude);
+      console.log(`
+        ------------- isGeolocation -------------
+        
+        `, isGeolocation);
+      const [address] = isGeolocation
+        ? await this.getEstablishmentsByGeolocQuery({
+          limit: 1,
+          page: 0,
+          establishmentId,
+          distance: 10000,
+          latitude,
+          longitude,
+        })
+        : await this.getEstablishmentAddressByQueryNoGeoloc({
+          limit: 1,
+          page: 0,
+          establishmentId,
+        });
 
       const establishmentWithAddress = {
         ...establishment.dataValues,
