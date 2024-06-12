@@ -2,13 +2,18 @@
 import { NextFunction, Request, Response } from 'express';
 import { IGeolocation } from '../interfaces/IGeolocation';
 
+const ROUTES_WHITELIST = [
+  '/offer',
+  '/brands/',
+];
+
 const geolocationMiddleware = async (req: Request, _res: Response, next: NextFunction) => {
   const { lastLat, lastLng, geolocation } = <IGeolocation>req.query;
 
-  const isGeolocaionProvided = geolocation;
-  const isRouteOffer = req.path.includes('/offer');
+  const isGeolocationProvided = geolocation;
+  const isRouteWhiteListed = ROUTES_WHITELIST.some((route) => req.path.includes(route));
 
-  if (isGeolocaionProvided || isRouteOffer) {
+  if (isGeolocationProvided || isRouteWhiteListed) {
     req.body.userInfo.location.geolocation = geolocation;
 
     const isLastLatAndlastLng = lastLat && lastLng;
