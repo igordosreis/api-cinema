@@ -86,6 +86,7 @@ export default class EstablishmentsController {
 
   public static async getEstablishmentById(req: Request, res: Response): Promise<void> {
     const { id } = req.params;
+    const { address } = <{ address: string | undefined }>req.query;
     const { userInfo: { location: { latitude, longitude } } } = <IUserInfoInBody>req.body;
 
     const establishmentId = Number(id);
@@ -94,6 +95,7 @@ export default class EstablishmentsController {
       establishmentId,
       latitude,
       longitude,
+      addressId: address,
     });
 
     res.status(200).json(establishment);

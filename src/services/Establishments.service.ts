@@ -1,3 +1,5 @@
+/* eslint-disable sonarjs/cognitive-complexity */
+/* eslint-disable complexity */
 /* eslint-disable sonarjs/no-identical-functions */
 /* eslint-disable max-lines-per-function */
 import { QueryTypes } from 'sequelize';
@@ -252,10 +254,12 @@ export default class EstablishmentsService {
     establishmentId,
     latitude,
     longitude,
+    addressId,
   }: {
     establishmentId: number;
     latitude: string | null;
     longitude: string | null;
+    addressId: string | undefined;
   }) {
     try {
       const establishment = (await EstablishmentsModel.findOne({
@@ -313,24 +317,25 @@ export default class EstablishmentsService {
       })) as IEstablishmentById;
 
       const isGeolocation = !!(latitude && longitude);
-      console.log(`
-        ------------- isGeolocation -------------
-        
-        `, isGeolocation);
-      const [address] = isGeolocation
-        ? await this.getEstablishmentsByGeolocQuery({
-          limit: 1,
-          page: 0,
-          establishmentId,
-          distance: 10000,
-          latitude,
-          longitude,
-        })
-        : await this.getEstablishmentAddressByQueryNoGeoloc({
-          limit: 1,
-          page: 0,
-          establishmentId,
-        });
+
+      const [address] = (addressId && await this.getEstablishmentAddressByQueryNoGeoloc({
+        limit: 1,
+        page: 0,
+        addressId: [Number(addressId)],
+      })) 
+      || (isGeolocation && await this.getEstablishmentsByGeolocQuery({
+        limit: 1,
+        page: 0,
+        establishmentId,
+        distance: 10000,
+        latitude,
+        longitude,
+      }))
+      || await this.getEstablishmentAddressByQueryNoGeoloc({
+        limit: 1,
+        page: 0,
+        establishmentId,
+      });
 
       const establishmentWithAddress = {
         ...establishment.dataValues,
