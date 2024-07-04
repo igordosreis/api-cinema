@@ -1,5 +1,5 @@
-/* eslint-disable sonarjs/cognitive-complexity */
 /* eslint-disable complexity */
+/* eslint-disable sonarjs/cognitive-complexity */
 /* eslint-disable sonarjs/no-identical-functions */
 /* eslint-disable max-lines-per-function */
 import { QueryTypes } from 'sequelize';
