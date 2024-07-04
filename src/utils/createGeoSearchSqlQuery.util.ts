@@ -33,7 +33,7 @@ FROM (
       :latitude AS lat,
       :longitude AS lng
     ) AS u
-  WHERE e.active = 1 ${term}
+  WHERE e.active = 1 and e.available_tickets = 1 and e.available_consumables = 1 ${term}
 ) sub
 WHERE distance <= :distance
 ORDER BY distance
@@ -56,6 +56,8 @@ FROM (
     city,
     state,
     distance,
+    availableTickets,
+    availableConsumables,
     ROW_NUMBER() OVER (PARTITION BY establishmentId ORDER BY distance) as row_num
   FROM (
     SELECT
@@ -88,7 +90,7 @@ FROM (
         :latitude AS lat,
         :longitude AS lng
       ) AS u
-    WHERE e.active = 1 ${term}
+    WHERE e.active = 1 and e.available_tickets = 1 and e.available_consumables = 1 ${term}
   ) subquery
 ) sub
 WHERE row_num = 1 AND distance <= :distance
