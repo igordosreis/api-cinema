@@ -17,6 +17,8 @@ FROM (
     address,
     city,
     state,
+    availableTickets,
+    availableConsumables,
     ROW_NUMBER() OVER (PARTITION BY establishmentId) as row_num
   FROM (
     SELECT
@@ -31,7 +33,9 @@ FROM (
       a.name AS title,
       a.address AS address,
       c.name AS city,
-      s.name AS state
+      s.name AS state,
+      e.available_tickets AS availableTickets,
+      e.available_consumables AS availableConsumables
     FROM establishments_addresses AS a
     JOIN establishments AS e ON a.establishment_id = e.id
     JOIN establishments_images AS i ON e.id = i.establishment_id
@@ -58,7 +62,9 @@ FROM (
     a.address as address,
     c.name as city,
     s.name as state,
-    h.position as position
+    h.position as position,
+    e.available_tickets AS availableTickets,
+    e.available_consumables AS availableConsumables
   FROM establishments_addresses AS a
   JOIN establishments AS e ON a.establishment_id = e.id
   JOIN establishments_images AS i ON e.id = i.establishment_id

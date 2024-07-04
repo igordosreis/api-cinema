@@ -15,7 +15,9 @@ FROM (
     a.name as title,
     a.address as address,
     c.name as city,
-    s.name as state
+    s.name as state,
+    e.available_tickets AS availableTickets,
+    e.available_consumables AS availableConsumables
   FROM establishments_addresses AS a
   JOIN establishments AS e ON a.establishment_id = e.id
   JOIN establishments_images AS i ON e.id = i.establishment_id

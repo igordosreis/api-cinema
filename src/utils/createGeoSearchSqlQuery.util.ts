@@ -16,6 +16,8 @@ FROM (
     a.address AS address,
     c.name AS city,
     s.name AS state,
+    e.available_tickets AS availableTickets,
+    e.available_consumables AS availableConsumables,
     ( 3959 * acos( cos( radians(u.lat) )
               * cos( radians( a.latitude ) )
               * cos( radians( a.longitude ) - radians( u.lng ) )
@@ -69,6 +71,8 @@ FROM (
       a.address AS address,
       c.name AS city,
       s.name AS state,
+      e.available_tickets AS availableTickets,
+      e.available_consumables AS availableConsumables,
       ( 3959 * acos( cos( radians(u.lat) )
                 * cos( radians( a.latitude ) )
                 * cos( radians( a.longitude ) - radians( u.lng ) )
