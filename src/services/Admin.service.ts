@@ -61,7 +61,10 @@ export default class AdminService {
         },
       );
 
-      await CartModel.destroy({ where: { userId, waiting: true } });
+      await CartModel.destroy({
+        where: { userId, waiting: true },
+        transaction: t, 
+      });
 
       await t.commit();
     } catch (error) {
