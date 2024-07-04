@@ -20,6 +20,8 @@ class EstablishmentsModel extends Model {
   declare updatedAt: Date;
   declare views: number;
   declare underHighlight: boolean;
+  declare availableTickets: boolean;
+  declare availableConsumables: boolean;
 }
 
 EstablishmentsModel.init(
@@ -96,6 +98,16 @@ EstablishmentsModel.init(
     underHighlight: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
+    },
+    availableTickets: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+      allowNull: false,
+    },
+    availableConsumables: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+      allowNull: false,
     },
   },
   {
