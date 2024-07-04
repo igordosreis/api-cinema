@@ -94,6 +94,7 @@ export type IProductResult = EstablishmentsProductsModel & {
   typeInfo: ProductsTypesModel;
   tagsProducts: Array<TagsProductsModel>;
   batchProduct: Array<BatchesModel> | BatchesModel;
+  available: boolean;
 };
 
 export interface IProductParsed {
