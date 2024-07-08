@@ -23,7 +23,7 @@ FROM (
   JOIN establishments_images AS i ON e.id = i.establishment_id
   JOIN cities as c on c.id = a.city_id
   JOIN states as s on s.id = c.state_id
-  WHERE e.active = 1 and e.available_tickets = 1 and e.available_consumables = 1 ${term}
+  WHERE e.active = 1 AND (e.available_tickets = 1 OR e.available_consumables = 1) ${term}
 ) sub
 limit :offset, :limit`;
 

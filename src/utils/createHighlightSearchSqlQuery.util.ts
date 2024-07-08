@@ -42,7 +42,7 @@ FROM (
     JOIN cities as c ON c.id = a.city_id
     JOIN states as s ON s.id = c.state_id
     JOIN highlights AS h ON h.address_id = a.id
-    WHERE e.active = 1 and e.available_tickets = 1 and e.available_consumables = 1
+    WHERE e.active = 1 AND (e.available_tickets = 1 OR e.available_consumables = 1)
   ) subquery
 ) sub
 WHERE row_num = 1
@@ -71,7 +71,7 @@ FROM (
   JOIN cities AS c ON c.id = a.city_id
   JOIN states AS s ON s.id = c.state_id
   JOIN highlights AS h ON h.address_id = a.id
-  WHERE e.active = 1 and e.available_tickets = 1 and e.available_consumables = 1
+  WHERE e.active = 1 AND (e.available_tickets = 1 OR e.available_consumables = 1)
 ) sub
 ORDER BY position
 limit 0, 20`);

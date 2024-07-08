@@ -33,7 +33,7 @@ FROM (
       :latitude AS lat,
       :longitude AS lng
     ) AS u
-  WHERE e.active = 1 and e.available_tickets = 1 and e.available_consumables = 1 ${term}
+  WHERE e.active = 1 AND (e.available_tickets = 1 OR e.available_consumables = 1) ${term}
 ) sub
 WHERE distance <= :distance
 ORDER BY distance
@@ -90,7 +90,7 @@ FROM (
         :latitude AS lat,
         :longitude AS lng
       ) AS u
-    WHERE e.active = 1 and e.available_tickets = 1 and e.available_consumables = 1 ${term}
+    WHERE e.active = 1 AND (e.available_tickets = 1 OR e.available_consumables = 1) ${term}
   ) subquery
 ) sub
 WHERE row_num = 1 AND distance <= :distance
