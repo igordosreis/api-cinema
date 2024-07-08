@@ -7,6 +7,7 @@ import VouchersAvailableModel from '../database/models/VouchersAvailable.model';
 import VouchersUserModel from '../database/models/VouchersUser.model';
 import { IOrderUpdate } from '../interfaces/IOrder';
 import { IPaymentOrderResponse } from '../interfaces/IPayment';
+import EstablishmentUtil from '../utils/establishment.util';
 import OrdersService from './Orders.service';
 
 export default class AdminService {
@@ -47,6 +48,7 @@ export default class AdminService {
       const parsedVouchersOrderUnpaid = vouchersOrderUnpaid.map((voucher) => ({
         ...voucher.dataValues,
       }));
+      const { establishmentId } = vouchersOrderUnpaid[0];
 
       await VouchersUserModel.bulkCreate(parsedVouchersOrderUnpaid, { transaction: t });
       await VouchersAvailableModel.destroy({
@@ -65,6 +67,8 @@ export default class AdminService {
         where: { userId, waiting: true },
         transaction: t, 
       });
+
+      await EstablishmentUtil.setProductsAvailability(establishmentId, t);
 
       await t.commit();
     } catch (error) {

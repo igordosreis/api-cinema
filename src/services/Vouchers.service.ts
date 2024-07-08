@@ -40,6 +40,7 @@ import db from '../database/models';
 import VoucherUtil from '../utils/voucher.util';
 import BatchesModel from '../database/models/Batches.model';
 import EstablishmentsModel from '../database/models/Establishments.model';
+import EstablishmentUtil from '../utils/establishment.util';
 
 export default class VouchersService {
   public static async getVouchersByProductId(productId: number, transaction?: Transaction) {
@@ -368,6 +369,8 @@ export default class VouchersService {
       );
       await VouchersAvailableModel.bulkCreate(vouchersInfoArray, { transaction: t });
 
+      await EstablishmentUtil.setProductsAvailability(establishmentId, t);
+
       await t.commit();
     } catch (error) {
       await t.rollback();
@@ -498,6 +501,9 @@ export default class VouchersService {
         await VouchersWithdrawModel.create({ ...voucher.dataValues }, { transaction: t });
       }
       await voucher.destroy({ transaction: t });
+
+      const { establishmentId } = voucher;
+      await EstablishmentUtil.setProductsAvailability(establishmentId, t);
 
       await t.commit();
     } catch (error) {
