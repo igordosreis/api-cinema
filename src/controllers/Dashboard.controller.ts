@@ -275,6 +275,15 @@ export default class DashboardController {
     res.status(200).end();
   }
 
+  public static async getEstablishmentActiveStatusCountDashboard(
+    _req: Request,
+    res: Response,
+  ): Promise<void> {
+    const count = await EstablishmentsService.getEstablishmentActiveStatusCountDashboard();
+
+    res.status(200).json(count);
+  }
+
   // Comment
   public static async getAllCommentActions(_req: Request, res: Response): Promise<void> {
     const allActions = await CommentService.getAllCommentActions();

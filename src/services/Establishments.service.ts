@@ -512,4 +512,43 @@ export default class EstablishmentsService {
       throw new CustomError(establishmentServiceUnavailable);
     }
   }
+
+  public static async getEstablishmentActiveStatusCountDashboard() {
+    try {
+      const activeCount = (await db.query(
+        `SELECT
+          (SELECT COUNT(*) 
+          FROM establishments AS e
+          WHERE e.active = 1) AS active,
+          
+          (SELECT COUNT(*) 
+          FROM establishments AS e
+          WHERE e.active = 0) AS inactive,
+          
+          (SELECT COUNT(*)
+          FROM establishments AS e
+          WHERE (e.available_tickets = 0 AND e.available_consumables = 0)) AS suspended,
+          
+          (SELECT COUNT(*)
+          FROM establishments AS e) AS total;
+        `,
+        {
+          type: QueryTypes.SELECT,
+        },
+      )) as [{
+        active: number;
+        inactive: number;
+        suspended: number;
+        total: number;
+      }];
+
+      return activeCount[0];
+    } catch (error: CustomError | unknown) {
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
+
+      if (error instanceof CustomError) throw error;
+
+      throw new CustomError(establishmentServiceUnavailable);
+    }
+  }
 }

@@ -16,6 +16,10 @@ dashboardRouter.put(
   EstablishmentImageUploadMiddleware,
   DashboardController.editEstablishmentImage,
 );
+dashboardRouter.get(
+  '/establishment/count',
+  DashboardController.getEstablishmentActiveStatusCountDashboard,
+);
 
 // Shop -- Product & Pack
 dashboardRouter.get('/shop/get', DashboardController.productsAndPacksGet);
