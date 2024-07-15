@@ -316,6 +316,9 @@ export default class EstablishmentsService {
         where: { id: establishmentId },
       })) as IEstablishmentById;
 
+      const isEstablishmentNotFound = !establishment;
+      if (isEstablishmentNotFound) throw new CustomError(establishmentNotFound);
+
       const isGeolocation = !!(latitude && longitude);
 
       const [address] = (addressId && await this.getEstablishmentAddressByQueryNoGeoloc({
@@ -423,12 +426,33 @@ export default class EstablishmentsService {
 
   public static async getEstablishmentByIdDashboard(id: number) {
     try {
-      const establishment = await EstablishmentsModel.findByPk(id);
+      const establishmentRaw = (await EstablishmentsModel.findByPk(
+        id,
+        {
+          include: [{ model: EstablishmentsImagesModel, as: 'images' }],
+        },
+      )) as IEstablishment;
 
-      const isEstablishmentNotFound = !establishment;
+      const isEstablishmentNotFound = !establishmentRaw;
       if (isEstablishmentNotFound) throw new CustomError(establishmentNotFound);
 
-      return establishment;
+      const establishment = establishmentRaw.toJSON();
+      const establishmentWithImageLinks = {
+        ...establishment,
+        images: {
+          ...establishment.images,
+          logo: ImageFormatter.formatUrl({
+            imageName: establishment.images.logo,
+            folderPath: FOLDER_PATH_ESTABLISHMENT_COVER,
+          }),
+          cover: ImageFormatter.formatUrl({
+            imageName: establishment.images.cover,
+            folderPath: FOLDER_PATH_ESTABLISHMENT_LOGO,
+          }),
+        },
+      } as IEstablishment;
+
+      return establishmentWithImageLinks;
     } catch (error) {
       console.log(CONSOLE_LOG_ERROR_TITLE, error);
 
@@ -527,7 +551,9 @@ export default class EstablishmentsService {
           
           (SELECT COUNT(*)
           FROM establishments AS e
-          WHERE (e.available_tickets = 0 AND e.available_consumables = 0)) AS suspended,
+          WHERE (
+            e.available_tickets = 0 AND e.available_consumables = 0 AND e.active = 1
+          )) AS suspended,
           
           (SELECT COUNT(*)
           FROM establishments AS e) AS total;
