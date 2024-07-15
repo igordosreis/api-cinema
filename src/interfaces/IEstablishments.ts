@@ -115,7 +115,7 @@ export const IEstablishmentBrandEditSchema = z.object({
   instagram: z.string().optional(),
   site: z.string().optional(),
   rules: z.string().optional(),
-  keywords: z.string().optional(),
+  keyWords: z.string().optional(),
   views: z.number().optional(),
   active: z.boolean().optional(),
   underHighlight: z.boolean().optional(),
