@@ -53,11 +53,11 @@ export default class EstablishmentsService {
           ...establishment.images.dataValues,
           logo: ImageFormatter.formatUrl({
             imageName: establishment.images.logo,
-            folderPath: FOLDER_PATH_ESTABLISHMENT_COVER,
+            folderPath: FOLDER_PATH_ESTABLISHMENT_LOGO,
           }),
           cover: ImageFormatter.formatUrl({
             imageName: establishment.images.cover,
-            folderPath: FOLDER_PATH_ESTABLISHMENT_LOGO,
+            folderPath: FOLDER_PATH_ESTABLISHMENT_COVER,
           }),
         },
       })) as IEstablishment[];
@@ -443,11 +443,11 @@ export default class EstablishmentsService {
           ...establishment.images,
           logo: ImageFormatter.formatUrl({
             imageName: establishment.images.logo,
-            folderPath: FOLDER_PATH_ESTABLISHMENT_COVER,
+            folderPath: FOLDER_PATH_ESTABLISHMENT_LOGO,
           }),
           cover: ImageFormatter.formatUrl({
             imageName: establishment.images.cover,
-            folderPath: FOLDER_PATH_ESTABLISHMENT_LOGO,
+            folderPath: FOLDER_PATH_ESTABLISHMENT_COVER,
           }),
         },
       } as IEstablishment;
