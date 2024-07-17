@@ -397,6 +397,7 @@ export default class ProductsService {
             model: VouchersAvailableModel,
             attributes: [],
             as: 'vouchersAvailable',
+            required: false,
             where: {
               orderId: null,
               expireAt: {
@@ -575,6 +576,7 @@ export default class ProductsService {
               model: VouchersAvailableModel,
               attributes: [],
               as: 'vouchersAvailable',
+              required: false,
               where: {
                 orderId: null,
                 expireAt: {
