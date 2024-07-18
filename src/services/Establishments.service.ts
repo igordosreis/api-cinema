@@ -39,6 +39,8 @@ import EstablishmentsAddressesModel from '../database/models/EstablishmentsAddre
 import createAddressGetSqlizeQueryUtil from '../utils/createAddressGetSqlizeQuery.util';
 import createHighlightSearchSqlQuery from '../utils/createHighlightSearchSqlQuery.util';
 import formatMoviesUtil from '../utils/formatMovies.util';
+import DataAndCountUtil from '../utils/dataAndCount.util';
+import { IPagination } from '../interfaces/IPagination';
 
 export default class EstablishmentsService {
   public static async getAllEstablishments() {
@@ -506,11 +508,19 @@ export default class EstablishmentsService {
     }
   }
 
-  public static async getAllEstablishmentsDashboard() {
+  public static async getAllEstablishmentsDashboard({ limit, page }: IPagination) {
     try {
-      const allEstablishments = (await EstablishmentsModel.findAll({
-        include: [{ model: EstablishmentsImagesModel, as: 'images' }],
-      })) as IEstablishment[];
+      const { rows, count } = (await EstablishmentsModel.findAndCountAll({
+        include: [
+          {
+            model: EstablishmentsImagesModel, as: 'images',
+          },
+        ],
+        limit,
+        offset: limit * page,
+      }));
+
+      const allEstablishments = rows as IEstablishment[];
 
       const establishmentsWithImageLinks = allEstablishments.map((establishment) => ({
         ...establishment.dataValues,
@@ -527,7 +537,7 @@ export default class EstablishmentsService {
         },
       })) as IEstablishment[];
 
-      return establishmentsWithImageLinks;
+      return DataAndCountUtil.getObject(count, establishmentsWithImageLinks);
     } catch (error: CustomError | unknown) {
       console.log(CONSOLE_LOG_ERROR_TITLE, error);
 

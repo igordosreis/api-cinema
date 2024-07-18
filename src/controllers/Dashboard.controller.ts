@@ -49,6 +49,8 @@ import {
 import TagsUtil from '../utils/tags.util';
 import { ICommentLogsSearchQuerySchema } from '../interfaces/IComments';
 import CustomError, { typeIconNotFound } from '../utils/customError.util';
+import { IPaginationRequest } from '../interfaces/IPagination';
+import formatRequestQueryUtil from '../utils/formatRequestQuery.util';
 
 export default class DashboardController {
   // Shop
@@ -239,8 +241,11 @@ export default class DashboardController {
     res.status(200).json(brand);
   }
 
-  public static async getEstablishmentBrands(_req: Request, res: Response): Promise<void> {
-    const brands = await EstablishmentsService.getAllEstablishmentsDashboard();
+  public static async getEstablishmentBrands(req: Request, res: Response): Promise<void> {
+    const paginationRequest = <IPaginationRequest>req.query;
+    const pagination = formatRequestQueryUtil.formatPagination(paginationRequest);
+    
+    const brands = await EstablishmentsService.getAllEstablishmentsDashboard(pagination);
 
     res.status(200).json(brands);
   }
