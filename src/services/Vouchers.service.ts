@@ -28,7 +28,7 @@ import {
   IVoucherSingleWithdraw,
   IVouchersByDate,
   IVouchersInfoArray,
-  IVouchersGetDashboard,
+  IVouchersGetDashboardParsed,
 } from '../interfaces/IVouchers';
 import OrdersModel from '../database/models/Orders.model';
 import VouchersUserModel from '../database/models/VouchersUser.model';
@@ -41,6 +41,7 @@ import VoucherUtil from '../utils/voucher.util';
 import BatchesModel from '../database/models/Batches.model';
 import EstablishmentsModel from '../database/models/Establishments.model';
 import EstablishmentUtil from '../utils/establishment.util';
+import DataAndCountUtil from '../utils/dataAndCount.util';
 
 export default class VouchersService {
   public static async getVouchersByProductId(productId: number, transaction?: Transaction) {
@@ -382,13 +383,13 @@ export default class VouchersService {
     }
   }
 
-  public static async getVouchersDashboard(vouchersInfo: IVouchersGetDashboard) {
+  public static async getVouchersDashboard(vouchersInfo: IVouchersGetDashboardParsed) {
     try {
-      const { voucherType } = vouchersInfo;
+      const { voucherType, page, limit } = vouchersInfo;
 
       const isAvailable = voucherType === 'available' || voucherType === undefined;
       if (isAvailable) {
-        const vouchers = await VouchersAvailableModel.findAll({
+        const { count, rows } = await VouchersAvailableModel.findAndCountAll({
           include: [
             {
               model: EstablishmentsProductsModel,
@@ -401,8 +402,11 @@ export default class VouchersService {
           ],
           ...createVouchersGetSqlizeQueryUtil.create(vouchersInfo),
           order: [['createdAt', 'ASC']],
+          limit,
+          offset: limit * page,
         });
 
+        const vouchers = rows;
         const parsedVouchers = vouchers.map((voucher) => {
           const { vouchersAvailable, ...restOfInfo } = voucher.toJSON();
 
@@ -412,12 +416,15 @@ export default class VouchersService {
           };
         }) as unknown as VouchersAvailableModel[];
 
-        return VoucherUtil.addStatusToVoucher(parsedVouchers, voucherType);
+        return DataAndCountUtil.getObject(
+          count,
+          VoucherUtil.addStatusToVoucher(parsedVouchers, voucherType),
+        );
       }
 
       const isUser = voucherType === 'user';
       if (isUser) {
-        const vouchers = await VouchersUserModel.findAll({
+        const { count, rows } = await VouchersUserModel.findAndCountAll({
           include: [
             {
               model: EstablishmentsProductsModel,
@@ -430,8 +437,11 @@ export default class VouchersService {
           ],
           ...createVouchersGetSqlizeQueryUtil.create(vouchersInfo),
           order: [['createdAt', 'ASC']],
+          limit,
+          offset: limit * page,
         });
 
+        const vouchers = rows;
         const parsedVouchers = vouchers.map((voucher) => {
           const { productVoucherInfo, ...restOfInfo } = voucher.dataValues;
 
@@ -441,12 +451,15 @@ export default class VouchersService {
           };
         }) as unknown as VouchersUserModel[];
 
-        return VoucherUtil.addStatusToVoucher(parsedVouchers, voucherType);
+        return DataAndCountUtil.getObject(
+          count,
+          VoucherUtil.addStatusToVoucher(parsedVouchers, voucherType),
+        );
       }
 
       const isWithdraw = voucherType === 'withdraw';
       if (isWithdraw) {
-        const vouchers = await VouchersWithdrawModel.findAll({
+        const { count, rows } = await VouchersWithdrawModel.findAndCountAll({
           include: [
             {
               model: EstablishmentsProductsModel,
@@ -459,8 +472,11 @@ export default class VouchersService {
           ],
           ...createVouchersGetSqlizeQueryUtil.create(vouchersInfo),
           order: [['createdAt', 'ASC']],
+          limit,
+          offset: limit * page,
         });
 
+        const vouchers = rows;
         const parsedVouchers = vouchers.map((voucher) => {
           const { vouchersWithdraw, ...restOfInfo } = voucher.dataValues;
 
@@ -470,7 +486,10 @@ export default class VouchersService {
           };
         }) as unknown as VouchersWithdrawModel[];
 
-        return VoucherUtil.addStatusToVoucher(parsedVouchers, voucherType);
+        return DataAndCountUtil.getObject(
+          count,
+          VoucherUtil.addStatusToVoucher(parsedVouchers, voucherType),
+        );
       }
     } catch (error) {
       console.log(CONSOLE_LOG_ERROR_TITLE, error);

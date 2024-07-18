@@ -203,8 +203,14 @@ export default class DashboardController {
   public static async getVouchers(req: Request, res: Response): Promise<void> {
     const vouchersInfo = <IVouchersGetDashboard>req.query;
     const parsedVouchersInfo = IVouchersGetDashboardSchema.parse(vouchersInfo);
+    const { page, limit } = parsedVouchersInfo;
 
-    const vouchers = await VouchersService.getVouchersDashboard(parsedVouchersInfo);
+    const pagination = formatRequestQueryUtil.formatPagination({ page, limit });
+
+    const vouchers = await VouchersService.getVouchersDashboard({
+      ...parsedVouchersInfo,
+      ...pagination,
+    });
 
     res.status(200).json(vouchers);
   }

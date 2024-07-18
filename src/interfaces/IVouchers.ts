@@ -118,9 +118,22 @@ export const IVouchersGetDashboardSchema = z.object({
   productId: z.coerce.number().optional(),
   voucherType: VoucherTypeSchema,
   search: z.string().optional(),
+  page: z.string().optional(),
+  limit: z.string().optional(),
 });
 
 export type IVouchersGetDashboard = z.infer<typeof IVouchersGetDashboardSchema>;
+
+export const IVouchersGetDashboardParsedSchema = z.object({
+  establishmentId: z.coerce.number().optional(),
+  productId: z.coerce.number().optional(),
+  voucherType: VoucherTypeSchema,
+  search: z.string().optional(),
+  page: z.number(),
+  limit: z.number(),
+});
+
+export type IVouchersGetDashboardParsed = z.infer<typeof IVouchersGetDashboardParsedSchema>;
 
 export const IVoucherSingleWithdrawSchema = z.object({
   voucherCode: z.string(),

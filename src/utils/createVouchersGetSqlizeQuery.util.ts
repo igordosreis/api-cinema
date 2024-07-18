@@ -2,10 +2,10 @@
 /* eslint-disable max-lines-per-function */
 /* eslint-disable complexity */
 import { Op } from 'sequelize';
-import { IVouchersGetDashboard } from '../interfaces/IVouchers';
+import { IVouchersGetDashboardParsed } from '../interfaces/IVouchers';
 
 class CreateVouchersGetSqlizeQuery {
-  private addParams = ({ productId, establishmentId, search }: IVouchersGetDashboard) => {
+  private addParams = ({ productId, establishmentId, search }: IVouchersGetDashboardParsed) => {
     const searchQuery = [];
     if (productId) searchQuery.push({ productId });
     if (establishmentId) searchQuery.push({ establishmentId });
@@ -18,7 +18,7 @@ class CreateVouchersGetSqlizeQuery {
     };
   };
 
-  create = (formattedQuery: IVouchersGetDashboard) => {
+  create = (formattedQuery: IVouchersGetDashboardParsed) => {
     const areThereAnyParams = Object.values(formattedQuery).some((param) => param);
 
     return areThereAnyParams ? this.addParams(formattedQuery) : { where: {} };
