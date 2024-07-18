@@ -19,6 +19,7 @@ import TagsModel from '../database/models/Tags.model';
 import TagsUtil from '../utils/tags.util';
 import createProductSearchSqlizeQueryDashboardUtil from '../utils/createProductSearchSqlizeQueryDashboard.util';
 import BatchesModel from '../database/models/Batches.model';
+import DataAndCountUtil from '../utils/dataAndCount.util';
 
 export default class ProductsService {
   public static async getProductsByQuery(formattedSearchQuery: IProductQuery) {
@@ -538,7 +539,10 @@ export default class ProductsService {
           } as IProductParsed;
         });
 
-      return pagedProducts;
+      return DataAndCountUtil.getObject(
+        filteredByExpireAt.length,
+        pagedProducts,
+      );
     } catch (error: CustomError | unknown) {
       console.log(CONSOLE_LOG_ERROR_TITLE, error);
       

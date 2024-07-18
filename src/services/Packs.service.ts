@@ -26,6 +26,7 @@ import ImageFormatter from '../utils/formatImages.util';
 import TagsUtil from '../utils/tags.util';
 import createPackSearchSqlizeQueryDashboardUtil from '../utils/createPackSearchSqlizeQueryDashboard.util';
 import { IProductQueryDashboard } from '../interfaces/IProducts';
+import DataAndCountUtil from '../utils/dataAndCount.util';
 
 export default class PacksService {
   public static async getPacksByQuery(formattedSearchQuery: IPackSearchQuery) {
@@ -1038,7 +1039,10 @@ export default class PacksService {
       const { page, limit } = formattedSearchQuery;
       const pagedPacks = PaginationUtil.getPageContent({ page, limit, array: filteredPacks });
 
-      return pagedPacks;
+      return DataAndCountUtil.getObject(
+        filteredPacks.length,
+        pagedPacks,
+      );
     } catch (error) {
       console.log(CONSOLE_LOG_ERROR_TITLE, error);
 
