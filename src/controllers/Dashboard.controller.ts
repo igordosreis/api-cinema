@@ -227,7 +227,10 @@ export default class DashboardController {
   public static async getVoucherTypes(req: Request, res: Response): Promise<void> {
     const types = await VouchersService.getVoucherTypes();
 
-    res.status(200).json(types);
+    res.status(200).json({
+      count: types.length,
+      data: types,
+    });
   }
 
   // Tag
