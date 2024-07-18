@@ -8,6 +8,7 @@ class CreatePackSearchSqlizeQueryDashboard {
   private addParams = ({ establishmentId, active }: IProductQueryDashboard) => {
     const searchQuery = [];
     if (active) searchQuery.push({ active });
+    if (active === false) searchQuery.push({ active });
     if (establishmentId) {
       searchQuery.push({
         '$packInfo.productDetails.establishment_id$': { [Op.eq]: establishmentId },

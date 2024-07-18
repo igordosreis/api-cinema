@@ -16,7 +16,9 @@ class CreateProductSearchSqlizeQueryDashboard {
   }: IProductQueryDashboard) => {
     const searchQuery = [];
     if (purchasable) searchQuery.push({ purchasable });
+    if (purchasable === false) searchQuery.push({ purchasable });
     if (active) searchQuery.push({ active });
+    if (active === false) searchQuery.push({ active });
     if (search) {
       const isSearchNumber = Number(search);
       if (isSearchNumber) {
@@ -39,7 +41,7 @@ class CreateProductSearchSqlizeQueryDashboard {
       where: {
         [Op.and]: searchQuery,
       },
-      having: available ? { available } : {},
+      having: available || available === false ? { available } : {},
     };
   };
 
