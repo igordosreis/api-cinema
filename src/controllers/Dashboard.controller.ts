@@ -62,7 +62,7 @@ export default class DashboardController {
     if (type === 'pack') {
       const parsedSearchQuery = {
         ...formattedSearchQuery,
-        limit: formattedSearchQuery.limit || 10000,
+        limit: formattedSearchQuery.limit || 20,
         page: formattedSearchQuery.page || 0,
       };
 
@@ -76,7 +76,7 @@ export default class DashboardController {
       const parsedSearchQuery = {
         ...formattedSearchQuery,
         type,
-        limit: formattedSearchQuery.limit || 10000,
+        limit: formattedSearchQuery.limit || 20,
         page: formattedSearchQuery.page || 0,
       };
       const product = await ProductsService.getProductsByQueryDashboard(parsedSearchQuery);
@@ -87,7 +87,7 @@ export default class DashboardController {
     if (typeof type === 'undefined') {
       const parsedSearchQuery = {
         ...formattedSearchQuery,
-        limit: formattedSearchQuery.limit || 10000,
+        limit: formattedSearchQuery.limit || 20,
         page: formattedSearchQuery.page || 0,
       };
       const { type: removedType, ...restOfQuery } = parsedSearchQuery;
@@ -150,7 +150,10 @@ export default class DashboardController {
   public static async getAllProductTypes(_req: Request, res: Response): Promise<void> {
     const allProductsTypes = await ProductsService.getProductsTypes();
 
-    res.status(200).json(allProductsTypes);
+    res.status(200).json({
+      count: allProductsTypes.length,
+      data: allProductsTypes,
+    });
   }
 
   // -- Packs
