@@ -4,11 +4,6 @@ export interface IPaginationContent<T> {
   array: Array<T>;
 }
 
-// export type IPaginationRequest = {
-//   page: number;
-//   limit: number;
-// };
-
 export interface IPaginationRequest {
   page?: string;
   limit?: string;
