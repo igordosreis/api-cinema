@@ -150,9 +150,22 @@ export const IEstablishmentAddressGetSchema = z.object({
   establishmentId: z.coerce.number().optional(),
   cityId: z.coerce.number().optional(),
   active: z.string().transform((x) => x.toLowerCase() === 'true').pipe(z.boolean()).optional(),
+  page: z.string().optional(),
+  limit: z.string().optional(),
 });
 
 export type IEstablishmentAddressGet = z.infer<typeof IEstablishmentAddressGetSchema>;
+
+export const IEstablishmentAddressGetParsedSchema = z.object({
+  search: z.string().optional(),
+  establishmentId: z.coerce.number().optional(),
+  cityId: z.coerce.number().optional(),
+  active: z.string().transform((x) => x.toLowerCase() === 'true').pipe(z.boolean()).optional(),
+  page: z.number(),
+  limit: z.number(),
+});
+
+export type IEstablishmentAddressGetParsed = z.infer<typeof IEstablishmentAddressGetParsedSchema>;
 
 interface IAction {
   type: 'internal';

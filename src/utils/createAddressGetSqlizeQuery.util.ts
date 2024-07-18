@@ -2,10 +2,15 @@
 /* eslint-disable max-lines-per-function */
 /* eslint-disable complexity */
 import { Op } from 'sequelize';
-import { IEstablishmentAddressGet } from '../interfaces/IEstablishments';
+import { IEstablishmentAddressGetParsed } from '../interfaces/IEstablishments';
 
 class CreateAddressGetSqlizeQuery {
-  private addParams = ({ search, establishmentId, cityId, active }: IEstablishmentAddressGet) => {
+  private addParams = ({ 
+    search, 
+    establishmentId, 
+    cityId, 
+    active, 
+  }: IEstablishmentAddressGetParsed) => {
     const searchQuery = [];
     if (search) {
       searchQuery.push({
@@ -26,7 +31,7 @@ class CreateAddressGetSqlizeQuery {
     };
   };
 
-  create = (formattedQuery: IEstablishmentAddressGet) => {
+  create = (formattedQuery: IEstablishmentAddressGetParsed) => {
     const areThereAnyParams = Object.values(formattedQuery).some((param) => param);
 
     return areThereAnyParams ? this.addParams(formattedQuery) : { where: {} };

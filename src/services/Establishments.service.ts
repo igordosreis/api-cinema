@@ -14,7 +14,7 @@ import {
   IAddressWithImages,
   IBannerUniversalEstablishment,
   IEstablishment,
-  IEstablishmentAddressGet,
+  IEstablishmentAddressGetParsed,
   IEstablishmentAddressQuery,
   IEstablishmentBrandEdit,
   IEstablishmentById,
@@ -412,13 +412,18 @@ export default class EstablishmentsService {
     return offer;
   }
 
-  public static async getEstablishmentAddressDashboard(addressInfo: IEstablishmentAddressGet) {
+  public static async getEstablishmentAddressDashboard(
+    addressInfo: IEstablishmentAddressGetParsed,
+  ) {
     try {
-      const addresses = await EstablishmentsAddressesModel.findAll({
+      const { page, limit } = addressInfo;
+      const { count, rows } = await EstablishmentsAddressesModel.findAndCountAll({
         ...createAddressGetSqlizeQueryUtil.create(addressInfo),
+        limit,
+        offset: page * limit,
       });
 
-      return addresses;
+      return DataAndCountUtil.getObject(count, rows);
     } catch (error) {
       console.log(CONSOLE_LOG_ERROR_TITLE, error);
 

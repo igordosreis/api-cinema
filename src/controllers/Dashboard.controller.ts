@@ -252,11 +252,15 @@ export default class DashboardController {
 
   public static async getEstablishmentAddress(req: Request, res: Response): Promise<void> {
     const addressInfo = <IEstablishmentAddressGet>req.query;
-
     const parsedAddressInfo = IEstablishmentAddressGetSchema.parse(addressInfo);
-    const addresses = await EstablishmentsService.getEstablishmentAddressDashboard(
-      parsedAddressInfo,
-    );
+    const { page, limit } = parsedAddressInfo;
+
+    const pagination = formatRequestQueryUtil.formatPagination({ page, limit });
+
+    const addresses = await EstablishmentsService.getEstablishmentAddressDashboard({
+      ...parsedAddressInfo,
+      ...pagination,
+    });
 
     res.status(200).json(addresses);
   }
