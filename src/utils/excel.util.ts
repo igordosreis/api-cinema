@@ -1,5 +1,4 @@
 import xlsx from 'xlsx';
-import { SUPERAPP_CINEMA_BASE_URL } from '../constants';
 
 export default class ExcelUtil {
   public static read<T>(buffer: Buffer): Array<T> {
@@ -21,8 +20,8 @@ export default class ExcelUtil {
     const filePath = `uploads/dashboard/excel/${fileName}`;
     xlsx.writeFile(workbook, filePath);
 
-    const fileUrl = `${SUPERAPP_CINEMA_BASE_URL}/dashboard/excel/${fileName}`;
+    // const fileUrl = `${SUPERAPP_CINEMA_BASE_URL}/dashboard/excel/${fileName}`;
 
-    return fileUrl;
+    return filePath;
   }
 }

@@ -12,7 +12,6 @@ import CustomError, {
   batchAlreadyInUse,
   cannotValidateVouchers,
   productNotFound,
-  voucherDuplicateFound,
   vouchersObjectNotFound,
   wrongEstablishmentId,
 } from './customError.util';
@@ -164,7 +163,9 @@ export default class VoucherUtil {
         );
 
         const errorFileUrl = ExcelUtil.writeErrorFileWIthUrl(errorsArray);
-        throw new CustomError(voucherDuplicateFound(errorFileUrl));
+        
+        return errorFileUrl;
+        // throw new CustomError(voucherDuplicateFound(errorFileUrl));
       }
     } catch (error) {
       console.log(CONSOLE_LOG_ERROR_TITLE, error);

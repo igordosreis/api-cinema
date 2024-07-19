@@ -47,6 +47,7 @@ dashboardRouter.post(
 dashboardRouter.get('/voucher/get', DashboardController.getVouchers);
 dashboardRouter.get('/voucher/count', DashboardController.getVouchersStatusCount);
 dashboardRouter.get('/voucher/types', DashboardController.getVoucherTypes);
+dashboardRouter.get('/voucher/example', DashboardController.getExampleExcel);
 dashboardRouter.put('/voucher/withdraw/single', DashboardController.withdrawSingleVoucher);
 
 // Tag
