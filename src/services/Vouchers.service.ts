@@ -362,7 +362,14 @@ export default class VouchersService {
 
       await VoucherUtil.validateBatchCode(batchId, t);
       await VoucherUtil.validateProductAndEstablishmentIds(productId, establishmentId, t);
-      await VoucherUtil.validateVoucherCodes(vouchersInfoArray, t);
+      const errorPath = await VoucherUtil.validateVoucherCodes(vouchersInfoArray, t);
+
+      const isError = errorPath;
+      if (isError) {
+        await t.rollback();
+        
+        return errorPath;
+      }
 
       await BatchesModel.create(
         { batchId, expireAt, productId, establishmentId },
@@ -548,7 +555,7 @@ export default class VouchersService {
     try {
       const isProductIdNaN = Number.isNaN(productId);
       if (isProductIdNaN) throw new Error('The productId is not a number.');
-      
+
       const productsCount = (await db.query(
         `SELECT
           COALESCE((SELECT COUNT(*)

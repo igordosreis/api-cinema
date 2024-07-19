@@ -2,6 +2,7 @@
 /* eslint-disable max-lines-per-function */
 /* eslint-disable complexity */
 import { Request, Response } from 'express';
+import * as fs from 'node:fs';
 import {
   IProductCreateInfoBody,
   IProductCreateInfoSchema,
@@ -203,8 +204,11 @@ export default class DashboardController {
     });
     IVouchersInfoArraySchema.parse(voucherInfoArray);
 
-    await VouchersService.createVouchersDashboard(voucherInfoArray);
-
+    const errorPath = await VouchersService.createVouchersDashboard(voucherInfoArray);
+    const isError = errorPath;
+    if (isError) {
+      res.download(errorPath, 'codigos_com_erro.xlsx', () => { fs.unlinkSync(errorPath); });
+    }
     res.status(200).end();
   }
 
@@ -247,6 +251,13 @@ export default class DashboardController {
       count: types.length,
       data: types,
     });
+  }
+
+  public static async getExampleExcel(_req: Request, res: Response): Promise<void> {
+    res.download(
+      'uploads/dashboard/excel/exemplo.xlsx',
+      'exemplo.xlsx',
+    );
   }
 
   // Tag
