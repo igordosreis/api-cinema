@@ -7,12 +7,26 @@ import { IEstablishmentAddressGetParsed } from '../interfaces/IEstablishments';
 class CreateAddressGetSqlizeQuery {
   private addParams = ({ 
     search, 
-    establishmentId, 
+    establishmentId,
+    addressId, 
     cityId, 
     active, 
   }: IEstablishmentAddressGetParsed) => {
     const searchQuery = [];
-    if (search) {
+
+    const isSearchNumber = !!Number(search);
+    const parsedSearch = Number(search);
+    const parsedEstablishmentId = establishmentId || parsedSearch;
+    const parsedAddressId = addressId || parsedSearch;
+
+    if (isSearchNumber) {
+      searchQuery.push({
+        [Op.or]: {
+          id: parsedAddressId,
+          establishmentId: parsedEstablishmentId,
+        },
+      });
+    } else if (search) {
       searchQuery.push({
         [Op.or]: {
           name: { [Op.substring]: search },

@@ -147,6 +147,7 @@ export interface IEstablishmentImageName {
 
 export const IEstablishmentAddressGetSchema = z.object({
   search: z.string().optional(),
+  addressId: z.coerce.number().optional(),
   establishmentId: z.coerce.number().optional(),
   cityId: z.coerce.number().optional(),
   active: z.string().transform((x) => x.toLowerCase() === 'true').pipe(z.boolean()).optional(),
@@ -158,6 +159,7 @@ export type IEstablishmentAddressGet = z.infer<typeof IEstablishmentAddressGetSc
 
 export const IEstablishmentAddressGetParsedSchema = z.object({
   search: z.string().optional(),
+  addressId: z.coerce.number().optional(),
   establishmentId: z.coerce.number().optional(),
   cityId: z.coerce.number().optional(),
   active: z.string().transform((x) => x.toLowerCase() === 'true').pipe(z.boolean()).optional(),
