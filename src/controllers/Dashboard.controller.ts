@@ -207,7 +207,11 @@ export default class DashboardController {
     const errorPath = await VouchersService.createVouchersDashboard(voucherInfoArray);
     const isError = errorPath;
     if (isError) {
-      res.download(errorPath, 'codigos_com_erro.xlsx', () => { fs.unlinkSync(errorPath); });
+      res
+        .status(400)
+        .download(errorPath, 'codigos_com_erro.xlsx', () => { fs.unlinkSync(errorPath); });
+      
+      return;
     }
     res.status(200).end();
   }
