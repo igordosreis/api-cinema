@@ -554,7 +554,7 @@ export default class EstablishmentsService {
 
   public static async getEstablishmentActiveStatusCountDashboard() {
     try {
-      const activeCount = (await db.query(
+      const establishmentsCount = (await db.query(
         `SELECT
           (SELECT COUNT(*) 
           FROM establishments AS e
@@ -583,7 +583,7 @@ export default class EstablishmentsService {
         total: number;
       }];
 
-      return activeCount[0];
+      return establishmentsCount[0];
     } catch (error: CustomError | unknown) {
       console.log(CONSOLE_LOG_ERROR_TITLE, error);
 

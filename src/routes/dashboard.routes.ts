@@ -33,6 +33,7 @@ dashboardRouter.post(
   DashboardController.createProductType,
 );
 dashboardRouter.delete('/shop/product/type/remove/:id', DashboardController.deleteProductType);
+dashboardRouter.get('/shop/count', DashboardController.getProductsStatusCount);
 dashboardRouter.get('/shop/pack/get/:id', DashboardController.getPackById);
 dashboardRouter.post('/shop/pack/create', DashboardController.createPack);
 dashboardRouter.patch('/shop/pack/edit', DashboardController.editPack);

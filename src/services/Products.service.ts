@@ -1,7 +1,7 @@
 /* eslint-disable sonarjs/no-duplicate-string */
 /* eslint-disable max-len */
 /* eslint-disable max-lines-per-function */
-import sequelize, { Op } from 'sequelize';
+import sequelize, { Op, QueryTypes } from 'sequelize';
 import EstablishmentsImagesModel from '../database/models/EstablishmentsImages.model';
 import EstablishmentsProductsModel from '../database/models/EstablishmentsProducts.model';
 import ProductsTypesModel from '../database/models/ProductsTypes.model';
@@ -732,6 +732,56 @@ export default class ProductsService {
       if (error instanceof CustomError) throw error;
 
       throw new CustomError(cannotCreateTypeError);
+    }
+  }
+
+  public static async getProductsStatusCount(establishmentId: number) {
+    try {
+      const isEstablishmentIdNaN = Number.isNaN(establishmentId);
+      if (isEstablishmentIdNaN) throw new Error('The establishmentId is not a number.');
+
+      const productsCount = (await db.query(
+        `SELECT
+        (SELECT COUNT(*)
+         FROM establishments_products AS p
+         WHERE p.establishment_id = ${establishmentId} AND p.active = 1) AS active,
+     
+        (SELECT COUNT(*)
+         FROM establishments_products AS p
+         WHERE p.establishment_id = ${establishmentId} AND p.active = 0) AS inactive,
+     
+        (SELECT COUNT(*)
+         FROM establishments_products AS p
+         LEFT JOIN (
+             SELECT product_id, COUNT(*) AS voucher_count
+             FROM vouchers_available
+             WHERE expire_at > NOW() AND order_id IS NULL
+             GROUP BY product_id
+         ) AS v ON p.product_id = v.product_id
+         WHERE p.establishment_id = ${establishmentId} AND p.active = 1
+           AND p.sold_out_amount > COALESCE(v.voucher_count, 0)) AS soldOut,
+     
+        (SELECT COUNT(*)
+         FROM establishments_products AS p
+         WHERE p.establishment_id = ${establishmentId}) AS total;`,
+        {
+          type: QueryTypes.SELECT,
+        },
+      )) as [{
+        active: number;
+        inactive: number;
+        soldOut: number;
+        total: number;
+      }];
+      console.log(productsCount);
+
+      return productsCount[0];
+    } catch (error: CustomError | unknown) {
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
+
+      if (error instanceof CustomError) throw error;
+
+      throw new CustomError(getProductError);
     }
   }
 }

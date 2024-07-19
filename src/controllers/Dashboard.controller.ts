@@ -156,6 +156,14 @@ export default class DashboardController {
     });
   }
 
+  public static async getProductsStatusCount(req: Request, res: Response): Promise<void> {
+    const { establishmentId } = req.query;
+
+    const count = await ProductsService.getProductsStatusCount(Number(establishmentId));
+
+    res.status(200).json(count);
+  }
+
   // -- Packs
   public static async createPack(req: Request, res: Response): Promise<void> {
     const { packInfo } = <IPackCreateInfoBody>req.body;
