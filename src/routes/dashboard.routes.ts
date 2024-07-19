@@ -45,6 +45,7 @@ dashboardRouter.post(
   DashboardController.createVoucher,
 );
 dashboardRouter.get('/voucher/get', DashboardController.getVouchers);
+dashboardRouter.get('/voucher/count', DashboardController.getVouchersStatusCount);
 dashboardRouter.get('/voucher/types', DashboardController.getVoucherTypes);
 dashboardRouter.put('/voucher/withdraw/single', DashboardController.withdrawSingleVoucher);
 

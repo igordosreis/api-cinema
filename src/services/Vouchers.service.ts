@@ -2,7 +2,7 @@
 /* eslint-disable sonarjs/cognitive-complexity */
 /* eslint-disable operator-linebreak */
 /* eslint-disable max-lines-per-function */
-import sequelize, { Transaction, Op } from 'sequelize';
+import sequelize, { Transaction, Op, QueryTypes } from 'sequelize';
 import EstablishmentsProductsModel from '../database/models/EstablishmentsProducts.model';
 import ProductsTypesModel from '../database/models/ProductsTypes.model';
 import VouchersAvailableModel from '../database/models/VouchersAvailable.model';
@@ -542,5 +542,55 @@ export default class VouchersService {
     ];
 
     return voucherTypes;
+  }
+
+  public static async getVouchersStatusCountDashboard(productId: number) {
+    try {
+      const isProductIdNaN = Number.isNaN(productId);
+      if (isProductIdNaN) throw new Error('The productId is not a number.');
+      
+      const productsCount = (await db.query(
+        `SELECT
+          COALESCE((SELECT COUNT(*)
+            FROM vouchers_available AS a
+            WHERE a.product_id = ${productId}
+              AND expire_at > NOW()
+              AND order_id IS NULL), 0) AS available,
+
+          COALESCE((SELECT COUNT(*)
+            FROM vouchers_user AS u
+            WHERE u.product_id = ${productId}), 0) AS user,
+
+          COALESCE((SELECT COUNT(*)
+            FROM vouchers_withdraw AS w
+            WHERE w.product_id = ${productId}), 0) AS withdraw,
+
+          COALESCE((SELECT COUNT(*)
+            FROM vouchers_available AS a
+            WHERE a.product_id = ${productId}
+              AND expire_at > NOW()
+              AND order_id IS NULL), 0) +
+          COALESCE((SELECT COUNT(*)
+            FROM vouchers_user AS u
+            WHERE u.product_id = ${productId}), 0) +
+          COALESCE((SELECT COUNT(*)
+            FROM vouchers_withdraw AS w
+            WHERE w.product_id = ${productId}), 0) AS total`,
+        {
+          type: QueryTypes.SELECT,
+        },
+      )) as [{
+        available: number;
+        user: number;
+        withdraw: number;
+        total: number;
+      }];
+
+      return productsCount[0];
+    } catch (error) {
+      console.log(CONSOLE_LOG_ERROR_TITLE, error);
+
+      throw new CustomError(cannotGetVouchers);
+    }
   }
 }

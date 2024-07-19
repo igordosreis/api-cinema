@@ -159,7 +159,7 @@ export default class DashboardController {
   public static async getProductsStatusCount(req: Request, res: Response): Promise<void> {
     const { establishmentId } = req.query;
 
-    const count = await ProductsService.getProductsStatusCount(Number(establishmentId));
+    const count = await ProductsService.getProductsStatusCountDashboard(Number(establishmentId));
 
     res.status(200).json(count);
   }
@@ -221,6 +221,14 @@ export default class DashboardController {
     });
 
     res.status(200).json(vouchers);
+  }
+
+  public static async getVouchersStatusCount(req: Request, res: Response): Promise<void> {
+    const { productId } = req.query;
+
+    const count = await VouchersService.getVouchersStatusCountDashboard(Number(productId));
+
+    res.status(200).json(count);
   }
 
   public static async withdrawSingleVoucher(req: Request, res: Response): Promise<void> {

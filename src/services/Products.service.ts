@@ -735,7 +735,7 @@ export default class ProductsService {
     }
   }
 
-  public static async getProductsStatusCount(establishmentId: number) {
+  public static async getProductsStatusCountDashboard(establishmentId: number) {
     try {
       const isEstablishmentIdNaN = Number.isNaN(establishmentId);
       if (isEstablishmentIdNaN) throw new Error('The establishmentId is not a number.');
@@ -773,7 +773,6 @@ export default class ProductsService {
         soldOut: number;
         total: number;
       }];
-      console.log(productsCount);
 
       return productsCount[0];
     } catch (error: CustomError | unknown) {
