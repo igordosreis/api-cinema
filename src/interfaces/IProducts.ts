@@ -216,6 +216,7 @@ export const IProductQueryDashboardSchema = z.object({
   limit: z.coerce.number().optional(),
   page: z.coerce.number().optional(),
   establishmentId: z.coerce.number().optional(),
+  productId: z.coerce.number().optional(),
   type: z.union([
     z.literal('pack'),
     z.coerce.number(),

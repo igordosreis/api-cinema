@@ -14,27 +14,29 @@ class CreateAddressGetSqlizeQuery {
   }: IEstablishmentAddressGetParsed) => {
     const searchQuery = [];
 
-    const isSearchNumber = !!Number(search);
-    const parsedSearch = Number(search);
-    const parsedEstablishmentId = establishmentId || parsedSearch;
-    const parsedAddressId = addressId || parsedSearch;
-
-    if (isSearchNumber) {
-      searchQuery.push({
-        [Op.or]: {
-          id: parsedAddressId,
-          establishmentId: parsedEstablishmentId,
-        },
-      });
-    } else if (search) {
-      searchQuery.push({
-        [Op.or]: {
-          name: { [Op.substring]: search },
-          address: { [Op.substring]: search },
-        },
-      });
+    if (search) {
+      const isSearchNumber = !!Number(search);
+      if (isSearchNumber) {
+        const parsedSearch = Number(search);
+        const parsedEstablishmentId = establishmentId || parsedSearch;
+        const parsedAddressId = addressId || parsedSearch;
+        searchQuery.push({
+          [Op.or]: {
+            id: parsedAddressId,
+            establishmentId: parsedEstablishmentId,
+          },
+        });
+      } else {
+        searchQuery.push({
+          [Op.or]: {
+            name: { [Op.substring]: search },
+            address: { [Op.substring]: search },
+          },
+        });
+      }
     }
     if (establishmentId) searchQuery.push({ establishmentId });
+    if (addressId) searchQuery.push({ id: addressId });
     if (cityId) searchQuery.push({ cityId });
     if (active) searchQuery.push({ active });
 

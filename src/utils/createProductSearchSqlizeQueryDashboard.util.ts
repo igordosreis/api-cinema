@@ -9,6 +9,7 @@ class CreateProductSearchSqlizeQueryDashboard {
     purchasable,
     active,
     search,
+    productId,
     establishmentId,
     type,
     available,
@@ -20,9 +21,17 @@ class CreateProductSearchSqlizeQueryDashboard {
     if (active) searchQuery.push({ active });
     if (active === false) searchQuery.push({ active });
     if (search) {
-      const isSearchNumber = Number(search);
+      const isSearchNumber = !!Number(search);
       if (isSearchNumber) {
-        searchQuery.push({ productId: search });
+        const parsedSearch = Number(search);
+        const parsedProductId = productId || parsedSearch;
+        const parsedEstablishmentId = establishmentId || parsedSearch;
+        searchQuery.push({ 
+          [Op.or]: {
+            productId: parsedProductId,
+            establishmentId: parsedEstablishmentId,
+          },
+        });
       } else {
         searchQuery.push({
           [Op.or]: {
@@ -34,6 +43,7 @@ class CreateProductSearchSqlizeQueryDashboard {
       }
     }
     if (type) searchQuery.push({ '$typeInfo.id$': { [Op.eq]: type } });
+    if (productId) searchQuery.push({ productId });
     if (establishmentId) searchQuery.push({ establishmentId });
     // if (expireAt) searchQuery.push({ '$batchProduct.expireAt$': { [Op.like]: expireAt } });
 
