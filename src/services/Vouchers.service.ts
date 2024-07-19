@@ -450,7 +450,7 @@ export default class VouchersService {
 
         const vouchers = rows;
         const parsedVouchers = vouchers.map((voucher) => {
-          const { productVoucherInfo, ...restOfInfo } = voucher.dataValues;
+          const { productVoucherInfo, ...restOfInfo } = voucher.toJSON();
 
           return {
             ...restOfInfo,
@@ -485,7 +485,7 @@ export default class VouchersService {
 
         const vouchers = rows;
         const parsedVouchers = vouchers.map((voucher) => {
-          const { vouchersWithdraw, ...restOfInfo } = voucher.dataValues;
+          const { vouchersWithdraw, ...restOfInfo } = voucher.toJSON();
 
           return {
             ...restOfInfo,
