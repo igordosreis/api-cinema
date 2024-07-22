@@ -45,6 +45,7 @@ import BatchesModel from '../database/models/Batches.model';
 import EstablishmentsModel from '../database/models/Establishments.model';
 import EstablishmentUtil from '../utils/establishment.util';
 import DataAndCountUtil from '../utils/dataAndCount.util';
+import VoucherCountSqlUtil from '../utils/createVoucherCountSqlQuery';
 
 export default class VouchersService {
   public static async getVouchersByProductId(productId: number, transaction?: Transaction) {
@@ -562,36 +563,12 @@ export default class VouchersService {
       if (isBothPresentOrBothMissing) throw new CustomError(voucherCountParamError);
 
       if (productId) {
-        const isProductIdNaN = Number.isNaN(productId);
+        const isProductIdNaN = !Number(productId);
         if (isProductIdNaN) throw new CustomError(voucherCountTypeError);
 
+        const searchString = `product_id = ${productId}`;
         const productsCount = (await db.query(
-          `SELECT
-            COALESCE((SELECT COUNT(*)
-              FROM vouchers_available AS a
-              WHERE a.product_id = ${productId}
-                AND expire_at > NOW()
-                AND order_id IS NULL), 0) AS available,
-  
-            COALESCE((SELECT COUNT(*)
-              FROM vouchers_user AS u
-              WHERE u.product_id = ${productId}), 0) AS user,
-  
-            COALESCE((SELECT COUNT(*)
-              FROM vouchers_withdraw AS w
-              WHERE w.product_id = ${productId}), 0) AS withdraw,
-  
-            COALESCE((SELECT COUNT(*)
-              FROM vouchers_available AS a
-              WHERE a.product_id = ${productId}
-                AND expire_at > NOW()
-                AND order_id IS NULL), 0) +
-            COALESCE((SELECT COUNT(*)
-              FROM vouchers_user AS u
-              WHERE u.product_id = ${productId}), 0) +
-            COALESCE((SELECT COUNT(*)
-              FROM vouchers_withdraw AS w
-              WHERE w.product_id = ${productId}), 0) AS total`,
+          VoucherCountSqlUtil.create(searchString),
           {
             type: QueryTypes.SELECT,
           },
@@ -606,36 +583,12 @@ export default class VouchersService {
       }
 
       if (establishmentId) {
-        const isEstablishmentIdNaN = Number.isNaN(establishmentId);
+        const isEstablishmentIdNaN = !Number(establishmentId);
         if (isEstablishmentIdNaN) throw new CustomError(voucherCountTypeError);
 
+        const searchString = `establishment_id = ${establishmentId}`;
         const establishmentsCount = (await db.query(
-          `SELECT
-            COALESCE((SELECT COUNT(*)
-              FROM vouchers_available AS a
-              WHERE a.establishment_id = ${establishmentId}
-                AND expire_at > NOW()
-                AND order_id IS NULL), 0) AS available,
-  
-            COALESCE((SELECT COUNT(*)
-              FROM vouchers_user AS u
-              WHERE u.establishment_id = ${establishmentId}), 0) AS user,
-  
-            COALESCE((SELECT COUNT(*)
-              FROM vouchers_withdraw AS w
-              WHERE w.establishment_id = ${establishmentId}), 0) AS withdraw,
-  
-            COALESCE((SELECT COUNT(*)
-              FROM vouchers_available AS a
-              WHERE a.establishment_id = ${establishmentId}
-                AND expire_at > NOW()
-                AND order_id IS NULL), 0) +
-            COALESCE((SELECT COUNT(*)
-              FROM vouchers_user AS u
-              WHERE u.establishment_id = ${establishmentId}), 0) +
-            COALESCE((SELECT COUNT(*)
-              FROM vouchers_withdraw AS w
-              WHERE w.establishment_id = ${establishmentId}), 0) AS total`,
+          VoucherCountSqlUtil.create(searchString),
           {
             type: QueryTypes.SELECT,
           },
@@ -650,6 +603,8 @@ export default class VouchersService {
       }
     } catch (error) {
       console.log(CONSOLE_LOG_ERROR_TITLE, error);
+
+      if (error instanceof CustomError) throw error;
 
       throw new CustomError(cannotGetVouchers);
     }
