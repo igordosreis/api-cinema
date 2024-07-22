@@ -18,6 +18,8 @@ import CustomError, {
   cannotCreateVouchers,
   cannotGetVouchers,
   productNotFound,
+  voucherCountParamError,
+  voucherCountTypeError,
   voucherServiceUnavailable,
   vouchersNotFound,
 } from '../utils/customError.util';
@@ -29,6 +31,7 @@ import {
   IVouchersByDate,
   IVouchersInfoArray,
   IVouchersGetDashboardParsed,
+  IVoucherCountRequest,
 } from '../interfaces/IVouchers';
 import OrdersModel from '../database/models/Orders.model';
 import VouchersUserModel from '../database/models/VouchersUser.model';
@@ -551,49 +554,100 @@ export default class VouchersService {
     return voucherTypes;
   }
 
-  public static async getVouchersStatusCountDashboard(productId: number) {
+  public static async getVouchersStatusCountDashboard(voucherCountRequest: IVoucherCountRequest) {
     try {
-      const isProductIdNaN = Number.isNaN(productId);
-      if (isProductIdNaN) throw new Error('The productId is not a number.');
+      const { productId, establishmentId } = voucherCountRequest;
+      const isBothPresentOrBothMissing = (productId && establishmentId) 
+        || (!productId && !establishmentId);
+      if (isBothPresentOrBothMissing) throw new CustomError(voucherCountParamError);
 
-      const productsCount = (await db.query(
-        `SELECT
-          COALESCE((SELECT COUNT(*)
-            FROM vouchers_available AS a
-            WHERE a.product_id = ${productId}
-              AND expire_at > NOW()
-              AND order_id IS NULL), 0) AS available,
+      if (productId) {
+        const isProductIdNaN = Number.isNaN(productId);
+        if (isProductIdNaN) throw new CustomError(voucherCountTypeError);
 
-          COALESCE((SELECT COUNT(*)
-            FROM vouchers_user AS u
-            WHERE u.product_id = ${productId}), 0) AS user,
+        const productsCount = (await db.query(
+          `SELECT
+            COALESCE((SELECT COUNT(*)
+              FROM vouchers_available AS a
+              WHERE a.product_id = ${productId}
+                AND expire_at > NOW()
+                AND order_id IS NULL), 0) AS available,
+  
+            COALESCE((SELECT COUNT(*)
+              FROM vouchers_user AS u
+              WHERE u.product_id = ${productId}), 0) AS user,
+  
+            COALESCE((SELECT COUNT(*)
+              FROM vouchers_withdraw AS w
+              WHERE w.product_id = ${productId}), 0) AS withdraw,
+  
+            COALESCE((SELECT COUNT(*)
+              FROM vouchers_available AS a
+              WHERE a.product_id = ${productId}
+                AND expire_at > NOW()
+                AND order_id IS NULL), 0) +
+            COALESCE((SELECT COUNT(*)
+              FROM vouchers_user AS u
+              WHERE u.product_id = ${productId}), 0) +
+            COALESCE((SELECT COUNT(*)
+              FROM vouchers_withdraw AS w
+              WHERE w.product_id = ${productId}), 0) AS total`,
+          {
+            type: QueryTypes.SELECT,
+          },
+        )) as [{
+          available: number;
+          user: number;
+          withdraw: number;
+          total: number;
+        }];
+  
+        return productsCount[0];
+      }
 
-          COALESCE((SELECT COUNT(*)
-            FROM vouchers_withdraw AS w
-            WHERE w.product_id = ${productId}), 0) AS withdraw,
+      if (establishmentId) {
+        const isEstablishmentIdNaN = Number.isNaN(establishmentId);
+        if (isEstablishmentIdNaN) throw new CustomError(voucherCountTypeError);
 
-          COALESCE((SELECT COUNT(*)
-            FROM vouchers_available AS a
-            WHERE a.product_id = ${productId}
-              AND expire_at > NOW()
-              AND order_id IS NULL), 0) +
-          COALESCE((SELECT COUNT(*)
-            FROM vouchers_user AS u
-            WHERE u.product_id = ${productId}), 0) +
-          COALESCE((SELECT COUNT(*)
-            FROM vouchers_withdraw AS w
-            WHERE w.product_id = ${productId}), 0) AS total`,
-        {
-          type: QueryTypes.SELECT,
-        },
-      )) as [{
-        available: number;
-        user: number;
-        withdraw: number;
-        total: number;
-      }];
-
-      return productsCount[0];
+        const establishmentsCount = (await db.query(
+          `SELECT
+            COALESCE((SELECT COUNT(*)
+              FROM vouchers_available AS a
+              WHERE a.establishment_id = ${establishmentId}
+                AND expire_at > NOW()
+                AND order_id IS NULL), 0) AS available,
+  
+            COALESCE((SELECT COUNT(*)
+              FROM vouchers_user AS u
+              WHERE u.establishment_id = ${establishmentId}), 0) AS user,
+  
+            COALESCE((SELECT COUNT(*)
+              FROM vouchers_withdraw AS w
+              WHERE w.establishment_id = ${establishmentId}), 0) AS withdraw,
+  
+            COALESCE((SELECT COUNT(*)
+              FROM vouchers_available AS a
+              WHERE a.establishment_id = ${establishmentId}
+                AND expire_at > NOW()
+                AND order_id IS NULL), 0) +
+            COALESCE((SELECT COUNT(*)
+              FROM vouchers_user AS u
+              WHERE u.establishment_id = ${establishmentId}), 0) +
+            COALESCE((SELECT COUNT(*)
+              FROM vouchers_withdraw AS w
+              WHERE w.establishment_id = ${establishmentId}), 0) AS total`,
+          {
+            type: QueryTypes.SELECT,
+          },
+        )) as [{
+          available: number;
+          user: number;
+          withdraw: number;
+          total: number;
+        }];
+  
+        return establishmentsCount[0];
+      }
     } catch (error) {
       console.log(CONSOLE_LOG_ERROR_TITLE, error);
 

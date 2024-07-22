@@ -379,3 +379,15 @@ export const cannotGetCommentLogs: ICustomError = {
   title: OPERATION_UNAVAILABLE,
   message: 'Não foi possível buscar os comentário agora. Tente novamente mais tarde.',
 };
+
+export const voucherCountParamError: ICustomError = {
+  status: 400,
+  title: OPERATION_UNAVAILABLE,
+  message: 'Faça a requisição somente com o productId ou com o establishment.',
+};
+
+export const voucherCountTypeError: ICustomError = {
+  status: 400,
+  title: OPERATION_UNAVAILABLE,
+  message: 'O parâmetro precisa ser um número.',
+};

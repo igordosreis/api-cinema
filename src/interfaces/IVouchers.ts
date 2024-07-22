@@ -142,3 +142,8 @@ export const IVoucherSingleWithdrawSchema = z.object({
 });
 
 export type IVoucherSingleWithdraw = z.infer<typeof IVoucherSingleWithdrawSchema>;
+
+export interface IVoucherCountRequest {
+  productId?: string;
+  establishmentId?: string;
+}

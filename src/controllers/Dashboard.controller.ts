@@ -30,6 +30,7 @@ import {
   IVouchersInfoArraySchema,
   IVouchersGetDashboard,
   IVouchersGetDashboardSchema,
+  IVoucherCountRequest,
 } from '../interfaces/IVouchers';
 import { ITagsNewInBody, ITagsNewSchema } from '../interfaces/ITags';
 import {
@@ -232,9 +233,9 @@ export default class DashboardController {
   }
 
   public static async getVouchersStatusCount(req: Request, res: Response): Promise<void> {
-    const { productId } = req.query;
+    const voucherCountRequest = <IVoucherCountRequest>req.query;
 
-    const count = await VouchersService.getVouchersStatusCountDashboard(Number(productId));
+    const count = await VouchersService.getVouchersStatusCountDashboard(voucherCountRequest);
 
     res.status(200).json(count);
   }
